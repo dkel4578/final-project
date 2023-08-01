@@ -1,0 +1,47 @@
+{  
+  "name": "react_",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@popperjs/core": "^2.11.8",
+    "axios": "^1.4.0",
+    "bootstrap": "^5.3.1",
+    "date-fns": "^2.30.0",
+    "gh-pages": "^5.0.0",
+    "jquery": "^3.7.0",
+    "react-bootstrap": "^2.8.0",
+    "react-cookie": "^4.1.1",
+    "react-cookies": "^0.1.1",
+    "react-icons": "^4.10.1",
+    "react-router-dom": "^6.14.2",
+    "sass": "^1.64.2",
+    "styled-components": "^6.0.5"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "postbuild": "del /f /s /q ..\\docs\\** && xcopy /Y .\\build\\* ..\\docs\\ /E",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
