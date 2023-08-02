@@ -31,7 +31,7 @@ spring:
       hibernate:
         format_sql: true  # sql문 pretty하게 보여줌
         use_sql_comments: true # model이 어느 디텍토리에 있는지 알려줌
-    generate-ddl: ture # true, false //default 는 false. true 라면 @Entity가 있는 테이블을 만듦
+    generate-ddl: true # true, false //default 는 false. true 라면 @Entity가 있는 테이블을 만듦
     hibernate: #hibernate 값이 존재하면 generate-ddl 의 값을 신경쓰지 않는다.
       ddl-auto: none  # create, create-drop, update, validate, none
       # 1. create : spring boot를 처음 실행 시 Entity로 된 클래스 및 테이블을 drop 하고 create 함
