@@ -55,5 +55,5 @@ mybatis:
     map-underscore-to-camel-case: true
   # package model/ xml에 있는 모델 앞의 패키지명을 생략 가능하도록 지원해주는 기능
   type-aliases-package: com.example.demo.model
-jwt:
-  secret: 1234
+#jwt:
+#  secret: 1234
