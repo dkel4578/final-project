@@ -18,7 +18,7 @@ spring:
     url: jdbc:mariadb://im.21v.in:33306/finalproject       # mariadb
     #    url: jdbc.mariadb://thejoeun1.iptime.org.3310/mydb
     driver-class-name: org.mariadb.jdbc.Driver
-    username: tldlcmConsole
+    username: tkdlxmConsole
     password: Q1alf@qlalf
   h2:
     console:
