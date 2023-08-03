@@ -6,8 +6,8 @@ spring:
       client:
         registration:
           google:
-            client-id: 154968277655-fgj739lqnduioqm81i6tn86erc3pfn77.apps.googleusercontent.com
-            client-secret: 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
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
             scope:
               - email
               - profile
@@ -15,11 +15,11 @@ spring:
       name: user
       password: 1234
   datasource:
-    url: jdbc:mariadb://im.21v.in:33306/finalproject       # mariadb
+    url: jdbc:mariadb://${DB_SOURCE_URL}    # mariadb
     #    url: jdbc.mariadb://thejoeun1.iptime.org.3310/mydb
     driver-class-name: org.mariadb.jdbc.Driver
-    username: tkdlxmConsole
-    password: Q1alf@qlalf
+    username: ${DB_SOURCE_ID}
+    password: ${DB_SOURCE_PW}
   h2:
     console:
       path: /h2-console
