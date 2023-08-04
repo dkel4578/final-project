@@ -26,13 +26,12 @@ public class AuthService {
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(usernamePasswordAuthenticationToken);
         //4. UserDetailsService 에 전달 (AuthenticationManagerBuilder 에 존재)
         //  UserDetailsService 를 implements 를 받는 CustomUserDetailService 로 전달
-        JwtTokenDto jwtTokenDto = jwtTokenProvider.generateTokenDto(authentication);
-//
+        //
 //        Member member = memberRepository.findByEmail(requestDto.getEmail()).get();
 //        member.setAccessToken(jwtTokenDto.getAccessToken());
 //        memberRepository.save(member);
 
-        return jwtTokenDto;
+        return jwtTokenProvider.generateTokenDto(authentication);
 
     }
 }

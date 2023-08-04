@@ -1,6 +1,7 @@
 package com.example.gachi.config.jwt;
 
 import com.example.gachi.model.dto.user.JwtTokenDto;
+import com.example.gachi.model.enums.Authority;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,11 +26,29 @@ public class JwtTokenProvider {
     private static final String BEARER_TYPE = "bearer";
     private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30; // 30분의 유효기간
     private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 1000L;
-    private String jwtSecretKey;
+    private final String jwtSecretKey;
     public JwtTokenProvider(@Value("${jwt.secret}") String secretKey) {
         this.jwtSecretKey = secretKey;
     }
+    //토큰 생성 by oauth2( ex 구글 ) member id 생성 기준
+    public JwtTokenDto generateTokenDto(String id) {
+        Date expireDate = getTokenExpirationTime();
 
+        String accessToken = Jwts.builder()
+                .setExpiration(expireDate)
+                .setSubject(id)
+                // 현재는 ROLE_USER 만 가져옴
+                .claim(AUTHORITIES_KEY, Authority.USER.name())
+                .signWith(SignatureAlgorithm.HS256, jwtSecretKey)
+                .compact();
+
+        return JwtTokenDto.builder()
+                .grantType(BEARER_TYPE)
+                .accessToken(accessToken)
+                .tokenExpiresIn(expireDate.getTime())
+                .build();
+    }
+    //Authentication 으로 토큰 생성
     public JwtTokenDto generateTokenDto(Authentication authentication) {
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)

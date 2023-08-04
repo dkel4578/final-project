@@ -44,9 +44,8 @@ public class UserService {
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
                 =new UsernamePasswordAuthenticationToken(userLoginRequestDto.getLoginId(), userLoginRequestDto.getPassword());
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(usernamePasswordAuthenticationToken);
-        JwtTokenDto jwtTokenDto = jwtTokenProvider.generateTokenDto(authentication);
 
-        return jwtTokenDto;
+        return jwtTokenProvider.generateTokenDto(authentication);
     }
 
 }
