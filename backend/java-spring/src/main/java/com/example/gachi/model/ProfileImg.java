@@ -25,7 +25,8 @@ public class ProfileImg extends BaseEntity{
     @Column(nullable=false)
     private String orgName;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
+
 
 }

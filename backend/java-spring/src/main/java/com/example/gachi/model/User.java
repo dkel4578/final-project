@@ -66,6 +66,8 @@ public class User extends BaseEntity{
     @Builder.Default
     private String bannedYn="N";
 
+
+
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     @ToString.Exclude
@@ -86,8 +88,10 @@ public class User extends BaseEntity{
     @ToString.Exclude
     private List<BanList> banLists;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private ProfileImg profileImg;
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name="user_id")
+    @ToString.Exclude
+    private List<ProfileImg> profileImg;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
@@ -98,5 +102,6 @@ public class User extends BaseEntity{
     @JoinColumn(name="user_id")
     @ToString.Exclude
     private List<Schedule> schedules;
+
 
 }

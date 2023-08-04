@@ -13,14 +13,17 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserRequestDto {
+public class UserSignUpRequestDto {
     private String loginId;
     private String name;
     private String password;
-    private String nickname;
     private String phone;
+    private String email;
     private String gender;
+    private String nickname;
+    private String profileMessage;
     private LocalDate birth;
+
 
     //회원가입
     public User signupUser(PasswordEncoder passwordEncoder){
@@ -31,6 +34,8 @@ public class UserRequestDto {
                 .nickname(nickname)
                 .phone(phone)
                 .gender(gender)
+                .profileMessage(profileMessage)
+                .birth(birth)
                 .build();
     }
 }
