@@ -2,10 +2,7 @@ package com.example.gachi.model;
 
 import com.example.gachi.model.enums.BanReason;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -14,6 +11,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@EqualsAndHashCode(callSuper=false)
 public class BanList extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

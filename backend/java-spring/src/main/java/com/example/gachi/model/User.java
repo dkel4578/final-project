@@ -1,4 +1,5 @@
 package com.example.gachi.model;
+import com.example.gachi.model.enums.Authority;
 import com.example.gachi.model.enums.Provider;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
@@ -13,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@EqualsAndHashCode(callSuper=false)
 public class User extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,6 +58,9 @@ public class User extends BaseEntity{
     @Column(nullable = false, columnDefinition = "char(1)")
     @Builder.Default
     private String status = "U";
+
+    @Enumerated(value = EnumType.STRING)
+    private Authority authority;
 
     @Column(nullable = false)
     @Builder.Default

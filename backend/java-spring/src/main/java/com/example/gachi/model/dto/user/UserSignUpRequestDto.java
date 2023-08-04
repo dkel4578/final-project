@@ -1,6 +1,7 @@
 package com.example.gachi.model.dto.user;
 
 import com.example.gachi.model.User;
+import com.example.gachi.model.enums.Authority;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -33,8 +34,10 @@ public class UserSignUpRequestDto {
                 .password(passwordEncoder.encode(password))
                 .nickname(nickname)
                 .phone(phone)
+                .email(email)
                 .gender(gender)
                 .profileMessage(profileMessage)
+                .authority(Authority.USER)
                 .birth(birth)
                 .build();
     }

@@ -2,16 +2,14 @@ package com.example.gachi.model;
 
 import com.example.gachi.model.enums.Review;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@EqualsAndHashCode(callSuper=false)
 public class Manner extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -12,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@EqualsAndHashCode(callSuper=false)
 public class Board extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
