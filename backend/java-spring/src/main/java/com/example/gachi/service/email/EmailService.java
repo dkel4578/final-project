@@ -14,10 +14,10 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
 @Slf4j
-@Profile("test")
+//@Profile("test")
 @Component
 @RequiredArgsConstructor
-public class EmailService {
+public class EmailService  {
     private final JavaMailSender javaMailSender;
 
 public void send(EmailMessage emailMessage){

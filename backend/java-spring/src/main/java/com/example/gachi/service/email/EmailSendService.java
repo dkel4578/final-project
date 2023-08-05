@@ -5,17 +5,19 @@ import com.example.gachi.model.User;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 
+@Component
 @Service
 @Slf4j
 @Transactional
 @RequiredArgsConstructor
 public class EmailSendService {
-    private static final String EXAMPLE_LINK_TEMPLATE = "템플릿 경로";
+    private static final String EXAMPLE_LINK_TEMPLATE = "/EmailTemplate";
 
     private final TemplateEngine templateEngine;
 
@@ -34,7 +36,7 @@ public class EmailSendService {
         emailService.send(emailMessage);
     }
 
-    private Context getContext(User account) {
+    private Context getContext(User user) {
         Context context = new Context();
         context.setVariable("message", "메일 메시지");
 
