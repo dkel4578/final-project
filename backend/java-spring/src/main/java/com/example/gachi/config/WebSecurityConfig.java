@@ -28,12 +28,12 @@ public class WebSecurityConfig {
         return http.build();
     }
 
-    @Bean
-    public WebSecurityCustomizer configure() {
-        return (web) -> web.ignoring()
-                .requestMatchers(toH2Console())
-                .requestMatchers("/static/**");
-    }
+//    @Bean
+//    public WebSecurityCustomizer configure() {
+//        return (web) -> web.ignoring()
+//                .requestMatchers(toH2Console())
+//                .requestMatchers("/static/**");
+//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {

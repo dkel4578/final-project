@@ -24,11 +24,12 @@ public class EmailController {
 
     private final UserRepository userRepository;
 
-    @PostMapping("/email-login")
+//    @PostMapping("/email-login")
+    @RequestMapping("/email-login")
     public String sendEmailLoginLink(String email
     , Model model
     , RedirectAttributes attributes){
-        User user = userRepository.findByEmail(email);
+        User user = userRepository.findByEmail("futen1998@gmail.com");
 
         if(user == null){
             model.addAttribute("error", "유효한 이메일 주소가 아닙니다.");
