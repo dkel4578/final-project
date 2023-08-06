@@ -1,5 +1,6 @@
 package com.example.gachi.config;
 
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
 
 @Component
+@AllArgsConstructor
 @EnableWebSecurity
 @Configuration
 public class WebSecurityConfig {
@@ -24,15 +26,17 @@ public class WebSecurityConfig {
             throws Exception {
         http.csrf().disable();
         http.authorizeHttpRequests().anyRequest().permitAll();
+//        http.authorizeHttpRequests().requestMatchers("/**").permitAll();
 
         return http.build();
     }
 
 //    @Bean
-//    public WebSecurityCustomizer configure() {
+//    public WebSecurityCustomizer configure() throws Exception {
 //        return (web) -> web.ignoring()
-//                .requestMatchers(toH2Console())
 //                .requestMatchers("/static/**");
+////                .requestMatchers(toH2Console())
+////                .requestMatchers("/static/**","/**");
 //    }
 
     @Bean

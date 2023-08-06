@@ -24,8 +24,10 @@ public void send(EmailMessage emailMessage){
     MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 
     try{
+//        첨부파일(Multipartfile) 보낼꺼면 TRUE
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, false ,"UTF-8");
-        mimeMessageHelper.setTo(emailMessage.getSubject());
+        mimeMessageHelper.setTo(emailMessage.getTo());
+        mimeMessageHelper.setSubject(emailMessage.getSubject());
         /*
         html 템플릿이면 true
         plaintext면 false 세양이 형이 html 만들어줄거니까 true
