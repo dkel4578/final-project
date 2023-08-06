@@ -29,7 +29,7 @@ public class EmailController {
     public String sendEmailLoginLink(String email
     , Model model
     , RedirectAttributes attributes){
-        User user = userRepository.findByEmail("futen1998@gmail.com");
+        User user = userRepository.findByEmail(email);
 
         if(user == null){
             model.addAttribute("error", "유효한 이메일 주소가 아닙니다.");
@@ -38,6 +38,10 @@ public class EmailController {
         }
         emailSendService.sendLoginLink(user);
         attributes.addFlashAttribute("message", "이메일 인증 메일을 발송했습니다.");
+
+
+        attributes.addFlashAttribute("name",user.getName());
+        attributes.addFlashAttribute("email",user.getEmail());
 
         return "redirect:/email-login";
 

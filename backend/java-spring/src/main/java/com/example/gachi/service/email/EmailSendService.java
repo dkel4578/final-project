@@ -29,7 +29,7 @@ public class EmailSendService {
 
         EmailMessage emailMessage = EmailMessage.builder()
                 .to(user.getEmail())
-                .subject("이메일 제목")
+                .subject(user.getName()+ " 님 안녕하세요.")
                 .message(message)
                 .build();
 
@@ -38,7 +38,8 @@ public class EmailSendService {
 
     private Context getContext(User user) {
         Context context = new Context();
-        context.setVariable("message", "메일 메시지");
+        context.setVariable("name", user.getName());
+        context.setVariable("message", user.getName()+"님의 비밀번호는 " + user.getPassword()+ " 입니다.");
 
         return context;
     }

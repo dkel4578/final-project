@@ -1,16 +1,16 @@
-
 <!DOCTYPE html>
-
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>HTML 템플릿 메일 메시지 예시</title>
-    <!-- 사랑하는 세양이형 이거 수정 부탁해 ^0^    -->
+    <title>Title</title>
 </head>
 <body>
 <div>
     <p>안녕하세요 <span th:text="${name}"></span>님</p>
 
     <h2 th:text="${message}">메시지</h2>
-</div>
+
+    <h3 th:text="${email}"/>
+</div>>
 </body>
 </html>
