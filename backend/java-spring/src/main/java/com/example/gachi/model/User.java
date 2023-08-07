@@ -1,4 +1,5 @@
 package com.example.gachi.model;
+import com.example.gachi.model.enums.Authority;
 import com.example.gachi.model.enums.Provider;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
@@ -13,6 +14,10 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+
+@EqualsAndHashCode(callSuper=false)
+
+
 public class User extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,11 +32,13 @@ public class User extends BaseEntity{
 
     private String accessToken;
 
-    private LocalDateTime accessTokenExpireIn;
+
+    private Long accessTokenExpireIn;
 
     private String refreshToken;
 
-    private LocalDateTime refreshTokenExpireIn;
+    private Long refreshTokenExpireIn;
+
 
     private String password;
 
@@ -57,6 +64,10 @@ public class User extends BaseEntity{
     @Builder.Default
     private String status = "U";
 
+
+    @Enumerated(value = EnumType.STRING)
+    private Authority authority;
+
     @Column(nullable = false)
     @Builder.Default
     @Enumerated(value = EnumType.STRING)
@@ -65,6 +76,7 @@ public class User extends BaseEntity{
     @Column(nullable = false, columnDefinition = "char(1)")
     @Builder.Default
     private String bannedYn="N";
+
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
@@ -86,8 +98,12 @@ public class User extends BaseEntity{
     @ToString.Exclude
     private List<BanList> banLists;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private ProfileImg profileImg;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name="user_id")
+    @ToString.Exclude
+    private List<ProfileImg> profileImg;
+
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
@@ -98,5 +114,27 @@ public class User extends BaseEntity{
     @JoinColumn(name="user_id")
     @ToString.Exclude
     private List<Schedule> schedules;
+
+
+    public User update(
+            String  accessToken,
+            Long accessTokenExpireIn,
+            String loginId,
+            String refreshToken,
+            Long refreshTokenExpireIn
+    ){
+        this.accessToken = accessToken;
+        this.accessTokenExpireIn = accessTokenExpireIn;
+        this.loginId = loginId;
+        this.refreshToken = refreshToken;
+        this.refreshTokenExpireIn = refreshTokenExpireIn;
+        return this;
+    }
+
+    public User update(String loginId){
+        this.loginId = loginId;
+        return this;
+    }
+
 
 }
