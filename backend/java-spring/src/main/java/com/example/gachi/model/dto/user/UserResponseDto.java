@@ -13,6 +13,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 public class UserResponseDto {
+    private Long id;
     private String loginId;
     private String name;
     private String phone;

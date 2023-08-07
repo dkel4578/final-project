@@ -2,17 +2,20 @@ package com.example.gachi.service.user;
 
 import com.example.gachi.config.jwt.JwtTokenProvider;
 import com.example.gachi.model.User;
-import com.example.gachi.model.dto.user.JwtTokenDto;
-import com.example.gachi.model.dto.user.UserLoginRequestDto;
-import com.example.gachi.model.dto.user.UserSignUpRequestDto;
-import com.example.gachi.model.dto.user.UserResponseDto;
+import com.example.gachi.model.dto.user.*;
 import com.example.gachi.repository.UserRepository;
+import com.nimbusds.openid.connect.sdk.claims.UserInfo;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -44,8 +47,53 @@ public class UserService {
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
                 =new UsernamePasswordAuthenticationToken(userLoginRequestDto.getLoginId(), userLoginRequestDto.getPassword());
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(usernamePasswordAuthenticationToken);
-
-        return jwtTokenProvider.generateTokenDto(authentication);
+        JwtTokenDto jwtTokenDto = jwtTokenProvider.generateTokenDto(authentication);
+        Optional<User> userOptional = userRepository.findByLoginId(userLoginRequestDto.getLoginId());
+        User user = userOptional.orElse(null);
+        if(Objects.nonNull(user)){
+            user.setAccessToken(jwtTokenDto.getAccessToken());
+            user.setAccessTokenExpireIn(jwtTokenDto.getTokenExpiresIn());
+            userRepository.save(user);
+        }
+        return jwtTokenDto;
     }
+    //패스워드 일치 확인
+    public boolean checkPassword(Long id, String checkPassword){
+        User user = userRepository.findById(id).orElseThrow(()->
+                new IllegalArgumentException("해당 회원이 존재하지 않습니다."));
+        String realPassword = user.getPassword();
+        return passwordEncoder.matches(checkPassword, realPassword);
+    }
+    //유저 정보 업데이트
+    @Transactional
+    public void update(Long id, UserInfoUpdateDto userInfoUpdateDto){
+        User user = userRepository.findById(id).orElseThrow(()->
+                new IllegalArgumentException("해당 유저가 존재 하지 않습니다."));
+        user.updateUser(userInfoUpdateDto.getName(),
+                userInfoUpdateDto.getPhone(),
+                userInfoUpdateDto.getEmail(),
+                userInfoUpdateDto.getGender(),
+                userInfoUpdateDto.getNickname(),
+                userInfoUpdateDto.getProfileMessage(),
+                userInfoUpdateDto.getBirth());
+    }
+    //유저 패스워드 변경
+    @Transactional
+    public void updatePassword(Long id, UserPasswordUpdateDto userPasswordUpdateDto){
+        User user = userRepository.findById(id).orElseThrow(() ->
+                new IllegalArgumentException("해당 유저가 존재 하지 않습니다."));
+        String password = passwordEncoder.encode(userPasswordUpdateDto.getPassword());
+        user.updatePassword(password);
+    }
+    //유저 정보 조회
+    public UserResponseDto getMyInfoBySecurity() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String id = authentication.getName();
+
+        Optional<UserResponseDto> memberOptional
+                = userRepository.findById(Long.parseLong(id)).map(UserResponseDto::of);
+        return memberOptional.orElse(null);
+    }
+
 
 }
