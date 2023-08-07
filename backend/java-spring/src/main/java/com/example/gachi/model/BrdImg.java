@@ -2,7 +2,6 @@ package com.example.gachi.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-
 @Data
 @Builder
 @AllArgsConstructor

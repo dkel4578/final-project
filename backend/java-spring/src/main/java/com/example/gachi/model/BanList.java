@@ -3,7 +3,6 @@ package com.example.gachi.model;
 import com.example.gachi.model.enums.BanReason;
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.time.LocalDate;
 
 @Data

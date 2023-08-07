@@ -2,6 +2,10 @@ package com.example.gachi.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
@@ -25,6 +29,4 @@ public class ProfileImg extends BaseEntity{
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
-
-
 }

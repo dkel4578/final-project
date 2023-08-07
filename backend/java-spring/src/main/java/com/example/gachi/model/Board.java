@@ -4,7 +4,6 @@ import com.example.gachi.model.enums.Kind;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ValueGenerationType;
-
 import java.util.List;
 
 @Data

@@ -3,7 +3,10 @@ package com.example.gachi.model;
 import com.example.gachi.model.enums.Review;
 import jakarta.persistence.*;
 import lombok.*;
-
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 @Data
 @Builder
 @AllArgsConstructor
