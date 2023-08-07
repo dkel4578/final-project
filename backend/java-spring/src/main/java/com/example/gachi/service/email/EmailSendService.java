@@ -17,7 +17,7 @@ import org.thymeleaf.context.Context;
 @Transactional
 @RequiredArgsConstructor
 public class EmailSendService {
-    private static final String EXAMPLE_LINK_TEMPLATE = "/EmailTemplate";
+    private static final String EMAIL_LINK_TEMPLATE = "/EmailTemplate";
 
     private final TemplateEngine templateEngine;
 
@@ -25,7 +25,7 @@ public class EmailSendService {
 
     public void sendLoginLink(User user) {
         Context context = getContext(user);
-        String message = templateEngine.process(EXAMPLE_LINK_TEMPLATE, context);
+        String message = templateEngine.process(EMAIL_LINK_TEMPLATE, context);
 
         EmailMessage emailMessage = EmailMessage.builder()
                 .to(user.getEmail())
