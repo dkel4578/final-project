@@ -1,5 +1,6 @@
 package com.example.gachi.config;
 
+import lombok.AllArgsConstructor;
 import com.example.gachi.config.jwt.JwtAccessDeniedHandler;
 import com.example.gachi.config.jwt.JwtAuthenticationEntryPoint;
 import com.example.gachi.config.jwt.JwtSecurityConfig;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -19,13 +21,13 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
-
 import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
 
 @Component
+@AllArgsConstructor
 @RequiredArgsConstructor
-@Configuration
 @EnableWebSecurity
+@Configuration
 public class WebSecurityConfig {
 
     private final JwtTokenProvider jwtTokenProvider;
@@ -58,6 +60,7 @@ public class WebSecurityConfig {
                 .and()
                 .authorizeHttpRequests()
                 .requestMatchers(mvcMatcherBuilder.pattern("/api/**")).permitAll()
+                .requestMatchers(mvcMatcherBuilder.pattern("/email-login","user/email-login","/EmailTemplate")).permitAll()
                 .requestMatchers(mvcMatcherBuilder.pattern("\"/\", \"/css/**\", \"/images/**\", \"/js/**\", \"/h2-console/**\"")).permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -71,6 +74,14 @@ public class WebSecurityConfig {
         return http.build();
     }
 
+//    @Bean
+//    public WebSecurityCustomizer configure() throws Exception {
+//        return (web) -> web.ignoring()
+//                .requestMatchers("/static/**");
+////                .requestMatchers(toH2Console())
+////                .requestMatchers("/static/**","/**");
+//    }
+
     @Bean
     public OAuth2CustomAuthenticationSuccessHandler customAuth2SuccessHandler() {
         return new OAuth2CustomAuthenticationSuccessHandler(oAuth2CustomUserService);
@@ -80,4 +91,6 @@ public class WebSecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+
 }
