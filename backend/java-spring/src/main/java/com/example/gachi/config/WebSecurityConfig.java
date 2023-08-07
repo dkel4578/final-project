@@ -24,7 +24,6 @@ import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
 
 @Component
-@AllArgsConstructor
 @RequiredArgsConstructor
 @EnableWebSecurity
 @Configuration
@@ -60,7 +59,7 @@ public class WebSecurityConfig {
                 .and()
                 .authorizeHttpRequests()
                 .requestMatchers(mvcMatcherBuilder.pattern("/api/**")).permitAll()
-                .requestMatchers(mvcMatcherBuilder.pattern("/email-login","user/email-login","/EmailTemplate")).permitAll()
+//                .requestMatchers(mvcMatcherBuilder.pattern("/email-login","user/email-login","/EmailTemplate")).permitAll()
                 .requestMatchers(mvcMatcherBuilder.pattern("\"/\", \"/css/**\", \"/images/**\", \"/js/**\", \"/h2-console/**\"")).permitAll()
                 .anyRequest().authenticated()
                 .and()
