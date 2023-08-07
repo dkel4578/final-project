@@ -33,7 +33,7 @@ spring:
         use_sql_comments: true # model이 어느 디텍토리에 있는지 알려줌
     generate-ddl: true # true, false //default 는 false. true 라면 @Entity가 있는 테이블을 만듦
     hibernate: #hibernate 값이 존재하면 generate-ddl 의 값을 신경쓰지 않는다.
-      ddl-auto: create  # create, create-drop, update, validate, none
+      ddl-auto: none  # create, create-drop, update, validate, none
       # 1. create : spring boot를 처음 실행 시 Entity로 된 클래스 및 테이블을 drop 하고 create 함
       # 2. create-drop : 위 과정을 거친 후 spring boot 종료시에 다시 drop 함
       # 3. update : 연결된 db schema 와 자바 entity 를 비교하여 다른 점이 있다면 다른 점만 ddl 코드를 생성
@@ -59,6 +59,10 @@ spring:
           timeout: 5000
           starttls:
             enable: true
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
 
 # mapper.xml
 mybatis:

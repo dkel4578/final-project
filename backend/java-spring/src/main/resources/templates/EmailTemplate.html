@@ -8,9 +8,15 @@
 </head>
 <body>
 <div>
-    <p>안녕하세요 <span th:text="${name}"></span>님</p>
+    <h4>안녕하세요 <span th:text="${name}"></span>님</h4>
 
     <h2 th:text="${message}">메시지</h2>
+
+    <h3 style="color: red" th:text="${error}"/>
+
+
+
+
 </div>
 </body>
 </html>
