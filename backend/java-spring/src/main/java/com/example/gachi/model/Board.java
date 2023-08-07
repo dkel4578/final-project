@@ -4,7 +4,6 @@ import com.example.gachi.model.enums.Kind;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ValueGenerationType;
-
 import java.util.List;
 
 @Data
@@ -12,6 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@EqualsAndHashCode(callSuper=false)
 public class Board extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
