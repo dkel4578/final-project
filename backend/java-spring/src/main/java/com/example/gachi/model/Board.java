@@ -1,9 +1,10 @@
 package com.example.gachi.model;
 
 import com.example.gachi.model.enums.Kind;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.ValueGenerationType;
+
 import java.util.List;
 
 @Data
@@ -33,16 +34,61 @@ public class Board extends BaseEntity{
     private String delYn="N";
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
+    @JsonIgnore
+    private User userId;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name="board_id")
+    @JsonIgnore
     @ToString.Exclude
     private List<Comment> comments;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name="board_id")
+    @JsonIgnore
     @ToString.Exclude
     private List<BrdImg> brdImgs;
+
+
+    public void setKind(Kind  kind) {
+        this.kind = kind;
+    }
+    public void setTitle(String title) {
+        this.title = title;
+    }
+    public void setContent(String content) {
+        this.content = content;
+    }
+    public void setCnt(Integer cnt) {
+        this.cnt = cnt;
+    }
+    public void setDelYn(String delYn) {
+        this.delYn = delYn;
+    }
+    public void setUser(User user) {
+        this.userId = userId;
+    }
+
+    public Board update(String title, String content) {
+        this.title = title;
+        this.content = content;
+        return this;
+    }
+
+    @Builder
+    public Board(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+
+    @Builder
+    public Board(Kind kind, String title, String content, User user) {
+        this.kind = kind;
+        this.title = title;
+        this.content = content;
+        this.delYn = delYn;
+        this.cnt = 0;
+    }
+
 
 }

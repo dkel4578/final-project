@@ -20,7 +20,6 @@ spring:
     driver-class-name: org.mariadb.jdbc.Driver
     username: ${DB_SOURCE_ID}
     password: ${DB_SOURCE_PW}
-  h2:
     console:
       path: /h2-console
       enabled: true

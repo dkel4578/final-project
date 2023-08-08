@@ -34,22 +34,42 @@ public class EmailController {
     public String sendEmailLoginLink(String email
     , Model model
     , RedirectAttributes attributes){
-        User user = userRepository.findByEmail(email);
+//        User user = userRepository.findByEmail(email);
 
-        if(user == null){
+        Optional<User> userOptional = userRepository.findByEmail(email);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            // 이제 user 객체를 사용할 수 있습니다.
+            emailSendService.sendLoginLink(user);
+            attributes.addFlashAttribute("message", "이메일 인증 메일을 발송했습니다.");
+
+
+            attributes.addFlashAttribute("name",user.getName());
+            attributes.addFlashAttribute("email",user.getEmail());
+
+            return "redirect:/email-login";
+        } else {
+            // 해당 이메일로 등록된 사용자가 없는 경우 처리
             model.addAttribute("error", "유효한 이메일 주소가 아닙니다.");
 //            System.out.println(model);
 
             return "user/email-login";
         }
-        emailSendService.sendLoginLink(user);
-        attributes.addFlashAttribute("message", "이메일 인증 메일을 발송했습니다.");
 
 
-        attributes.addFlashAttribute("name",user.getName());
-        attributes.addFlashAttribute("email",user.getEmail());
-
-        return "redirect:/email-login";
+//        if(user == null){
+//            model.addAttribute("error", "유효한 이메일 주소가 아닙니다.");
+//
+//            return "user/email-login";
+//        }
+//        emailSendService.sendLoginLink(user);
+//        attributes.addFlashAttribute("message", "이메일 인증 메일을 발송했습니다.");
+//
+//
+//        attributes.addFlashAttribute("name",user.getName());
+//        attributes.addFlashAttribute("email",user.getEmail());
+//
+//        return "redirect:/email-login";
 
     }
     @RequestMapping("/email-cert")
