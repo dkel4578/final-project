@@ -30,6 +30,7 @@
     "react-scripts": "^5.0.1",
     "react-slick": "^0.29.0",
     "sass": "^1.64.1",
+    "scss": "^0.2.4",
     "styled-components": "^6.0.5",
     "tailwindcss": "^3.3.3",
     "web-vitals": "^3.4.0"

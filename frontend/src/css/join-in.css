@@ -1,0 +1,83 @@
+[class *= place]{
+  width: 100%;
+}
+[class *= input-kind]{
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  outline: none;
+  border: 1px solid var(--maincolor);
+  font-size: 1.3em;
+  padding-left: 45px;
+}
+.subject{
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.subject p{
+  font-size: 1.4em;
+}
+.input-kind::placeholder{
+  transition: 0.5s;
+}
+.input-kind:focus::placeholder{
+  opacity: 0;
+}
+.input-kind:focus{
+  box-shadow: 0 0 10px #2acf7d96;
+}
+.sign-up{
+  border: 1px solid red;
+  width: 360px;
+  margin: auto;
+  /* height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column; */
+}
+.sign-up h1{
+  font-size: 3em;
+  text-align: center;
+}
+.sign-up-inner{
+  width: inherit;
+  padding: 20px;
+}
+.sign-up-place{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 25px;
+}
+.id-subject, .email-subject, .nick-subject{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.id-subject input[type=button], .email-subject input[type=button], .nick-name-place input[type=button]{
+  cursor: pointer;
+  background-color: var(--maincolor);
+  color: white;
+  font-size: 1.4em;
+  padding: 5px 10px;
+  border-radius: 15px;
+}
+.place {
+  position: relative;
+}
+.place .bi{
+  position: absolute;
+  left: 5px;
+  font-size: 2.1em;
+  transition: 0.4s;
+}
+.input-kind:focus ~ .bi{
+  color: var(--maincolor);
+} 
+.introduce-place textarea{
+  width: 100%;
+}

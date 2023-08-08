@@ -1,0 +1,178 @@
+.coffee-board{
+    width: 360px;
+    margin: auto;
+    padding: 0 10px;
+}
+.board-kind{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    gap: 10px;
+}
+.board-kind a{
+   font-size: 0.9em;
+   position: relative;
+}
+.board-kind a.active{
+    font-weight: bold;
+}
+.board-kind a:after{
+    position: absolute;
+    content: '';
+    width: 2px;
+    background-color: var(--silver-black);
+    height: 9px;
+    top: 55%;
+    transform: translateY(-55%);
+    right: -6px;
+}
+.board-kind a:last-child::after{
+    background-color: transparent;
+}
+
+/* search-area */
+.search-area{
+    width: 100%;
+    display: flex;
+    margin-bottom: 20px;
+}
+.search{
+    flex: 3;
+    position: relative;
+}
+.search .fa{
+    position: absolute;
+    left: 0;
+    top:50%;
+    transform: translateY(-50%);
+    color: #474747;
+    font-size: 1.3em;
+    transition: 0.4s;
+}
+.search input[type=text]{
+ width: 100%;
+ padding: 10px 30px;
+ font-size: 1.6em;
+ border: none;
+ border-bottom: 2px solid var(--maincolor);
+}
+.search input[type=text]::placeholder{
+    color: #474747;
+    transition: 0.4s;
+}
+.search input[type=text]:focus::placeholder{
+    opacity: 0;
+}
+.search input[type=text]:focus + .fa{
+    color: var(--maincolor);
+}
+.write-button{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    flex: 1;
+}
+.write-button a .fa{
+    font-size: 2.5em;
+    color: var(--silver-black);
+    transition: 0.4s;
+}
+.write-button a:hover .fa{
+    color: var(--maincolor);
+}
+/* borad-main */
+.borad-main{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    /* border: 1px solid red; */
+    flex-direction: column;
+    gap: 15px;
+}
+.board-content{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+}
+.board-info{
+    flex: 4;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+/* board-title */
+.board-title{
+    display: flex;
+    gap: 10px;
+}
+.board-title span{
+    color: var(--forestgreen);
+    display: flex;
+    align-items: center;
+    width: 80px;
+    font-size: 0.95em;
+}
+.board-title a{
+    font-weight: bold;
+    font-size: 1.7em;
+    vertical-align: middle;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 190px;
+
+}
+/* .board-user-log */
+.board-user-log{}
+.board-user-log span{
+    font-size: 0.9em;
+}
+.board-comment{
+    display: flex;
+    gap: 5px;
+    flex-direction: column;
+    flex: 1;
+    /* border: 1px solid blue; */
+    border-radius: 10px;
+    background-color: var(--maincolor);
+    color:  white;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    font-size: 1.1em;
+}
+.board-comment span{
+    color: white;
+} 
+/* board-paging */
+.board-paging{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin: 15px;
+    position: relative;
+}
+.paging-ball{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+    width: 40px;
+    height: 40px;
+    background-color: var(--forestgreen);
+    border-radius: 50%;
+    color: white;
+    transition: 0.5s;
+}
+.paging-ball.active{
+    background-color: #222;
+}
+.paging-arrow{
+    font-size: 1.3em;
+    transform: translateY(3.5px);
+}
