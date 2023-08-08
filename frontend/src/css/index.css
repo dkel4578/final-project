@@ -1,0 +1,147 @@
+/* 슬라이드 섹션 */
+/* .slide-area{
+  width: 360px;
+  margin: auto;
+}
+.slide-items{
+  display: flex;
+
+}
+.slide-item{
+  display: flex;
+  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
+}
+.slide-img{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
+.slide-text{
+  justify-content: center;
+  align-items: center;
+  flex: 0.7;
+} */
+/* 카테고리 섹션 */
+.category-area{
+  width: 100%;
+}
+.category-inner{
+  width: 100%;
+  margin: 10px auto;
+  overflow: hidden;
+
+}
+.category-items{}
+.category-item{
+  margin: 20px 0;
+  position: relative;
+  text-align: center;
+  border-radius: 15px;
+  overflow: hidden;
+  border: 1px solid #ccc;
+}
+.category-item::before,.category-item::after{
+  width: 100%;
+  content: '';
+  position: absolute;
+  z-index: 1;
+  color: white;
+  text-shadow: 0px 0px 5px black;
+}
+.category-item::before{
+  content: '커피한잔할래요?';
+  top: 30%;
+  left: 50%;
+  font-size: 3em;
+  transform: translate(-50%,-30%);
+  letter-spacing: 5px;
+  margin: 0;
+  padding: 0;
+  text-shadow: 0px 0px 20px black;
+}
+.category-item:nth-of-type(2):before{
+  content: '여행같이갈래요?';
+}
+.category-item:nth-of-type(3):before{
+  content: '식사같이할래요?';
+}
+.category-item:nth-of-type(4):before{
+  content: '술한잔할래요?';
+}
+
+.category-item::after{
+  content: '붕 뜨는 시간 커피한잔의 여유를 함께할 동료를 찾으세요.';
+  top: 60%;
+  left: 0;
+  font-size: 1.1em;
+  /* border: 1px solid red; */
+}
+.category-item:nth-of-type(2):after{
+  content: '이곳저곳 함께 여행할 영혼의 단짝을 찾으세요';
+}
+.category-item:nth-of-type(3):after{
+  content: '혼밥은 더 이상 NO! 이제 눈치보지 말고 먹어요';
+}
+.category-item:nth-of-type(4):after{
+  content: '쓸쓸한 혼술은 이제그만! 함께 건배할 동료를 찾아보세요';
+}
+.category-item img{
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  transition: 0.5s;
+  height: 150px;
+  object-fit: cover;
+  scale: 1.05;
+}
+.category-item:hover img{
+  scale: 1.2;
+
+  filter: grayscale(1);
+}
+.category-item:hover .category-slogan{
+  opacity: 0;
+  visibility: hidden;
+}
+/* faq */
+.noticeAndfaq{
+  margin: auto;
+  width: 360px;
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+}
+.noticeAndfaq div{
+  text-align: center;
+  border-radius: 15px;
+  background-color: var(--maincolor);
+  flex: 1;
+  padding: 30px 0;
+  margin-bottom: 20px;
+  transition: 0.5s;
+}
+.noticeAndfaq div:hover{
+  opacity: 1;
+  background-color: var(--turquoise);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+}
+.noticeAndfaq div a{
+  color: white;
+  font-size: 2.5em;
+}
+.notice-link{
+
+}
+.faq-link{
+
+}
+.body{
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
