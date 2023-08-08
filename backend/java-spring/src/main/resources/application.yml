@@ -58,6 +58,10 @@ spring:
           timeout: 5000
           starttls:
             enable: true
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
 
 # mapper.xml
 mybatis:

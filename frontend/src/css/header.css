@@ -1,0 +1,153 @@
+header{
+  width: 360px; 
+  height: 80px;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  position: relative;
+}
+.header-inner{
+  overflow: hidden;
+  width: inherit;
+  display: flex;
+  height: inherit;
+  align-items: center;  
+  justify-content: space-around;
+}
+.header-hamburger{
+  /* border: 1px solid red; */
+  width: inherit;
+  position: absolute;
+  top:30%;
+
+}
+.header-hamburger input[id=trigger]{
+  display: none;
+}
+.header-hamburger label[for=trigger]{
+  display: inline-block;
+  width: 30px;
+  height: 25px;
+  position: absolute;
+  cursor: pointer;
+  z-index: 5;
+  /* border: 1px solid red; */
+  left: 10px;
+}
+.header-hamburger label[for=trigger] span{
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background-color: #2acf7dc2;
+  /* transition: 1s; */
+}
+.header-hamburger label[for=trigger] span:nth-child(1){
+  top: 0;
+}
+.header-hamburger label[for=trigger] span:nth-child(2){
+  top: 50%;
+}
+.header-hamburger label[for=trigger] span:nth-child(3){
+  top: 100%;
+}
+input[id="trigger"]:checked ~ label[for=trigger] span:nth-of-type(1){
+  top: 50%;
+  transform: rotate(45deg);
+}
+input[id="trigger"]:checked ~ label[for=trigger] span:nth-child(2){
+  opacity: 0;
+}
+input[id="trigger"]:checked ~ label[for=trigger] span:nth-child(3){
+  top: 50%;
+  transform: rotate(-45deg);
+}
+
+/* 사이드바 */
+.side-var{
+  z-index: 3;
+  background-color: #e2f5f9;
+  width: inherit;
+  position: absolute;
+  left:-9999px;
+  transform: translateX(-50%);
+  top: -25px;
+  /* transition: 0.5s; */
+}
+input[id=trigger]:checked ~ .side-var{
+  position: absolute;
+  left: 50%;
+}
+input[id=trigger]:checked ~ label[for=trigger] span{
+  background-color: white;
+}
+
+input[id=side-close]:checked~.side-var{
+  left: -9999px;
+}
+
+/* 로그인 에이리어 */
+.login-area{
+ /* background-color: #418ce1; */
+ background-color: var(--maincolor);
+ padding: 23px 23px 23px 50px;
+ display: flex;
+ align-items: center;
+ gap: 15px;
+}
+.login-area a{
+  color: white;
+  position: relative;
+  font-size: 2em;
+}
+.login-area .fa{
+  color:  white;
+  font-size: 2em;
+}
+
+/* 카테고리 */
+.categorys{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.category-title,.category-sub{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  padding: 5px 0;
+  background-color: white;
+  border-radius: 25px;
+  margin: 10px 0;
+  cursor: pointer;
+  transition: 0.4s;
+}
+.category-title:hover,.category-sub:hover{
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  scale: 1.1;
+}
+.category-sub{
+  width: 70%;
+  position: relative;
+}
+.category-sub::before{
+  position: absolute;
+  content: '\F132';
+  font-family: var(--bs-font);
+  left: -40px;
+  font-size: 2em;
+  font-weight: bold;
+}
+.category-content{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.category-content i, .category-content a {
+  font-size: 1.5em;
+}
+
+
+

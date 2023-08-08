@@ -1,0 +1,60 @@
+footer{
+  background-color: var(--dark-black);
+  width: 360px;
+  margin: auto;
+  position: relative;
+}
+.footer-inner{
+  padding: 20px;
+}
+.footer-inner p{
+  color: white;
+}
+.company-title{
+
+  padding: 0;
+  margin: 0 0 10px 0;
+ 
+}
+address{
+   color: white;
+  font-style: normal;
+  line-height: 1.3em;
+}
+.company-marketing{
+  letter-spacing: 2px;
+  position: relative;
+  margin-left: 20px;
+}
+.company-marketing::before{
+  content: '\f095 ';
+  position: absolute;
+  font-family: var(--fa-font);
+  left: -20px;
+  transform: translateY(3px);
+}
+.copy-right{
+  margin: 0;
+  font-size: 0.88em;
+}
+.to-top{
+  display: block;
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  right: 5px;
+  bottom: 5px;
+}
+.to-top::after{
+  display: block;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  position: absolute;
+  content: '\f0aa';
+  color: white;
+  font-family: var(--fa-font);
+  font-size: 1.7em;
+}
+

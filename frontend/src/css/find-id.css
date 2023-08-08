@@ -1,0 +1,147 @@
+
+.find-id{
+    width: 360px;
+    margin: auto; 
+    display: flex;
+    height:100vh;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* find-id-inner */
+.find-id-inner{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+}
+.find-id-title{
+    color: #474747;
+    font-size: 2em;
+    margin-bottom:15px ;
+}
+.find-id-inner form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    gap: 15px;
+}
+.find-id-inner form fieldset{
+    border: none;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+.email-cf-send{
+    width: 84%;
+}
+.input-cf-email, .input-cf-number,.email-cf-send{
+    position: relative;
+}
+
+.input-cf-email .bi, .input-cf-number .bi, .email-cf-send .bi{
+    top: 50%;
+    transform: translateY(-45%);
+    position: absolute;
+    font-size: 2.2em;
+    left: 10px;
+    transition: 0.5s;
+}
+.email-cf-send .bi{
+    color: white;
+}
+.input-cf-email input[type=email],.input-cf-number input[type=text],.email-cf-send input[type=button]{
+    width: 100%;
+    padding: 15px;
+    padding-left: 55px;
+    border-radius: 5px;
+    border: 1px solid var(--maincolor);
+    font-size: 1.3em;
+}
+.email-cf-send input[type=button]{
+    padding-left: 0;
+    cursor: pointer;
+    display: block;
+    border: none;
+    background-color: #4f86ec;
+    color: white;
+    transition: 0.4s;
+}
+.email-cf-send input[type=button]:hover{
+    background-color: royalblue;
+    box-shadow: 0 0 10px royalblue;
+}
+
+.input-cf-email input[type=email]::placeholder,.input-cf-number input[type=text]::placeholder{
+    transition: 0.5s;
+}
+.input-cf-email input[type=email]:focus,.input-cf-number input[type=text]:focus{
+    box-shadow: 0 0 10px #2acf7dc4;
+}
+.input-cf-email input[type=email]:focus ~ .bi,.input-cf-number input[type=text]:focus ~ .bi{
+    color: var(--maincolor);
+}
+.input-cf-email input[type=email]:focus::placeholder,.input-cf-number input[type=text]:focus::placeholder{
+    opacity: 0;
+}
+.find-id-btn{
+    display: block;
+    width: 80%;
+    margin: auto;
+}
+.find-id-btn a{
+    display: block;
+    border-radius: 25px;
+    padding: 15px;
+    font-size: 1.3em;
+    background-color: var(--maincolor);
+    color: white;
+    transition: 0.45s;
+}
+.find-id-btn a:hover{
+    background-color: var(--forestgreen);
+    box-shadow: 0 0 10px var(--forestgreen);
+}
+
+/* p태그들 */
+.please-email-input,.after-send-eamil{
+    padding: 0;
+    margin: 0;
+    color: red;
+    font-size: 1.1em;
+    white-space: pre-line;
+}
+
+
+/* user-find */
+.user-find{
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+.user-find a{
+    font-size: 1.2em;
+}
+.user-find a:nth-of-type(2){
+    position: relative;
+}
+.user-find a:nth-of-type(2)::before{
+    left: -8px;
+}
+.user-find a:nth-of-type(2)::before{
+    position: absolute;
+    content: '';
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2px;
+    height: 10px;
+    background-color: var(--dark-gray);
+}
+
+

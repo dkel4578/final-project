@@ -1,0 +1,63 @@
+/* 노토산스 */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/* 레일웨이 */
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/* 오뮤예쁨체 */
+@font-face {
+  font-family: 'omyu_pretty';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+/* 나눔고딕 */
+@import url(//fonts.googleapis.com/earlyaccess/nanumgothic.css);
+.nanumgothic * {
+ font-family: 'Nanum Gothic', sans-serif;
+}
+html{
+  scroll-behavior: smooth;
+}
+*{
+  box-sizing: border-box;
+  font-family: 'omyu_pretty', sans-serif;
+  outline: none;
+  color: #333;
+}
+button,input{
+  outline: none;
+  border: none;
+}
+ul,li{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+h1,h2,h3,h4,h5,h6{
+  margin: 0;
+  padding: 0;
+}
+body{
+  margin: 0;
+  padding: 0;
+  margin: 0 auto;
+}
+a{
+  text-decoration: none;
+}
+button{
+  cursor: pointer;
+}
+[class*=inner]{
+  margin: auto;
+  max-width: 360px;
+}
+ul{
+  margin: 0;
+  padding: 0;
+}
+li{
+  margin: 0;
+  padding: 0;
+}

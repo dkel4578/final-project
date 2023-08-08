@@ -1,0 +1,248 @@
+.login-place{
+  width: 360px;
+  position: relative;
+  margin: auto; 
+  display: flex;
+  height:100vh;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+/* 패스워드 모달 */
+.find-password-modal{
+  z-index: 3;
+  width: inherit;
+  position: fixed;
+  transition: 0.5s;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.651);
+  opacity: 0;
+  visibility: hidden;
+}
+
+.find-password-modal.active{
+  opacity: 1;
+  visibility: visible;
+}
+.find-password-modal fieldset{
+  border-radius: 5px;
+  position: relative;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background-color: white;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+}
+.find-password-modal fieldset p{
+  font-size: 1.25em;
+}
+.email-send{
+  position: relative;
+}
+.email-send::before{
+  position: absolute;
+  content: '\f0e0 ';
+  font-family: var(--fa-font);
+  top: 50%;
+  left: 50px;
+  transform: translateY(-50%);
+  font-size: 1.5em;
+  color: var(--maincolor);
+}
+.email-send input[type=email]{
+  width: 80%;
+  padding: 15px 15px 15px 50px;
+  border: 1px solid var(--maincolor);
+  border-radius: 5px;
+  font-size: 1.1em;
+}
+.email-send input[type=email]:focus{
+  box-shadow: 0 0 10px #2acf7d96;
+}
+.email-send input[type=email]::placeholder{
+  transition: 0.5s;
+}
+.email-send input[type=email]:focus::placeholder{
+  opacity: 0;
+}
+.send-pw{
+  margin: auto;
+  display: block;
+  width: 80%;
+  padding: 15px;
+  background-color: #4f86ec;
+  border-radius: 5px;
+  font-size: 1.2em;
+  color: white;
+  position: relative;
+  transition: 0.5s;
+}
+.send-pw:hover{
+  background-color: royalblue;
+  box-shadow: 0 0 10px rgba(65, 105, 225, 0.719);
+}
+.send-pw::before{
+  position: absolute;
+  content: '\f1d8';
+  font-family: var(--fa-font);
+  left: 18px;
+}
+
+.find-password-modal fieldset .modal-close{
+  cursor: pointer;
+  position: absolute;
+  right: .625rem;
+  top: 0;
+  color: var(--dark-gray);
+  transition: 0.45s;
+}
+.find-password-modal fieldset .modal-close:hover{
+  color: var(--dim-black);
+}
+.find-password-modal fieldset legend{
+  text-align: center;
+  padding: .9375rem;
+  background-color: var(--maincolor);
+  border-radius: 1.5625rem;
+  color: white;
+}
+/* 로그인 이너 */
+.login-inner{
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+.login-title-font{
+  color: #474747;
+  font-size: 3em;
+  margin-bottom:15px ;
+}
+.login-inner form{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  gap: 20px;
+  text-align: center;
+}
+.login-inner form fieldset{
+  border: none;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.input-id, .input-pw{
+  position: relative;
+}
+.input-id .bi, .input-pw .bi{
+  top: 50%;
+  transform: translateY(-50%);
+  position: absolute;
+  font-size: 2.2em;
+  left: 25px;
+  transition: 0.5s;
+}
+.input-id input[type=text],.input-pw input[type=password]{
+  width: 90%;
+  padding: .9375rem;
+  padding-left: 50px;
+  border-radius: .3125rem;
+  outline: none;
+  border: .0625rem solid var(--maincolor);
+  font-size: 1.3em;
+}
+.input-id input[type=text]::placeholder,.input-pw input[type=password]::placeholder{
+  transition: 0.5s;
+}
+.input-id input[type=text]:focus,.input-pw input[type=password]:focus{
+  box-shadow: 0 0 10px #2acf7dc4;
+}
+.input-id input[type=text]:focus ~ .bi,.input-pw input[type=password]:focus ~ .bi{
+  color: var(--maincolor);
+}
+.input-id input[type=text]:focus::placeholder,.input-pw input[type=password]:focus::placeholder{
+  opacity: 0;
+}
+.login-btn{
+  display: block;
+  width: 80%;
+  margin: auto;
+}
+.login-btn button{
+  width: 100%;
+  border-radius: 25px;
+  padding: 15px;
+  font-size: 1.3em;
+  background-color: var(--maincolor);
+  color: white;
+  transition: 0.45s;
+}
+.login-btn button:hover{
+  background-color: var(--forestgreen);
+  box-shadow: 0 0 8px #00d3d39d;
+}
+.forgot-password{
+  cursor: pointer;
+  font-size: 1.3em;
+}
+/* btn-area */
+.btn-area{
+  margin-top: 25px;
+  position: relative;
+}
+.google-logo{
+  z-index: 2;
+  position: absolute;
+  width: 50px;
+  height: 45px;
+  border-radius: 5px;
+  left: 40px;
+  top: 4px;
+}
+.google-login-btn{
+  display: inline-block;
+  width: 80%;
+  padding: 15px;
+  background-color: #4f86ec;
+  border-radius: 5px;
+  color: white;
+  font-size: 1.3em;
+  transition: 0.45s; 
+}
+.google-login-btn:hover{
+  background-color: royalblue;
+}
+/* user-find */
+.user-find{
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+.user-find a{
+  font-size: 1.2em;
+}
+.user-find a:nth-of-type(2){
+  position: relative;
+}
+.user-find a:nth-of-type(2)::before{
+  left: -10px;
+}
+.user-find a:nth-of-type(2)::after{
+  right: -9px;
+}
+.user-find a:nth-of-type(2)::before,
+.user-find a:nth-of-type(2)::after{
+  position: absolute;
+  content: '';
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2px;
+  height: 10px;
+  background-color: var(--dark-gray);
+}
+

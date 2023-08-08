@@ -136,5 +136,25 @@ public class User extends BaseEntity{
         return this;
     }
 
+    public void updateUser(String name,
+                           String phone,
+                           String email,
+                           String gender,
+                           String nickname,
+                           String profileMessage,
+                           LocalDate birth){
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.gender = gender;
+        this.nickname = nickname;
+        this.profileMessage = profileMessage;
+        this.birth = birth;
+    }
+
+    public void updatePassword(String password){
+        this.password = password;
+    }
+
 
 }

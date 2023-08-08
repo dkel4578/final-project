@@ -27,9 +27,11 @@ public class JwtTokenProvider {
     private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30; // 30분의 유효기간
     private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 1000L;
     private final String jwtSecretKey;
+
     public JwtTokenProvider(@Value("${jwt.secret}") String secretKey) {
         this.jwtSecretKey = secretKey;
     }
+
     //토큰 생성 by oauth2( ex 구글 ) member id 생성 기준
     public JwtTokenDto generateTokenDto(String id) {
         Date expireDate = getTokenExpirationTime();
@@ -48,25 +50,34 @@ public class JwtTokenProvider {
                 .tokenExpiresIn(expireDate.getTime())
                 .build();
     }
+
     //Authentication 으로 토큰 생성
     public JwtTokenDto generateTokenDto(Authentication authentication) {
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
-        Date expireDate = getTokenExpirationTime();
+        Date acceessTokenExpireDate = getTokenExpirationTime();
+        Date refreshTokenExpireDate = getRefreshTokenExpirationTime();
         String name = authentication.getName();
 
         String accessToken = Jwts.builder()
                 .setSubject(name)
                 .claim(AUTHORITIES_KEY, authorities)
-                .setExpiration(expireDate)
+                .setExpiration(acceessTokenExpireDate)
+                .signWith(SignatureAlgorithm.HS256, jwtSecretKey)
+                .compact();
+
+        String refreshToken = Jwts.builder()
+                .setSubject(name)
+                .claim(AUTHORITIES_KEY, authorities)
+                .setExpiration(refreshTokenExpireDate)
                 .signWith(SignatureAlgorithm.HS256, jwtSecretKey)
                 .compact();
 
         return JwtTokenDto.builder()
                 .grantType(BEARER_TYPE)
                 .accessToken(accessToken)
-                .tokenExpiresIn(expireDate.getTime())
+                .refreshToken(refreshToken)
                 .build();
     }
 
@@ -75,7 +86,7 @@ public class JwtTokenProvider {
         return new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
     }
 
-    private Date getRefreshTokenExpirationTime(){
+    private Date getRefreshTokenExpirationTime() {
         long now = (new Date()).getTime();
         return new Date(now + REFRESH_TOKEN_EXPIRE_TIME);
     }
@@ -95,6 +106,7 @@ public class JwtTokenProvider {
         }
         return false;
     }
+
     public Authentication getAuthentication(String accessToken) {
         Claims claims = null;
         try {
@@ -117,6 +129,7 @@ public class JwtTokenProvider {
 
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
+
     private Claims parseClaims(String accessToken) {
         return Jwts.parser()
                 .setSigningKey(jwtSecretKey)
@@ -124,6 +137,3 @@ public class JwtTokenProvider {
                 .getBody();
     }
 }
-
-
-

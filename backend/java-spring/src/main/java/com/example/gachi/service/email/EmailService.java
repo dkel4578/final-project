@@ -13,12 +13,15 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
+import java.util.Random;
+
 @Slf4j
 //@Profile("test")
 @Component
 @RequiredArgsConstructor
 public class EmailService  {
     private final JavaMailSender javaMailSender;
+    private final String accessCode = createKey();
 
 public void send(EmailMessage emailMessage){
     MimeMessage mimeMessage = javaMailSender.createMimeMessage();
@@ -33,14 +36,26 @@ public void send(EmailMessage emailMessage){
         plaintext면 false 세양이 형이 html 만들어줄거니까 true
         */
 
+
         mimeMessageHelper.setText(emailMessage.getMessage(),true);
 
         javaMailSender.send(mimeMessage);
         log.info("send Email : {}", emailMessage.getMessage());
-    }catch (MessagingException e){
-        log.error("[EmailServive.send()] error {}", e.getMessage());
+        }catch (MessagingException e){
+            log.error("[EmailServive.send()] error {}", e.getMessage());
+        }
+
     }
 
+
+    public static String createKey() {
+        StringBuffer key = new StringBuffer();
+        Random rnd = new Random();
+
+        for (int i = 0; i < 6; i++) { // 인증코드 6자리
+            key.append((rnd.nextInt(10)));
+        }
+        return key.toString();
     }
 }
 
