@@ -24,8 +24,7 @@ public class Manner extends BaseEntity {
     @Enumerated(value = EnumType.STRING)
     private Review review;
 
-
     @Column(nullable = false)
-    private int score;
+    private long score;
 
 }
