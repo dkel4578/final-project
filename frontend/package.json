@@ -4,6 +4,7 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
+    "start": "react-scripts start",
     "dev": "vite",
     "test": "vitest",
     "build": "vite build",
@@ -11,6 +12,7 @@
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
+  "proxy": "http://localhost:9090/",
   "dependencies": {
     "@popperjs/core": "^2.11.8",
     "axios": "^1.4.0",
@@ -24,9 +26,13 @@
     "react-dom": "^18.2.0",
     "react-icons": "^4.10.1",
     "react-router-dom": "^6.14.2",
-    "sass": "^1.64.2",
+    "react-script": "^2.0.5",
+    "react-scripts": "^5.0.1",
+    "react-slick": "^0.29.0",
+    "sass": "^1.64.1",
     "styled-components": "^6.0.5",
-    "tailwindcss": "^3.3.3"
+    "tailwindcss": "^3.3.3",
+    "web-vitals": "^3.4.0"
   },
   "devDependencies": {
     "@testing-library/dom": "^9.2.0",
@@ -45,6 +51,7 @@
     "jsdom": "^22.0.0",
     "prettier": "3.0.0",
     "prettier-config-a11y": "^1.1.2",
+    "slick-carousel": "^1.8.1",
     "vite": "^4.4.5",
     "vitest": "^0.32.0"
   },
