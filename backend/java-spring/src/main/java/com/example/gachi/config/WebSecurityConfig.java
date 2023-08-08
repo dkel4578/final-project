@@ -60,7 +60,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers(mvcMatcherBuilder.pattern("/api/**")).permitAll()
 //                .requestMatchers(mvcMatcherBuilder.pattern("/email-login","user/email-login","/EmailTemplate")).permitAll()
-                .requestMatchers(mvcMatcherBuilder.pattern("\"/\", \"/css/**\", \"/images/**\", \"/js/**\", \"/h2-console/**\"")).permitAll()
+                .requestMatchers(mvcMatcherBuilder.pattern("\"/\", \"/css/**\", \"/images/**\", \"/js/**\", \"/h2-console/**\", \"/api/**\"")).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .oauth2Login()
