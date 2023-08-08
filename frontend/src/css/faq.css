@@ -1,0 +1,72 @@
+.title-area{
+  text-align: center;
+  padding: 20px 0;
+}
+.title-area h1{
+  font-size: 3em;
+  letter-spacing: 5px;
+}
+.faq{
+  background-color: var(--mintcolor);
+  width: 360px;
+  margin: auto;
+}
+.faq-inner{}
+.faq-inner h1{
+  text-align: center;
+  font-size: 3em;
+}
+.faq-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+  flex-direction: column;
+  height: 100vh;
+}
+.faq-items{
+  cursor: pointer;
+  width: 85%;
+  background-color: white;
+  border-radius: 35px;
+  text-align: center;
+  font-size: 1.2em;
+  padding: 15px;
+  margin-bottom: 30px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  transition: 0.5s;
+}
+.faq-items:hover{
+  scale: 1.1;
+  box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.3);
+}
+.faq-title{
+  cursor: pointer;
+  font-size: 1.3em;
+  font-weight: bold;
+  /* padding-bottom: 15px; */
+  position: relative;
+}
+.faq-title::before{
+  content: '\F282';
+  position: absolute;
+  font-family: var(--bs-font);
+  right: 0;
+  font-size: 0.7em;
+  transition: 0.5s;
+  top: 50%;
+  transform: translateY(-50%);
+  font-weight: bold;
+}
+.faq-title.active{
+  padding-bottom:15px;
+}
+.faq-title.active::before{
+  content: '\F286';
+  transform: translateY(-17px);
+}
+.faq-content{
+  padding-top: 15px;
+  border-top: 1px solid black;
+  display: none;
+}

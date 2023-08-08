@@ -1,0 +1,35 @@
+:root{
+  /* font */
+  --bs-font:bootstrap-icons;
+  --primary-kr: 'Noto Sans KR', sans-serif;
+  --secondary-kr: 'SpoqaHanSansNeo-Regular';
+  --primary-en :'Raleway', sans-serif;
+  --fa-font: FontAwesome;
+
+
+ /* Setting Variables : Text Color */
+--dark-black: #333333; /*  문서 본문 전체 텍스트 색상 */
+--dim-black: #555555;
+--silver-black: #777777;
+--light-black: #999999;
+--dark-gray: #BDBDBD;
+--dim-gray: #DDDDDD;
+--silver-gray: #EEEEEE; /* 입력요소(input) 보더 색상 */
+--light-gray: #F5F5F5;
+--cloudy-gray: #F9F9F9;
+
+/* Setting Variables : Object Color */
+--royalblue: #006BE5;
+--orangered: #FD5631;
+--orange: #FFD912;
+--crimson: #ED2040;
+--forestgreen: #2ECC71;
+--turquoise: #00D2D3;
+--tomato: #FF4C79;
+--white: #FFFFFF;
+--black: #000000;
+--maincolor:#2ACF7D;
+--mintcolor:#e2f5f9;
+--pink:#feccce;
+--yellow:#f7e385;
+}
