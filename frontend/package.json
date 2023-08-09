@@ -32,6 +32,7 @@
     "sass": "^1.64.1",
     "scss": "^0.2.4",
     "styled-components": "^6.0.5",
+    "sweetalert2": "^11.7.20",
     "tailwindcss": "^3.3.3",
     "web-vitals": "^3.4.0"
   },
@@ -59,7 +60,9 @@
   "eslintConfig": {
     "extends": [
       "react-app",
-      "react-app/jest"
+      "react-app/jest",
+      "eslint:recommended",
+      "plugin:react/recommended"
     ],
     "rules": {
       "react/jsx-no-target-blank": "off"
