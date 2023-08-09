@@ -3,19 +3,25 @@ package com.example.gachi.controller;
 import ch.qos.logback.core.model.Model;
 import com.example.gachi.model.User;
 import com.example.gachi.model.dto.user.*;
+import com.example.gachi.repository.UserRepository;
 import com.example.gachi.service.user.UserService;
 import com.example.gachi.util.BadRequestException;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import net.minidev.json.JSONObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final UserRepository userRepository;
 
     //아이디 중복 체크
     @GetMapping("/idCheck")
@@ -74,6 +80,45 @@ public class UserController {
         UserResponseDto myInfoBySecurity = userService.getMyInfoBySecurity();
 
         return ResponseEntity.ok(myInfoBySecurity);
+    }
+
+    @GetMapping("/user/email")
+    public void existEmail(String email , HttpServletResponse response){
+
+        JSONObject jsonObject = new JSONObject();
+        boolean emailCheck;
+        Optional<User> userOptional = userRepository.findByEmail(email);
+
+        if(userOptional.isPresent()) {
+            System.out.println(userOptional);
+            emailCheck = true;
+        }else {
+            System.out.println(userOptional);
+            emailCheck = false;
+        }
+        jsonObject.put("emailCheck",emailCheck);
+
+        try {
+            response.getWriter().print(jsonObject);	//response.getWriter로 프린트 해주면 통신 성공
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @PostMapping("/user/findLoginId")
+    public void findLoginId(HttpServletResponse response){
+        JSONObject jsonObject = new JSONObject();
+//        UserResponseDto userResponseDto = userService.getMyInfoBySecurity();
+
+
+//        jsonObject.put("userId",emailCheck);
+
+        try {
+            response.getWriter().print(jsonObject);	//response.getWriter로 프린트 해주면 통신 성공
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
 }

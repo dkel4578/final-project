@@ -1,11 +1,11 @@
-import React, { useState, useRef, useContext, useEffect } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useRef, useContext, useEffect } from 'react'; // eslint-disable-line no-unused-vars
+import axios from 'axios';    // eslint-disable-line no-unused-vars
+import { useNavigate } from 'react-router-dom';  
 
 function SignupPage() {
-  const navigatge = useNavigate();
+  const navigatge = useNavigate(); // eslint-disable-line no-unused-vars
 
-  const loginId = useRef(null);
+  const loginId = useRef(null); // eslint-disable-line no-unused-vars
   return (
     <>
       
