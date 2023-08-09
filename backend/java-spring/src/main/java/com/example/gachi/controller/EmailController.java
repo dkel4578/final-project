@@ -36,6 +36,7 @@ public class EmailController {
     public String sendEmailLoginLink(String email
     , Model model
     , RedirectAttributes attributes){
+
         Optional<User> userOptional = userRepository.findByEmail(email);
 
         if(!userOptional.isPresent()){
@@ -54,6 +55,7 @@ public class EmailController {
 
             return "redirect:/email-login";
         }
+
     }
     @RequestMapping("/find-id")
     public String sendFindIdLink(String email
@@ -79,6 +81,7 @@ public class EmailController {
 
 
         return "redirect:/findId";
+
 
     }
 

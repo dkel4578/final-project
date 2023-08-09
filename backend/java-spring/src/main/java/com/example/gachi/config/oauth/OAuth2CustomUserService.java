@@ -42,9 +42,14 @@ public class OAuth2CustomUserService implements OAuth2UserService {
                 .getUserNameAttributeName(); // OAuth 로그인 시 키(pk)가 되는 값
         Map<String, Object> attributes = oAuth2User.getAttributes(); // OAuth 서비스의 유저 정보들
 
+        System.out.println(attributes.toString());
+
         UserProfile userProfile = OAuth2Attributes.extract(registrationId, attributes); // registrationId에 따라 유저 정보를 통해 공통된 UserProfile 객체로 만들어 줌
         userProfile.setProvider(registrationId);
-        User user = saveOrUpdate(userProfile);
+//        User user = saveOrUpdate(userProfile);
+        // outh2 정보 입력 오류
+        User user = userRepository.findByLoginIdAndProvider(userProfile.getEmail(), userProfile.getProvider())
+                .orElseGet(() -> saveUser(userProfile));
 
         JwtTokenDto jwtTokenDto = jwtTokenProvider.generateTokenDto(user.getId().toString());
         saveOrUpdate(user, jwtTokenDto);
@@ -54,6 +59,11 @@ public class OAuth2CustomUserService implements OAuth2UserService {
                 Collections.singleton(new SimpleGrantedAuthority("USER")),
                 customAttribute,
                 userNameAttributeName);
+    }
+
+    private User saveUser(UserProfile userProfile) {
+        User newUser = userProfile.loginUser();
+        return userRepository.save(newUser);
     }
 
     private Map customAttribute(Map attributes, String userNameAttributeName, UserProfile userProfile, String registrationId) {
@@ -107,5 +117,6 @@ public class OAuth2CustomUserService implements OAuth2UserService {
         return userRepository.findByLoginIdAndProvider(loginId, provider)
                 .orElseThrow(() -> new IllegalArgumentException("이메일 및 외부 oauth지원으로 검색시 없는 유저입니다."));
     }
+
 
 }

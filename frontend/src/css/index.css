@@ -2,6 +2,7 @@
 /* .slide-area{
   width: 360px;
   margin: auto;
+
 }
 .slide-items{
   display: flex;
@@ -144,4 +145,5 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  
 }
