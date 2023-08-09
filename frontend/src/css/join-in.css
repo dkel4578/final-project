@@ -1,23 +1,24 @@
 [class *= place]{
   width: 100%;
+  margin-top: 20px;
 }
 [class *= input-kind]{
-  width: 100%;
-  padding: 10px;
-  border-radius: 5px;
-  outline: none;
-  border: 1px solid var(--maincolor);
-  font-size: 1.3em;
-  padding-left: 45px;
+  width: 100% !important;
+  padding: 10px !important;
+  border-radius: 5px !important;
+  outline: none !important;
+  border: 1px solid var(--maincolor) !important;
+  font-size: 1.3em !important;
+  padding-left: 55px !important;
 }
 .subject{
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 .subject p{
-  font-size: 1.4em;
+  font-size: 1.6em;
 }
 .input-kind::placeholder{
   transition: 0.5s;
@@ -29,18 +30,14 @@
   box-shadow: 0 0 10px #2acf7d96;
 }
 .sign-up{
-  border: 1px solid red;
+  /* border: 1px solid red; */
   width: 360px;
   margin: auto;
-  /* height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column; */
 }
 .sign-up h1{
   font-size: 3em;
   text-align: center;
+  padding-top: 35px;
 }
 .sign-up-inner{
   width: inherit;
@@ -51,14 +48,21 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  gap: 25px;
+}
+.sign-up-place span{
+  display: block;
+  width: 100%;
+  margin-top: 15px;
+  font-size: 1.1rem;
+  color:  red;
+  text-align: center;
 }
 .id-subject, .email-subject, .nick-subject{
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.id-subject input[type=button], .email-subject input[type=button], .nick-name-place input[type=button]{
+.id-subject input[type=button], .email-subject input[type=button], .nick-name-place input[type=button], .cfnumber-subject input[type=button]{
   cursor: pointer;
   background-color: var(--maincolor);
   color: white;
@@ -66,18 +70,98 @@
   padding: 5px 10px;
   border-radius: 15px;
 }
-.place {
+.input-box {
   position: relative;
 }
-.place .bi{
+.gender-check-place{
+  display: flex;
+  gap: 15px;
+}
+label[for=male],label[for=female]{
+  display: flex;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+.gender-input{
+  margin-right: 10px;
+  appearance: none;
+  vertical-align: middle;
+  border: max(2px, 0.1em) solid var(--maincolor);
+  border-radius: 50%;
+  width: 1.5em;
+  height: 1.5em;
+}
+.gender-input:checked{
+  border: 0.4em solid var(--forestgreen);
+}
+.input-box .bi{
+  /* 아이콘 전체 조정 */
   position: absolute;
-  left: 5px;
-  font-size: 2.1em;
+  left: 10px;
+  font-size: 2.2em;
   transition: 0.4s;
+  top: 50%;
+  transform: translateY(-50%);
 }
 .input-kind:focus ~ .bi{
   color: var(--maincolor);
 } 
 .introduce-place textarea{
   width: 100%;
+  border: 1px solid  var(--maincolor);
+  border-radius: 5px;
+  transition: 0.5s;
+  padding: 15px;
+  font-size: 1.2em;
+  letter-spacing: 2px;
+}
+.introduce-place textarea:focus{
+  box-shadow: 0 0 10px #2acf7d96;
+}
+.cf-number-send-place{}
+.cf-number-send-place input[type=button]{
+  cursor: pointer;
+  width: 100%;
+  padding: 15px;
+  font-size: 1.4em;
+  color: white;
+  background-color: var(--remonblue);
+  border-radius: 35px;
+  transition: 0.4s;
+}
+.cf-number-send-place input[type=button]:hover{
+  background-color: royalblue;
+  box-shadow: 0 0 10px royalblue;
+}
+.toggle-eye{
+  cursor: pointer;
+}
+
+/* 각 영역별 아이콘 정렬 (각 아이콘 크기 달라서 각자 조정) */
+.input-pw .bi{
+  top: 55%;
+}
+.input-cfnumber .bi{
+  font-size: 2em;
+  top: 58%;
+}
+
+/* join-complete-btn */
+.join-complete-btn{
+  margin-top: 15px;
+}
+.join-complete-btn .join-btn{
+  text-align: center;
+  display: block;
+  width: 100%;
+  border-radius: 35px;
+  background-color: var(--maincolor);
+  color: white;
+  font-size: 2em;
+  padding:  10px;
+  transition: 0.4s;
+}
+.join-complete-btn .join-btn:hover{
+  background-color: var(--forestgreen);
+  box-shadow: 0 0 10px var(--forestgreen);
 }

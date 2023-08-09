@@ -1,5 +1,19 @@
 import $ from 'jquery';
 
+/* 눈모양 누르면  비밀번호 보이게 만들기 (전체 페이지)*/
+$(function(){
+  $('.toggle-eye').click(function(){
+    /* toggle 아이콘 모양 */
+    $(this).toggleClass('bi-eye')
+    /* toggle 인풋타입 */
+    let inputType = $(this).parent().children('input').attr('type');
+    if(inputType == 'password'){
+      $(this).parent().children('input').attr('type', 'text');
+    }else{
+      $(this).parent().children('input').attr('type', 'password');
+    }
+  })
+})
 /* 헤더 인클루드 */
 $(function(){
   $('.header-include').load('../html/header.html',function(){
