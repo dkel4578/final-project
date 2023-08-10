@@ -44,7 +44,7 @@ public class UserController {
 
     @GetMapping("/emailCheck")
     public ResponseEntity<?> checkEmailDuplication(@RequestParam String email ) throws BadRequestException {
-        if(userService.nicknameCheck(email)){
+        if(userService.emailCheck(email)){
             throw new BadRequestException("이미 사용 중인 이메일 입니다.");
         } else{
             return ResponseEntity.ok("사용 가능한 이메일 입니다.");
