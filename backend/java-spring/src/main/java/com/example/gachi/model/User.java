@@ -14,10 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-
 @EqualsAndHashCode(callSuper=false)
-
-
 public class User extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -70,8 +67,9 @@ public class User extends BaseEntity{
 
     @Column(nullable = false)
     @Builder.Default
-    @Enumerated(value = EnumType.STRING)
-    private Provider provider= Provider.Web;
+//    @Enumerated(value = EnumType.STRING)
+//    private Provider provider= Provider.Web;
+    private String provider = "Web";
 
     @Column(nullable = false, columnDefinition = "char(1)")
     @Builder.Default
