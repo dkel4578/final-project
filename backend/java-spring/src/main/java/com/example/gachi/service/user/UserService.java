@@ -33,6 +33,10 @@ public class UserService {
     public boolean nicknameCheck(String nickname){
         return userRepository.existsByNickname(nickname);
     }
+    //이메일 중복 검사
+    public boolean emailCheck(String email){
+        return userRepository.existsByEmail(email);
+    }
 
     //회원가입
     public UserResponseDto signup(UserSignUpRequestDto userSignUpRequestDto){

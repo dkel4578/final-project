@@ -68,7 +68,9 @@ function SignupPage() {
   const [idFlg, setIdFlg] = useState(false);
   const [nicknameFlg, setNicknameFlg] = useState(false);
   const [emailFlg, setEmailFlg] = useState(false);
+  const [authenticationFlg, setAuthenticationFlg] = useState(false);
   const [birth, setBirth] = useState("");
+  const [gender, setGender] = useState("");
   
   // 패스워드 검증
   const [passwordValidation, setPasswordValidation] = useState({   // eslint-disable-line no-unused-vars
@@ -161,9 +163,10 @@ function SignupPage() {
     e.preventDefault();
     const response = await checkCode(emailRef.current.value,cfNumber);
     console.log("res: ", response);
-    if(response.check == true){
+    if(response.check){
       authenticationRef.current.disabled = true;
       setCfNumberMessage(<span style={{ color: "#2acf7d" }}>인증완료 되었습니다.</span>);
+      setAuthenticationFlg(true);
     }else{
       // 이거 작동 안함 수정 요청
       setCfNumberMessage(<span style={{ color: "red" }}>인증번호가 일치하지 않거나 만료 되었습니다.</span>);
@@ -196,7 +199,7 @@ function SignupPage() {
     console.log(loginId)
     if(!loginId){
       Swal.fire({
-        icon : 'success',
+        icon : 'warning',
         title : '중복 검사',         // Alert 제목
         text : '아이디를 입력해주세요', 
         width: 300,
@@ -245,7 +248,7 @@ function SignupPage() {
     const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
     if(!nickname){
       Swal.fire({
-        icon : 'success',
+        icon : 'warning',
         title : '중복 검사',         // Alert 제목
         text : '닉네임을 입력해주세요', 
         width: 300,
@@ -293,7 +296,7 @@ function SignupPage() {
     const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
     if(!email){
       Swal.fire({
-        icon : 'success',
+        icon : 'warning',
         title : '중복 검사',         // Alert 제목
         text : '이메일을 입력해주세요', 
         width: 300,
@@ -337,11 +340,33 @@ function SignupPage() {
     e.preventDefault();
 
     if(!idFlg){
-      alert("아이디 중복 검사를 완료하십시오.")
+      Swal.fire({
+        icon : 'warning',
+        title : '중복 검사',         // Alert 제목
+        text : '아이디 중복 검사를 완료하십시오.', 
+        width: 300,
+      });
     } else if (!nicknameFlg){
-      alert("닉네임 중복 검사를 완료하십시오.")
+      Swal.fire({
+        icon : 'warning',
+        title : '중복 검사',         // Alert 제목
+        text : '닉네임 중복 검사를 완료하십시오.', 
+        width: 300,
+      });
     } else if (!emailFlg){
-      alert("이메일 중복 검사를 완료하십시오.")
+      Swal.fire({
+        icon : 'warning',
+        title : '중복 검사',         // Alert 제목
+        text : '이메일 중복 검사를 완료해주세요.', 
+        width: 300,
+      });
+    } else if (!authenticationFlg){
+      Swal.fire({
+        icon : 'warning',
+        title : '인증',         // Alert 제목
+        text : '이메일 인증을 완료하십시오.', 
+        width: 300,
+      });
     } else
       {
       const loginId = loginIdRef.current.value;
@@ -351,7 +376,6 @@ function SignupPage() {
       const name = nameRef.current.value;
       const phone = phoneRef.current.value;
       const birth = new Date(Date(birthRef.current.value)).toISOString().split('T')[0];
-      const gender = genderRef.current.value;
       const profileMessage = profileMessageRef.current.value;
   
       const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
@@ -586,7 +610,8 @@ function SignupPage() {
 											className="gender-input"
 											value="m"
                       defaultChecked
-                      ref={genderRef}
+                      checked={gender === "M"} // Check if gender is "M"
+                      onChange={() => setGender("M")}
 										/>
 										<p>남성</p>
 									</label>
@@ -599,7 +624,8 @@ function SignupPage() {
 											id="female"
 											className="gender-input"
 											value="F"
-                      ref={genderRef}
+                      checked={gender === "F"} // Check if gender is "F"
+                      onChange={() => setGender("F")}
 										/>
 										<p>여성</p>
 									</label>

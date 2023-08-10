@@ -26,6 +26,7 @@ function MyPage() {
 	const [profileMessage, setProfileMessage] = useState(''); // eslint-disable-line no-unused-vars
 	const [birth, setBirth] = useState(''); // eslint-disable-line no-unused-vars
 
+  
 	if(cookies.token != 'undefined'){
 		isLogin = true;
 	} else {
