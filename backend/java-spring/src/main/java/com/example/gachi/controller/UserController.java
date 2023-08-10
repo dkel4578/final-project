@@ -125,13 +125,13 @@ public class UserController {
         }
     }
 
-    @PostMapping("/user/findLoginId")
-    public void findLoginId(HttpServletResponse response){
+    @GetMapping("/user/findLoginId")
+    public void findLoginId(HttpServletResponse response, String email){
         JSONObject jsonObject = new JSONObject();
 //        UserResponseDto userResponseDto = userService.getMyInfoBySecurity();
+        String userLoginId = userService.getUserLoginIdByEmail(email);
 
-
-//        jsonObject.put("userId",emailCheck);
+        jsonObject.put("userId",userLoginId);
 
         try {
             response.getWriter().print(jsonObject);	//response.getWriter로 프린트 해주면 통신 성공

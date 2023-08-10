@@ -95,5 +95,16 @@ public class UserService {
         return userOptional.orElse(null);
     }
 
+//    유저 Login ID 조회
+    public String getUserLoginIdByEmail(String email){
+        Optional<User> user = userRepository.findLoginIdByEmail(email);
+        System.out.println(user);
+        String userLoginId = user.get().getLoginId();
+
+
+        //        userLoginId = user
+        return userLoginId;
+    }
+
 
 }
