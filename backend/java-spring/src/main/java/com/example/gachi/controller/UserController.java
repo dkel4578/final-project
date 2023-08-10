@@ -128,7 +128,6 @@ public class UserController {
     @GetMapping("/user/findLoginId")
     public void findLoginId(HttpServletResponse response, String email){
         JSONObject jsonObject = new JSONObject();
-//        UserResponseDto userResponseDto = userService.getMyInfoBySecurity();
         String userLoginId = userService.getUserLoginIdByEmail(email);
 
         jsonObject.put("userId",userLoginId);
