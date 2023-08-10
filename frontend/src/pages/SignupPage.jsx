@@ -1,13 +1,46 @@
 
-import React, { useState, useRef, useContext, useEffect } from "react";
-// import axios from "axios";
+import React, { useState, useRef, useContext, useEffect } from "react";  // eslint-disable-line no-unused-vars
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../css/join-in.css" ;
 import "../css/total.css";
 import "../css/variables.css";
 import "../script/custom.js";
-import "../script/signup.js";
+import "../script/signup.js"; 
 import Swal from 'sweetalert2';
+
+async function getCode(email){
+  await axios
+  .post("/api/email-cert?email="+email,{
+    email : email
+  })
+  .then((response)=>{
+    console.log(response);
+    // response.data.check;
+  })
+  .catch((error)=>{
+    console.log(error);				//오류발생시 실행
+  });
+}
+
+async function checkCode(email,code){
+  console.log("email: ",email);
+  console.log("code: ",code);
+
+  return await axios
+  .get("/api/checkCode?email="+email+"&code="+code,{
+    "email" : email
+    , "code" : code
+  })
+  .then((response)=>{
+    console.log(response);
+    console.log(response.data);
+    return response.data;
+  })
+  .catch((error)=>{
+    console.log(error);				//오류발생시 실행
+  });
+}
 
 function SignupPage() {
 	const navigate = useNavigate();
@@ -24,9 +57,9 @@ function SignupPage() {
   const genderRef = useRef(null);
   const profileMessageRef = useRef(null);
 
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState("");  // eslint-disable-line no-unused-vars
   const [emailMessage, setEmailMessage] = useState("");
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState("");  // eslint-disable-line no-unused-vars
   const [passwordCheck, setPasswordCheck] = useState("");
   const [passwordCheckText, setPasswordCheckText] = useState("비밀번호를 입력해주세요!");
   const [cfNumber, setCfNumber] = useState("");
@@ -38,7 +71,7 @@ function SignupPage() {
   const [birth, setBirth] = useState("");
   
   // 패스워드 검증
-  const [passwordValidation, setPasswordValidation] = useState({
+  const [passwordValidation, setPasswordValidation] = useState({   // eslint-disable-line no-unused-vars
     hasLowerCase: false,
     hasUpperCase: false,
     hasNumber: false,
@@ -89,13 +122,23 @@ function SignupPage() {
     }
   };
 
-  const handleEmailSendClick = () => {
+  const handleSendEmail = async() =>{
+    // e.preventDefault();
+    console.log('ssssss');
+
+    getCode(emailRef.current.value);
+  }
+
+  // 이메일 보내는 버튼
+  const handleEmailSendClick =() => {
+    let email = emailRef.current.value
     if (isValidEmail(email)) {
       setEmailMessage(
         <span style={{ color: "#2acf7dc4" }}>
           {email}으로<br />인증메일을 보내드렸습니다.
         </span>
       );
+      handleSendEmail();
     } else {
       setEmailMessage(<span style={{ color: "red" }}>알맞은 이메일 형식을 입력해주세요.</span>);
     }
@@ -114,6 +157,18 @@ function SignupPage() {
 
     setCfNumber(inputValue);
   };
+  const handleCheckCode = async (e) =>{
+    e.preventDefault();
+    const response = await checkCode(emailRef.current.value,cfNumber);
+    console.log("res: ", response);
+    if(response.check == true){
+      authenticationRef.current.disabled = true;
+      setCfNumberMessage(<span style={{ color: "#2acf7d" }}>인증완료 되었습니다.</span>);
+    }else{
+      // 이거 작동 안함 수정 요청
+      setCfNumberMessage(<span style={{ color: "red" }}>인증번호가 일치하지 않거나 만료 되었습니다.</span>);
+    }
+  }
   const handleNumberInput = (event) => {
     const inputValue = event.target.value;
 
@@ -433,7 +488,8 @@ function SignupPage() {
 						<div className="cfnumber-place place">
 							<div className="cfnumber-subject subject">
 								<p>인증번호</p>
-								<input type="button" value="인증번호 확인" />
+								<input type="button" value="인증번호 확인" onClick={handleCheckCode} /> 
+                {/* 인증번호 */}
 							</div>
 							<div className="input-box input-cfnumber">
 								<input

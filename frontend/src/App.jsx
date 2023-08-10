@@ -3,7 +3,6 @@ import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
 import SignupPage from './pages/SignupPage';
 import { Routes, Route,  } from 'react-router-dom'
-import SignupPage from './pages/SignupPage';  // eslint-disable-line no-unused-vars
 import FindIdPage from './pages/FindIdPage';
 
 function App() {

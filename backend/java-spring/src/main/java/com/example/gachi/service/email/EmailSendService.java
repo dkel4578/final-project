@@ -22,6 +22,7 @@ import java.util.Random;
 public class EmailSendService {
     private static final String EMAIL_LINK_TEMPLATE = "/EmailTemplate";
     private static final String EMAIL_LINK_CODE = "/EmailCode";
+    private static final String EMAIL_LINK_NEW = "/NewUserEmail";
 
     private final TemplateEngine templateEngine;
 
@@ -62,14 +63,14 @@ public class EmailSendService {
                 .build();
 
         emailService.send(emailMessage);
-    }public void sendJoinLink(String email, String name) {
-        Context context = getContext(name);
-        String message = templateEngine.process(EMAIL_LINK_TEMPLATE, context);
+    }public void sendJoinLink(String email) {
+        Context context = getContext();
+        String message = templateEngine.process(EMAIL_LINK_NEW, context);
         redisUtil.setDataExpire(email, accessCode, 300 * 1L);
 
         EmailMessage emailMessage = EmailMessage.builder()
                 .to(email)
-                .subject(name+ " 님 안녕하세요.")
+                .subject("신규 회원님의 가입을 축하합니다!")
                 .message(message)
                 .build();
 
@@ -95,6 +96,12 @@ public class EmailSendService {
         Context context = new Context();
         context.setVariable("name", name);
         context.setVariable("message", name + " 님의 인증 코드는 " + accessCode + " 입니다.");
+
+        return context;
+    }
+    private Context getContext() {
+        Context context = new Context();
+        context.setVariable("message","신규 회원님의 인증 코드는 " + accessCode + " 입니다.");
 
         return context;
     }
