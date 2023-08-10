@@ -90,9 +90,9 @@ public class UserService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String id = authentication.getName();
 
-        Optional<UserResponseDto> memberOptional
+        Optional<UserResponseDto> userOptional
                 = userRepository.findById(Long.parseLong(id)).map(UserResponseDto::of);
-        return memberOptional.orElse(null);
+        return userOptional.orElse(null);
     }
 
 

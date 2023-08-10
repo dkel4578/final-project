@@ -41,6 +41,15 @@ public class UserController {
             return ResponseEntity.ok("사용 가능한 닉네임 입니다.");
         }
     }
+
+    @GetMapping("/emailCheck")
+    public ResponseEntity<?> checkEmailDuplication(@RequestParam String email ) throws BadRequestException {
+        if(userService.nicknameCheck(email)){
+            throw new BadRequestException("이미 사용 중인 이메일 입니다.");
+        } else{
+            return ResponseEntity.ok("사용 가능한 이메일 입니다.");
+        }
+    }
     //회원 가입
     @PostMapping("/signup")
     public ResponseEntity<UserResponseDto> signup(@RequestBody UserSignUpRequestDto userSignUpRequestDto){
@@ -53,6 +62,17 @@ public class UserController {
     public ResponseEntity<JwtTokenDto> login(@RequestBody UserLoginRequestDto userLoginRequestDto) {
         return ResponseEntity.ok(userService.login(userLoginRequestDto));
     }
+    //로그아웃
+//    @PostMapping("/logout")
+//    public ResponseEntity<?> logout(HttpServletResponse response) {
+//        // 쿠키 제거
+//        Cookie cookie = new Cookie("token", null);
+//        cookie.setMaxAge(0);
+//        cookie.setPath("/");
+//        response.addCookie(cookie);
+//
+//        return ResponseEntity.ok("로그아웃 완료");
+//    }
     //패스워드 일치 확인
     @PostMapping("checkPwd")
     public ResponseEntity<?> checkPassword(@RequestBody FindPasswordDto findPasswordDto){
