@@ -6,9 +6,10 @@ import "../css/total.css";
 import "../css/variables.css";
 import "../script/custom.js";
 import "../script/signup.js";
+import Swal from 'sweetalert2';
 
 function SignupPage() {
-	const navigatge = useNavigate();
+	const navigate = useNavigate();
 
   const loginIdRef = useRef(null);
   const passwordRef = useRef(null);
@@ -33,7 +34,9 @@ function SignupPage() {
   const [idFlg, setIdFlg] = useState(false);
   const [nicknameFlg, setNicknameFlg] = useState(false);
   const [emailFlg, setEmailFlg] = useState(false);
-
+  const [birth, setBirth] = useState("");
+  
+  // 패스워드 검증
   const [passwordValidation, setPasswordValidation] = useState({
     hasLowerCase: false,
     hasUpperCase: false,
@@ -41,6 +44,7 @@ function SignupPage() {
     hasSpecialChar: false,
     isLengthValid: false,
   })
+  // 이메일 형식 검증
   const isValidEmail = (email) => {
     var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     return emailPattern.test(email);
@@ -113,7 +117,18 @@ function SignupPage() {
     const inputValue = event.target.value;
 
     const numericValue = inputValue.replace(/\D/g, "");
+    if(numericValue.length <= 11){
     setPhone(numericValue);
+    }
+  };
+
+  const handleBirthInput = (event) => {
+    const inputValue = event.target.value;
+
+    const numericValue = inputValue.replace(/\D/g, "");
+    if (numericValue.length <= 8) {
+      setBirth(numericValue);
+    }
   };
 
   const idCheckHandler = async (e) =>{
@@ -122,7 +137,16 @@ function SignupPage() {
     const loginId = loginIdRef.current.value;
     
     const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
-
+    console.log(loginId)
+    if(!loginId){
+      Swal.fire({
+        icon : 'success',
+        title : '중복 검사',         // Alert 제목
+        text : '아이디를 입력해주세요', 
+        width: 300,
+      });
+      return;
+    } else{
     fetch(`api/idCheck?loginId=${encodeURIComponent(loginId)}`, {
       method: 'GET',
       headers :{
@@ -139,12 +163,23 @@ function SignupPage() {
         // 아이디 사용 가능한 경우 처리
         loginIdRef.current.disabled = true;
         setIdFlg(true);
-        alert(message);
+        Swal.fire({
+          icon : 'success',
+          title : '중복 검사',         // Alert 제목
+          text : message, 
+          width: 300,
+        });
       })
       .catch(error => {
         // 아이디 중복인 경우 처리
-        alert(error);
+        Swal.fire({
+          icon : 'error',
+          title : '중복 검사',         // Alert 제목
+          text : error,
+          width: 300,  // Alert 내용 
+        });
       });
+    }
   }
   const nicknameCheckHandler = async (e) =>{
     e.preventDefault();
@@ -152,7 +187,15 @@ function SignupPage() {
     const nickname = nicknameRef.current.value;
     
     const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
-
+    if(!nickname){
+      Swal.fire({
+        icon : 'success',
+        title : '중복 검사',         // Alert 제목
+        text : '닉네임을 입력해주세요', 
+        width: 300,
+      });
+      return;
+    }else{
     fetch(`api/nicknameCheck?nickname=${encodeURIComponent(nickname)}`, {
       method: 'GET',
       headers :{
@@ -168,11 +211,22 @@ function SignupPage() {
       .then(message => {
         nicknameRef.current.disabled = true;
         setNicknameFlg(true);
-        alert(message);
+        Swal.fire({
+          icon : 'success',
+          title : '중복 검사',         // Alert 제목
+          text : message,
+          width: 300,  // Alert 내용 
+        });
       })
       .catch(error => {
-        alert(error);
+        Swal.fire({
+          icon : 'error',
+          title : '중복 검사',         // Alert 제목
+          text : error,
+          width: 300,  // Alert 내용 
+        });
       });
+    }
   }
 
   const emailCheckHandler = async (e) =>{
@@ -181,7 +235,15 @@ function SignupPage() {
     const email = emailRef.current.value;
     
     const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
-
+    if(!email){
+      Swal.fire({
+        icon : 'success',
+        title : '중복 검사',         // Alert 제목
+        text : '이메일을 입력해주세요', 
+        width: 300,
+      });
+      return;
+    }else{
     fetch(`api/emailCheck?email=${encodeURIComponent(email)}`, {
       method: 'GET',
       headers :{
@@ -197,11 +259,22 @@ function SignupPage() {
       .then(message => {
         emailRef.current.disabled = true;
         setEmailFlg(true);
-        alert(message);
+        Swal.fire({
+          icon : 'success',
+          title : '중복 검사',         // Alert 제목
+          text : message,
+          width: 300,  // Alert 내용 
+        });
       })
       .catch(error => {
-        alert(error);
+        Swal.fire({
+          icon : 'error',
+          title : '중복 검사',         // Alert 제목
+          text : error,
+          width: 300,  // Alert 내용 
+        });
       });
+    }
   }
 
   const submitHandler = async (e) => {
@@ -219,6 +292,7 @@ function SignupPage() {
       const password = passwordRef.current.value;
       const email = emailRef.current.value;
       const nickname = nicknameRef.current.value;
+      const name = nameRef.current.value;
       const phone = phoneRef.current.value;
       const birth = new Date(Date(birthRef.current.value)).toISOString().split('T')[0];
       const gender = genderRef.current.value;
@@ -237,6 +311,7 @@ function SignupPage() {
           password : password,
           email : email,
           nickname : nickname,
+          name : name,
           phone : phone,
           birth : birth,
           gender : gender,
@@ -245,9 +320,20 @@ function SignupPage() {
       })
       .then(res => {
         if(res.status !== 200){
-          return alert('회원가입에 실패하였습니다.');
+          return  Swal.fire({
+            icon : 'error',
+            title : '회원가입',         // Alert 제목
+            text : "회원가입에 실패하였습니다.",
+            width: 300,  // Alert 내용 
+          });
         }
-        alert('회원가입이 완료되었습니다. 환영합니다');
+        Swal.fire({
+          icon : 'success',
+          title : '회원가입',         // Alert 제목
+          text : "회원가입에 성공하였습니다.",
+          width: 300,  // Alert 내용 
+        });
+        navigate('/login', true);
         return res.json();
       })
     }
@@ -422,6 +508,8 @@ function SignupPage() {
 									className="input-kind birth-input"
 									placeholder="생년월일 8자리 ( - 제외 )"
                   required
+                  onChange={handleBirthInput}
+                  value={birth}
                   ref={birthRef}
 								/>
 								<i className="bi bi-calendar-heart-fill"></i>
@@ -453,7 +541,7 @@ function SignupPage() {
 											name="gender"
 											id="female"
 											className="gender-input"
-											value="f"
+											value="F"
                       ref={genderRef}
 										/>
 										<p>여성</p>

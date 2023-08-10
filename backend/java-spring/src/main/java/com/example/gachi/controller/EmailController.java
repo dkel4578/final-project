@@ -77,7 +77,7 @@ public class EmailController {
             , Model model
             , RedirectAttributes attributes
             , String name){
-        User user = userRepository.findByEmail(email);
+        Optional<User> user = userRepository.findByEmail(email);
 
         if(user != null){
             model.addAttribute("error", "이메일이 이미 존재합니다.");
