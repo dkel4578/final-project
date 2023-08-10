@@ -1,0 +1,22 @@
+
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>HTML 템플릿 메일 메시지 예시</title>
+</head>
+<body>
+<div>
+    <h3>안녕하세요 <span th:text="${name}"></span>님</h3>
+
+    <h3 ><span th:text="${code}"></span> 메일 입니다.</h3>
+
+    <h2 th:text="${message}">메시지</h2>
+
+    <h2 style="color:red;">인증번호의 기간은 5분입니다. 5분 이내로 인증해주세요.</h2>
+
+
+
+</div>
+</body>
+</html>

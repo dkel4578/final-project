@@ -15,7 +15,9 @@ public class RedisUtil {
 
     // key를 통해 value 리턴
     public String getData(String key) {
+        System.out.println("Key: "+ key);
         ValueOperations<String, String> valueOperations = stringRedisTemplate.opsForValue();
+        System.out.println("valueOp: "+ valueOperations.get(key));
         return valueOperations.get(key);
     }
 
