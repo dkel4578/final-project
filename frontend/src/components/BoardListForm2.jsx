@@ -13,14 +13,14 @@ import '../css/variables.css';
 const PAGE_SIZE = 3; // 한 번에 가져올 게시글 수
 
 const BoardListForm2 = () => {
-  const getBoardInfoListInfinitely = async (lastBoardId = 999, size) => {
+  const getBoardInfoListInfinitely = async (lastBoardId = 99999, size, page) => {
     try {
-      const res = await db.get(`/api/boardss?lastBoardId=${lastBoardId}&size=${size}`);
+      const res = await db.get(`/api/boardss?lastBoardId=${lastBoardId}&size=${size}&page=${page}`);
       const boardList = res.data;
-
+      console.log("============>>>>>", res.data)
       return {
         boardList,
-        nextLastBoardId: boardList[boardList.length - 1]?.boardId,
+        nextLastBoardId: boardList.length >= 0 ? boardList[boardList.length - 1]?.id : null,
         isLast: boardList.length < size,
       };
     } catch (error) {
@@ -42,7 +42,7 @@ const BoardListForm2 = () => {
       hasNextPage,
     } = useInfiniteQuery(
         ['infiniteBoardList'],
-        ({ pageParam }) => getBoardInfoListInfinitely(pageParam, PAGE_SIZE),
+        ({ pageParam = 0 }) => getBoardInfoListInfinitely(boardInfoList?.pages.length, PAGE_SIZE, pageParam),
         {
           getNextPageParam: (lastPage) =>
               lastPage.isLast ? undefined : lastPage.nextLastBoardId,
@@ -61,7 +61,8 @@ const BoardListForm2 = () => {
 
 
       if (inView && !isFetchingNextPage && hasNextPage) {
-        fetchNextPage();
+        console.log("boardInfoList?.pages.length: ====>  ", boardInfoList?.pages.length);
+        fetchNextPage({ pageParam: boardInfoList?.pages.length });
       }
     }, [boardInfoList, inView, isFetchingNextPage, hasNextPage, fetchNextPage]);
 

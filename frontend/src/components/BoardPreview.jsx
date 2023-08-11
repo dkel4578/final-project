@@ -15,7 +15,7 @@ const BoardPreview = ({ boardInfo }) => {
                     <a href={`/board/view?id=${boardInfo.id}`}>{boardInfo.title}</a>
                 </div>
                 <div className="board-user-log">
-                    <span>글쓴이 홍찰찰</span>
+                    <span>글쓴이 {boardInfo.id}</span>
                     <span> / 시간: {dayjs(boardInfo.creatAt).format('YYYY/MM/DD HH:mm:ss')}</span>
                     <span> / 조회수: {boardInfo.cnt}</span>
                 </div>

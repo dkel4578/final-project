@@ -1,6 +1,7 @@
 package com.example.gachi.controller;
 
 import com.example.gachi.model.dto.board.BoardResponseDto;
+import com.example.gachi.model.enums.Kind;
 import com.example.gachi.repository.UserRepository;
 import com.example.gachi.service.board.BoardService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,17 @@ public class BoardApiController {
     private final BoardService boardService;
 
     @GetMapping("/boardss")
-    public List<BoardResponseDto> getBoardLowerThanId(@RequestParam Long lastBoardId, @RequestParam int size){
-        return boardService.fetchBoardPagesBy(lastBoardId, size);
+//    public List<BoardResponseDto> getBoardLowerThanId(@RequestParam Long lastBoardId, @RequestParam int size){
+//        return boardService.fetchBoardPagesBy(lastBoardId, size);
+//    }
+
+    public List<BoardResponseDto> getBoardLowerThanId(
+            @RequestParam Long lastBoardId,
+            @RequestParam int size,
+            @RequestParam int page,
+            @RequestParam Kind kind
+    ) {
+        return boardService.fetchBoardPagesBy(lastBoardId, size, page, kind); // page를 fetchBoardPagesBy 메소드에 전달
     }
+
 }

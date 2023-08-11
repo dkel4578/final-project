@@ -5,6 +5,7 @@ import com.example.gachi.model.User;
 import com.example.gachi.model.dto.board.AddBoardRequestDto;
 import com.example.gachi.model.dto.board.BoardResponseDto;
 import com.example.gachi.model.dto.board.UpdateBoardRequestDto;
+import com.example.gachi.model.enums.Kind;
 import com.example.gachi.repository.BoardRepository;
 import com.example.gachi.repository.BoardsRepository;
 import com.example.gachi.repository.UserRepository;
@@ -41,15 +42,26 @@ public class BoardService {
     }
 
     //글 목록 가져오기
-    public List<BoardResponseDto> fetchBoardPagesBy(Long lastBoardId, int size){
-        PageRequest pageRequest = PageRequest.of(0, size);
-        Page<Board> entityPage = boardsRepository.findByIdLessThanOrderByIdDesc(lastBoardId, pageRequest);
+//    public List<BoardResponseDto> fetchBoardPagesBy(Long lastBoardId, int size){
+//        PageRequest pageRequest = PageRequest.of(0, size);
+//        Page<Board> entityPage = boardsRepository.findByIdLessThanOrderByIdDesc(lastBoardId, pageRequest);
+//        List<Board> entityList = entityPage.getContent();
+//
+//        return entityList.stream()
+//                .map(BoardResponseDto::of)
+//                .collect(Collectors.toList());
+//    }
+
+    public List<BoardResponseDto> fetchBoardPagesBy(Long lastBoardId, int size, int page, Kind kindValue) {
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id"));
+        Page<Board> entityPage = boardsRepository.findByKindOrderByCreateAtDesc(lastBoardId,kindValue, pageRequest);
         List<Board> entityList = entityPage.getContent();
 
         return entityList.stream()
                 .map(BoardResponseDto::of)
                 .collect(Collectors.toList());
     }
+
     public Page<Board> getBoardAll(Pageable pageable) {
         return boardRepository.findAll(pageable);
     }
