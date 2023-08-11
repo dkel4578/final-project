@@ -111,7 +111,16 @@ public class EmailController {
         }
     }
 
+            attributes.addFlashAttribute("name",user.getName());
+            attributes.addFlashAttribute("email",user.getEmail());
 
+            return "redirect:/email-login";
+        } else {
+            // 해당 이메일로 등록된 사용자가 없는 경우 처리
+            model.addAttribute("error", "유효한 이메일 주소가 아닙니다.");
+
+            return "user/email-login";
+        }
 
 
 
@@ -121,6 +130,7 @@ public class EmailController {
             , RedirectAttributes attributes){
         System.out.println("email-cert");
         Optional<User> userOptional = userRepository.findByEmail(email);
+
 
         if(userOptional.isPresent()){
             model.addAttribute("error", "이메일이 이미 존재합니다.");

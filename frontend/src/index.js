@@ -1,3 +1,5 @@
+// eslint-disable-next-line no-unused-vars
+import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App.jsx';
@@ -9,6 +11,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   // <BrowserRouter basename='/230724_practice'>
   <CookiesProvider>
+    {/* eslint-disable-next-line no-undef */}
   <BrowserRouter basename={process.env.PUBLIC_URL}>
     <App />
   </BrowserRouter>

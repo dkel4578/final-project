@@ -126,6 +126,14 @@
     width: 190px;
 
 }
+.board-title p{
+    font-weight: bold;
+    font-size: 1.7em;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: 190px;
+
+}
 /* .board-user-log */
 .board-user-log{}
 .board-user-log span{
@@ -175,4 +183,7 @@
 .paging-arrow{
     font-size: 1.3em;
     transform: translateY(3.5px);
+}
+.content-height{
+    height : 200px;
 }
