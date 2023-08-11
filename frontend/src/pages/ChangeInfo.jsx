@@ -62,24 +62,25 @@ function ChangeInfo() {
 	const nameRef = useRef(null);
 	const phoneRef = useRef(null);
 	const birthRef = useRef(null);
-	const genderRef = useRef(null);
+	const genderRef = useRef(null); // eslint-disable-line no-unused-vars
 	const profileMessageRef = useRef(null);
+	
 
 	const [id, setId] = useState("");
 	const [loginId, setLoginId] = useState(""); // eslint-disable-line no-unused-vars
 	const [nickname, setNickname] = useState(""); // eslint-disable-line no-unused-vars
 	const [email, setEmail] = useState("");
 	const [name, setName] = useState(""); // eslint-disable-line no-unused-vars
-  const [gender, setGender] = useState(""); // eslint-disable-line no-unused-vars
+	const [gender, setGender] = useState(""); // eslint-disable-line no-unused-vars
 	const [phone, setPhone] = useState(""); // eslint-disable-line no-unused-vars
 	const [profileMessage, setProfileMessage] = useState(""); // eslint-disable-line no-unused-vars
 	const [birth, setBirth] = useState(""); // eslint-disable-line no-unused-vars
-  const [imageSrc, setImageSrc] = useState("");
+	const [imageSrc, setImageSrc] = useState("");
 
 	const [cfNumberMessage, setCfNumberMessage] =
 		useState("인증을 완료해주세요!");
 	const [cfNumber, setCfNumber] = useState("");
-	const [emailMessage, setEmailMessage] = useState("");
+	const [emailMessage, setEmailMessage] = useState(""); // eslint-disable-line no-unused-vars
 	const [nicknameFlg, setNicknameFlg] = useState(true);
 	const [authenticationFlg, setAuthenticationFlg] = useState(true);
 	const [emailFlg, setEmailFlg] = useState(true);
@@ -131,13 +132,13 @@ function ChangeInfo() {
 
 	const handleNicknameInputChange = (e) => {
 		setNickname(e.target.value);
-    setNicknameFlg(false);
+		setNicknameFlg(false);
 	};
 
 	const handleEmailInputChange = (e) => {
 		setEmail(e.target.value);
-    setEmailFlg(false);
-    setAuthenticationFlg(false);
+		setEmailFlg(false);
+		setAuthenticationFlg(false);
 	};
 
 	// 이메일 형식 검증
@@ -330,21 +331,53 @@ function ChangeInfo() {
 				});
 		}
 	};
-  //프로필 사진 업로드
-  const onUpload = (e) => {
-    const file = e.target.files[0];
-    
-    if (file) {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      
-      reader.onload = () => {
-        setImageSrc(reader.result);
-      };
-    }
-  };
+	//프로필 사진 업로드
+	const onUpload = (e) => {
+		const file = e.target.files[0];
 
-  //유저 정보 업데이트 제출
+		if (file) {
+			const reader = new FileReader();
+			reader.readAsDataURL(file);
+
+			reader.onload = () => {
+				setImageSrc(reader.result);
+			};
+
+			const formData = new FormData();
+			const userId = id;
+
+			formData.append("file", file);
+			formData.append("userId", userId);
+
+			console.log(formData);
+
+			fetch("upload/profileImg", {
+				method: "POST",
+				body: formData,
+			})
+			.then(res => {
+        if(res.status !== 200){
+					console.log(res.status)
+          return  Swal.fire({
+            icon : 'error',
+            title : '프로필 이미지 등록',         // Alert 제목
+            text : "프로필 이미지 등록에 실패하였습니다.",
+            width: 300,  // Alert 내용 
+          });
+        }
+        Swal.fire({
+          icon : 'success',
+          title : '프로필 이미지 등록',         // Alert 제목
+          text : "프로필 이미지 등록에 성공하였습니다.",
+          width: 300,  // Alert 내용 
+        });
+        return res.json();
+      })
+			;
+		}
+	};
+
+	//유저 정보 업데이트 제출
 	const submitHandler = async (e) => {
 		e.preventDefault();
 
@@ -572,8 +605,8 @@ function ChangeInfo() {
 											id="male"
 											className="gender-input"
 											value="M"
-                      checked={gender === "M"} // Check if gender is "M"
-                      onChange={() => setGender("M")}
+											checked={gender === "M"} // Check if gender is "M"
+											onChange={() => setGender("M")}
 										/>
 										<p>남성</p>
 									</label>
@@ -586,8 +619,8 @@ function ChangeInfo() {
 											id="female"
 											className="gender-input"
 											value="F"
-                      checked={gender === "F"} // Check if gender is "F"
-                      onChange={() => setGender("F")}
+											checked={gender === "F"} // Check if gender is "F"
+											onChange={() => setGender("F")}
 										/>
 										<p>여성</p>
 									</label>
@@ -599,15 +632,14 @@ function ChangeInfo() {
 								<p>프로필 이미지</p>
 							</div>
 							<div className="user-profile">
-              {imageSrc && <img src={imageSrc} alt="Uploaded" />}
+								{imageSrc && <img src={imageSrc} alt="Uploaded" />}
 							</div>
 							<div className="upload-profile-img">
 								<input
 									type="file"
 									className="upload-profile-img-btn"
-                  accept="image/*"
-                  onChange={onUpload}
-									
+									accept="image/*"
+									onChange={onUpload}
 								></input>
 							</div>
 						</div>

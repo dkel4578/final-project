@@ -18,6 +18,7 @@ public class ProfileImg extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
     @Column(nullable = false)
     private String imgSrc;
 
