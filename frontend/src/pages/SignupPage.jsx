@@ -54,7 +54,7 @@ function SignupPage() {
   const nameRef = useRef(null);
   const phoneRef = useRef(null);
   const birthRef = useRef(null);
-  const genderRef = useRef(null);
+  const genderRef = useRef(null); // eslint-disable-line no-unused-vars
   const profileMessageRef = useRef(null);
 
   const [email, setEmail] = useState("");  // eslint-disable-line no-unused-vars

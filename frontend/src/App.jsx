@@ -7,7 +7,6 @@ import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
 
 import SignupPage from './pages/SignupPage';
-import { Routes, Route,  } from 'react-router-dom'
 import FindIdPage from './pages/FindIdPage';
 import MyPage from './pages/MyPage';
 import ChangeInfo from './pages/ChangeInfo';

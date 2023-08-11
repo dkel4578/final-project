@@ -62,7 +62,7 @@ function ChangeInfo() {
 	const nameRef = useRef(null);
 	const phoneRef = useRef(null);
 	const birthRef = useRef(null);
-	const genderRef = useRef(null);
+	const genderRef = useRef(null);  // eslint-disable-line no-unused-vars
 	const profileMessageRef = useRef(null);
 
 	const [id, setId] = useState("");
@@ -79,7 +79,7 @@ function ChangeInfo() {
 	const [cfNumberMessage, setCfNumberMessage] =
 		useState("인증을 완료해주세요!");
 	const [cfNumber, setCfNumber] = useState("");
-	const [emailMessage, setEmailMessage] = useState("");
+	const [emailMessage, setEmailMessage] = useState(""); // eslint-disable-line no-unused-vars
 	const [nicknameFlg, setNicknameFlg] = useState(true);
 	const [authenticationFlg, setAuthenticationFlg] = useState(true);
 	const [emailFlg, setEmailFlg] = useState(true);

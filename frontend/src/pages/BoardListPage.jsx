@@ -1,9 +1,9 @@
-import BoardListForm2 from '../components/BoardListForm2';
+import BoardListForm3 from '../components/BoardListForm3';
 
 
 const BoardList = () => {
   return (
-      <BoardListForm2 />
+      <BoardListForm3 kind={"C"} />
   );
 };
 
