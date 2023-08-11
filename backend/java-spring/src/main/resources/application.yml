@@ -40,7 +40,7 @@ spring:
       # 5. none : ddl 구문을 만들지 않음.
   sql:
     init:
-      mode: always
+      mode: never
       # always: embeded db가 아닌 외부 db 사용시 spring boot를 실행할때 마다 data.sql schema.sql import.sql을 항상 실행
       # never: data.sql schema.sql import.sql을 실행하지 않음
   devtools:
