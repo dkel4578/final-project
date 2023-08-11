@@ -21,6 +21,8 @@ import java.util.Random;
 @RequiredArgsConstructor
 public class EmailSendService {
     private static final String EMAIL_LINK_TEMPLATE = "/EmailTemplate";
+    private static final String EMAIL_LINK_CODE = "/EmailCode";
+    private static final String EMAIL_LINK_NEW = "/NewUserEmail";
 
     private final TemplateEngine templateEngine;
 
@@ -29,6 +31,25 @@ public class EmailSendService {
     private final RedisUtil redisUtil;
 
     private final String accessCode = createKey();
+
+    public void sendFindIdEmail(User user){
+        Context context = getIdContext(user);
+        String message = templateEngine.process(EMAIL_LINK_CODE, context);
+
+        redisUtil.setDataExpire(user.getEmail(), accessCode, 300 * 1L);
+
+        EmailMessage emailMessage = EmailMessage.builder()
+                .to(user.getEmail())
+                .subject(user.getName()+ " 님 안녕하세요.")
+                .message(message)
+                .code("아이디 찾기 인증")
+                .build();
+
+        emailService.send(emailMessage);
+
+
+    }
+
 
     public void sendLoginLink(User user) {
         Context context = getContext(user);
@@ -42,14 +63,14 @@ public class EmailSendService {
                 .build();
 
         emailService.send(emailMessage);
-    }public void sendJoinLink(String email, String name) {
-        Context context = getContext(name);
-        String message = templateEngine.process(EMAIL_LINK_TEMPLATE, context);
+    }public void sendJoinLink(String email) {
+        Context context = getContext();
+        String message = templateEngine.process(EMAIL_LINK_NEW, context);
         redisUtil.setDataExpire(email, accessCode, 300 * 1L);
 
         EmailMessage emailMessage = EmailMessage.builder()
                 .to(email)
-                .subject(name+ " 님 안녕하세요.")
+                .subject("신규 회원님의 가입을 축하합니다!")
                 .message(message)
                 .build();
 
@@ -63,10 +84,24 @@ public class EmailSendService {
 
         return context;
     }
+    private Context getIdContext(User user) {
+        Context context = new Context();
+        context.setVariable("name", user.getName());
+        context.setVariable("code", "아이디 찾기 인증");
+        context.setVariable("message", "인증 코드는 " + accessCode + " 입니다.");
+
+        return context;
+    }
     private Context getContext(String name) {
         Context context = new Context();
         context.setVariable("name", name);
         context.setVariable("message", name + " 님의 인증 코드는 " + accessCode + " 입니다.");
+
+        return context;
+    }
+    private Context getContext() {
+        Context context = new Context();
+        context.setVariable("message","신규 회원님의 인증 코드는 " + accessCode + " 입니다.");
 
         return context;
     }

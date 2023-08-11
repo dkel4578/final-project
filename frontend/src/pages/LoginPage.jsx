@@ -1,6 +1,6 @@
 import "../css/login.css"
 import { useRef } from 'react';
-import {useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 
 function LoginPage() {
@@ -85,7 +85,7 @@ function LoginPage() {
           <p className="forgot-password">비밀번호를 잊으셨나요?</p>
         </div>
         <div className="user-find">
-          <a href="#none">회원가입</a>
+          <Link to="/signup">회원가입</Link>
           <a href="#none">아이디 찾기</a>
           <a href="#none">비밀번호 변경</a>
         </div>

@@ -3,19 +3,25 @@ package com.example.gachi.controller;
 import ch.qos.logback.core.model.Model;
 import com.example.gachi.model.User;
 import com.example.gachi.model.dto.user.*;
+import com.example.gachi.repository.UserRepository;
 import com.example.gachi.service.user.UserService;
 import com.example.gachi.util.BadRequestException;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import net.minidev.json.JSONObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final UserRepository userRepository;
 
     //아이디 중복 체크
     @GetMapping("/idCheck")
@@ -35,6 +41,15 @@ public class UserController {
             return ResponseEntity.ok("사용 가능한 닉네임 입니다.");
         }
     }
+
+    @GetMapping("/emailCheck")
+    public ResponseEntity<?> checkEmailDuplication(@RequestParam String email ) throws BadRequestException {
+        if(userService.emailCheck(email)){
+            throw new BadRequestException("이미 사용 중인 이메일 입니다.");
+        } else{
+            return ResponseEntity.ok("사용 가능한 이메일 입니다.");
+        }
+    }
     //회원 가입
     @PostMapping("/signup")
     public ResponseEntity<UserResponseDto> signup(@RequestBody UserSignUpRequestDto userSignUpRequestDto){
@@ -47,6 +62,17 @@ public class UserController {
     public ResponseEntity<JwtTokenDto> login(@RequestBody UserLoginRequestDto userLoginRequestDto) {
         return ResponseEntity.ok(userService.login(userLoginRequestDto));
     }
+    //로그아웃
+//    @PostMapping("/logout")
+//    public ResponseEntity<?> logout(HttpServletResponse response) {
+//        // 쿠키 제거
+//        Cookie cookie = new Cookie("token", null);
+//        cookie.setMaxAge(0);
+//        cookie.setPath("/");
+//        response.addCookie(cookie);
+//
+//        return ResponseEntity.ok("로그아웃 완료");
+//    }
     //패스워드 일치 확인
     @PostMapping("checkPwd")
     public ResponseEntity<?> checkPassword(@RequestBody FindPasswordDto findPasswordDto){
@@ -74,6 +100,44 @@ public class UserController {
         UserResponseDto myInfoBySecurity = userService.getMyInfoBySecurity();
 
         return ResponseEntity.ok(myInfoBySecurity);
+    }
+
+    @GetMapping("/user/email")
+    public void existEmail(String email , HttpServletResponse response){
+
+        JSONObject jsonObject = new JSONObject();
+        boolean emailCheck;
+        Optional<User> userOptional = userRepository.findByEmail(email);
+
+        if(userOptional.isPresent()) {
+            System.out.println(userOptional);
+            emailCheck = true;
+        }else {
+            System.out.println(userOptional);
+            emailCheck = false;
+        }
+        jsonObject.put("emailCheck",emailCheck);
+
+        try {
+            response.getWriter().print(jsonObject);	//response.getWriter로 프린트 해주면 통신 성공
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @GetMapping("/user/findLoginId")
+    public void findLoginId(HttpServletResponse response, String email){
+        JSONObject jsonObject = new JSONObject();
+        String userLoginId = userService.getUserLoginIdByEmail(email);
+
+        jsonObject.put("userId",userLoginId);
+
+        try {
+            response.getWriter().print(jsonObject);	//response.getWriter로 프린트 해주면 통신 성공
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
 }

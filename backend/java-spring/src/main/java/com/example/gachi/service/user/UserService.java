@@ -33,6 +33,10 @@ public class UserService {
     public boolean nicknameCheck(String nickname){
         return userRepository.existsByNickname(nickname);
     }
+    //이메일 중복 검사
+    public boolean emailCheck(String email){
+        return userRepository.existsByEmail(email);
+    }
 
     //회원가입
     public UserResponseDto signup(UserSignUpRequestDto userSignUpRequestDto){
@@ -90,9 +94,20 @@ public class UserService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String id = authentication.getName();
 
-        Optional<UserResponseDto> memberOptional
+        Optional<UserResponseDto> userOptional
                 = userRepository.findById(Long.parseLong(id)).map(UserResponseDto::of);
-        return memberOptional.orElse(null);
+        return userOptional.orElse(null);
+    }
+
+//    유저 Login ID 조회
+    public String getUserLoginIdByEmail(String email){
+        Optional<User> user = userRepository.findLoginIdByEmail(email);
+        System.out.println(user);
+        String userLoginId = user.get().getLoginId();
+
+
+        //        userLoginId = user
+        return userLoginId;
     }
 
 

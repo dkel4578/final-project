@@ -45,6 +45,10 @@ body{
   display: flex;
   justify-content: center;
   align-items: center;
+  background: white;
+}
+input[type=password],input[type=text],input[type=email],input[type=tel],textarea{
+  background-color: white;
 }
 a{
   text-decoration: none;
