@@ -42,7 +42,7 @@ public class FileUploadController {
             UUID uuid = UUID.randomUUID();
             String imgName = uuid+"_"+orgName;
 
-            String imgSrc = "D:\\project\\finalproject\\final-project\\backend\\java-spring\\src\\main\\resources\\image";
+            String imgSrc = "D:\\project\\finalproject\\final-project\\backend\\java-spring\\src\\main\\resources\\image\\";
 
             Optional<User> user =  userRepository.findById(id);
 

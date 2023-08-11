@@ -21,6 +21,7 @@ public class Report extends BaseEntity{
     private Long id;
 
     @Column(nullable = false)
+    @Enumerated(value = EnumType.STRING)
     private BanReason reportType;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -35,9 +36,9 @@ public class Report extends BaseEntity{
     @JoinColumn(name = "reported_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User reportedUser;
-
-    @Column(nullable = false)
-    private ReportStatus reportStatus;    //현재 신고 상태 (신고처리가 되었는가 아닌가)
+//
+//    @Column(nullable = false)
+//    private ReportStatus reportStatus;    //현재 신고 상태 (신고처리가 되었는가 아닌가)
 
 //    @Column(nullable = false)
 //    private String reportedUserId;

@@ -1,11 +1,9 @@
 // eslint-disable-next-line no-unused-vars
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { Routes, Route } from 'react-router-dom';
 import Header from './layout/Header';
 import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
-
 import SignupPage from './pages/SignupPage';
 import { Routes, Route,  } from 'react-router-dom'
 import FindIdPage from './pages/FindIdPage';
