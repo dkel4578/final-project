@@ -83,9 +83,9 @@ function Header() {
 						</div>
 					</div>
 					<div className="logo-area">
-						<a href="#">
+						<Link to={"/"}>
 							<img src="../images/header-logo.png" alt="로고이미지" />
-						</a>
+						</Link>
 					</div>
 				</div>
 			</header>

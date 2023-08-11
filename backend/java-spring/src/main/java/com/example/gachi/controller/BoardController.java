@@ -13,6 +13,8 @@ import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -50,7 +53,7 @@ public class BoardController {
      * @param request
      * @return
      */
-    @PostMapping("/boards2")
+    @PostMapping("/board/edit")
     public ResponseEntity<Board> addBoard(@RequestBody AddBoardRequestDto request)  throws NotFoundException {
 //        System.out.println("===================="+request.getEmail());
 //        User userEntity = userRepository.findByEmail(request.getEmail()).orElseThrow(() -> new NotFoundException("User not found222222"));
@@ -63,10 +66,11 @@ public class BoardController {
 
 
     //상세글 가져오기
-    @GetMapping("/api/boards/{id}")
+    @GetMapping("/board/{id}")
     public ResponseEntity<BoardResponseDto> findboards(@PathVariable long id) {
         Board board = boardService.getBoard(id);
-        return ResponseEntity.ok().body(new BoardResponseDto(board));
+//        return ResponseEntity.ok().body(new BoardResponseDto(board));
+        return ResponseEntity.ok().body(new BoardResponseDto(board.getId(), board.getTitle(), board.getContent(), board.getCnt(), board.getCreateAt()));
     }
 
 //    @GetMapping("/api/boards")
@@ -93,10 +97,21 @@ public class BoardController {
 //    }
 
     //전체글 가져오기 (게시판 페이징)
-    @GetMapping("/boards")
-    public ResponseEntity retrieveBoards(final Pageable pageable) {
-        Page<Board> boards = boardRepository.findAll(pageable);
-        return new ResponseEntity<>(boards, HttpStatus.OK);
-    }
+//    @GetMapping("/boards")
+//    public ResponseEntity retrieveBoards(final Pageable pageable) {
+//        Page<Board> boards = boardRepository.findAll(pageable, Sort.sort("id").descending());
+//        return new ResponseEntity<>(boards, HttpStatus.OK);
+//    }
 
+    //전체글 가져오기2
+//    @GetMapping("/boards")
+//    public ResponseEntity<Page<Board>> retrieveBoards(final Pageable pageable) {
+//        Page<Board> boardsPage = boardRepository.findPageBy(pageable); // id는 필요 없을 것 같아 null로 전달
+//        return new ResponseEntity<>(boardsPage, HttpStatus.OK);
+//    }
+
+    @GetMapping("/boards")
+    public String getBoardListPage() {
+        return "/boards";
+    }
 }
