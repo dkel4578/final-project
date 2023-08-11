@@ -31,11 +31,11 @@ public class EmailController {
     private final RedisUtil redisUtil;
 
 
-//    @PostMapping("/email-login")
+    //    @PostMapping("/email-login")
     @RequestMapping("/email-login")
     public String sendEmailLoginLink(String email
-    , Model model
-    , RedirectAttributes attributes){
+            , Model model
+            , RedirectAttributes attributes){
         Optional<User> userOptional = userRepository.findByEmail(email);
 
         if(!userOptional.isPresent()){
@@ -57,8 +57,8 @@ public class EmailController {
     }
     @RequestMapping("/find-id")
     public String sendFindIdLink(String email
-    , Model model
-    , RedirectAttributes attributes){
+            , Model model
+            , RedirectAttributes attributes){
         Optional<User> userOptional = userRepository.findByEmail(email);
 
 
@@ -79,7 +79,7 @@ public class EmailController {
     }
 
 
-//    @ResponseBody, @RequestBody
+    //    @ResponseBody, @RequestBody
 //    DTO https://magpienote.tistory.com/36
     @CrossOrigin(origins = "*")
     @GetMapping("/checkCode")
@@ -111,16 +111,7 @@ public class EmailController {
         }
     }
 
-            attributes.addFlashAttribute("name",user.getName());
-            attributes.addFlashAttribute("email",user.getEmail());
 
-            return "redirect:/email-login";
-        } else {
-            // 해당 이메일로 등록된 사용자가 없는 경우 처리
-            model.addAttribute("error", "유효한 이메일 주소가 아닙니다.");
-
-            return "user/email-login";
-        }
 
 
 
@@ -130,7 +121,6 @@ public class EmailController {
             , RedirectAttributes attributes){
         System.out.println("email-cert");
         Optional<User> userOptional = userRepository.findByEmail(email);
-
 
         if(userOptional.isPresent()){
             model.addAttribute("error", "이메일이 이미 존재합니다.");
