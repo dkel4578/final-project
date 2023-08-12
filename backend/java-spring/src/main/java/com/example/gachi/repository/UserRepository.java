@@ -3,6 +3,7 @@ package com.example.gachi.repository;
 import com.example.gachi.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -15,6 +16,12 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findLoginIdByEmail(String email);
 
+    List<User> findByStatus(String status);
 
+    List<User> findByAuthority(String authority);
+
+    List<User> findByBannedYn(String bannedYn);
+
+//    List<User> findBy(String bannedYn);
 
 }

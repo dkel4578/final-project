@@ -154,5 +154,9 @@ public class User extends BaseEntity{
         this.password = password;
     }
 
+    public List<BanList> getBanLists() {
+        return this.banLists;
+    }
+
 
 }
