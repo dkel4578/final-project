@@ -1,6 +1,5 @@
 package com.example.gachi.controller;
 
-import ch.qos.logback.core.model.Model;
 import com.example.gachi.model.User;
 import com.example.gachi.model.dto.user.*;
 import com.example.gachi.repository.UserRepository;
@@ -10,8 +9,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import net.minidev.json.JSONObject;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -96,11 +93,22 @@ public class UserController {
 
     //유저 정보 조회
     @GetMapping("/user/me")
-    public ResponseEntity<UserResponseDto> getMyMemberInfo() {
+    public ResponseEntity<UserResponseDto> getMyUserInfo() {
+        System.out.println(">>>>>>>>>>>>>user/me");
         UserResponseDto myInfoBySecurity = userService.getMyInfoBySecurity();
 
         return ResponseEntity.ok(myInfoBySecurity);
     }
+
+    //유저 프로필 사진 조회
+    @GetMapping("/profile/me")
+    public ResponseEntity<ProfileImgResponseDto> getMyUserProfileImg(@RequestParam Long userId) {
+        System.out.println(">>>>>>>>>>>>>>profile/me");
+        ProfileImgResponseDto myUserProfileImg = userService.getMyUserProfileImg(userId);
+
+        return ResponseEntity.ok(myUserProfileImg);
+    }
+
 
     @GetMapping("/user/email")
     public void existEmail(String email , HttpServletResponse response){

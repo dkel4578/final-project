@@ -19,6 +19,7 @@ public class ProfileImgResponseDto {
     private User user;
     private Long userId;
 
+
     public static ProfileImgResponseDto of(ProfileImg profileImg){
         return ProfileImgResponseDto.builder()
                 .id(profileImg.getId())
