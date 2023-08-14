@@ -1,6 +1,7 @@
 package com.example.gachi.model.dto.user;
 
 import com.example.gachi.model.BanList;
+import com.example.gachi.model.Report;
 import com.example.gachi.model.User;
 import com.example.gachi.model.enums.BanReason;
 import lombok.AllArgsConstructor;
@@ -21,10 +22,11 @@ public class BannedUserResponseDto {
     private String name;
     private String bannedYn;
     private BanReason banReason;
+    private Long reportId;
     private LocalDateTime banStartAt;
     private LocalDateTime banEndAt;
 
-    public static BannedUserResponseDto of(User user, BanList banList) {
+    public static BannedUserResponseDto of(User user, BanList banList,Report report) {
         // Member member 의 요소 중 BannedUserResponseDto 에 있는 것들을 가져 오겠다.
         // BanList banList 의 요소 중 BannedUserResponseDto 에 있는 것들을 가져 오겠다.
         return BannedUserResponseDto.builder()
@@ -35,6 +37,7 @@ public class BannedUserResponseDto {
                 .banReason(banList.getBanReason())
                 .banStartAt(banList.getBanStartAt())
                 .banEndAt(banList.getBanEndAt())
+                .reportId(banList.getReportId())
                 .build();
     }
 }

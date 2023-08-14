@@ -56,27 +56,50 @@ public class EmailController {
         }
     }
     @RequestMapping("/find-id")
-    public String sendFindIdLink(String email
+    public void sendFindIdLink(String email
+            , Model model
+            , RedirectAttributes attributes) {
+        Optional<User> userOptional = userRepository.findByEmail(email);
+
+
+        if (!userOptional.isPresent()) {
+            model.addAttribute("error", "유효한 이메일 주소가 아닙니다.");
+        } else {
+            User user = userOptional.get();
+            emailSendService.sendFindIdEmail(user, "I");
+            attributes.addFlashAttribute("message", "이메일 인증 메일을 발송했습니다.");
+            attributes.addFlashAttribute("name", user.getName());
+            attributes.addFlashAttribute("email", user.getEmail());
+
+        }
+    }
+    @RequestMapping("/find-password")
+    public void sendFindPasswordLink(String email
             , Model model
             , RedirectAttributes attributes){
         Optional<User> userOptional = userRepository.findByEmail(email);
-
 
         if(!userOptional.isPresent()){
             model.addAttribute("error", "유효한 이메일 주소가 아닙니다.");
 //            System.out.println(model);
 
-            return "user/email-login";
+//            return "user/email-login";
         }
-        User user = userOptional.get();
-        emailSendService.sendFindIdEmail(user);
-        attributes.addFlashAttribute("message", "이메일 인증 메일을 발송했습니다.");
-        attributes.addFlashAttribute("name",user.getName());
-        attributes.addFlashAttribute("email",user.getEmail());
+        else{
+            User user = userOptional.get();
+            emailSendService.sendFindIdEmail(user,"P");
+            attributes.addFlashAttribute("message", "이메일 인증 메일을 발송했습니다.");
+            attributes.addFlashAttribute("name",user.getName());
+            attributes.addFlashAttribute("email",user.getEmail());
 
-        return "redirect:/findId";
+        }
+
 
     }
+
+
+
+
 
 
     //    @ResponseBody, @RequestBody

@@ -194,7 +194,7 @@ function FindIdPage() {
         </form>
         <div className="user-find">
           <a href="#none">회원가입</a>
-          <a href="../html/password-change.html">비밀번호 변경</a>
+          <a href="/passwordChange">비밀번호 변경</a>
         </div>
       </div>
     </section>

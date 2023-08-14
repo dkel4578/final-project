@@ -39,6 +39,7 @@ public class AdminController {
             userJson.put("banReason", dto.getBanReason());
             userJson.put("banStartAt", dto.getBanStartAt());
             userJson.put("banEndAt", dto.getBanEndAt());
+            userJson.put("reportId", dto.getReportId());
 
             jsonArray.put(userJson);
         }

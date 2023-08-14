@@ -1,6 +1,7 @@
 package com.example.gachi.service.user;
 
 import com.example.gachi.model.BanList;
+import com.example.gachi.model.Report;
 import com.example.gachi.model.User;
 import com.example.gachi.model.dto.user.BannedUserResponseDto;
 import com.example.gachi.repository.UserRepository;
@@ -44,12 +45,13 @@ public class AdminService {
     @Transactional
     public List<BannedUserResponseDto> getBannedUserByBannedYn(String bannedYn) {
         List<User> banneds = userRepository.findByBannedYn(bannedYn);
-        List<BannedUserResponseDto> bannedDtoList = new ArrayList<>();
 
+        List<BannedUserResponseDto> bannedDtoList = new ArrayList<>();
         for (User user : banneds) {
             List<BanList> banLists = user.getBanLists(); // Assuming the getter is named "getBanLists()"
 
-            for (BanList banList : banLists) {
+            for (BanList banList : banLists) {// Get the associated report for the banList
+
                 BannedUserResponseDto bannedUserResponseDto = BannedUserResponseDto.builder()
                         .id(banList.getId())
                         .loginId(user.getLoginId())
@@ -58,6 +60,7 @@ public class AdminService {
                         .banReason(banList.getBanReason())
                         .banStartAt(banList.getBanStartAt())
                         .banEndAt(banList.getBanEndAt())
+                        .reportId(banList.getReportId()) // Set the report for the DTO
                         .build();
 
                 bannedDtoList.add(bannedUserResponseDto);
@@ -66,6 +69,8 @@ public class AdminService {
 
         return bannedDtoList;
     }
+
+
 }
 
 
