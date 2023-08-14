@@ -113,6 +113,11 @@ public class User extends BaseEntity{
     @ToString.Exclude
     private List<Schedule> schedules;
 
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "reported_id")
+    @ToString.Exclude
+    private List<Report> reports;
+
 
     public User update(
             String  accessToken,
@@ -153,6 +158,11 @@ public class User extends BaseEntity{
     public void updatePassword(String password){
         this.password = password;
     }
+
+    public List<BanList> getBanLists() {
+        return this.banLists;
+    }
+
 
 
 }

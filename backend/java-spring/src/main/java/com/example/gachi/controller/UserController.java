@@ -139,5 +139,30 @@ public class UserController {
         }
 
     }
+    @GetMapping("/user/checkLoginIdByEmail")
+    public void CheckLoginIdByEmail(HttpServletResponse response, String email,String loginId){
+        JSONObject jsonObject = new JSONObject();
+        Optional<User> userOptional = userRepository.findByLoginId(loginId);
+        if(userOptional.isPresent()) {
+            System.out.println(userOptional);
+            User user = userOptional.get();
+            if(user.getEmail().equals(email)){
+                jsonObject.put("isEmailCorrect",true);
+                jsonObject.put("isIdCorrect",true);
+            }else {
+                jsonObject.put("isEmailCorrect",false);
+                jsonObject.put("isIdCorrect",true);
+            }
+        }else {
+            jsonObject.put("isEmailCorrect",false);
+            jsonObject.put("isIdCorrect",false);
+        }
+        try {
+            response.getWriter().print(jsonObject);	//response.getWriter로 프린트 해주면 통신 성공
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 
 }
