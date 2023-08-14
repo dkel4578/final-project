@@ -3,8 +3,8 @@ package com.example.gachi.service.user;
 import com.example.gachi.config.jwt.JwtTokenProvider;
 import com.example.gachi.model.User;
 import com.example.gachi.model.dto.user.*;
+import com.example.gachi.repository.ProfileImgRepository;
 import com.example.gachi.repository.UserRepository;
-import com.nimbusds.openid.connect.sdk.claims.UserInfo;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,6 +24,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
+    private final ProfileImgRepository profileImgRepository;
 
     //아이디 중복 검사
     public boolean loginIdCheck(String loginId) {
@@ -97,6 +98,14 @@ public class UserService {
         Optional<UserResponseDto> userOptional
                 = userRepository.findById(Long.parseLong(id)).map(UserResponseDto::of);
         return userOptional.orElse(null);
+    }
+
+    //유저 프로필 이미지 조회
+
+    public ProfileImgResponseDto getMyUserProfileImg(Long userId){
+        Optional<ProfileImgResponseDto> profileImgResponseDtoOptional
+                = profileImgRepository.findFirstByUserIdOrderByCreateAtDesc(userId).map(ProfileImgResponseDto::of);
+        return profileImgResponseDtoOptional.orElse(null);
     }
 
 //    유저 Login ID 조회
