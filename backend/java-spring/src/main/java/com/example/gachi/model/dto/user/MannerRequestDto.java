@@ -7,9 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-@Builder
 public class MannerRequestDto {
-
     private Long id;
     private User user;
     private Long userId;
@@ -17,7 +15,7 @@ public class MannerRequestDto {
     private Long reviewerId;
     private Review review;
     private long score;
-
+    @Builder
     public Manner addMannerScore(User user, User reviewer){
         return Manner.builder()
                 .review(review)
@@ -26,7 +24,6 @@ public class MannerRequestDto {
                 .score(score)
                 .build();
     }
-
     public MannerRequestDto(Long userId, Long reviewerId, Review review, long score) {
         this.userId = userId;
         this.reviewerId = reviewerId;
