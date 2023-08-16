@@ -12,6 +12,7 @@ import ChangeInfo from './pages/ChangeInfo';
 import BoardListPage from './pages/BoardListPage';
 import BoardViewPage from './pages/BoardViewPage';
 import PasswordChangePage from './pages/PasswordChangePage';
+import Calnedar from './pages/Calendar';
 
 const queryClient = new QueryClient();
 
@@ -33,7 +34,7 @@ function App() {
             <Route path="/board" element={<BoardListPage/>}/>
           <Route path="/board/view" element={<BoardViewPage/>}/>
           <Route path="/passwordChange" element={<PasswordChangePage/>}/>
-
+          <Route path="/calendar" element={<Calnedar/>}/>
         </Routes>
       </QueryClientProvider>
     </>

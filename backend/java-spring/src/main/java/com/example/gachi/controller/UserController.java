@@ -86,6 +86,7 @@ public class UserController {
         userService.update(id, userInfoUpdateDto);
     }
 
+    //비밀번호 변경
     @PutMapping("/update/password/{id}")
     public void updatePassword(@PathVariable Long id, @RequestBody UserPasswordUpdateDto userPasswordUpdateDto){
         userService.updatePassword(id, userPasswordUpdateDto);

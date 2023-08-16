@@ -21,6 +21,9 @@ public class Manner extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User reviewer;
+
     @Enumerated(value = EnumType.STRING)
     private Review review;
 

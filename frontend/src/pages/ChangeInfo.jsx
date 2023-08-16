@@ -86,6 +86,7 @@ function ChangeInfo() {
 	const [authenticationFlg, setAuthenticationFlg] = useState(true);
 	const [emailFlg, setEmailFlg] = useState(true);
 
+	//로그인 확인
 	if (cookies.token != "undefined") {
 		isLogin = true;
 	} else {
