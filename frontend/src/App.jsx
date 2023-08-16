@@ -1,5 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import React from 'react';
+import { Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import Header from './layout/Header';
 import LoginPage from './pages/LoginPage';
@@ -11,11 +12,14 @@ import ChangeInfo from './pages/ChangeInfo';
 import BoardListPage from './pages/BoardListPage';
 import BoardViewPage from './pages/BoardViewPage';
 
+
 const queryClient = new QueryClient();
 
 
 
 function App() {
+
+
 
   return (
     <>
@@ -28,7 +32,7 @@ function App() {
           <Route path="/signup" element={<SignupPage/>}/>
           <Route path="/myPage" element={<MyPage/>}/>
           <Route path="/changeInfo" element={<ChangeInfo/>}/>
-            <Route path="/board" element={<BoardListPage/>}/>
+          <Route path="/board/:kind" element={<BoardListPage />}/>
           <Route path="/board/view" element={<BoardViewPage/>}/>
 
         </Routes>

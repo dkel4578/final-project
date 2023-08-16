@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import {useLocation, useParams} from 'react-router-dom';
 import {Link} from 'react-router-dom'
 import dayjs from 'dayjs';
 import "../css/index.css";
@@ -11,8 +11,9 @@ function BoardViewForm() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const id = searchParams.get('id'); // Extract id from URL parameter
-
   const [data, setData] = useState('');
+
+  const { kind } = useParams(); // kind 값을 추출
 
 
 
@@ -38,12 +39,18 @@ function BoardViewForm() {
 
           <section className="coffee-board">
             <div className="board-kind">
-              <Link to={"/board"}>
-                <a href="board-coffee.html" className="active">커피한잔할래요</a>
+              <Link to="/board/C" className={kind === 'C' ? 'active' : ''}>
+                커피한잔할래요
               </Link>
-              <a href="#none">같이여행갈래요</a>
-              <a href="#none">같이식사할래요</a>
-              <a href="#none">술한잔할래요</a>
+              <Link to="/board/T" className={kind === 'T' ? 'active' : ''}>
+                같이여행갈래요
+              </Link>
+              <Link to="/board/F" className={kind === 'F' ? 'active' : ''}>
+                같이식사할래요
+              </Link>
+              <Link to="/board/A" className={kind === 'A' ? 'active' : ''}>
+                술한잔할래요
+              </Link>
             </div>
             <div className="search-area">
 

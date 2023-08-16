@@ -19,6 +19,7 @@ public class Board extends BaseEntity{
     private Long id;
 
     @Column(nullable = false)
+    @Enumerated(value = EnumType.STRING)
     private Kind kind;
 
     @Column(nullable = false)

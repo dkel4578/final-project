@@ -10,14 +10,41 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface BoardsRepository extends JpaRepository<Board, Long> {
-    @Query(value = "SELECT p FROM Board p WHERE p.kind = :kindValue AND p.id < :lastBoardId ORDER BY p.createAt DESC")
+    @Repository
+    public interface BoardsRepository extends JpaRepository<Board, Long> {
+
+    @Query(value = "SELECT p " +
+                    "FROM Board p " +
+                    "WHERE p.kind = :kindValue " +
+                    "AND (:searchWord IS NULL OR p.title LIKE %:searchWord% OR p.content LIKE %:searchWord%) " +
+                    "ORDER BY p.createAt DESC ")
+    Page<Board> findByKindAndTitleContainingOrderByCreateAtDesc(
+            @Param("kindValue") Kind kindValue,
+            @Param("searchWord") String searchWord,
+            Pageable pageable
+    );
+    @Query(value = "SELECT p " +
+                    "FROM Board p " +
+                    "WHERE p.kind = :kindValue " +
+                    "AND p.id < :lastBoardId " +
+                    "ORDER BY p.createAt DESC ")
     Page<Board> findByKindOrderByCreateAtDesc(
             @Param("lastBoardId") Long lastBoardId,
             @Param("kindValue") Kind kindValue,
             Pageable pageable
     );
-
     Page<Board> findByIdLessThan(Long boardId, Pageable pageable);
+
+        default Page<Board> fetchBoardList(
+                Kind kindValue,
+                Long lastBoardId,
+                String searchWord,
+                Pageable pageable
+        ) {
+            if (searchWord != null && !searchWord.isEmpty()) {
+                return findByKindAndTitleContainingOrderByCreateAtDesc(kindValue, searchWord, pageable);
+            } else {
+                return findByKindOrderByCreateAtDesc(lastBoardId, kindValue, pageable);
+            }
+        }
 }
