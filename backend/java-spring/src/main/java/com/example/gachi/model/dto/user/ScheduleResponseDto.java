@@ -20,7 +20,6 @@ public class ScheduleResponseDto {
     public static ScheduleResponseDto of(Schedule schedule){
         return ScheduleResponseDto.builder()
                 .id(schedule.getId())
-                .user(schedule.getUser())
                 .userId(schedule.getUser().getId())
                 .date(schedule.getDate())
                 .content(schedule.getContent())

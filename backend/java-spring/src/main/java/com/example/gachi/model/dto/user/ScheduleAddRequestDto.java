@@ -8,17 +8,16 @@ import lombok.Getter;
 import java.time.LocalDate;
 
 @Getter
-@Builder
+
 public class ScheduleAddRequestDto {
 
-    private Long id;
-    private User user;
-    private Long userId;
-    private LocalDate date;
-    private String content;
+    private final Long userId;
+    private final LocalDate date;
+    private final String content;
 
     //스케쥴 추가
-    public Schedule addSchedule(){
+    @Builder
+    public Schedule addSchedule(User user){
         return Schedule.builder()
                 .user(user)
                 .date(date)
@@ -26,4 +25,9 @@ public class ScheduleAddRequestDto {
                 .build();
     }
 
+    public ScheduleAddRequestDto(Long userId, LocalDate date, String content) {
+        this.userId = userId;
+        this.date = date;
+        this.content = content;
+    }
 }

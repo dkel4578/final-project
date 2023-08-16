@@ -28,7 +28,6 @@ public class ReportResponseDto {
                 .reporterId(report.getReporter().getId())
                 .reportedUser(report.getReportedUser())
                 .reportedUserId(report.getReportedUser().getId())
-//                .reportStatus(report.getReportStatus())
                 .build();
     }
 
