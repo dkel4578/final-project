@@ -13,6 +13,7 @@ import BoardListPage from './pages/BoardListPage';
 import BoardViewPage from './pages/BoardViewPage';
 import PasswordChangePage from './pages/PasswordChangePage';
 import Calnedar from './pages/Calendar';
+import MasterPage from './pages/MasterPage';
 
 const queryClient = new QueryClient();
 
@@ -35,6 +36,7 @@ function App() {
           <Route path="/board/view" element={<BoardViewPage/>}/>
           <Route path="/passwordChange" element={<PasswordChangePage/>}/>
           <Route path="/calendar" element={<Calnedar/>}/>
+          <Route path="/MasterPage" element={<MasterPage />}/>
         </Routes>
       </QueryClientProvider>
     </>
