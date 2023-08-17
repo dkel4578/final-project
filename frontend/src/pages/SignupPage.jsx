@@ -70,7 +70,7 @@ function SignupPage() {
   const [emailFlg, setEmailFlg] = useState(false);
   const [authenticationFlg, setAuthenticationFlg] = useState(false);
   const [birth, setBirth] = useState("");
-  const [gender, setGender] = useState("");
+  const [gender, setGender] = useState(""); // eslint-disable-line no-unused-vars
   
   // 패스워드 검증
   const [passwordValidation, setPasswordValidation] = useState({   // eslint-disable-line no-unused-vars
@@ -610,8 +610,7 @@ function SignupPage() {
 											className="gender-input"
 											value="m"
                       defaultChecked
-                      checked={gender === "M"} // Check if gender is "M"
-                      onChange={() => setGender("M")}
+                      // checked={gender === "M"} // Check if gender is "M"
 										/>
 										<p>남성</p>
 									</label>
@@ -624,8 +623,7 @@ function SignupPage() {
 											id="female"
 											className="gender-input"
 											value="F"
-                      checked={gender === "F"} // Check if gender is "F"
-                      onChange={() => setGender("F")}
+                      // checked={gender === "F"} // Check if gender is "F"/
 										/>
 										<p>여성</p>
 									</label>

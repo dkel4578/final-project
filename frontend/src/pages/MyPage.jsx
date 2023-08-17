@@ -25,6 +25,7 @@ function MyPage() {
 	const [phone, setPhone] = useState(''); // eslint-disable-line no-unused-vars
 	const [profileMessage, setProfileMessage] = useState(''); // eslint-disable-line no-unused-vars
 	const [birth, setBirth] = useState(''); // eslint-disable-line no-unused-vars
+  const [imgSrc, setImgSrc] = useState('default-image.svg')
 
   
 	if(cookies.token != 'undefined'){
@@ -65,6 +66,39 @@ function MyPage() {
       })
 		}
 	}, [isLogin]);
+
+  //프로필 이미지 정보 가져오기
+  useEffect(() => {
+    if (isLogin) {
+      fetch(`/api/profile/me?userId=${encodeURIComponent(id)}`, {
+        method: 'GET',
+        headers: {
+          "Content-Type": jsonContent,
+        },
+      })
+      .then(res => {
+        if (!res.ok) {
+          throw new Error('Response was not OK');
+        }
+        return res.json();
+      })
+      .then(data => {
+        console.log(data);
+        console.log(data.imgSrc);
+        if (data.imgSrc != null) {
+          // 로컬 파일 시스템 경로에서 \public\ 이전의 경로 제거
+          const publicIndex = data.imgSrc.indexOf('\\public\\');
+          if (publicIndex !== -1) {
+            const webPath = data.imgSrc.substring(publicIndex + '\\public\\'.length).replace(/\\/g, '/');
+            setImgSrc('/' + webPath);
+          }
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+    }
+  }, [isLogin, id]);
 
   // 비밀번호 확인
   const passwordCheckHandler = async (e) =>{
@@ -112,7 +146,7 @@ function MyPage() {
         <h1 className="my-page-title">나의 정보</h1>
         <div className="picture-place">
           <div className="user-profile-img">
-            <img src="../images/user-profile-test.jpg" alt="유저 프로필사진" />
+            <img src={imgSrc} alt="유저 프로필사진" />
           </div>
           <div className="user-nick-names">
             <p>{nickname}</p>
