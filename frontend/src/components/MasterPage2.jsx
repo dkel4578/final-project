@@ -111,6 +111,17 @@ const MasterPage2 = () => {
           유저 게시판
         </button>
       </div>
+      <div className="SearchFunction">
+        <label >카테고리</label>
+        <select>
+          <option value="">전체</option>
+          <option value="">신고된 유저</option>
+          <option value="">활동정지 유저</option>
+          <option value="">관리대상자 유저</option>
+          <option value="">유저 게시판</option>
+          
+        </select>
+      </div>
 
       <div className="board_list_wrap">
         <div className="board_list">
@@ -151,11 +162,11 @@ const MasterPage2 = () => {
                   <button className="SuspendButton" onClick={handleSuspendButtonClick}>정지</button>
                   <button className="UnsuspendButton">정지 해제</button>
                 </li>
-                
               </ul>
+                ))}
+                
               
               
-            ))}
 {showSuspendedUsers&&
             boardData2.filter(item => item.SuspensionStatus2 === "Y").map((item) => (
 
