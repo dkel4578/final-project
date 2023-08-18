@@ -16,7 +16,6 @@ a {
   margin: 100px auto;
 }
 .board_title {
-  margin-bottom: 30px;
 }
 .board_title strong {
   font-size: 3rem;
@@ -54,6 +53,7 @@ a {
 .board_list {
   width: 100%;
   border-top: 1px solid #2acf7d;
+  clear: both;
 }
 .board_list > div {
   border-bottom: 1px solid #ddd;
@@ -152,6 +152,10 @@ a {
   transition: 0.4s;
   font-weight: bold;
   font-size: 12px;
+}
+.ReportedUser:hover {
+  background-color: #199b5a; /* 변경된 배경색 */
+  color: #000000;
 }
 
 .UserBoard{
@@ -326,12 +330,6 @@ a {
   margin-top: 10px;
 }
 
-
-
-
-
-
-
 .popup_content{
   background-color: #ffffff;
   width: 300px;
@@ -350,7 +348,7 @@ a {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* 한빈아 너가 요청한 div -> ul로 바꿈 */
+
 .top{
   display: flex;
   justify-content: space-around;
@@ -386,7 +384,54 @@ a {
 .SearchFunction{
   display: flex;
   justify-content: flex-end;
-  padding: 10px;
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+/* master-select-search */
+.master-select-search{
+  display: flex;
+  float: right;
+  gap: 15px;
+}
+/* master-search */
+.master-search{
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.master-search-box{
+  font-size: 1.2em;
+  border-bottom: 2px solid var(--maincolor);
+  width: 250px;
+}
+.master-search-box::placeholder{
+  transition: 0.4s;
+}
+.master-search-box:focus::placeholder{
+  opacity: 0;
+}
+.master-search-btn{
+  font-size: 1.1em;
+  padding: 5px 10px;
+  border-radius: 10px;
+  background-color: var(--maincolor);
+  color:white;
+}
+/* master-select-box */
+.master-select-box{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+.master-select-box-span {
+  font-size: 1.1em;
+}
+.master-select-options{
+  font-size: 1.1em;
+  border: none;
+  border-bottom: 2px solid var(--maincolor);
 }
 
 
