@@ -1,34 +1,19 @@
 {
-  "name": "cbg-server-status-webpage",
+  "name": "2_hyunjae-final-project",
+  "version": "0.1.0",
   "private": true,
-  "version": "0.0.1",
-  "type": "module",
-  "main": "./src/index.js",
-  "scripts": {
-    "start": "react-scripts start",
-    "dev": "webpack serve --mode development",
-    "test": "vitest",
-    "build": "webpack --mode production",
-    "postbuild": "del /f /s /q ..\\docs\\** && xcopy /Y .\\dist\\* ..\\docs\\ /E",
-    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
-  },
-  "proxy": "http://localhost:9090/",
-  "browserslist": [
-    "last 3 and_chr versions",
-    "last 3 chrome versions",
-    "last 3 opera versions",
-    "last 3 ios_saf versions",
-    "last 3 safari versions"
-  ],
   "dependencies": {
     "@popperjs/core": "^2.11.8",
+    "@stomp/stompjs": "^6.1.0",
     "axios": "^1.4.0",
     "bootstrap": "^5.3.1",
     "create-react-app": "^5.0.1",
     "date-fns": "^2.30.0",
     "dayjs": "^1.11.9",
     "gh-pages": "^5.0.0",
+    "history": "4.10.1",
+    "http-proxy-middleware": "^2.0.6",
+    "immer": "^9.0.1",
     "jquery": "^3.7.0",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
@@ -38,12 +23,18 @@
     "react-icons": "^4.10.1",
     "react-intersection-observer": "^9.5.2",
     "react-query": "^3.39.3",
+    "react-redux": "^7.2.3",
     "react-router-dom": "^6.14.2",
     "react-script": "^2.0.5",
     "react-scripts": "^5.0.1",
     "react-slick": "^0.29.0",
+    "redux": "^4.0.5",
+    "redux-actions": "^2.6.5",
+    "redux-thunk": "^2.3.0",
     "sass": "^1.64.1",
     "scss": "^0.2.4",
+    "sockjs-client": "^1.5.1",
+    "stompjs": "^2.3.3",
     "styled-components": "^6.0.5",
     "sweetalert2": "^11.7.20",
     "tailwindcss": "^3.3.3",
@@ -75,16 +66,28 @@
     "webpack-cli": "^4.9.1",
     "webpack-dev-server": "^4.6.0"
   },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
-      "react-app/jest",
-      "eslint:recommended",
-      "plugin:react/recommended"
-    ],
-    "rules": {
-      "react/jsx-no-target-blank": "off"
-    }
+      "react-app/jest"
+    ]
   },
-  "prettier": "prettier-config-a11y"
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }

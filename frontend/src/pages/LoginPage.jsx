@@ -2,12 +2,17 @@ import "../css/login.css"
 import { useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
+import { useDispatch, useSelector } from "react-redux";
+import { actionCreators as userActions } from "../store/modules/user";
 
 function LoginPage() {
+  // const dispatch = useDispatch();
+  // const userInfo = useSelector((state) => state.user.user);
+  // console.log('userInfo', userInfo);
+
   const navigate = useNavigate();
   const [ cookies, setCookie, removeCookie ] = useCookies(['token']);
   
-
   const loginIdRef = useRef(null);
   const passwordRef = useRef(null);
 
@@ -40,6 +45,9 @@ function LoginPage() {
         const expireTikmeDate = new Date(Number(data.accessTokenExpireIn));
         setCookie('token', data.accessToken, { expires: expireTikmeDate});
         console.log(cookies);
+        // console.log('loginAPI Data:', data);
+        
+        // dispatch(userActions.loginSaveAPI(data.id, data.nickname));
 
         navigate('/', true);
       }
