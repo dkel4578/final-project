@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as userActions } from "../store/modules/user";
+import Swal from "sweetalert2";
 
 function LoginPage() {
   // const dispatch = useDispatch();
@@ -35,7 +36,12 @@ function LoginPage() {
     })
     .then(res => {
       if(res.status !== 200){
-        return alert('사용자 정보가 올바르지 않습니다.');
+        return Swal.fire({
+          icon: "error",
+          title: "로그인",
+          text: "사용자 정보가 올바르지 않습니다.",
+          width: 360,
+        });
       } 
       return res.json();
     })

@@ -22,6 +22,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     List<User> findByBannedYn(String bannedYn);
 
+    String findPasswordByLoginId(String loginId);
+
 //    List<User> findBy(String bannedYn);
 
 }

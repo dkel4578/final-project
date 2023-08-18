@@ -122,15 +122,11 @@ public class User extends BaseEntity{
     public User update(
             String  accessToken,
             Long accessTokenExpireIn,
-            String loginId,
-            String refreshToken,
-            Long refreshTokenExpireIn
+            String loginId
     ){
         this.accessToken = accessToken;
         this.accessTokenExpireIn = accessTokenExpireIn;
         this.loginId = loginId;
-        this.refreshToken = refreshToken;
-        this.refreshTokenExpireIn = refreshTokenExpireIn;
         return this;
     }
 
