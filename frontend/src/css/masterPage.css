@@ -68,7 +68,7 @@ a {
   display: inline-block;
   padding: 15px 0;
   text-align: center;
-  font-size: 1.1rem;
+  font-size: 15px;
 }
 .board_list > div .top > div {
   font-weight: 600;
@@ -123,6 +123,7 @@ a {
   background-color: #2acf7d;
   color: #ffffff;
   font-weight: bold;
+  height: 30px;
 }
 
 .board_list .Suspend {
@@ -138,7 +139,7 @@ a {
   align-items: center;
 }
 .master-list-item {
-  flex: 1;
+  flex: 5px;
 }
 
 .ReportedUser {
@@ -153,6 +154,22 @@ a {
   font-size: 12px;
 }
 
+.UserBoard{
+  padding: 10px 20px;
+  font-size: 1px;
+  background-color: #2acf7d; /* 변경된 배경색 */
+  color: rgb(255, 255, 255);
+  border: none;
+  cursor: pointer;
+  transition:0.4s;
+  margin: 1px;
+  font-weight: bold;
+  font-size: 12px;
+}
+.UserBoard:hover {
+  background-color: #199b5a; /* 변경된 배경색 */
+  color: #000000;
+}
 /* 마우스 커서가 버튼 위로 올라갔을 때 스타일 변경 */
 .ReportedUser:hover {
   background-color: #199b5a; /* 변경된 배경색 */
@@ -182,7 +199,6 @@ a {
   border: none;
   cursor: pointer;
   transition:0.4s;
-  margin: 1px;
   font-weight: bold;
   font-size: 12px;
 }
@@ -218,16 +234,16 @@ a {
   border-left: 1px solid #ddd;
 }
 .SuspendButton {
-  padding: 13px 23px;
+  width: 70px;
+  padding: 10px;
   font-size: 1px;
   background-color: #9acd32; /* 변경된 배경색 */
   color: rgb(255, 255, 255);
   border: none;
   cursor: pointer;
   transition:0.4s;
-  margin: -3px;
   font-weight: bold;
-  font-size: 11px;
+
   border-radius: 10px;
 }
 
@@ -237,16 +253,16 @@ a {
 }
 
 .UnsuspendButton {
-  padding: 13px 15px;
+  width: 70px;
+  padding: 10px;
   font-size: 1px;
   background-color: #4169e1; /* 변경된 배경색 */
   color: white;
   border: none;
-  cursor: pointer;
+
   transition: 0.4s;
-  margin: 6px;
   font-weight: bold;
-  font-size: 11px;
+ 
   border-radius: 10px;
 }
 .UnsuspendButton:hover {
@@ -333,10 +349,40 @@ a {
   border-radius: 5px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+/* 한빈아 너가 요청한 div -> ul로 바꿈 */
+.top{
+  display: flex;
+  justify-content: space-around;
+}
+.top li{
+  /* flex: 1; */
+  display: flex;
+  font-size: 1.3em;
+  align-items: center;
+  justify-content: center;
+}
+.master-list{
+  display: flex;
+  justify-content: space-around;
+
+}
+.master-list li{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2px;
+  
+}
+.master-list li div{
+  display: flex;
+  justify-content: center;
+  flex: 1;
+}
+.master-btns{
+  display: flex;
+  gap: 3px;
+}
   
 
 
-
-.popup_overlayactive{
- 
-}
