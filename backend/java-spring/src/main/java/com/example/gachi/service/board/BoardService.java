@@ -4,6 +4,7 @@ import com.example.gachi.model.Board;
 import com.example.gachi.model.User;
 import com.example.gachi.model.dto.board.AddBoardRequestDto;
 import com.example.gachi.model.dto.board.BoardResponseDto;
+import com.example.gachi.model.dto.board.DeleteBoardRequestDto;
 import com.example.gachi.model.dto.board.UpdateBoardRequestDto;
 import com.example.gachi.model.enums.Kind;
 import com.example.gachi.repository.BoardRepository;
@@ -101,17 +102,23 @@ public class BoardService {
 //    }
 
     //글 삭제하기
-    public void delete(long boardId){
-        boardRepository.deleteById(boardId);
+    @Transactional
+    public void delete(Long boardId){
+        Board board = boardRepository.findById(boardId).orElseThrow(() -> new IllegalArgumentException("not found: "));
+        board.deleteBoard("Y");
     }
+//    public void delete(Long boardId){
+//        System.out.println("delete: id" + boardId);
+//        boardRepository.deleteById(boardId);
+//    }
+
 
     //글 수정하기
     @Transactional
-    public Board update(long boardId, UpdateBoardRequestDto updateBoardRequestDto){
+    public Board update(Long boardId, UpdateBoardRequestDto updateBoardRequestDto){
         Board board = boardRepository.findById(boardId).orElseThrow(() -> new IllegalArgumentException("not found: "));
-        board.update(updateBoardRequestDto.getTitle(), updateBoardRequestDto.getContent());
+        board.updateBoard(updateBoardRequestDto.getTitle(), updateBoardRequestDto.getContent());
         return board;
-
     }
 
 }

@@ -10,7 +10,9 @@ import MyPage from './pages/MyPage';
 import ChangeInfo from './pages/ChangeInfo';
 import BoardListPage from './pages/BoardListPage';
 import BoardViewPage from './pages/BoardViewPage';
+import BoardEditPage from './pages/BoardEditPage';
 import BoardWritePage from './pages/BoardWritePage';
+import BoardDeletePage from './pages/BoardDeletePage';
 import PasswordChangePage from './pages/PasswordChangePage';
 import Calnedar from './pages/Calendar';
 import ChatRoomListPage from './pages/ChatRoomListPage';
@@ -33,7 +35,9 @@ function App() {
           <Route path="/changeInfo" element={<ChangeInfo/>}/>
           <Route path="/board/:kind" element={<BoardListPage />}/>
           <Route path="/board/view" element={<BoardViewPage/>}/>
+          <Route path="/board/edit" element={<BoardEditPage/>}/>
           <Route path="/board/write" element={<BoardWritePage />}/>
+          <Route path="/board/delete" element={<BoardDeletePage />}/>
           <Route path="/passwordChange" element={<PasswordChangePage/>}/>
           <Route path="/calendar" element={<Calnedar/>}/>
           <Route path="/chat/room/list" element={<ChatRoomListPage />}/>
