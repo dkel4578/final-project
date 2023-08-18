@@ -1,7 +1,3 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import { useCookies } from 'react-cookie'; 
-import Swal from 'sweetalert2';
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as userActions } from "../store/modules/user";
 import { Link, useNavigate } from "react-router-dom";
