@@ -1,8 +1,12 @@
 package com.example.gachi.config.jwt;
 
 import com.example.gachi.model.dto.user.JwtTokenDto;
+import com.example.gachi.model.dto.user.RefreshTokenDto;
 import com.example.gachi.model.enums.Authority;
+import com.example.gachi.repository.RefreshTokenRepository;
 import io.jsonwebtoken.*;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,6 +28,7 @@ import java.util.stream.Collectors;
 public class JwtTokenProvider {
     private static final String AUTHORITIES_KEY = "auth";
     private static final String BEARER_TYPE = "bearer";
+    private RefreshTokenRepository refreshTokenRepository;
     private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 3000; // 30분의 유효기간
     private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 1000L;
     private final String jwtSecretKey;
@@ -57,7 +62,6 @@ public class JwtTokenProvider {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
         Date acceessTokenExpireDate = getTokenExpirationTime();
-        Date refreshTokenExpireDate = getRefreshTokenExpirationTime();
         String name = authentication.getName();
 
         String accessToken = Jwts.builder()
@@ -67,17 +71,10 @@ public class JwtTokenProvider {
                 .signWith(SignatureAlgorithm.HS256, jwtSecretKey)
                 .compact();
 
-        String refreshToken = Jwts.builder()
-                .setSubject(name)
-                .claim(AUTHORITIES_KEY, authorities)
-                .setExpiration(refreshTokenExpireDate)
-                .signWith(SignatureAlgorithm.HS256, jwtSecretKey)
-                .compact();
-
         return JwtTokenDto.builder()
                 .grantType(BEARER_TYPE)
                 .accessToken(accessToken)
-                .refreshToken(refreshToken)
+                .tokenExpiresIn(acceessTokenExpireDate.getTime())
                 .build();
     }
 
@@ -89,6 +86,29 @@ public class JwtTokenProvider {
     private Date getRefreshTokenExpirationTime() {
         long now = (new Date()).getTime();
         return new Date(now + REFRESH_TOKEN_EXPIRE_TIME);
+    }
+    // Refresh Token 생성.
+    public RefreshTokenDto createRefreshToken(Authentication authentication) {
+        String authorities = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(","));
+
+        Date refreshTokenExpireDate = getRefreshTokenExpirationTime();
+        String name = authentication.getName();
+
+        String refreshToken = Jwts.builder()
+                .setSubject(name)
+                .claim(AUTHORITIES_KEY, authorities)
+                .setExpiration(refreshTokenExpireDate)
+                .signWith(SignatureAlgorithm.HS256, jwtSecretKey)
+                .compact();
+
+        return RefreshTokenDto.builder()
+                .grantType(BEARER_TYPE)
+                .refreshToken(refreshToken)
+                .tokenExpiresIn(refreshTokenExpireDate.getTime())
+                .build();
+
     }
 
     public boolean validateToken(String token) {
@@ -136,4 +156,18 @@ public class JwtTokenProvider {
                 .parseClaimsJws(accessToken)
                 .getBody();
     }
+
+
+    // RefreshToken 존재유무 확인
+    public boolean existsRefreshToken(String refreshToken) {
+        return refreshTokenRepository.existsByRefreshToken(refreshToken);
+    }
+
+    // 토큰에서 회원 정보 추출
+    public String getUserLoginId(String token) {
+        return Jwts.parser().setSigningKey(jwtSecretKey).parseClaimsJws(token).getBody().getSubject();
+    }
+
+
+
 }

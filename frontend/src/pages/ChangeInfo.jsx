@@ -81,10 +81,12 @@ function ChangeInfo() {
 		useState("인증을 완료해주세요!");
 	const [cfNumber, setCfNumber] = useState("");
 	const [emailMessage, setEmailMessage] = useState(""); // eslint-disable-line no-unused-vars
+
+
 	const [nicknameFlg, setNicknameFlg] = useState(true);
 	const [authenticationFlg, setAuthenticationFlg] = useState(true);
 	const [emailFlg, setEmailFlg] = useState(true);
-
+  const [nameFlg, setNameFlg]= useState(false);
 	//로그인 확인
 	if (cookies.token != "undefined") {
 		isLogin = true;
@@ -92,6 +94,15 @@ function ChangeInfo() {
 		isLogin = false;
 	}
 
+	//이름 유효성 검사
+  const nameCheckHandler = () => {
+    const nameInput = nameRef.current.value;
+    if (/^[가-힣a-zA-Z]/.test(nameInput)) {
+      setNameFlg(true);
+    } else {
+      setNameFlg(false);
+    }
+  };
 	const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
 	//유저 정보 가져오기
 	useEffect(() => {
@@ -357,14 +368,23 @@ function ChangeInfo() {
 	//유저 정보 업데이트 제출
 	const submitHandler = async (e) => {
 		e.preventDefault();
-
-		if (!nicknameFlg) {
+		if(nameFlg){
+			Swal.fire({
+        icon: "warning",
+        title: "이름", // Alert 제목
+        text: "이름이 올바르지 않습니다",
+        width: 300,
+      });
+      return;
+		}
+		else if (!nicknameFlg) {
 			Swal.fire({
 				icon: "warning",
 				title: "중복 검사",
 				text: "닉네임 중복 검사를 완료하십시오.",
 				width: 300,
 			});
+			return;
 		} else if (!emailFlg) {
 			Swal.fire({
 				icon: "warning",
@@ -372,6 +392,7 @@ function ChangeInfo() {
 				text: "이메일 중복 검사를 완료해주세요.",
 				width: 300,
 			});
+			return;
 		} else if (!authenticationFlg) {
 			Swal.fire({
 				icon: "warning",
@@ -379,6 +400,7 @@ function ChangeInfo() {
 				text: "이메일 인증을 완료해주세요.",
 				width: 300,
 			});
+			return;
 		} else {
 			const name = nameRef.current.value;
 			const phone = phoneRef.current.value;
@@ -558,7 +580,8 @@ function ChangeInfo() {
 									placeholder="실명을 입력해주세요."
 									value={name}
 									ref={nameRef}
-									onChange={handleNameInputChange}
+									onChange={(e) =>{handleNameInputChange(e);
+										nameCheckHandler(e)}}
 								/>
 								<i className="bi bi-person-lines-fill"></i>
 							</div>

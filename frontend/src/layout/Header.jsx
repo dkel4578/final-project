@@ -89,6 +89,7 @@ function Header() {
 			width: 300, // Alert 내용
 		});
 		removeCookie("token");
+		setIsLogin(false);
 		navigate("/", true);
 	};
 
