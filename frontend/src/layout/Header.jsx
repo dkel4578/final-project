@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'; // eslint-disable-line no-unused-vars
 import { useCookies } from 'react-cookie'; 
 import Swal from 'sweetalert2';
 
@@ -10,7 +10,7 @@ import '../css/total.css';
 
 function Header() {
 	const [cookies, removeCookie] = useCookies(['token']);
-	const [nickname, setNickname] = useState('');
+	const [nickname, setNickname] = useState('');// eslint-disable-line no-unused-vars
 	let isLogin = false;
 	const navigate = useNavigate();
 

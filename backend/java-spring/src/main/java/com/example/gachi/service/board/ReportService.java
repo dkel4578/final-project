@@ -2,8 +2,8 @@ package com.example.gachi.service.board;
 
 import com.example.gachi.model.Report;
 import com.example.gachi.model.User;
-import com.example.gachi.model.dto.board.ReportRequestDto;
-import com.example.gachi.model.dto.board.ReportResponseDto;
+import com.example.gachi.model.dto.Report.ReportRequestDto;
+import com.example.gachi.model.dto.Report.ReportResponseDto;
 import com.example.gachi.repository.ReportRepository;
 import com.example.gachi.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;

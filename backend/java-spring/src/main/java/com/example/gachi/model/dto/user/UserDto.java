@@ -11,8 +11,7 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class UserResponseDto {
+public class UserDto {
     private Long id;
     private String loginId;
     private String name;
@@ -27,19 +26,18 @@ public class UserResponseDto {
 
 
 
-    public static UserResponseDto of(User user) {
+    public UserDto(User user) {
         // Member member 의 요소 중 UserResponseDto 에 있는 것들을 가져 오겠다.
-        return UserResponseDto.builder()
-                .id(user.getId())
-                .loginId(user.getLoginId())
-                .name(user.getName())
-                .phone(user.getPhone())
-                .email(user.getEmail())
-                .status(user.getStatus())
-                .gender(user.getGender())
-                .nickname(user.getNickname())
-                .profileMessage(user.getProfileMessage())
-                .birth(user.getBirth())
-                .build();
+
+        this.id = user.getId();
+        this.loginId = user.getLoginId();
+        this.name = user.getName();
+        this.phone = user.getPhone();
+        this.email = user.getEmail();
+        this.status = user.getStatus();
+        this.gender = user.getGender();
+        this.nickname = user.getNickname();
+        this.profileMessage = user.getProfileMessage();
+        this.birth = user.getBirth();
     }
 }

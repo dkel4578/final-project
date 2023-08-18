@@ -1,11 +1,9 @@
 package com.example.gachi.controller;
 
-import com.example.gachi.model.dto.board.ReportRequestDto;
-import com.example.gachi.model.dto.board.ReportResponseDto;
-import com.example.gachi.repository.UserRepository;
+import com.example.gachi.model.dto.Report.ReportRequestDto;
+import com.example.gachi.model.dto.Report.ReportResponseDto;
 import com.example.gachi.service.board.ReportService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

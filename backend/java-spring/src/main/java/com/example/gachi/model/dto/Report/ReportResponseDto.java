@@ -1,8 +1,9 @@
-package com.example.gachi.model.dto.board;
+package com.example.gachi.model.dto.Report;
 
 import com.example.gachi.model.Report;
 import com.example.gachi.model.User;
 import com.example.gachi.model.enums.BanReason;
+import com.example.gachi.model.enums.ReportCategory;
 import com.example.gachi.model.enums.ReportStatus;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,11 +20,16 @@ public class ReportResponseDto {
     private User reportedUser;
     private Long reportedUserId;
     private ReportStatus reportStatus;
+    private ReportCategory category;
+    private Long contentId;
 
     public static ReportResponseDto of(Report report){
         return ReportResponseDto.builder()
                 .id(report.getId())
+                .category(report.getCategory())
+                .contentId(report.getContentId())
                 .reportType(report.getReportType())
+                .reportStatus(report.getReportStatus())
                 .reporter(report.getReporter())
                 .reporterId(report.getReporter().getId())
                 .reportedUser(report.getReportedUser())

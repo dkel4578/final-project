@@ -19,6 +19,7 @@ public class Board extends BaseEntity{
     private Long id;
 
     @Column(nullable = false)
+    @Enumerated(value = EnumType.STRING)
     private Kind kind;
 
     @Column(nullable = false)
@@ -35,7 +36,7 @@ public class Board extends BaseEntity{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
-    private User userId;
+    private User user;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name="board_id")
@@ -66,7 +67,7 @@ public class Board extends BaseEntity{
         this.delYn = delYn;
     }
     public void setUser(User user) {
-        this.userId = userId;
+        this.user = user;
     }
 
     public Board update(String title, String content) {
