@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.14.5",
+    "@mui/system": "^5.14.5",
     "@popperjs/core": "^2.11.8",
     "@stomp/stompjs": "^6.1.0",
     "axios": "^1.4.0",

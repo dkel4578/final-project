@@ -1,52 +1,54 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import * as StompJs from '@stomp/stompjs';
 import * as SockJS from "sockjs-client";
 import styled from "styled-components"
 import { actionCreators as chattingActions } from "../store/modules/chatting";
-// import { actionCreators as userActions } from "../store/modules/user";
 
-let date = new Date();
-let todayDate = date.getFullYear() + "년 " + (date.getMonth()+1) + "월 " + date.getDate() + "일";
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+// import Button from '@material-ui/core/Button';
+// import TextField from '@material-ui/core/TextField';
+
+import "../css/chatting.css";
 
 function ChatPage(props) {
   console.log('ChatPage props:', props);
 
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const userInfo = useSelector((state) => state.user.user);
-  console.log('ChatPage userInfo:', userInfo);
+  // console.log('ChatPage userInfo:', userInfo);
   const dispatch = useDispatch();
 
-  const [chatting, setChatting] = useState('');
   const stompClient = useRef({});
   let { channelId } = useParams();
-  console.log('channelId:', channelId);
   const chatRoomNumber = Number(channelId);
 
   const chatConnect = () => {
     if (chatRoomNumber === 0) {
       const chatRoomName = prompt('채팅방 이름을 넣어주세요');
-      console.log('chatRoomName:', chatRoomName);
-
+      
       // 채팅방 새로 생성
-      if (chatRoomName)
+      if (chatRoomName) {
         dispatch(chattingActions.createChatRoomAPI({ chatRoomName: chatRoomName, uid: userInfo.uid }));
+        // navigate('/chat/room/list');
+        // return;
+      }
       else
         return;
     } else if (isNaN(chatRoomNumber)) {
       alert('잘못된 경로로 대화방에 들어왔네요~~ ㅠㅠ');
       return;
     }
-
+    
     stompClient.current = new StompJs.Client({
       webSocketFactory: () => new SockJS("/ws-stomp/chat"), // proxy를 통한 접속
-      // webSocketFactory: () => new SockJS("ws://localhost:9093/ws-stomp/chat"), // proxy를 통한 접속
-      connectHeaders: {
-        "auth-token": "spring-chat-auth-token1",
-        "Authorization": "spring-chat-auth-token2",
-      },
-      // debug: function (str) {
-      //   console.log('connect str:', str);
+      // connectHeaders: {
+      //   "auth-token": "spring-chat-auth-token1",
+      //   "Authorization": "spring-chat-auth-token2",
       // },
       reconnectDelay: 5000,
       heartbeatIncoming: 4000,
@@ -60,54 +62,157 @@ function ChatPage(props) {
       onStompError: (frame) => {
         console.error('onStompError frame:', frame);
       },
+      onDisconnect: () => {
+        console.log('stompSockjs disconnect success');
+        chatDisconnect();
+      },
     });
 
     stompClient.current.activate();
   };
 
-  const chatPublish = (_chatting) => {
+  const chatPublish = (_chatting, _channelId) => {
     if (!stompClient.current.connected) return;
 
     stompClient.current.publish({
       destination: '/pub/chat',
       body: JSON.stringify({
-        channelId: channelId,
-        // writerId: 1,
+        channelId: _channelId,
+        writerId: userInfo.uid,
         chat: _chatting,
       }),
     });
-
-    setChatting('');
   };
 
   const chatSubscribe = () => {
     stompClient.current.subscribe('/sub/chat/' + channelId, (response) => {
-      console.log('subscribe body', response.body);
+      // console.log('subscribe body', response.body);
+      if(!userInfo.uid) {
+        alert('비상적으로 접근하여 채팅 사용을 할 수 없습니다.');
+        setChattingMesssageList([]);
+        return;
+      }
       const jsonBody = JSON.parse(response.body);
-      console.log('subscribe jsonBody', jsonBody);
+      chattingMessageList = chattingMessageList.map((msg, idx) => {
+        ++keyId;  
+        return msg;
+      });
 
-      // setChattingList((_chat_list) => [
-      //   ..._chat_list, jsonBody.chat
-      // ]);
+      let myOther = '';
+      // if (Number(jsonBody.writerId) != Number(localStorage.getItem('uid'))) {
+      if (jsonBody.writerId != userInfo.uid) {
+        myOther = 'other-msg'
+      } else {
+        myOther = 'my-msg'
+      }
+      // chattingMessageList = chattingMessageList.concat(<li key={++keyId}>{jsonBody.chat}</li>)
+      chattingMessageList = chattingMessageList.concat(<li key={++keyId}><div className={myOther}><div className="msg"><pre>{jsonBody.chat}</pre></div></div></li>)
+      setChattingMesssageList(chattingMessageList);
+
+      window.scrollTo(0, document.body.scrollHeight);
     });
   };
 
   const chatDisconnect = () => {
-    // if (stompClient.current)
-    // if (stompClient)
-    //   stompClient.current.deactivate();
+    if (stompClient && stompClient.current)
+      stompClient.current.unsubscribe();
   };
 
   useEffect(() => {
-    chatConnect();
-    // input.current.focus();
+    chatConnect(userInfo.uid);
+    input.current.focus();
 
-    return () => chatDisconnect();
+    return () => {
+      chatDisconnect();
+    };
   }, []);
+
+  let [chattingMessageList, setChattingMesssageList] = useState([]);
+  let keyId = 0;
+  
+  const handleChatSend = (event) => { // 보내기 버튼 눌렀을 때 publish
+    event.preventDefault();
+
+    chatPublish(event.target.value, channelId);
+
+    chattingMessageList = chattingMessageList.map((msg, idx) => {
+      ++keyId;
+
+      // return <li key={keyId}>{msg}</li>
+      return msg;
+    });
+    chattingMessageList = chattingMessageList.concat(<li key={++keyId}><div className='my-msg'><div className="msg"><pre>{event.target.value}</pre></div></div></li>)
+    // chattingMessageList = chattingMessageList.concat(<li key={++keyId}>{event.target.value}</li>)
+    // setChattingMesssageList([...chattingMessageList, <li key={++keyId}>{event.target.value}</li>]);
+    setChattingMesssageList(chattingMessageList);
+
+    input.current.value = '';
+    input.current.focus();
+    setIsButtonEnabled(false);
+    window.scrollTo(0, document.body.scrollHeight);
+  };
+
+  const input = useRef();
+  const keyPress = (e) => {
+    if((e.target.value.search(/\S/) != -1) === true){
+      if (e.key === 'Enter') {
+        handleChatSend(e);
+      }
+    }
+  };
+
+  const [isButtonEnabled, setIsButtonEnabled] = useState(false);
+  const changeTextField = (e) => {
+    input.current.value = e.target.value;
+    if (e.target.value) {
+      setIsButtonEnabled(true);
+    } else {
+      setIsButtonEnabled(false);
+    }
+  };
+
+  // useEffect(() => {
+  //   // const accessToken = new URL(window.location.href).searchParams.get('accessToken');
+  //   const accessToken = window.location.pathname.split("/").pop();
+  //   console.log('aaaaaa:', accessToken);
+  //   // navigate(0);
+  // }, [dispatch]);
 
   return (
     <>
-      <div>chat-page</div>
+      <div id="msgList">
+        <ul>
+          {chattingMessageList}
+        </ul>
+      </div>
+      <form onSubmit={handleChatSend}>
+        <div className="msg-send-part">
+          <div id="contents">
+            <TextField
+              id="standard-multiline-flexible"
+              multiline
+              maxRows="4"
+              autoComplete="off"
+              style={{ margin: 8, border: 0 }}
+              placeholder="메세지를 입력해주세요"
+              onKeyPress={keyPress} 
+              fullWidth
+              onChange={changeTextField} 
+              inputRef={input}
+              margin="normal"
+            />
+          </div>
+          <div id="send-btn">
+            <Button variant="contained" color="primary" onClick={handleChatSend} 
+              // disabled={!isEnabled} 
+              disabled={!isButtonEnabled}
+              style={{ marginTop: "-38px" }}
+            >
+              <div className={{ fontSize: "20px" }}>전송</div>
+            </Button>
+          </div>
+        </div>  
+      </form>
     </>
   )
 }

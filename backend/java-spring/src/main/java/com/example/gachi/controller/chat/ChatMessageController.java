@@ -21,14 +21,11 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class ChatMessageController {
     private static final Set<String> SESSION_IDS = new HashSet<>();
-    private static final Map<String, Integer> sessions = new HashMap<>();
+//    private static final Map<String, Integer> sessions = new HashMap<>();
     private final SimpMessagingTemplate simpMessagingTemplate;
 
     @MessageMapping("/chat")
     public void sendMessage(ChatDto chatDto, SimpMessageHeaderAccessor accessor) {
-//        Integer writerId = SESSION_IDS.get(accessor.getSessionId());
-        Integer writerId = sessions.get(accessor.getSessionId());
-        chatDto.setWriterId(writerId);
         System.out.println("chatDto: " + chatDto);
 
         simpMessagingTemplate.convertAndSend("/sub/chat/" + chatDto.getChannelId(), chatDto);
@@ -42,7 +39,7 @@ public class ChatMessageController {
         SESSION_IDS.add(sessionId);
 //        sessions.put(sessionId, Integer.valueOf(userId));
         log.info("[connect] connections(set) : {}", SESSION_IDS.size());
-        System.out.println("[connect] connections(map) : " + sessions.size());
+//        System.out.println("[connect] connections(map) : " + sessions.size());
     }
 
     @EventListener(SessionDisconnectEvent.class)
@@ -50,8 +47,8 @@ public class ChatMessageController {
         String sessionId = event.getSessionId();
 
         SESSION_IDS.remove(sessionId);
-        sessions.remove(sessionId);
-        log.info("[disconnect] connections(set) : {}", SESSION_IDS.size());
-        System.out.println("[disconnect] connections(map) : " + sessions.size());
+//        sessions.remove(sessionId);
+        log.info("[disconnect] disconnections(set) : {}", SESSION_IDS.size());
+//        System.out.println("[disconnect] disconnections(map) : " + sessions.size());
     }
 }

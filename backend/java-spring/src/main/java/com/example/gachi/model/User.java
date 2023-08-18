@@ -29,13 +29,11 @@ public class User extends BaseEntity{
 
     private String accessToken;
 
-
     private Long accessTokenExpireIn;
 
     private String refreshToken;
 
     private Long refreshTokenExpireIn;
-
 
     private String password;
 
@@ -60,7 +58,6 @@ public class User extends BaseEntity{
 //    @Column(nullable = false, columnDefinition = "char(1)")
     @Builder.Default
     private String status = "U";
-
 
     @Enumerated(value = EnumType.STRING)
     private Authority authority;
@@ -118,6 +115,10 @@ public class User extends BaseEntity{
     @ToString.Exclude
     private List<Report> reports;
 
+    @OneToMany
+    @JoinColumn(name = "user_id")
+    @ToString.Exclude
+    private List<ChatRoom> chatRoomList;
 
     public User update(
             String  accessToken,

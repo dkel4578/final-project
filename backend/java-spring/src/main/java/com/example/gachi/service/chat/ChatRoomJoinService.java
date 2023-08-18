@@ -1,5 +1,6 @@
 package com.example.gachi.service.chat;
 
+import com.example.gachi.model.ChatRoom;
 import com.example.gachi.model.ChatRoomJoin;
 import com.example.gachi.model.User;
 import com.example.gachi.repository.ChatRoomJoinRepository;
@@ -7,7 +8,9 @@ import com.example.gachi.repository.ChatRoomRepository;
 import com.example.gachi.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -21,27 +24,28 @@ public class ChatRoomJoinService {
         return chatRoomJoinRepository.findByUser(user);
     }
 
-//    @Transactional
-//    public Long newRoom(String user1, String user2) {
-//        Long ret = check(user1,user2);
-//        if(ret != 0){
-//            //이미 존재하는 방이면 해당 방 번호 리턴
-//            return ret;
-//        }
-//        ChatRoom chatRoom = new ChatRoom();
-//        ChatRoom newChatRoom = chatRoomRepository.save(chatRoom);
-//        if(user1.equals(user2)){
-//            //나 자신과의 채팅은 한명만 존재
-//            createRoom(user1,newChatRoom);
-//        }
-//        else{
-//            //두명 다 입장
-//            createRoom(user1,newChatRoom);
-//            createRoom(user2,newChatRoom);
-//        }
-//        return newChatRoom.getId();
-//    }
-//
+    @Transactional
+    public Long newRoom(HashMap<String, Object> paramMap) {
+        Long uid = Long.valueOf(String.valueOf(paramMap.get("uid")));
+        User user = userService.getUserById(uid);
+
+        ChatRoom newChatRoom = ChatRoom.builder()
+//                .userId(uid)
+                .user(user)
+                .name(String.valueOf(paramMap.get("chatRoomName")))
+                .build();
+        newChatRoom = chatRoomRepository.save(newChatRoom);
+
+        ChatRoomJoin newChatRoomJoin = ChatRoomJoin.builder()
+                .chatRoom(newChatRoom)
+                .user(user)
+                .build();
+//        newChatRoomJoin = chatRoomJoinRepository.save(newChatRoomJoin);
+        chatRoomJoinRepository.save(newChatRoomJoin);
+
+        return newChatRoom.getId();
+    }
+
 //    @Transactional(readOnly = true)
 //    public Long check(String user1,String user2){
 //        User userFirst = userService.findUserByEmailMethod(user1);
