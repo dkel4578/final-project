@@ -68,9 +68,11 @@ function SignupPage() {
   const [idFlg, setIdFlg] = useState(false);
   const [nicknameFlg, setNicknameFlg] = useState(false);
   const [emailFlg, setEmailFlg] = useState(false);
-  const [authenticationFlg, setAuthenticationFlg] = useState(false);
+  //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+  const [authenticationFlg, setAuthenticationFlg] = useState(true); // 가입 테스트 하게 바꿨음
+    //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   const [birth, setBirth] = useState("");
-  const [gender, setGender] = useState("");
+  const [gender, setGender] = useState(""); // eslint-disable-line no-unused-vars
   
   // 패스워드 검증
   const [passwordValidation, setPasswordValidation] = useState({   // eslint-disable-line no-unused-vars
@@ -399,23 +401,24 @@ function SignupPage() {
         })
       })
       .then(res => {
-        if(res.status !== 200){
-          return  Swal.fire({
-            icon : 'error',
-            title : '회원가입',         // Alert 제목
-            text : "회원가입에 실패하였습니다.",
-            width: 300,  // Alert 내용 
-          });
-        }
-        Swal.fire({
+        if(res.status == 200){
+         Swal.fire({
           icon : 'success',
           title : '회원가입',         // Alert 제목
           text : "회원가입에 성공하였습니다.",
           width: 300,  // Alert 내용 
-        });
+        })
+        }
         navigate('/login', true);
         return res.json();
-      })
+      }) .catch(error => {
+        Swal.fire({
+          icon : 'error',
+          title : '회원 가입',         // Alert 제목
+          text : error,
+          width: 300,  // Alert 내용 
+        });
+      });
     }
     }
 	return (
@@ -610,8 +613,7 @@ function SignupPage() {
 											className="gender-input"
 											value="m"
                       defaultChecked
-                      checked={gender === "M"} // Check if gender is "M"
-                      onChange={() => setGender("M")}
+                      // checked={gender === "M"} // Check if gender is "M"
 										/>
 										<p>남성</p>
 									</label>
@@ -624,8 +626,7 @@ function SignupPage() {
 											id="female"
 											className="gender-input"
 											value="F"
-                      checked={gender === "F"} // Check if gender is "F"
-                      onChange={() => setGender("F")}
+                      // checked={gender === "F"} // Check if gender is "F"/
 										/>
 										<p>여성</p>
 									</label>

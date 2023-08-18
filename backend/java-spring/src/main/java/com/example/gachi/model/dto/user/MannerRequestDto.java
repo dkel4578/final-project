@@ -10,11 +10,11 @@ import lombok.Getter;
 public class MannerRequestDto {
     private Long id;
     private User user;
-    private Long userId;
+    private final Long userId;
     private User reviewer;
-    private Long reviewerId;
-    private Review review;
-    private long score;
+    private final Long reviewerId;
+    private final Review review;
+    private final long score;
     @Builder
     public Manner addMannerScore(User user, User reviewer){
         return Manner.builder()

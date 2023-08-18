@@ -7,8 +7,8 @@ import java.util.function.Function;
 public enum OAuth2Attributes {
     GOOGLE("google", (attributes) -> {
         UserProfile userProfile = new UserProfile();
-        userProfile.setNickname((String) attributes.get("name"));
-        userProfile.setEmail((String) attributes.get("email"));
+        userProfile.setName((String) attributes.get("name"));
+        userProfile.setLoginId((String) attributes.get("email"));
         return userProfile;
     });
 

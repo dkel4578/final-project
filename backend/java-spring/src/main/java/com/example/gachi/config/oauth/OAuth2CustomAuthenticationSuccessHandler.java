@@ -18,7 +18,8 @@ import java.time.Duration;
 @RequiredArgsConstructor
 @Component
 public class OAuth2CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
-    public static final String REDIRECT_URI = "http://localhost:3000/230724_practice/ouath2login/callback";
+    public static final String REDIRECT_URI = "http://localhost:3000/";
+    public static final String REDIRECT_SIGNUP_URL = "http://localhost:3000/changeInfo";
     public static final String REFRESH_TOKEN_COOKIE_NAME = "refresh_token";
     public static final Duration REFRESH_TOKEN_DURATION = Duration.ofDays(14);
     public static final Duration ACCESS_TOKEN_DURATION = Duration.ofMinutes(30);
@@ -27,15 +28,32 @@ public class OAuth2CustomAuthenticationSuccessHandler implements AuthenticationS
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
-        String loginId = (String) oAuth2User.getAttributes().get("email");
+        String loginId = (String) oAuth2User.getAttributes().get("loginId");
         User user = oAuth2CustomUserService.getUserByLoginId(loginId);
-        response.sendRedirect(UriComponentsBuilder.fromUriString(REDIRECT_URI)
-                .queryParam("accessToken", user.getAccessToken())
-                .queryParam("accessTokenExpireIn", user.getAccessTokenExpireIn())
-                .queryParam("refreshToken", user.getRefreshToken())
-                .queryParam("refreshTokenExpireIn", user.getRefreshTokenExpireIn())
-                .build()
-                .encode(StandardCharsets.UTF_8)
-                .toUriString());
+
+        if (user.getPhone() == null) {
+            String redirectUri = UriComponentsBuilder.fromUriString(REDIRECT_SIGNUP_URL)
+                    .queryParam("accessToken", user.getAccessToken())
+                    .queryParam("accessTokenExpireIn", user.getAccessTokenExpireIn())
+//                    .queryParam("refreshToken", user.getRefreshToken())
+//                    .queryParam("refreshTokenExpireIn", user.getRefreshTokenExpireIn())
+                    .build()
+                    .encode(StandardCharsets.UTF_8)
+                    .toUriString();
+
+            System.out.println("response>>>>>>>>>>>>>>>>" + redirectUri);
+        response.sendRedirect(redirectUri);
+            System.out.println("response>>>>>>>>>>>>>>>>");
+        }else {
+            response.sendRedirect(UriComponentsBuilder.fromUriString(REDIRECT_URI)
+                    .queryParam("accessToken", user.getAccessToken())
+                    .queryParam("accessTokenExpireIn", user.getAccessTokenExpireIn())
+                    .queryParam("refreshToken", user.getRefreshToken())
+                    .queryParam("refreshTokenExpireIn", user.getRefreshTokenExpireIn())
+                    .build()
+                    .encode(StandardCharsets.UTF_8)
+                    .toUriString());
+        }
+
     }
 }

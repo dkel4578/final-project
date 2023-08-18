@@ -4,67 +4,97 @@ import { useCookies } from 'react-cookie';
 import Swal from 'sweetalert2';
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as userActions } from "../store/modules/user";
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect, useLayoutEffect, useCallback } from "react"; // eslint-disable-line no-unused-vars
+import { useCookies } from "react-cookie";
+import Swal from "sweetalert2";
 
 import "../css/header.css";
 import "../script/custom.js";
-import '../css/variables.css';
-import '../css/total.css';
+import "../css/variables.css";
+import "../css/total.css";
 
 function Header() {
 	const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.user.user);
   console.log('userInfo', userInfo);
 
-	const [cookies, removeCookie] = useCookies(['token']);
-	const [nickname, setNickname] = useState('');
-	let isLogin = false;
-	const navigate = useNavigate();
+	const [cookies, setCookie, removeCookie] = useCookies(["token"]);
+	const [nickname, setNickname] = useState("");
+	const [isLogin, setIsLogin] = useState(false);
 
-	if(cookies.token != 'undefined'){
-		isLogin = true;
-	} else {
-		isLogin = false;
-	}
+  const navigate = useNavigate();
+	const cookieToken = cookies.token;
+
+	useEffect(() => {
+		if (!cookieToken) {
+			const accessToken = new URL(window.location.href).searchParams.get(
+				"accessToken"
+			);
+			console.log("accessToken >>>>> ", accessToken)
+			if (accessToken) {
+				const expireTime = new URL(window.location.href).searchParams.get(
+					"accessTokenExpireIn"
+				);
+				console.log("expireTime >>>>> ", expireTime)
+				const expireTimeDate = new Date(Number(expireTime));
+	
+				setCookie("token", accessToken, { expires: expireTimeDate, path: "/" });
+				setIsLogin(true); // 상태 업데이트를 여기서만 수행
+			}
+		} else {
+			setIsLogin(true); // 토큰이 이미 있는 경우에도 상태 업데이트
+		}
+	}, [cookieToken, setCookie]);
+
+	// if (cookies.token != "undefined") {
+	// 	setIsLogin(true); 
+	// } else {
+	// 	setIsLogin(false); 
+	// }
 
 	const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
 	useEffect(() => {
-		console.log("cookies"+cookies);
-		console.log("cookies token : "+cookies.token);
-		if(isLogin){
-			fetch('/api/user/me', {
-				method: 'GET',
+		console.log("cookies : " + cookies);
+		console.log("cookies token : " + cookies.token);
+		console.log("isLogin : ", isLogin);
+		if (isLogin && cookies.token) {
+			fetch("/api/user/me", {
+				method: "GET",
 				headers: {
-					"Content-Type" : jsonContent,
-					"Authorization" : "Bearer "+ cookies.token,
-				}
+					"Content-Type": jsonContent,
+					Authorization: "Bearer " + cookies.token,
+				},
 			})
-			.then(res => {
-				if(res){
-					console.log(res);
-					return res.json();
-				}
-			})
-			.then(data => {
-        console.log(data);
-        if(data){
-          setNickname(data.nickname);
-					dispatch(userActions.loginSaveAPI(data.id, data.nickname));
-        }
-      })
+				.then((res) => {
+					if (res) {
+						console.log(res);
+						return res.json();
+					}
+				})
+				.then((data) => {
+					console.log(data);
+					if (data.nickname) {
+						setNickname(data.nickname);
+            dispatch(userActions.loginSaveAPI(data.id, data.nickname));
+					}
+				});
+		} else {
+			setNickname(""); // 이 부분을 추가하여 nickname을 초기화합니다.
 		}
-	}, [isLogin]);
- 
-	const handleLogout = ( e ) => {
-		e.preventDefault();		
+	}, [isLogin, cookies]);
+
+	const handleLogout = (e) => {
+		e.preventDefault();
 		Swal.fire({
-			icon : 'success',
-			title : '로그아웃',         // Alert 제목
-			text : '로그아웃 완료',
-			width: 300,  // Alert 내용 
+			icon: "success",
+			title: "로그아웃", // Alert 제목
+			text: "로그아웃 완료",
+			width: 300, // Alert 내용
 		});
-		removeCookie('token');
+		removeCookie("token");
 		navigate("/", true);
-	}
+	};
 
 	return (
 		<div>
@@ -80,9 +110,9 @@ function Header() {
 						<div className="side-var">
 							<div className="login-area">
 								<i className="fa fa-unlock-alt" aria-hidden="true"></i>
-								{!isLogin && <Link to='/login'>로그인</Link>}
+								{!isLogin && <Link to="/login">로그인</Link>}
 								<i className="fa fa-angle-right" aria-hidden="true"></i>
-								{isLogin && <Link to='/myPage'> {nickname} 님 </Link>}
+								{isLogin && <Link to="/myPage"> {nickname} 님 </Link>}
 							</div>
 							<div className="categorys">
 								<div className="category-title">
@@ -133,12 +163,16 @@ function Header() {
 										<a href="#">술한잔할래요?</a>
 									</div>
 								</div>
-								{isLogin && <div className="category-title">
-									<div className="category-content">
-										<i className="fa fa-user-circle-o" aria-hidden="true"></i>
-										<a href="#" onClick={handleLogout}>로그아웃</a>
+								{isLogin && (
+									<div className="category-title">
+										<div className="category-content">
+											<i className="fa fa-user-circle-o" aria-hidden="true"></i>
+											<a href="#" onClick={handleLogout}>
+												로그아웃
+											</a>
+										</div>
 									</div>
-								</div>}
+								)}
 							</div>
 						</div>
 					</div>

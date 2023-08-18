@@ -50,6 +50,10 @@ public class UserController {
     //회원 가입
     @PostMapping("/signup")
     public ResponseEntity<UserResponseDto> signup(@RequestBody UserSignUpRequestDto userSignUpRequestDto){
+        System.out.println("dataname>>>>>>>>>>>>" + userSignUpRequestDto.getName());
+        if(userSignUpRequestDto.getName() == null){
+            throw new IllegalArgumentException("이름을 입력해주세요.");
+        }
         UserResponseDto userResponseDto = userService.signup(userSignUpRequestDto);
         return ResponseEntity.ok(userResponseDto);
 

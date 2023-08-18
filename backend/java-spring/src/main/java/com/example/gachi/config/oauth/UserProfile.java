@@ -11,17 +11,17 @@ import lombok.Setter;
 @Setter
 public class UserProfile {
     //    private String name;
-    private String email;
+    private String loginId;
     private String provider;
-    private String nickname;
+    private String name;
 
     public User loginUser() {
         return User.builder()
 //                .name(name)
-                .email(email)
+                .loginId(loginId)
 //                .provider(Provider.valueOf(provider))
                 .provider(provider)
-                .nickname(nickname)
+                .name(name)
                 .authority(Authority.USER)
                 .build();
     }
@@ -29,10 +29,10 @@ public class UserProfile {
     public User loginUser(JwtTokenDto jwtTokenDto) {
         return User.builder()
 //                .name(name)
-                .email(email)
+                .email(loginId)
 //                .provider(Provider.valueOf(provider))
                 .provider(provider)
-                .nickname(nickname)
+                .name(name)
                 .accessToken(jwtTokenDto.getAccessToken())
                 .accessTokenExpireIn(jwtTokenDto.getTokenExpiresIn())
                 .authority(Authority.USER)

@@ -66,8 +66,8 @@ function Calendar() {
   }, [events]);
 
   return (
-    <div className="App">
-      <div className="title">
+    <div className="calender-page">
+      <div className="calender-page-title">
         <h1 className="Date-march">
           <span className="small-text"></span> {year}
         </h1>
