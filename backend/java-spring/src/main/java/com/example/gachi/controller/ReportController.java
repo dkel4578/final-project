@@ -1,7 +1,7 @@
 package com.example.gachi.controller;
 
 import com.example.gachi.model.dto.Report.ReportRequestDto;
-import com.example.gachi.model.dto.Report.ReportResponseDto;
+import com.example.gachi.model.dto.board.ReportResponseDto;
 import com.example.gachi.service.board.ReportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

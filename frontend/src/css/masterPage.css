@@ -73,35 +73,13 @@ a {
 .board_list > div .top > div {
   font-weight: 600;
 }
-.board_list .ReportNumber {
-  width: 10%;
-  background-color: #2acf7d;
-  color: #ffffff;
-  font-weight: bold;
-}
-.board_list .ReportedDate {
-  width: 10%;
-  background-color: #2acf7d;
-  color: #ffffff;
-  font-weight: bold;
-}
-.board_list .Username {
-  width: 10%;
-  background-color: #2acf7d;
-  color: #ffffff;
-  font-weight: bold;
-}
-
-.board_list .Report {
-  width: 10%;
-  background-color: #2acf7d;
-  color: #ffffff;
-  font-weight: bold;
-}
 
 .tab-menu {
   flex: 1;
   font-size: 0.8em;
+  background-color: #2acf7d;
+  color: #ffffff;
+  font-weight: bold;
 }
 
 .board_list .SuspensionStatus {
@@ -127,10 +105,9 @@ a {
 }
 
 .board_list .Suspend {
-  background-color: #2acf7d;
-  color: #ffffff;
-  font-weight: bold;
+
 }
+
 
 /*아래는 리스트*/
 .master-list {
@@ -238,7 +215,7 @@ a {
   border-left: 1px solid #ddd;
 }
 .SuspendButton {
-  width: 70px;
+  width: 55px;
   padding: 10px;
   font-size: 1px;
   background-color: #9acd32; /* 변경된 배경색 */
@@ -257,7 +234,7 @@ a {
 }
 
 .UnsuspendButton {
-  width: 70px;
+  width: 55px;
   padding: 10px;
   font-size: 1px;
   background-color: #4169e1; /* 변경된 배경색 */
@@ -380,6 +357,9 @@ a {
 .master-btns{
   display: flex;
   gap: 3px;
+}
+.master-btn button{
+  padding: 0;
 }
 .SearchFunction{
   display: flex;

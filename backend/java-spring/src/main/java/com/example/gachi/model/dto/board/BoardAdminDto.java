@@ -21,8 +21,9 @@ public class BoardAdminDto {
     private int cnt;
     private LocalDateTime creatAt;
     private String delYN;
-    private User user;
     private Long userId;
+    private String userName;
+    private String userNickName;
 
 
     public BoardAdminDto(Board board)
@@ -36,5 +37,7 @@ public class BoardAdminDto {
         this.creatAt = board.getCreateAt();
         this.delYN = board.getDelYn();
         this.userId = board.getUser().getId();
+        this.userName = board.getUser().getName();
+        this.userNickName = board.getUser().getNickname();
     }
 }

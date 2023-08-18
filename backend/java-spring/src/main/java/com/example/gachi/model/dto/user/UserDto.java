@@ -19,6 +19,7 @@ public class UserDto {
     private String email;
     private String gender;
     private String status;
+    private String bannedYn;
     private String nickname;
     private String profileMessage;
     private LocalDate birth;
@@ -35,6 +36,7 @@ public class UserDto {
         this.phone = user.getPhone();
         this.email = user.getEmail();
         this.status = user.getStatus();
+        this.bannedYn = user.getBannedYn();
         this.gender = user.getGender();
         this.nickname = user.getNickname();
         this.profileMessage = user.getProfileMessage();
