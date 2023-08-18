@@ -5,11 +5,18 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 public class UpdateBoardRequestDto {
     private String title;
     private String content;
+
+    public UpdateBoardRequestDto(
+            String title,
+            String content
+            ){
+            this.title = title;
+            this.content = content;
+    }
 }

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -90,6 +91,17 @@ public class Board extends BaseEntity{
         this.delYn = delYn;
         this.user = user;
         this.cnt = 0;
+    }
+
+
+    public void updateBoard(String title,
+                           String content){
+        this.title = title;
+        this.content = content;
+    }
+
+    public void deleteBoard(String delYn){
+        this.delYn = delYn;
     }
 
 
