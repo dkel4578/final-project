@@ -13,10 +13,10 @@ import BoardListPage from './pages/BoardListPage';
 import BoardViewPage from './pages/BoardViewPage';
 import PasswordChangePage from './pages/PasswordChangePage';
 import Calnedar from './pages/Calendar';
+import ChatRoomListPage from './pages/ChatRoomListPage';
+import ChatPage from './pages/ChatPage';
 
 const queryClient = new QueryClient();
-
-
 
 function App() {
 
@@ -31,10 +31,12 @@ function App() {
           <Route path="/signup" element={<SignupPage/>}/>
           <Route path="/myPage" element={<MyPage/>}/>
           <Route path="/changeInfo" element={<ChangeInfo/>}/>
-            <Route path="/board" element={<BoardListPage/>}/>
+          <Route path="/board" element={<BoardListPage/>}/>
           <Route path="/board/view" element={<BoardViewPage/>}/>
           <Route path="/passwordChange" element={<PasswordChangePage/>}/>
           <Route path="/calendar" element={<Calnedar/>}/>
+          <Route path="/chat/room/list" element={<ChatRoomListPage />}/>
+          <Route path="/chat/room/list/:channelId" element={<ChatPage />}/>
         </Routes>
       </QueryClientProvider>
     </>

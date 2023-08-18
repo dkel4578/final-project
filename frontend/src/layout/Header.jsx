@@ -2,6 +2,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie'; 
 import Swal from 'sweetalert2';
+import { useDispatch, useSelector } from "react-redux";
+import { actionCreators as userActions } from "../store/modules/user";
 
 import "../css/header.css";
 import "../script/custom.js";
@@ -9,6 +11,10 @@ import '../css/variables.css';
 import '../css/total.css';
 
 function Header() {
+	const dispatch = useDispatch();
+  const userInfo = useSelector((state) => state.user.user);
+  console.log('userInfo', userInfo);
+
 	const [cookies, removeCookie] = useCookies(['token']);
 	const [nickname, setNickname] = useState('');
 	let isLogin = false;
@@ -42,21 +48,24 @@ function Header() {
         console.log(data);
         if(data){
           setNickname(data.nickname);
+					dispatch(userActions.loginSaveAPI(data.id, data.nickname));
         }
       })
 		}
 	}, [isLogin]);
  
 	const handleLogout = ( e ) => {
-		e.preventDefault();		Swal.fire({
+		e.preventDefault();		
+		Swal.fire({
 			icon : 'success',
 			title : '로그아웃',         // Alert 제목
 			text : '로그아웃 완료',
 			width: 300,  // Alert 내용 
 		});
 		removeCookie('token');
-		navigate("/", )
+		navigate("/", true);
 	}
+
 	return (
 		<div>
 			<header>
@@ -85,7 +94,7 @@ function Header() {
 								<div className="category-title">
 									<div className="category-content">
 										<i className="fa fa-comment" aria-hidden="true"></i>
-										<a href="#">채팅하기</a>
+										{isLogin ? <Link to={"/chat/room/list"}>채팅하기(후)</Link> : <a href="#">채팅하기(전)</a>}
 									</div>
 								</div>
 								<div className="category-title">
