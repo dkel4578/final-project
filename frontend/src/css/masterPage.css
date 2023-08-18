@@ -12,10 +12,8 @@ a {
   color: inherit;
 }
 .board_wrap {
-  width: 1200px;
+  width: 1440px;
   margin: 100px auto;
-}
-.board_title {
 }
 .board_title strong {
   font-size: 3rem;
@@ -82,31 +80,6 @@ a {
   font-weight: bold;
 }
 
-.board_list .SuspensionStatus {
-  text-align: left;
-  text-align: center;
-}
-.board_list .top .SuspensionStatus {
-  text-align: center;
-  background-color: #2acf7d;
-  color: #ffffff;
-  font-weight: bold;
-}
-.board_list .Start_Suspension {
-  background-color: #2acf7d;
-  color: #ffffff;
-  font-weight: bold;
-}
-.board_list .Date_Suspension {
-  background-color: #2acf7d;
-  color: #ffffff;
-  font-weight: bold;
-  height: 30px;
-}
-
-.board_list .Suspend {
-
-}
 
 
 /*아래는 리스트*/

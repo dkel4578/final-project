@@ -205,6 +205,7 @@ const AdminPage = () => {
             <li className="tab-menu">신고 한 유저</li>
             <li className="tab-menu">신고 유형</li>
             <li className="tab-menu">신고 처리 여부</li>
+            <li className="tab-menu">유형</li>
             <li className="tab-menu">신고 위치</li>
             <li className="tab-menu">신고버튼</li>
           </ul>
@@ -229,6 +230,9 @@ const AdminPage = () => {
               <li className="master-list-item">
                 {item.category}
               </li>
+              <li className="master-list-item">
+                {item.contentId}
+              </li>
               {item.bannedYn === "Y" &&
                 <li className="master-list-item">정지됨</li>
               }
@@ -247,17 +251,15 @@ const AdminPage = () => {
               <li className="tab-menu">ID</li>
               <li className="tab-menu">이름</li>
               <li className="tab-menu">닉네임</li>
-              <li className="tab-menu">성별</li>
-              <li className="tab-menu">전화번호</li>
-              <li className="tab-menu">이메일</li>
-              <li className="tab-menu">생년월일</li>
-              <li className="tab-menu">정지 여부</li>
-              <li className="tab-menu">신고버튼</li>
+              <li className="tab-menu">정지 사유</li>
+              <li className="tab-menu">시작일</li>
+              <li className="tab-menu">종료일</li>
+            <li className="tab-menu">신고버튼</li>
             </ul>
           }
           {/* 위에boardData 데이터 삽입 and filter이용해서 버튼검색 나눔 */}
-          {manageType === "report" &&
-            bannedUserList.filter(item => item.status ==="U").map((item) => (
+          {manageType === "ban" &&
+            bannedUserList.filter(item => item.bannedYn ==="Y").map((item) => (
               <ul key={item.id} className="master-list">
                 <li className="master-list-item">
                   {item.loginId}
@@ -266,31 +268,17 @@ const AdminPage = () => {
                   {item.name}
                 </li>
                 <li className="master-list-item">
-                  {/* <a href={`view.html?id=${item.Username}`}>{item.Username}</a> */}
-                  {item.nickname}
-                </li>
-                {item.gender === "M" &&
-                  <li className="master-list-item">남성</li>
-                }
-                {item.gender === "F" &&
-                  <li className="master-list-item">여성</li>
-                }
-                
-                <li className="master-list-item">
-                  {item.phone}
+                  {item.nickName}
                 </li>
                 <li className="master-list-item">
-                  {item.email}
+                  {item.banReason}
                 </li>
                 <li className="master-list-item">
-                  {item.birth}
+                  {item.banStartAt}
                 </li>
-                {item.bannedYn === "Y" &&
-                  <li className="master-list-item">정지됨</li>
-                }
-                {item.bannedYn === "N" &&
-                  <li className="master-list-item">정상</li>
-                }
+                <li className="master-list-item">
+                  {item.banEndAt}
+                </li>
                 <li className="master-list-item master-btns">
                   <button className="SuspendButton" onClick={handleSuspendButtonClick}>정지</button>
                   <button className="UnsuspendButton">정지 해제</button>
@@ -300,53 +288,33 @@ const AdminPage = () => {
 
           {manageType === "board" &&
             <ul className="top">
-            <li className="tab-menu">ID</li>
-            <li className="tab-menu">이름</li>
-            <li className="tab-menu">닉네임</li>
-            <li className="tab-menu">성별</li>
-            <li className="tab-menu">전화번호</li>
-            <li className="tab-menu">이메일</li>
-            <li className="tab-menu">생년월일</li>
-            <li className="tab-menu">정지 여부</li>
-            <li className="tab-menu">신고버튼</li>
+            <li className="tab-menu">게시판 종류</li>
+            <li className="tab-menu">제목</li>
+            <li className="tab-menu">작성자</li>
+            <li className="tab-menu">작성일</li>
+            <li className="tab-menu">조회수</li>
+            <li className="tab-menu">삭제버튼</li>
           </ul>
         }
         {/* 위에boardData 데이터 삽입 and filter이용해서 버튼검색 나눔 */}
         {manageType === "board" &&
-          boardList.filter(item => item.status ==="U").map((item) => (
+          boardList.filter(item => item.delYn ==="N").map((item) => (
             <ul key={item.id} className="master-list">
               <li className="master-list-item">
-                {item.loginId}
+                {item.kind}
               </li>
               <li className="master-list-item">
-                {item.name}
+                {item.title}
               </li>
               <li className="master-list-item">
-                {/* <a href={`view.html?id=${item.Username}`}>{item.Username}</a> */}
-                {item.nickname}
-              </li>
-              {item.gender === "M" &&
-                <li className="master-list-item">남성</li>
-              }
-              {item.gender === "F" &&
-                <li className="master-list-item">여성</li>
-              }
-              
-              <li className="master-list-item">
-                {item.phone}
+                {item.userNickName}
               </li>
               <li className="master-list-item">
-                {item.email}
+                {item.createAt}
               </li>
               <li className="master-list-item">
-                {item.birth}
+                {item.cnt}
               </li>
-              {item.bannedYn === "Y" &&
-                <li className="master-list-item">정지됨</li>
-              }
-              {item.bannedYn === "N" &&
-                <li className="master-list-item">정상</li>
-              }
               <li className="master-list-item master-btns">
                 <button className="SuspendButton" onClick={handleSuspendButtonClick}>정지</button>
                 <button className="UnsuspendButton">정지 해제</button>
