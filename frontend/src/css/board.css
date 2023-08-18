@@ -1,7 +1,7 @@
-.coffee-board{
+.board-place{
     width: 360px;
     margin: auto;
-    padding: 0 10px;
+    padding: 0 12.5px;
 }
 .board-kind{
     display: flex;
@@ -9,6 +9,19 @@
     align-items: center;
     margin: 20px 0;
     gap: 10px;
+}
+.board-notice{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    gap: 10px;
+}
+.board-notice a{
+    font-size: 2em;
+}
+.board-notice .bi{
+    font-size: 1.5em;
 }
 .board-kind a{
    font-size: 0.9em;
@@ -51,11 +64,11 @@
     transition: 0.4s;
 }
 .search input[type=text]{
- width: 100%;
- padding: 10px 30px;
- font-size: 1.6em;
- border: none;
- border-bottom: 2px solid var(--maincolor);
+    width: 100%;
+    padding: 10px 30px;
+    font-size: 1.5em;
+    border: none;
+    border-bottom: 2px solid var(--maincolor);
 }
 .search input[type=text]::placeholder{
     color: #474747;
@@ -76,7 +89,6 @@
 }
 .write-button a .fa{
     font-size: 2.5em;
-    color: var(--silver-black);
     transition: 0.4s;
 }
 .write-button a:hover .fa{
@@ -90,6 +102,7 @@
     /* border: 1px solid red; */
     flex-direction: column;
     gap: 15px;
+    
 }
 .board-content{
     width: 100%;
@@ -97,6 +110,7 @@
     align-items: center;
     border-bottom: 1px solid #ccc;
     padding-bottom: 10px;
+    gap: 10px;
 }
 .board-info{
     flex: 4;
@@ -118,7 +132,7 @@
 }
 .board-title a{
     font-weight: bold;
-    font-size: 1.7em;
+    font-size: 1.5em;
     vertical-align: middle;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -126,18 +140,10 @@
     width: 190px;
 
 }
-.board-title p{
-    font-weight: bold;
-    font-size: 1.7em;
-    vertical-align: middle;
-    white-space: nowrap;
-    width: 190px;
-
-}
 /* .board-user-log */
 .board-user-log{}
 .board-user-log span{
-    font-size: 0.9em;
+    font-size: 0.85em;
 }
 .board-comment{
     display: flex;
@@ -183,7 +189,4 @@
 .paging-arrow{
     font-size: 1.3em;
     transform: translateY(3.5px);
-}
-.content-height{
-    height : 200px;
 }

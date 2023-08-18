@@ -1,0 +1,132 @@
+.write-post{
+
+}
+.write-post-inner{
+  padding: 20px;
+}
+.write-post-title{
+  font-size: 2em;
+  font-weight: bold;
+  letter-spacing: 2px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+/* write-post-contents */
+.write-post-contents{
+  margin: 20px 0;
+  border-top: 2px solid var(--maincolor);
+  border-bottom: 2px solid  var(--maincolor);
+  padding: 20px 0;
+}
+.select-board-box,.write-title-box{
+  margin-bottom: 15px;
+}
+/* 셀렉트 박스 */
+.select-board-box #board-select{
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 5px 0;
+  border: none;
+  border-bottom: 2px solid var(--maincolor);
+  width: 55%;
+}
+/* 게시글 제목입력 */
+.write-title{
+  width: 100%;
+  border: 2px solid var(--maincolor);
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 1.3em;
+  letter-spacing: 2px;
+  transition: 0.4s;
+}
+.write-title::placeholder{
+  transition: 0.5s;
+}
+.write-title:focus{
+  box-shadow: 0 0 8px var(--maincolor);
+}
+.write-title:focus::placeholder{
+  opacity: 0;
+}
+/* write-post-btns */
+.write-post-btn-place{
+  margin-top: 15px;
+  text-align: center;
+}
+.write-post-btn{
+  color: white;
+  background-color: var(--maincolor);
+  font-size: 2em;
+  border-radius: 30px;
+  padding: 5px 0;
+  width:  90%;
+  transition: 0.4s;
+}
+.write-post-btn:hover{
+  background-color: var(--forestgreen);
+  box-shadow: 0 0 10px var(--forestgreen);
+}
+/* write-post-map-place */
+.write-post-map-place{}
+.write-post-map-place h2{
+  letter-spacing: 2px;
+}
+
+
+
+/* write-post-content-btns */
+.write-post-content-btns{
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+.write-post-content-btns input[type=button]{
+  cursor: pointer;
+  padding: 10px 20px;
+  font-size: 1.1em;
+  color: white;
+  border-radius: 20px;
+  transition: 0.4s;
+}
+.write-post-content-btns input[type=button]{
+  background-color: var(--remonblue);
+}
+.write-post-content-btns input[type=button]:hover{
+  background-color: royalblue;
+  box-shadow: 0 0 10px rgba(65, 105, 225, 0.808);
+}
+.write-post-content-btns-place{
+  margin-top: 15px;
+  text-align: center;
+}
+
+/* write-post-text-place */
+.write-post-text-place{
+  margin-bottom: 15px;
+}
+.write-post-text-place #write-post{
+  width: 100%;
+  border: 2px solid var(--maincolor);
+  border-radius: 5px;
+  font-size: 1.3em;
+  letter-spacing: 2px;
+  transition: 0.4s;
+  padding: 10px;
+}
+#write-post::placeholder{
+  transition: 0.4s;
+}
+#write-post:focus{
+  box-shadow: 0 0 10px var(--maincolor);
+}
+#write-post:focus::placeholder{
+  opacity: 0;
+}
+
+
+
+

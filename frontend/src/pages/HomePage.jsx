@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import "../css/index.css";
 import "../css/total.css";
 import "../css/variables.css";
@@ -46,22 +46,22 @@ function HomePage() {
         <div className="category-items">
 
             <div className="category-item">
-              <Link to={"/board"}>
+              <Link to={"/board/C"}>
                 <img src="./images/cofee-together.jpg" alt="커피한잔 할래요"/>
               </Link>
             </div>
             <div className="category-item">
-              <Link to={"/board/trip"}>
+              <Link to={"/board/T"}>
                 <img src="./images/trip-together.jpg" alt="여행같이 할래요"/>
               </Link>
             </div>
             <div className="category-item">
-              <Link to={"/board/food"}>
+              <Link to={"/board/F"}>
                 <img src="./images/eat-together.jpg" alt="식사같이 할래요"/>
               </Link>
             </div>
             <div className="category-item">
-              <Link to={"/board/drink"}>
+              <Link to={"/board/A"}>
                 <img src="./images/drink-together.jpg" alt="술한잔 할래요"/>
               </Link>
             </div>

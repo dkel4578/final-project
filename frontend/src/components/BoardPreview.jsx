@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types'; // prop-types를 임포트
 import dayjs from 'dayjs';
 
-const BoardPreview = ({ boardInfo }) => {
+const BoardPreview = ({ boardInfo,kind }) => {
 
     //console.log("BoardPreview > boardInfo =====> ", boardInfo)
 
@@ -11,7 +11,8 @@ const BoardPreview = ({ boardInfo }) => {
         <li className="board-content" key={boardInfo.id}>
             <div className="board-info">
                 <div className="board-title">
-                    <span>커피한잔할래요</span>
+                    {kind === 'C' &&  <span>커피한잔할래요</span>} {/* 커피*/}
+
                     <a href={`/board/view?id=${boardInfo.id}`}>{boardInfo.title}</a>
                 </div>
                 <div className="board-user-log">
@@ -35,6 +36,7 @@ BoardPreview.propTypes = {
         creatAt: PropTypes.string.isRequired,
         cnt: PropTypes.number.isRequired,
     }).isRequired,
+    kind: PropTypes.string.isRequired, // kind 프로퍼티 추가
 };
 
 export default BoardPreview;
