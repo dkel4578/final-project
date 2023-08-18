@@ -114,10 +114,13 @@ public class UserService {
         System.out.println(user);
         String userLoginId = user.get().getLoginId();
 
-
         //        userLoginId = user
         return userLoginId;
     }
 
+    public User getUserById(Long uid){
+        Optional<User> user = userRepository.findById(uid);
 
+        return user.get();
+    }
 }

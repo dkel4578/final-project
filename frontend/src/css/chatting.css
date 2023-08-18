@@ -1,0 +1,153 @@
+form {
+  background: white;
+  position: fixed;
+  bottom: 0;
+  /* width: 100%; */
+  border-top: 1px solid gray;
+  display : table;
+}
+
+#msgList {
+  height: 100%;
+  margin-bottom: 52px;
+  padding: 0;
+  overflow: auto;
+  padding: 1rem;
+}
+
+.msg {
+  background-color: #bdf;
+  /* border:2px solid #1bf; */
+  padding:0.5em;
+  line-height: 1.5em;
+  border-radius:0.2em;
+  -moz-border-radius: 0.2em;
+  -webkit-border-radius: 0.2em;
+  margin-top:0px;
+  margin-bottom: 10px;
+}
+
+#msgList .other-msg {
+  position: relative;
+  max-width:70%;
+  display: block;
+  float: right;
+  clear: both;
+  word-wrap: break-word;
+}
+
+#msgList .my-msg {
+  position: relative;
+  max-width: 70%;
+  display: block;
+  float: left;
+  clear: both;
+  word-wrap: break-word;
+}
+
+#user-entrace {
+  background-color: rgb(71, 224, 173);
+  text-align:center;
+  clear : both;
+  margin-top:0px;
+  margin-bottom:10px;
+}
+
+.my-entrace {
+  background-color: rgba(229, 231, 67, 0.986);
+  text-align:center;
+  clear : both;
+  margin-top:0px;
+  margin-bottom:10px;
+}
+
+.user-out {
+  background-color: thistle;
+  text-align:center;
+  clear : both;
+  margin-top:0px;
+  margin-bottom:10px;
+}
+
+.user-id {
+  float: left;
+  clear: both;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.my-msg-time {
+  position: absolute;
+  bottom: 10px;
+  right: 100%;
+  margin-right:5px;
+  min-width: 60px;
+  font-size: 12px;
+  text-align: right;
+}
+
+.other-msg-time {
+  position: absolute;
+  bottom: 10px;
+  left: 100%;
+  margin-left:5px;
+  min-width: 60px;
+  font-size: 12px;
+  text-align: left;
+}
+
+#send-btn {
+  display : table-cell;
+  vertical-align: bottom;
+  padding-left:10px;
+}
+
+#contents {
+  width: 100%;
+  display : table-cell;
+  vertical-align: middle;
+}
+
+#msg-send-part {
+  display: table-row;
+}
+
+.today-date {
+	display: flex;
+	flex-basis: 100%;
+	align-items: center;
+	color: rgba(0, 0, 0, 0.35);
+	font-size: 15px;
+  margin: 8px 0px;
+  clear: both;
+}
+.today-date::before,
+.today-date::after {
+	content: "";
+	flex-grow: 1;
+	background: rgba(0, 0, 0, 0.35);
+	height: 1px;
+	font-size: 0px;
+	line-height: 0px;
+	/* margin: 0px 16px; */
+}
+
+.today-date::before {
+ margin-right: 7px; 
+}
+
+.today-date::after {
+  margin-left: 7px;
+}
+
+pre {
+  margin : 0 0;
+  font-family: 'Nanum Gothic', sans-serif;
+  white-space: pre-wrap;
+}
+
+ul {
+  list-style-type : none;
+  padding-inline-start : 0;
+}
