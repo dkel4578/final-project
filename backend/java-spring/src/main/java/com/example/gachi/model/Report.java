@@ -25,9 +25,6 @@ public class Report extends BaseEntity{
     private BanReason reportType;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reporter_id", nullable = false)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private User reporter;

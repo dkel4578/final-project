@@ -8,10 +8,7 @@ import com.example.gachi.service.FileUploadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -41,7 +38,7 @@ public class FileUploadController {
             UUID uuid = UUID.randomUUID();
             String imgName = uuid+"_"+orgName;
 
-            String imgSrc = "D:\\finalProject\\final-project\\frontend\\public\\profileImg\\"+imgName;
+            String imgSrc = "D:\\project\\finalproject\\final-project\\frontend\\public\\profileImg\\"+imgName;
 
             Optional<User> user =  userRepository.findById(id);
 
