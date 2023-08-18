@@ -24,7 +24,6 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         registry.setApplicationDestinationPrefixes("/pub");
     }
 
-    // 새로 추가
 //    @Override
 //    public void configureClientInboundChannel(ChannelRegistration registration) {
 //        registration.interceptors(new WebSocketFilterChannelInterceptor());

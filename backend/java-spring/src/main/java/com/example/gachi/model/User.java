@@ -115,10 +115,10 @@ public class User extends BaseEntity{
     @ToString.Exclude
     private List<Report> reports;
 
-    @OneToMany
-    @JoinColumn(name = "user_id")
-    @ToString.Exclude
-    private List<ChatRoom> chatRoomList;
+//    @OneToMany
+//    @JoinColumn(name = "room_id")
+//    @ToString.Exclude
+//    private List<ChatRoom> chatRoomList;
 
     public User update(
             String  accessToken,

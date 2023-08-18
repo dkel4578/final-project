@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class ChatRoomJoin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "join_id")
+    @Column(updatable = false)
     private Long id;
 
     @ManyToOne

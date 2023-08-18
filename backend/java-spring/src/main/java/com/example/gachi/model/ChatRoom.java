@@ -14,7 +14,7 @@ import java.util.List;
 public class ChatRoom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "room_id")
+    @Column(updatable = false)
     private Long id;
 
     @Column(nullable = false)
@@ -22,7 +22,7 @@ public class ChatRoom {
 
     // 방장(방 만든 사람)
     @ManyToOne
-    @JoinColumn(name = "room_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL)
