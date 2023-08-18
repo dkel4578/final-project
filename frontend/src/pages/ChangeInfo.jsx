@@ -71,7 +71,7 @@ function ChangeInfo() {
 	const [nickname, setNickname] = useState(""); // eslint-disable-line no-unused-vars
 	const [email, setEmail] = useState("");
 	const [name, setName] = useState(""); // eslint-disable-line no-unused-vars
-	const [gender, setGender] = useState(""); // eslint-disable-line no-unused-vars
+	const [gender, setGender] = useState("M"); // eslint-disable-line no-unused-vars
 	const [phone, setPhone] = useState(""); // eslint-disable-line no-unused-vars
 	const [profileMessage, setProfileMessage] = useState(""); // eslint-disable-line no-unused-vars
 	const [birth, setBirth] = useState(""); // eslint-disable-line no-unused-vars
