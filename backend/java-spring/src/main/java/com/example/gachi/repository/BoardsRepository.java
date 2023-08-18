@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+    //게시글 가져오기 (검색 포함)
     @Repository
     public interface BoardsRepository extends JpaRepository<Board, Long> {
 

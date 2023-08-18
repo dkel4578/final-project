@@ -9,12 +9,17 @@ import '../css/total.css';
 import '../css/board.css';
 import '../css/variables.css';
 
+
+
 function BoardListForm3() { // Receive the 'kind' prop
   const { kind } = useParams(); // kind 값을 추출
   console.log("kind:  =============> ",kind);
 
+  //************************
+  // enum 유형으로 설정
+  //************************
   BoardListForm3.propTypes = {
-    kind: PropTypes.oneOf(['N', 'Q', 'F', 'C', 'A', 'T']).isRequired, // enum 유형으로 설정
+    kind: PropTypes.oneOf(['N', 'Q', 'F', 'C', 'A', 'T']).isRequired,
   };
 
   let [boardList, setBoardList] = useState([]);
@@ -26,8 +31,8 @@ function BoardListForm3() { // Receive the 'kind' prop
   console.log("searchWord : ", searchWord);
 
   /*
-  * 서버에 접속하여 데이터 가져오기
-  *
+  * 서버에 접속하여 게시글 정보 가져오기
+  * 2023.8.16
   * */
   const fetchBoardList = async (lastBoardId, pageNumber, searchWord) => {
     try {
@@ -152,7 +157,10 @@ function BoardListForm3() { // Receive the 'kind' prop
               </div>
               <div className="write-button">
                 <a href="#none">
-                  <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
+                  <Link to="/board/write">
+                  <i className="bi bi-pencil-square"></i>
+                  </Link>
+
                 </a>
               </div>
             </div>

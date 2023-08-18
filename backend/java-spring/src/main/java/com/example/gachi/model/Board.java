@@ -36,7 +36,7 @@ public class Board extends BaseEntity{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
-    private User userId;
+    private User user;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name="board_id")
@@ -67,7 +67,7 @@ public class Board extends BaseEntity{
         this.delYn = delYn;
     }
     public void setUser(User user) {
-        this.userId = userId;
+        this.user = user;
     }
 
     public Board update(String title, String content) {
@@ -83,11 +83,12 @@ public class Board extends BaseEntity{
     }
 
     @Builder
-    public Board(Kind kind, String title, String content, User user) {
+    public Board(Kind kind, String title, String content, String delYn, User user) {
         this.kind = kind;
         this.title = title;
         this.content = content;
         this.delYn = delYn;
+        this.user = user;
         this.cnt = 0;
     }
 

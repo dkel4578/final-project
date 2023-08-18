@@ -32,9 +32,10 @@ public class BoardService {
     //게시판 저장
     public Board save(AddBoardRequestDto addBoardRequestDto) throws NotFoundException{
         System.out.println("addBoardRequestDto: ---------------=>"  +  addBoardRequestDto);
-        User userEntity = userRepository.findByEmail(addBoardRequestDto.getEmail()).orElseThrow(() -> new NotFoundException("User not found444444"));
-        return boardRepository.save(addBoardRequestDto.toEntity(userEntity.getId()));
-    }
+        User userEntity = userRepository.findById(addBoardRequestDto.getUserId()).orElseThrow(() -> new NotFoundException("User not found444444"));
+        Board board = addBoardRequestDto.toEntity(userEntity);
+        return boardRepository.save(board);
+   }
 
     //글 상세 정보 가져오기
     public Board getBoard(long boardId) {
@@ -42,7 +43,7 @@ public class BoardService {
     }
 
 
-    //글 목록 가져오기
+    //게시글 목록 가져오기 (검색 포함)
     public List<BoardResponseDto> fetchBoardPagesBy(
             Long lastBoardId,
             int size,

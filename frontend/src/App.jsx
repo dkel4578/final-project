@@ -11,19 +11,17 @@ import MyPage from './pages/MyPage';
 import ChangeInfo from './pages/ChangeInfo';
 import BoardListPage from './pages/BoardListPage';
 import BoardViewPage from './pages/BoardViewPage';
+import BoardWritePage from './pages/BoardWritePage';
 
 
 const queryClient = new QueryClient();
 
-
-
 function App() {
-
 
 
   return (
     <>
-      <Header/>
+      <Header />
       <QueryClientProvider client={queryClient}>
         <Routes>
           <Route path="/" element={<HomePage/>}/>
@@ -34,6 +32,7 @@ function App() {
           <Route path="/changeInfo" element={<ChangeInfo/>}/>
           <Route path="/board/:kind" element={<BoardListPage />}/>
           <Route path="/board/view" element={<BoardViewPage/>}/>
+          <Route path="/board/write" element={<BoardWritePage />}/>
 
         </Routes>
       </QueryClientProvider>
