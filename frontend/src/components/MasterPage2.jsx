@@ -71,14 +71,14 @@ const MasterPage2 = () => {
     setShowManageUsers(true);
     // setShowUserBoard(false)
   }
-// 유저 게시판만 눌리게 설정
-    const goToUserBoard = () => {
-      setShowReportedUsers(false);
-      setShowSuspendedUsers(false);
-      setShowManageUsers(false);
-      // setShowUserBoard(true);
-  
-};
+  // 유저 게시판만 눌리게 설정
+  const goToUserBoard = () => {
+    setShowReportedUsers(false);
+    setShowSuspendedUsers(false);
+    setShowManageUsers(false);
+    // setShowUserBoard(true);
+
+  };
 
   //모달창
   const [showSuspendModal, setShowSuspendModal] = useState(false);
@@ -92,6 +92,8 @@ const MasterPage2 = () => {
     // 팝업을 닫을 때 호출되는 함수
     setShowSuspendModal(false);
   };
+  
+  
 
   return (
     <div className="board_wrap">
@@ -107,22 +109,29 @@ const MasterPage2 = () => {
         <button className="ManageUsers" onClick={goToManageUsers}>
           관리 대상자 유저
         </button>
-        <button className="UserBoard" onClick={goToUserBoard}> 
+        <button className="UserBoard" onClick={goToUserBoard}>
           유저 게시판
         </button>
-      </div>
-      <div className="SearchFunction">
-        <label >카테고리</label>
-        <select>
-          <option value="">전체</option>
-          <option value="">신고된 유저</option>
-          <option value="">활동정지 유저</option>
-          <option value="">관리대상자 유저</option>
-          <option value="">유저 게시판</option>
-          
-        </select>
+        <div className="master-select-search">
+          <div className="master-search">
+            <input type="text" placeholder="검색어를 입력하세요" className="master-search-box"></input>
+            <button className="master-search-btn">검색</button>
+          </div>
+          <div className="master-select-box">
+            <span className="master-select-box-span">카테고리:</span>
+            <select className="master-select-options">
+              <option value="">전체</option>
+              <option value="">신고된 유저</option>
+              <option value="">활동정지 유저</option>
+              <option value="">관리대상자 유저</option>
+              <option value="">유저 게시판</option>
+            </select>
+          </div>
+        </div>
       </div>
 
+      <div>
+      </div>
       <div className="board_list_wrap">
         <div className="board_list">
           <ul className="top">
@@ -137,7 +146,7 @@ const MasterPage2 = () => {
           </ul>
           {/* 위에boardData 데이터 삽입 and filter이용해서 버튼검색 나눔 */}
           {showReportedUsers &&
-  boardData.filter(item => item.SuspensionStatus === "N" || item.SuspensionStatus2 === "Y" || item.SuspensionStatus3 === "관리대상").map((item) => (
+            boardData.filter(item => item.SuspensionStatus === "N" || item.SuspensionStatus2 === "Y" || item.SuspensionStatus3 === "관리대상").map((item) => (
               <ul key={item.ReportNumber} className="master-list">
                 <li className="master-list-item ReportNumber-list">
                   {item.ReportNumber}
@@ -163,69 +172,69 @@ const MasterPage2 = () => {
                   <button className="UnsuspendButton">정지 해제</button>
                 </li>
               </ul>
-                ))}
-                
-              
-              
-{showSuspendedUsers&&
+            ))}
+
+
+
+          {showSuspendedUsers &&
             boardData2.filter(item => item.SuspensionStatus2 === "Y").map((item) => (
 
-            <ul key={item.ReportNumber2} className="master-list">
-            <li className="master-list-item ReportNumber-list">
-              {item.ReportNumber2}
-            </li>
-            <li className="master-list-item ReportedDate-list">
-              {item.ReportedDate2}
-            </li>
-            <li className="master-list-item Username-list">
-                <a href={`view.html?id=${item.Username}`}>{item.Username2}</a>
-              </li>
-            <li className="master-list-item Report-list">{item.Report2}</li>
- <li style={{ color: "red" }} className="master-list-item SuspensionStatus-list">
+              <ul key={item.ReportNumber2} className="master-list">
+                <li className="master-list-item ReportNumber-list">
+                  {item.ReportNumber2}
+                </li>
+                <li className="master-list-item ReportedDate-list">
+                  {item.ReportedDate2}
+                </li>
+                <li className="master-list-item Username-list">
+                  <a href={`view.html?id=${item.Username}`}>{item.Username2}</a>
+                </li>
+                <li className="master-list-item Report-list">{item.Report2}</li>
+                <li style={{ color: "red" }} className="master-list-item SuspensionStatus-list">
                   {item.SuspensionStatus2}
                 </li>
-            <li className="master-list-item Start_Suspension-list">
-              {item.Start_Suspension2}
-            </li>
-            <li className="master-list-item 정지끝남">
-              {item.Date_Suspension2}
-            </li>
-            <li className="master-list-item master-btns">
-              <button className="SuspendButton" onClick={handleSuspendButtonClick}>정지</button>
-              <button className="UnsuspendButton">정지 해제</button>
-            </li>
-          </ul>
-        ))}
-           
-         
-           {showManageUsers &&
-  boardData3.filter(item =>  item.SuspensionStatus3 === "관리대상").map((item) => (
-    <ul key={item.ReportNumber3} className="master-list">
-      <li className="master-list-item ReportNumber-list">
-        {item.ReportNumber3}
-      </li>
-      <li className="master-list-item ReportedDate-list">
-        {item.ReportedDate3}
-      </li>
-      <li className="master-list-item Username-list">
-        <a href={`view.html?id=${item.Username3}`}>{item.Username3}</a>
-      </li>
-      <li className="master-list-item Report-list">{item.Report3}</li>
-      <li style={{ color: "green" }} className="master-list-item SuspensionStatus-list">
-        {item.SuspensionStatus3}
-      </li>
-      <li className="master-list-item Start_Suspension-list">
-        {item.Start_Suspension3}
-      </li>
-      <li className="master-list-item 정지끝남">
-        {item.Date_Suspension3}
-      </li>
-      <li className="master-list-item master-btns">
-        <button className="SuspendButton" onClick={handleSuspendButtonClick}>정지</button>
-        <button className="UnsuspendButton">정지 해제</button>
-      </li>
-    </ul>
-  ))}
+                <li className="master-list-item Start_Suspension-list">
+                  {item.Start_Suspension2}
+                </li>
+                <li className="master-list-item 정지끝남">
+                  {item.Date_Suspension2}
+                </li>
+                <li className="master-list-item master-btns">
+                  <button className="SuspendButton" onClick={handleSuspendButtonClick}>정지</button>
+                  <button className="UnsuspendButton">정지 해제</button>
+                </li>
+              </ul>
+            ))}
+
+
+          {showManageUsers &&
+            boardData3.filter(item => item.SuspensionStatus3 === "관리대상").map((item) => (
+              <ul key={item.ReportNumber3} className="master-list">
+                <li className="master-list-item ReportNumber-list">
+                  {item.ReportNumber3}
+                </li>
+                <li className="master-list-item ReportedDate-list">
+                  {item.ReportedDate3}
+                </li>
+                <li className="master-list-item Username-list">
+                  <a href={`view.html?id=${item.Username3}`}>{item.Username3}</a>
+                </li>
+                <li className="master-list-item Report-list">{item.Report3}</li>
+                <li style={{ color: "green" }} className="master-list-item SuspensionStatus-list">
+                  {item.SuspensionStatus3}
+                </li>
+                <li className="master-list-item Start_Suspension-list">
+                  {item.Start_Suspension3}
+                </li>
+                <li className="master-list-item 정지끝남">
+                  {item.Date_Suspension3}
+                </li>
+                <li className="master-list-item master-btns">
+                  <button className="SuspendButton" onClick={handleSuspendButtonClick}>정지</button>
+                  <button className="UnsuspendButton">정지 해제</button>
+                </li>
+              </ul>
+            ))}
 
         </div>
         {showSuspendModal && (
