@@ -1,4 +1,4 @@
-package com.example.gachi.model.dto.Report;
+package com.example.gachi.model.dto.board;
 
 import com.example.gachi.model.Report;
 import com.example.gachi.model.User;

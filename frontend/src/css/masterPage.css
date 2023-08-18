@@ -1,0 +1,392 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+ul,
+li {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+.board_wrap {
+  width: 1200px;
+  margin: 100px auto;
+}
+.board_title {
+  margin-bottom: 30px;
+}
+.board_title strong {
+  font-size: 3rem;
+}
+.board_title p {
+  margin-top: 5px;
+  font-size: 1.4rem;
+}
+.bt_wrap {
+  margin-top: 30px;
+  font-size: 0;
+  text-align: center;
+}
+.bt_wrap a {
+  padding: 10px 20px;
+  font-size: 1px;
+  background-color: #2acf7d; /* 변경된 배경색 */
+  color: rgb(255, 255, 255);
+  border: none;
+  cursor: pointer;
+  transition: 0.4s;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.bt_wrap a:hover {
+  background-color: #199b5a; /* 변경된 배경색 */
+  color: #000000;
+}
+
+.bt_wrap a .on {
+  background-color: #000;
+  color: #fff;
+}
+.board_list {
+  width: 100%;
+  border-top: 1px solid #2acf7d;
+}
+.board_list > div {
+  border-bottom: 1px solid #ddd;
+  font-size: 0px;
+}
+.board_list > div.top {
+  border-bottom: 1px solid #999;
+  display: flex;
+}
+
+.board_list > div > div {
+  display: inline-block;
+  padding: 15px 0;
+  text-align: center;
+  font-size: 15px;
+}
+.board_list > div .top > div {
+  font-weight: 600;
+}
+.board_list .ReportNumber {
+  width: 10%;
+  background-color: #2acf7d;
+  color: #ffffff;
+  font-weight: bold;
+}
+.board_list .ReportedDate {
+  width: 10%;
+  background-color: #2acf7d;
+  color: #ffffff;
+  font-weight: bold;
+}
+.board_list .Username {
+  width: 10%;
+  background-color: #2acf7d;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.board_list .Report {
+  width: 10%;
+  background-color: #2acf7d;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.tab-menu {
+  flex: 1;
+  font-size: 0.8em;
+}
+
+.board_list .SuspensionStatus {
+  text-align: left;
+  text-align: center;
+}
+.board_list .top .SuspensionStatus {
+  text-align: center;
+  background-color: #2acf7d;
+  color: #ffffff;
+  font-weight: bold;
+}
+.board_list .Start_Suspension {
+  background-color: #2acf7d;
+  color: #ffffff;
+  font-weight: bold;
+}
+.board_list .Date_Suspension {
+  background-color: #2acf7d;
+  color: #ffffff;
+  font-weight: bold;
+  height: 30px;
+}
+
+.board_list .Suspend {
+  background-color: #2acf7d;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+/*아래는 리스트*/
+.master-list {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.master-list-item {
+  flex: 5px;
+}
+
+.ReportedUser {
+  padding: 10px 20px;
+  font-size: 1px;
+  background-color: #2acf7d; /* 변경된 배경색 */
+  color: rgb(255, 255, 255);
+  border: none;
+  cursor: pointer;
+  transition: 0.4s;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.UserBoard{
+  padding: 10px 20px;
+  font-size: 1px;
+  background-color: #2acf7d; /* 변경된 배경색 */
+  color: rgb(255, 255, 255);
+  border: none;
+  cursor: pointer;
+  transition:0.4s;
+  margin: 1px;
+  font-weight: bold;
+  font-size: 12px;
+}
+.UserBoard:hover {
+  background-color: #199b5a; /* 변경된 배경색 */
+  color: #000000;
+}n
+/* 마우스 커서가 버튼 위로 올라갔을 때 스타일 변경 */
+.ReportedUser:hover {
+  background-color: #199b5a; /* 변경된 배경색 */
+  color: #000000;
+}
+.SuspendedUser {
+  padding: 10px 20px;
+  font-size: 1px;
+  background-color: #2acf7d; /* 변경된 배경색 */
+  color: rgb(255, 255, 255);
+  border: none;
+  cursor: pointer;
+  transition:0.4s;
+  margin: 1px;
+  font-weight: bold;
+  font-size: 12px;
+}
+.SuspendedUser:hover {
+  background-color: #199b5a; /* 변경된 배경색 */
+  color: #000000;
+}
+.ManageUsers {
+  padding: 10px 20px;
+  font-size: 1px;
+  background-color: #2acf7d; /* 변경된 배경색 */
+  color: rgb(255, 255, 255);
+  border: none;
+  cursor: pointer;
+  transition:0.4s;
+  font-weight: bold;
+  font-size: 12px;
+}
+.ManageUsers:hover {
+  background-color: #199b5a; /* 변경된 배경색 */
+  color: #000000;
+}
+.board_page a {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  box-sizing: border-box;
+  vertical-align: middle;
+  border: 1px solid #ddd;
+  border-left: 0;
+  line-height: 100%;
+}
+.board_page a.bt {
+  padding-top: 10px;
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+}
+.board_page a.num {
+  padding-top: 9px;
+  font-size: 1.4rem;
+}
+.board_page a.num.on {
+  border-color: #000;
+  background: #000;
+  color: #fff;
+}
+.board_page a:first-child {
+  border-left: 1px solid #ddd;
+}
+.SuspendButton {
+  width: 70px;
+  padding: 10px;
+  font-size: 1px;
+  background-color: #9acd32; /* 변경된 배경색 */
+  color: rgb(255, 255, 255);
+  border: none;
+  cursor: pointer;
+  transition:0.4s;
+  font-weight: bold;
+
+  border-radius: 10px;
+}
+
+.SuspendButton:hover {
+  background-color: #e41515; /* 변경된 배경색 */
+  color: #000000;
+}
+
+.UnsuspendButton {
+  width: 70px;
+  padding: 10px;
+  font-size: 1px;
+  background-color: #4169e1; /* 변경된 배경색 */
+  color: white;
+  border: none;
+
+  transition: 0.4s;
+  font-weight: bold;
+ 
+  border-radius: 10px;
+}
+.UnsuspendButton:hover {
+  background-color: #2dc1cc; /* 변경된 배경색 */
+  color: #000000;
+}
+.modalButton{
+  padding: 9px 12px;
+  font-size: 1px;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 11px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: 0.4s;
+}
+
+.modalButton1 {
+  background-color: #ff0000;
+}
+
+.modalButton1:hover {
+  background-color: #ff0000; /* 변경된 배경색 */
+  color: #000000;
+}
+
+.modalButton2 {
+  background-color: #dfdb12; /* 변경된 배경색 */
+}
+
+.modalButton2:hover {
+  background-color: #dfdb12; /* 변경된 배경색 */
+  color: #000000;
+}
+
+.inputNumber {
+  width: 30px;
+  height: 25px;
+  border: solid 1px #000000;
+  border-radius: 4px;
+  text-align: center;
+  font-size: 14px;
+  color: #ff0000;
+  margin-right: 5px;
+  
+}
+.daySuspension{
+  border: solid 1px #ff0000;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  padding: 90px;
+
+}
+.bottomSection{
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+
+
+
+
+
+
+.popup_content{
+  background-color: #ffffff;
+  width: 300px;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: absolute;
+  top: 50%; /* 모달을 수직 중앙으로 정렬 */
+  left: 50%; /* 모달을 수평 중앙으로 정렬 */
+  transform: translate(-50%, -50%); /* 모달을 정 가운데로 이동 */
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 한빈아 너가 요청한 div -> ul로 바꿈 */
+.top{
+  display: flex;
+  justify-content: space-around;
+}
+.top li{
+  /* flex: 1; */
+  display: flex;
+  font-size: 1.3em;
+  align-items: center;
+  justify-content: center;
+}
+.master-list{
+  display: flex;
+  justify-content: space-around;
+
+}
+.master-list li{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2px;
+  
+}
+.master-list li div{
+  display: flex;
+  justify-content: center;
+  flex: 1;
+}
+.master-btns{
+  display: flex;
+  gap: 3px;
+}
+.SearchFunction{
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+}
+
+

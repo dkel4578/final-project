@@ -83,11 +83,12 @@ public class Board extends BaseEntity{
     }
 
     @Builder
-    public Board(Kind kind, String title, String content, User user) {
+    public Board(Kind kind, String title, String content, String delYn, User user) {
         this.kind = kind;
         this.title = title;
         this.content = content;
         this.delYn = delYn;
+        this.user = user;
         this.cnt = 0;
     }
 

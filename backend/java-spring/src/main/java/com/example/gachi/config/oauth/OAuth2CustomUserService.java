@@ -48,7 +48,7 @@ public class OAuth2CustomUserService implements OAuth2UserService {
         userProfile.setProvider(registrationId);
 //        User user = saveOrUpdate(userProfile);
         // outh2 정보 입력 오류
-        User user = userRepository.findByLoginIdAndProvider(userProfile.getEmail(), userProfile.getProvider())
+        User user = userRepository.findByLoginIdAndProvider(userProfile.getLoginId(), userProfile.getProvider())
                 .orElseGet(() -> saveUser(userProfile));
 
         JwtTokenDto jwtTokenDto = jwtTokenProvider.generateTokenDto(user.getId().toString());
@@ -70,16 +70,16 @@ public class OAuth2CustomUserService implements OAuth2UserService {
         Map<String, Object> customAttribute = new LinkedHashMap<>();
         customAttribute.put(userNameAttributeName, attributes.get(userNameAttributeName));
         customAttribute.put("provider", registrationId);
-        customAttribute.put("name", userProfile.getNickname());
+        customAttribute.put("name", userProfile.getName());
         customAttribute.put("loginId", userProfile.loginUser().getLoginId());
         return customAttribute;
 
     }
 
     private User saveOrUpdate(UserProfile userProfile) {
-        User user = userRepository.findByLoginIdAndProvider(userProfile.getEmail(), userProfile.getProvider())
+        User user = userRepository.findByLoginIdAndProvider(userProfile.getLoginId(), userProfile.getProvider())
                 .map(u -> u.update(
-                        userProfile.getEmail())) // OAuth 서비스 사이트에서 유저 정보 변경이 있을 수 있기 때문에 우리 DB에도 update
+                        userProfile.getLoginId())) // OAuth 서비스 사이트에서 유저 정보 변경이 있을 수 있기 때문에 우리 DB에도 update
                 .orElse(userProfile.loginUser());
 
         return userRepository.save(user);
@@ -95,11 +95,11 @@ public class OAuth2CustomUserService implements OAuth2UserService {
     }
 
     private User saveOrUpdate(UserProfile userProfile, JwtTokenDto jwtTokenDto) {
-        User member = userRepository.findByLoginIdAndProvider(userProfile.getEmail(), userProfile.getProvider())
+        User member = userRepository.findByLoginIdAndProvider(userProfile.getLoginId(), userProfile.getProvider())
                 .map(u -> u.update(
                         jwtTokenDto.getAccessToken(),
                         jwtTokenDto.getTokenExpiresIn(),
-                        userProfile.getEmail(),
+                        userProfile.getLoginId(),
                         jwtTokenDto.getRefreshToken(),
                         jwtTokenDto.getRefreshTokenExpiresIn()
                         )) // OAuth 서비스 사이트에서 유저 정보 변경이 있을 수 있기 때문에 우리 DB에도 update

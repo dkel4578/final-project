@@ -1,7 +1,6 @@
 package com.example.gachi.model;
 
 import com.example.gachi.model.enums.BanReason;
-import com.example.gachi.model.enums.ReportCategory;
 import com.example.gachi.model.enums.ReportStatus;
 import jakarta.persistence.*;
 import lombok.*;
@@ -24,10 +23,6 @@ public class Report extends BaseEntity{
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
     private BanReason reportType;
-
-    @Column(nullable = false)
-    @Enumerated(value = EnumType.STRING)
-    private ReportCategory category;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reporter_id", nullable = false)

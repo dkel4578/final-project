@@ -7,12 +7,14 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest
 class BoardRepositoryTest {
 
     @BeforeEach
@@ -30,8 +32,8 @@ class BoardRepositoryTest {
         Board params = Board.builder()
                 .title("1번 게시글 제목")
                 .content("1번 게시글 내용")
-                .user(1)
-                .delYn('N')
+//                .user(1)
+//                .delYn('N')
                 .build();
 
         // 2. 게시글 저장

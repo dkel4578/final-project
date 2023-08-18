@@ -303,7 +303,7 @@ function Schedule(props) {
 										color: selectedDate === day ? "red" : "black",
 										fontSize: selectedDate === day ? "1rem" : "1rem",
 										fontWeight: selectedDate === day ? "bold" : "normal",
-										backgroundColor: scheduleInfo ? "lightblue" : "transparent",
+										backgroundColor: scheduleInfo ? "#f7e385" : "transparent",
 										position: "relative", // 상대 위치 지정
 										display: "flex",
 										flexDirection: "column",

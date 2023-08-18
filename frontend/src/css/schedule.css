@@ -17,6 +17,9 @@ ul{
 button{
   outline: none;
 }
+.calender-page{
+  margin-top: 20px;
+}
 .Month{
   margin-bottom: 20px;
   color: #2ACF7D;
@@ -25,7 +28,6 @@ button{
 
 .calendar{
   background: #ffffff;
-  color: #000000;
   width: 360px;
   padding: 1rem;
   padding-top:  2rem;
@@ -36,24 +38,19 @@ button{
 .calendar ul.date {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr ; 
-  
-  
-
+  margin-bottom: 15px;
 }
 .daysArray {
   display: flex;
-  justify-content: space-around;
-  padding-bottom: 0.2rem;
+  justify-content: space-between;
   background-color: transparent;
-  border-radius: 10px;
-  width: 300px;
- 
+  margin-bottom: 15px;
 }
 .days {
   background-color: #2ACF7D;
   color: white;
   border-radius: 50%;
-  font-size: 0.7em; /* 1em으로 조정 */
+  font-size: 1.1em; /* 1em으로 조정 */
   width: 40px; /* 40px로 조정 */
   height: 40px; /* 40px로 조정 */
   text-align: center;
@@ -126,12 +123,13 @@ button{
 
 
 }
-.title{
+.calender-page-title{
   display: flex;/*특정 요소에 적용하면 해당 요소의 자식 요소들에 대해 Flexbox 레이아웃이 적용 행 또는 열로 배치하는 방법*/
   justify-content: center;/* Flexbox 레이아웃에서 Flex 컨테이너의 주축(main axis) 방향에 있는 아이템들을 가운데로 정렬*/
   gap: 20px; /* Flexbox 컨테이너의 아이템들 사이에 30픽셀의 간격이 생깁*/
   color: #2ACF7D;
   align-items: center;/*는 Flexbox 레이아웃에서 Flex 컨테이너의 교차축(cross axis) 방향에 있는 아이템들을 가운데로 정렬*/
+  margin-bottom: 10px;
 }
 .Date-march{
   order: 2;   /*배치하고싶은순서*/

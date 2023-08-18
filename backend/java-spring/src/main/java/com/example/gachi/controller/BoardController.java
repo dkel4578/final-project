@@ -53,15 +53,7 @@ public class BoardController {
      * @param request
      * @return
      */
-    @PostMapping("/board/edit")
-    public ResponseEntity<Board> addBoard(@RequestBody AddBoardRequestDto request)  throws NotFoundException {
-//        System.out.println("===================="+request.getEmail());
-//        User userEntity = userRepository.findByEmail(request.getEmail()).orElseThrow(() -> new NotFoundException("User not found222222"));
-        Board savedBoard = boardService.save(request);   // 글 저장
 
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(savedBoard);
-    }
 
 
 
