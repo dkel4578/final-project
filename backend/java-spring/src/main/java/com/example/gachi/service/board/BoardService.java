@@ -32,17 +32,51 @@ public class BoardService {
     //게시판 저장
     public Board save(AddBoardRequestDto addBoardRequestDto) throws NotFoundException{
         System.out.println("addBoardRequestDto: ---------------=>"  +  addBoardRequestDto);
-        User userEntity = userRepository.findByEmail(addBoardRequestDto.getEmail()).orElseThrow(() -> new NotFoundException("User not found444444"));
-        return boardRepository.save(addBoardRequestDto.toEntity(userEntity.getId()));
-    }
+        User userEntity = userRepository.findById(addBoardRequestDto.getUserId()).orElseThrow(() -> new NotFoundException("User not found444444"));
+        Board board = addBoardRequestDto.toEntity(userEntity);
+        return boardRepository.save(board);
+   }
 
     //글 상세 정보 가져오기
     public Board getBoard(long boardId) {
         return boardRepository.findById(boardId).orElseThrow(() -> new IllegalArgumentException("not found : " + boardId));
     }
 
-    //글 목록 가져오기
-//    public List<BoardResponseDto> fetchBoardPagesBy(Long lastBoardId, int size){
+
+    //게시글 목록 가져오기 (검색 포함)
+    public List<BoardResponseDto> fetchBoardPagesBy(
+            Long lastBoardId,
+            int size,
+            int page,
+            Kind kindValue,
+            String searchWord) {
+
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by("id").descending());
+        Page<Board> entityPage;
+
+        //검색어가 있다면
+        if (searchWord != null && !searchWord.isEmpty()) {
+            entityPage = boardsRepository.findByKindAndTitleContainingOrderByCreateAtDesc(
+                    kindValue,
+                    searchWord,
+                    pageRequest
+            );
+        } else {//검색어가 없다면
+            entityPage = boardsRepository.findByKindOrderByCreateAtDesc(
+                    lastBoardId,
+                    kindValue,
+                    pageRequest
+            );
+        }
+
+        List<Board> entityList = entityPage.getContent();
+
+        return entityList.stream()
+                .map(BoardResponseDto::of)
+                .collect(Collectors.toList());
+    }
+
+    //    public List<BoardResponseDto> fetchBoardPagesBy(Long lastBoardId, int size){
 //        PageRequest pageRequest = PageRequest.of(0, size);
 //        Page<Board> entityPage = boardsRepository.findByIdLessThanOrderByIdDesc(lastBoardId, pageRequest);
 //        List<Board> entityList = entityPage.getContent();
@@ -52,15 +86,9 @@ public class BoardService {
 //                .collect(Collectors.toList());
 //    }
 
-    public List<BoardResponseDto> fetchBoardPagesBy(Long lastBoardId, int size, int page, Kind kindValue) {
-        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id"));
-        Page<Board> entityPage = boardsRepository.findByKindOrderByCreateAtDesc(lastBoardId,kindValue, pageRequest);
-        List<Board> entityList = entityPage.getContent();
 
-        return entityList.stream()
-                .map(BoardResponseDto::of)
-                .collect(Collectors.toList());
-    }
+
+
 
     public Page<Board> getBoardAll(Pageable pageable) {
         return boardRepository.findAll(pageable);
