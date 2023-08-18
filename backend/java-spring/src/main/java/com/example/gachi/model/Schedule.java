@@ -25,4 +25,15 @@ public class Schedule extends BaseEntity{
     @Column(nullable = false)
     private String content;
 
+    @Column(nullable = false)
+    @Builder.Default
+    private String deleteYn = "N";
+
+    public void updateSchedule(String content){
+        this.content = content;
+    }
+
+    public void deleteSchedule(String deleteYn){
+        this.deleteYn = deleteYn;
+    }
 }

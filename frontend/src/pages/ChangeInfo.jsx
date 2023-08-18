@@ -63,16 +63,15 @@ function ChangeInfo() {
 	const phoneRef = useRef(null);
 	const birthRef = useRef(null);
 	const genderRef = useRef(null); // eslint-disable-line no-unused-vars
-
+	const fileInputRef = useRef(null);
 	const profileMessageRef = useRef(null);
-	
 
 	const [id, setId] = useState("");
 	const [loginId, setLoginId] = useState(""); // eslint-disable-line no-unused-vars
 	const [nickname, setNickname] = useState(""); // eslint-disable-line no-unused-vars
 	const [email, setEmail] = useState("");
 	const [name, setName] = useState(""); // eslint-disable-line no-unused-vars
-	const [gender, setGender] = useState(""); // eslint-disable-line no-unused-vars
+	const [gender, setGender] = useState("M"); // eslint-disable-line no-unused-vars
 	const [phone, setPhone] = useState(""); // eslint-disable-line no-unused-vars
 	const [profileMessage, setProfileMessage] = useState(""); // eslint-disable-line no-unused-vars
 	const [birth, setBirth] = useState(""); // eslint-disable-line no-unused-vars
@@ -86,6 +85,7 @@ function ChangeInfo() {
 	const [authenticationFlg, setAuthenticationFlg] = useState(true);
 	const [emailFlg, setEmailFlg] = useState(true);
 
+	//로그인 확인
 	if (cookies.token != "undefined") {
 		isLogin = true;
 	} else {
@@ -111,7 +111,7 @@ function ChangeInfo() {
 				})
 				.then((data) => {
 					console.log(data);
-					if (data) {
+					if (data.phone) {
 						setNickname(data.nickname);
 						setName(data.name);
 						setGender(data.gender);
@@ -122,6 +122,10 @@ function ChangeInfo() {
 						setBirth(convertedDate);
 						setId(data.id);
 						setEmail(data.email);
+					}
+					else if(data.loginId){
+						setName(data.name);
+						setLoginId(data.loginId);
 					}
 				});
 		}
@@ -335,11 +339,9 @@ function ChangeInfo() {
 	//프로필 사진 업로드
 	const onUpload = (e) => {
 		const file = e.target.files[0];
-
 		if (file) {
 			const reader = new FileReader();
 			reader.readAsDataURL(file);
-
 			reader.onload = () => {
 				setImageSrc(reader.result);
 			};
@@ -349,32 +351,6 @@ function ChangeInfo() {
 
 			formData.append("file", file);
 			formData.append("userId", userId);
-
-			console.log(formData);
-
-			fetch("upload/profileImg", {
-				method: "POST",
-				body: formData,
-			})
-			.then(res => {
-        if(res.status !== 200){
-					console.log(res.status)
-          return  Swal.fire({
-            icon : 'error',
-            title : '프로필 이미지 등록',         // Alert 제목
-            text : "프로필 이미지 등록에 실패하였습니다.",
-            width: 300,  // Alert 내용 
-          });
-        }
-        Swal.fire({
-          icon : 'success',
-          title : '프로필 이미지 등록',         // Alert 제목
-          text : "프로필 이미지 등록에 성공하였습니다.",
-          width: 300,  // Alert 내용 
-        });
-        return res.json();
-      })
-			;
 		}
 	};
 
@@ -413,38 +389,64 @@ function ChangeInfo() {
 
 			const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
 
-			console.log(birth);
-			fetch(`api/update/${id}`, {
-				method: "PUT",
-				headers: {
-					"Content-Type": jsonContent,
-				},
-				body: JSON.stringify({
-					email: email,
-					nickname: nickname,
-					name: name,
-					phone: phone,
-					birth: birth,
-					gender: gender,
-					profileMessage: profileMessage,
-				}),
-			}).then((res) => {
-				if (res.status !== 200) {
-					return Swal.fire({
+			// 파일 업로드 처리
+			const file = fileInputRef.current.files[0];
+			if (file) {
+				const formData = new FormData();
+				const userId = id;
+
+				formData.append("file", file);
+				formData.append("userId", userId);
+
+				try {
+					const uploadResponse = await fetch("upload/profileImg", {
+						method: "POST",
+						body: formData,
+					});
+
+					if (!uploadResponse.ok) {
+						throw new Error("File upload failed");
+					}
+
+					// 파일 업로드가 성공하면 유저 정보 수정
+					const updateResponse = await fetch(`api/update/${id}`, {
+						method: "PUT",
+						headers: {
+							"Content-Type": jsonContent,
+						},
+						body: JSON.stringify({
+							email: email,
+							nickname: nickname,
+							name: name,
+							phone: phone,
+							birth: birth,
+							gender: gender,
+							profileMessage: profileMessage,
+						}),
+					});
+
+					if (!updateResponse.ok) {
+						throw new Error("User info update failed");
+					}
+
+					// 파일 업로드와 유저 정보 수정 모두 성공
+					Swal.fire({
+						icon: "success",
+						title: "유저 정보 수정",
+						text: "유저 정보 수정에 성공하였습니다.",
+						width: 300,
+					});
+					navigate("/mypage", true);
+				} catch (error) {
+					console.error("Error updating user info:", error);
+					Swal.fire({
 						icon: "error",
-						title: "유저 정보 수정", // Alert 제목
+						title: "유저 정보 수정",
 						text: "유저 정보 수정에 실패하였습니다.",
-						width: 300, // Alert 내용
+						width: 300,
 					});
 				}
-				Swal.fire({
-					icon: "success",
-					title: "유저 정보 수정", // Alert 제목
-					text: "유저 정보 수정에 성공하였습니다.",
-					width: 300, // Alert 내용
-				});
-				navigate("/mypage", true);
-			});
+			}
 		}
 	};
 	return (
@@ -606,7 +608,7 @@ function ChangeInfo() {
 											id="male"
 											className="gender-input"
 											value="M"
-											checked={gender === "M"} // Check if gender is "M"
+											checked={gender === "M"}
 											onChange={() => setGender("M")}
 										/>
 										<p>남성</p>
@@ -620,7 +622,7 @@ function ChangeInfo() {
 											id="female"
 											className="gender-input"
 											value="F"
-											checked={gender === "F"} // Check if gender is "F"
+											checked={gender === "F"}
 											onChange={() => setGender("F")}
 										/>
 										<p>여성</p>
@@ -641,6 +643,7 @@ function ChangeInfo() {
 									className="upload-profile-img-btn"
 									accept="image/*"
 									onChange={onUpload}
+									ref={fileInputRef}
 								></input>
 							</div>
 						</div>

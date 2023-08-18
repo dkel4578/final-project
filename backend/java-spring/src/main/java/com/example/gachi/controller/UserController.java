@@ -1,6 +1,5 @@
 package com.example.gachi.controller;
 
-import ch.qos.logback.core.model.Model;
 import com.example.gachi.model.User;
 import com.example.gachi.model.dto.user.*;
 import com.example.gachi.repository.UserRepository;
@@ -10,8 +9,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import net.minidev.json.JSONObject;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -53,6 +50,10 @@ public class UserController {
     //회원 가입
     @PostMapping("/signup")
     public ResponseEntity<UserResponseDto> signup(@RequestBody UserSignUpRequestDto userSignUpRequestDto){
+        System.out.println("dataname>>>>>>>>>>>>" + userSignUpRequestDto.getName());
+        if(userSignUpRequestDto.getName() == null){
+            throw new IllegalArgumentException("이름을 입력해주세요.");
+        }
         UserResponseDto userResponseDto = userService.signup(userSignUpRequestDto);
         return ResponseEntity.ok(userResponseDto);
 
@@ -89,6 +90,7 @@ public class UserController {
         userService.update(id, userInfoUpdateDto);
     }
 
+    //비밀번호 변경
     @PutMapping("/update/password/{id}")
     public void updatePassword(@PathVariable Long id, @RequestBody UserPasswordUpdateDto userPasswordUpdateDto){
         userService.updatePassword(id, userPasswordUpdateDto);
@@ -96,11 +98,22 @@ public class UserController {
 
     //유저 정보 조회
     @GetMapping("/user/me")
-    public ResponseEntity<UserResponseDto> getMyMemberInfo() {
+    public ResponseEntity<UserResponseDto> getMyUserInfo() {
+        System.out.println(">>>>>>>>>>>>>user/me");
         UserResponseDto myInfoBySecurity = userService.getMyInfoBySecurity();
 
         return ResponseEntity.ok(myInfoBySecurity);
     }
+
+    //유저 프로필 사진 조회
+    @GetMapping("/profile/me")
+    public ResponseEntity<ProfileImgResponseDto> getMyUserProfileImg(@RequestParam Long userId) {
+        System.out.println(">>>>>>>>>>>>>>profile/me");
+        ProfileImgResponseDto myUserProfileImg = userService.getMyUserProfileImg(userId);
+
+        return ResponseEntity.ok(myUserProfileImg);
+    }
+
 
     @GetMapping("/user/email")
     public void existEmail(String email , HttpServletResponse response){
@@ -132,6 +145,31 @@ public class UserController {
 
         jsonObject.put("userId",userLoginId);
 
+        try {
+            response.getWriter().print(jsonObject);	//response.getWriter로 프린트 해주면 통신 성공
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+    @GetMapping("/user/checkLoginIdByEmail")
+    public void CheckLoginIdByEmail(HttpServletResponse response, String email,String loginId){
+        JSONObject jsonObject = new JSONObject();
+        Optional<User> userOptional = userRepository.findByLoginId(loginId);
+        if(userOptional.isPresent()) {
+            System.out.println(userOptional);
+            User user = userOptional.get();
+            if(user.getEmail().equals(email)){
+                jsonObject.put("isEmailCorrect",true);
+                jsonObject.put("isIdCorrect",true);
+            }else {
+                jsonObject.put("isEmailCorrect",false);
+                jsonObject.put("isIdCorrect",true);
+            }
+        }else {
+            jsonObject.put("isEmailCorrect",false);
+            jsonObject.put("isIdCorrect",false);
+        }
         try {
             response.getWriter().print(jsonObject);	//response.getWriter로 프린트 해주면 통신 성공
         } catch (Exception e) {

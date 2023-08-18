@@ -39,25 +39,25 @@ public class User extends BaseEntity{
 
     private String password;
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private String phone;
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private String email;
 
-    @Column(nullable = false, columnDefinition = "char(1)")
+//    @Column(nullable = false, columnDefinition = "char(1)")
     private String gender;
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     @Size(min=1, max=16)
     private String nickname;
 
     private String profileMessage;
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private LocalDate birth;
 
-    @Column(nullable = false, columnDefinition = "char(1)")
+//    @Column(nullable = false, columnDefinition = "char(1)")
     @Builder.Default
     private String status = "U";
 
@@ -113,6 +113,11 @@ public class User extends BaseEntity{
     @ToString.Exclude
     private List<Schedule> schedules;
 
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "reported_id")
+    @ToString.Exclude
+    private List<Report> reports;
+
 
     public User update(
             String  accessToken,
@@ -153,6 +158,11 @@ public class User extends BaseEntity{
     public void updatePassword(String password){
         this.password = password;
     }
+
+    public List<BanList> getBanLists() {
+        return this.banLists;
+    }
+
 
 
 }

@@ -22,13 +22,11 @@ public class ReportResponseDto {
 
     public static ReportResponseDto of(Report report){
         return ReportResponseDto.builder()
-                .id(report.getId())
                 .reportType(report.getReportType())
                 .reporter(report.getReporter())
                 .reporterId(report.getReporter().getId())
                 .reportedUser(report.getReportedUser())
                 .reportedUserId(report.getReportedUser().getId())
-//                .reportStatus(report.getReportStatus())
                 .build();
     }
 

@@ -27,6 +27,7 @@ function HomePage() {
   // const goToSlide = (index) =>{
   //   setCurrentSlide(index);
   // }
+  // console.log('zzzzzzzzzzzzzzzzzzzzz');
 
   return (
     <div className="body">

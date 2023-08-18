@@ -4,6 +4,7 @@ import com.example.gachi.model.enums.BanReason;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -17,15 +18,19 @@ public class BanList extends BaseEntity{
     private Long id;
 
     @Column(nullable = false)
+    @Enumerated(value = EnumType.STRING)
     private BanReason banReason;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
     @Column(nullable = false)
-    private LocalDate banStartAt;
+    private Long reportId;
 
     @Column(nullable = false)
-    private LocalDate banEndAt;
+    private LocalDateTime banStartAt;
+
+    @Column(nullable = false)
+    private LocalDateTime banEndAt;
 
 }

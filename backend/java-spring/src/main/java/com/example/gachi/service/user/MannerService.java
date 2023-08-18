@@ -2,7 +2,8 @@ package com.example.gachi.service.user;
 
 import com.example.gachi.model.Manner;
 import com.example.gachi.model.User;
-import com.example.gachi.model.dto.user.MannerScoreDto;
+import com.example.gachi.model.dto.user.MannerRequestDto;
+import com.example.gachi.model.dto.user.MannerResponseDto;
 import com.example.gachi.repository.MannerRepository;
 import com.example.gachi.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,15 +15,19 @@ public class MannerService {
     private final MannerRepository mannerRepository;
     private final UserRepository userRepository;
 
-    public double mannerAvgScore(String loginId){
-        return mannerRepository.getAvgScoreByLoginId(loginId);
+    public double mannerAvgScore(long id){
+        return mannerRepository.getAvgScoreById(id);
     }
 
-    public void addMannerScore(MannerScoreDto mannerScoreDto){
-        User user = userRepository.findById(mannerScoreDto.getUserId()).orElseThrow(() ->
+    public MannerResponseDto addMannerScore(MannerRequestDto mannerRequestDto){
+        User user = userRepository.findById(mannerRequestDto.getUserId()).orElseThrow(() ->
         new IllegalArgumentException("존재하지 않는 유저 아이디"));
-        Manner manner = mannerScoreDto.toMannerEntity(user);
-        manner = mannerRepository.save(manner);
+        User reviewer = userRepository.findById(mannerRequestDto.getReviewerId()).orElseThrow(() ->
+                new IllegalArgumentException("존재하지 않는 유저 아이디"));
+        Manner manner = mannerRequestDto.addMannerScore(user, reviewer);
+        mannerRepository.save(manner);
+
+        return MannerResponseDto.of(manner);
     }
 
 }

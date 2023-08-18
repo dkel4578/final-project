@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
@@ -12,12 +11,14 @@ import ChangeInfo from './pages/ChangeInfo';
 import BoardListPage from './pages/BoardListPage';
 import BoardViewPage from './pages/BoardViewPage';
 import BoardWritePage from './pages/BoardWritePage';
-
+import PasswordChangePage from './pages/PasswordChangePage';
+import Calnedar from './pages/Calendar';
+import ChatRoomListPage from './pages/ChatRoomListPage';
+import ChatPage from './pages/ChatPage';
 
 const queryClient = new QueryClient();
 
 function App() {
-
 
   return (
     <>
@@ -33,7 +34,10 @@ function App() {
           <Route path="/board/:kind" element={<BoardListPage />}/>
           <Route path="/board/view" element={<BoardViewPage/>}/>
           <Route path="/board/write" element={<BoardWritePage />}/>
-
+          <Route path="/passwordChange" element={<PasswordChangePage/>}/>
+          <Route path="/calendar" element={<Calnedar/>}/>
+          <Route path="/chat/room/list" element={<ChatRoomListPage />}/>
+          <Route path="/chat/room/list/:channelId" element={<ChatPage />}/>
         </Routes>
       </QueryClientProvider>
     </>

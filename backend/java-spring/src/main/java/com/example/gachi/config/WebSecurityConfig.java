@@ -69,6 +69,7 @@ public class WebSecurityConfig {
                 .and()
                 .authorizeHttpRequests()
                 .requestMatchers(mvcMatcherBuilder.pattern("/api/**")).permitAll()
+                .requestMatchers(mvcMatcherBuilder.pattern("/ws-stomp/chat/**")).permitAll()
                 .requestMatchers(mvcMatcherBuilder.pattern("/oauth2/**")).permitAll()
                 .requestMatchers(mvcMatcherBuilder.pattern("/upload/**")).permitAll()
 //                .requestMatchers(mvcMatcherBuilder.pattern("/email-login","user/email-login","/EmailTemplate")).permitAll()

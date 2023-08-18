@@ -30,28 +30,41 @@ public class EmailSendService {
 
     private final RedisUtil redisUtil;
 
-    private final String accessCode = createKey();
+    private String accessCode = createKey();
 
-    public void sendFindIdEmail(User user){
-        Context context = getIdContext(user);
+    public void sendFindIdEmail(User user,String type){
+        accessCode = createKey();
+        Context context = getContext(user,type);
         String message = templateEngine.process(EMAIL_LINK_CODE, context);
 
         redisUtil.setDataExpire(user.getEmail(), accessCode, 300 * 1L);
 
-        EmailMessage emailMessage = EmailMessage.builder()
-                .to(user.getEmail())
-                .subject(user.getName()+ " 님 안녕하세요.")
-                .message(message)
-                .code("아이디 찾기 인증")
-                .build();
+        if (type.equals("P")){
+            EmailMessage emailMessage = EmailMessage.builder()
+                    .to(user.getEmail())
+                    .subject(user.getName()+ " 님 안녕하세요.")
+                    .message(message)
+                    .code("비밀번호 변경 인증")
+                    .build();
+            emailService.send(emailMessage);
+        }else{
+            EmailMessage emailMessage = EmailMessage.builder()
+                    .to(user.getEmail())
+                    .subject(user.getName()+ " 님 안녕하세요.")
+                    .message(message)
+                    .code("아이디 찾기 인증")
+                    .build();
+            emailService.send(emailMessage);
+        }
 
-        emailService.send(emailMessage);
+
 
 
     }
 
 
     public void sendLoginLink(User user) {
+        accessCode = createKey();
         Context context = getContext(user);
         String message = templateEngine.process(EMAIL_LINK_TEMPLATE, context);
 //        redisUtil.setDataExpire(accessCode, to, 60 * 1L);
@@ -64,6 +77,7 @@ public class EmailSendService {
 
         emailService.send(emailMessage);
     }public void sendJoinLink(String email) {
+        accessCode = createKey();
         Context context = getContext();
         String message = templateEngine.process(EMAIL_LINK_NEW, context);
         redisUtil.setDataExpire(email, accessCode, 300 * 1L);
@@ -84,10 +98,14 @@ public class EmailSendService {
 
         return context;
     }
-    private Context getIdContext(User user) {
+    private Context getContext(User user,String type) {
         Context context = new Context();
         context.setVariable("name", user.getName());
-        context.setVariable("code", "아이디 찾기 인증");
+        if(type.equals("P")){
+            context.setVariable("code", "비밀번호 변경 인증");
+        }else{
+            context.setVariable("code", "아이디 찾기 인증");
+        }
         context.setVariable("message", "인증 코드는 " + accessCode + " 입니다.");
 
         return context;
