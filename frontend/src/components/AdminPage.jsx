@@ -1,9 +1,16 @@
 // import React from "react";
 import { useState, useEffect } from "react";
 import axios from 'axios';
+import Select from "react-select";
 import "../css/masterPage.css";
 
 const AdminPage = () => {
+
+  const userOption = [
+    {value : "", label : "선택해 주세요"},
+    {value : "banned", label : "정지된 사용자"},
+    {value : "notBanned", label : "일반 사용자"}
+  ];
 
   const [manageName, setManageName] = useState("유저 관리 페이지");
   const [manageType, setManageType] = useState("user");
@@ -13,6 +20,11 @@ const AdminPage = () => {
   const [reportedUserList, setReportedUserList] = useState([]);
   const [bannedUserList, setBannedUserList] = useState([]);
   const [boardList, setBoardList] = useState([]);
+
+  const [search,setSearch] = useState("");
+  const [keyword,setKeyword] = useState(userOption[0].value);
+
+
   
   useEffect(() => {    
     axios.get("/api/admin/userList")
@@ -72,6 +84,23 @@ const AdminPage = () => {
     setShowSuspendModal(false);
   };
   
+  const filterUserList = (item) => {
+    if (manageType === "user") {
+      return (
+        (item.status !== "S") &&
+        (search === "" || (item.nickname && item.nickname.includes(search))) &&
+        (keyword === "" ?
+        true :
+         keyword === "banned"
+          ? item.bannedYn.includes("Y")
+          : keyword === "notBanned"
+          ? item.bannedYn.includes("N")
+          : false)
+      );
+    } else {
+      return false;
+    }
+  };
   
 
   return (
@@ -93,19 +122,18 @@ const AdminPage = () => {
         </button>
         <div className="master-select-search">
           <div className="master-search">
-            <input type="text" placeholder="검색어를 입력하세요" className="master-search-box"></input>
+            <input type="text" placeholder="검색어를 입력하세요" className="master-search-box"
+            onChange={(e)=> {setSearch(e.target.value);}}></input>
             <button className="master-search-btn">검색</button>
           </div>
           <div className="master-select-box">
             <span className="master-select-box-span">카테고리:</span>
             { manageType ==="user" &&
-              <select className="master-select-options">
-                <option value="">전체</option>
-                <option value="">신고된 유저</option>
-                <option value="">활동정지 유저</option>
-                <option value="">관리대상자 유저</option>
-                <option value="">유저 게시판</option>
-              </select>
+              <Select className="master-select-options"
+              options={userOption}
+              onChange={(e)=>{setKeyword(e.value);}}
+              placeholder="유형 선택"
+              defaultValue={userOption[0]}/>
             }
             { manageType ==="report" &&
               <select className="master-select-options">
@@ -155,9 +183,20 @@ const AdminPage = () => {
               <li className="tab-menu">신고버튼</li>
             </ul>
           }
-          {/* 위에boardData 데이터 삽입 and filter이용해서 버튼검색 나눔 */}
           {manageType === "user" &&
-            userList.filter(item => item.status ==="U").map((item) => (
+            userList.filter(
+              filterUserList
+              // (item) => item.status != "S" 
+              // &&
+              // search == "" ?
+              // item :(item.nickname
+              //   ? item.nickname.includes(search)
+              //   : false) ||
+              //   (keyword === "" ? item 
+              //   : (keyword === "banned" ?  item.bannedYn.includes("Y")
+              //    : keyword === "notBanned" ? item.bannedYn.includes("N") 
+              //    : false))
+              ).map((item) => (
               <ul key={item.id} className="master-list">
                 <li className="master-list-item">
                   {item.loginId}
