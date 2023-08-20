@@ -1,6 +1,7 @@
 package com.example.gachi.model.dto.user;
 
 import com.example.gachi.model.BanList;
+import com.example.gachi.model.enums.BanReason;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,7 @@ public class BannedUserResponseDto {
     private String nickName;
     private String bannedYn;
     private String banReason;
+    private BanReason banReasonKeyword;
     private Long reportId;
     private LocalDateTime banStartAt;
     private LocalDateTime banEndAt;
@@ -27,6 +29,7 @@ public class BannedUserResponseDto {
         this.nickName = banList.getUser().getNickname();
         this.name = banList.getUser().getName();
         this.bannedYn = banList.getUser().getBannedYn();
+        this.banReasonKeyword = banList.getBanReason();
         this.banReason = banList.getBanReason().getValue();
         this.reportId = banList.getReportId(); /*(banList.getReport() != null) ? banList.getReport().getId() : null;*/
         this.banStartAt = banList.getBanStartAt();

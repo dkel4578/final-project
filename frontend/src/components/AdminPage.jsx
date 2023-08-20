@@ -9,7 +9,62 @@ const AdminPage = () => {
   const userOption = [
     {value : "", label : "선택해 주세요"},
     {value : "banned", label : "정지된 사용자"},
-    {value : "notBanned", label : "일반 사용자"}
+    {value : "notBanned", label : "일반 사용자"},
+    {value : "M", label : "남성"},
+    {value : "F", label : "여성"}
+  ];
+  const userSearchOption = [
+    {value : "", label : "선택해 주세요"},
+    {value : "id", label : "아이디"},
+    {value : "nickname", label : "닉네임"},
+    {value : "phone", label : "전화번호"},
+    {value : "email", label : "이메일"}
+  ];
+
+  const reportOption = [
+    {value : "", label : "선택해 주세요"},
+    {value : "notBanned", label : "신고처리 전"},
+    {value : "banned", label : "신고처리 완료"},
+    {value : "deleted", label : "신고 삭제"},
+    {value : "board", label : "게시판"},
+    {value : "chat", label : "채팅"},
+    {value : "comment", label : "댓글"}
+  ];
+  const reportSearchOption = [
+    {value : "", label : "선택해 주세요"},
+    {value : "reporter", label : "신고 한 유저"},
+    {value : "reported", label : "신고 된 유저"}
+  ];
+
+  const bannedOption = [
+    {value : "", label : "선택해 주세요"},
+    {value : "D", label : "게시글/댓글 도배"},
+    {value : "P", label : "음란성 게시글/댓글 작성"},
+    {value : "F", label : "욕설/혐오 발언 게시글/댓글 작성"},
+    {value : "A", label : "광고성 게시글/댓글 작성"},
+    {value : "R", label : "허위 리뷰 작성"}
+  ];
+
+  const banSearchOption = [
+    {value : "", label : "선택해 주세요"},
+    {value : "loginId", label : "아이디"},
+    {value : "name", label : "이름"},
+    {value : "nickName", label : "닉네임"}
+  ];
+
+  const boardOption = [
+    {value : "", label : "선택해 주세요"},
+    {value : "N", label : "공지사항"},
+    {value : "Q", label : "FAQ"},
+    {value : "F", label : "같이 한 끼"},
+    {value : "C", label : "같이 커피"},
+    {value : "A", label : "같이 한 잔"},
+    {value : "T", label : "같이 여행"}
+  ];
+  const boardSearchOption = [
+    {value : "", label : "선택해 주세요"},
+    {value : "title", label : "제목"},
+    {value : "userNickName", label : "작성자"}
   ];
 
   const [manageName, setManageName] = useState("유저 관리 페이지");
@@ -23,6 +78,7 @@ const AdminPage = () => {
 
   const [search,setSearch] = useState("");
   const [keyword,setKeyword] = useState(userOption[0].value);
+  const [searchKeyword,setSearchKeyword] = useState(userOption[0].value);
 
 
   
@@ -52,23 +108,31 @@ const AdminPage = () => {
   const goToManageUsers = () => {
     setManageName("유저 관리 페이지");
     setManageType("user");
+    setKeyword(userOption[0].value);
+    setSearch("");
   };
 
   // 활동 정지 버튼만 눌리게 설정
   const goToReportedUsers = () => {
     setManageName("신고 된 유저 관리 페이지");
     setManageType("report");
+    setKeyword(userOption[0].value);
+    setSearch("");
   };
 
   // 관리자 버튼만 눌리게 설정
   const goToSuspendedUsers = () => {
     setManageName("활동 정지 된 유저 관리 페이지");
     setManageType("ban");
+    setKeyword(userOption[0].value);
+    setSearch("");
   }
   // 유저 게시판만 눌리게 설정
   const goToUserBoard = () => {
     setManageName("게시판 관리 페이지");
     setManageType("board");
+    setKeyword(userOption[0].value);
+    setSearch("");
   };
 
   //모달창
@@ -88,10 +152,89 @@ const AdminPage = () => {
     if (manageType === "user") {
       return (
         (item.status !== "S") &&
-        (search === "" || (item.nickname && item.nickname.includes(search))) &&
+        (search === "" || 
+        (
+          searchKeyword === "" ?
+          true:
+            searchKeyword === "id" 
+            ? item.loginId.includes(search)
+          : searchKeyword === "nickname"
+          ? item.nickname.includes(search)
+          : searchKeyword === "phone"
+          ? item.phone.includes(search)
+          : searchKeyword === "email"
+          ? item.email.includes(search)
+          : false)
+        ) &&
         (keyword === "" ?
         true :
-         keyword === "banned"
+          keyword === "banned"
+          ? item.bannedYn.includes("Y")
+          : keyword === "notBanned"
+          ? item.bannedYn.includes("N")
+          : keyword === "M"
+          ? item.gender.includes("M")
+          : keyword === "F"
+          ? item.gender.includes("F")
+          : false)
+      );
+    } else {
+      return false;
+    }
+  };
+  const filterReportList = (item) => {
+    if (manageType === "report") {
+      return (
+        (search === "" || 
+        (item.reportedUserNickName && 
+          searchKeyword === "" ?
+          true:
+            searchKeyword === "reported" 
+            ? item.reportedUserNickName.includes(search)
+          : searchKeyword === "reporter"
+          ? item.reporterNickName.includes(search)
+          : false)
+        ) &&
+        (keyword === "" ?
+        true :
+          keyword === "banned"
+          ? item.reportStatusKeyword.includes("C")
+          : keyword === "notBanned"
+          ? item.reportStatusKeyword.includes("B")
+          : keyword === "deleted"
+          ? item.reportStatusKeyword.includes("D")
+          : keyword === "board"
+          ? item.categoryKeyword.includes("B")
+          : keyword === "chat"
+          ? item.categoryKeyword.includes("C")
+          : keyword === "comment"
+          ? item.categoryKeyword.includes("D")
+          : false)
+      );
+    } else {
+      return false;
+    }
+  };
+
+  const filterBanList = (item) => {
+    if (manageType === "ban") {
+      return (
+        (item.bannedYn === "Y") &&
+        (search === "" || 
+        (
+          searchKeyword === "" ?
+          true:
+            searchKeyword === "loginId" 
+            ? item.loginId.includes(search)
+            : searchKeyword === "name"
+            ? item.name.includes(search)
+            : searchKeyword === "nickName"
+            ? item.nickName.includes(search)
+            : false)
+        ) &&
+        (keyword === "" ?
+        true :
+          keyword === "banned"
           ? item.bannedYn.includes("Y")
           : keyword === "notBanned"
           ? item.bannedYn.includes("N")
@@ -101,7 +244,40 @@ const AdminPage = () => {
       return false;
     }
   };
-  
+  const filterBoardList = (item) => {
+    if (manageType === "board") {
+      return (
+        (item.delYn ==="N") &&
+        (search === "" || 
+        (
+          searchKeyword === "" ?
+          true:
+            searchKeyword === "title" 
+            ? item.title.includes(search)
+            : searchKeyword === "userNickName"
+            ? item.userNickName.includes(search)
+            : false)
+        ) &&
+        (keyword === ""?
+        true :
+          keyword === "N"
+          ? item.boardKind.includes("N")
+          : keyword === "Q"
+          ? item.boardKind.includes("Q")
+          : keyword === "F"
+          ? item.boardKind.includes("F")
+          : keyword === "C"
+          ? item.boardKind.includes("C")
+          : keyword === "A"
+          ? item.boardKind.includes("A")
+          : keyword === "T"
+          ? item.boardKind.includes("T")
+          : false)
+      );
+    } else {
+      return false;
+    }
+  };
 
   return (
     <div className="board_wrap">
@@ -122,9 +298,36 @@ const AdminPage = () => {
         </button>
         <div className="master-select-search">
           <div className="master-search">
+            { manageType ==="user" &&
+              <Select className="master-select-options"
+              options={userSearchOption}
+              onChange={(e)=>{setSearchKeyword(e.value);}}
+              placeholder="유형 선택"
+              defaultValue={userOption[0]}/>
+            }
+            { manageType ==="report" &&
+              <Select className="master-select-options"
+              options={reportSearchOption}
+              onChange={(e)=>{setSearchKeyword(e.value);}}
+              placeholder="유형 선택"
+              defaultValue={userOption[0]}/>
+            }
+            { manageType ==="ban" &&
+              <Select className="master-select-options"
+              options={banSearchOption}
+              onChange={(e)=>{setSearchKeyword(e.value);}}
+              placeholder="유형 선택"
+              defaultValue={userOption[0]}/>
+            }
+            { manageType ==="board" &&
+              <Select className="master-select-options"
+              options={boardSearchOption}
+              onChange={(e)=>{setSearchKeyword(e.value);}}
+              placeholder="유형 선택"
+              defaultValue={userOption[0]}/>
+            }
             <input type="text" placeholder="검색어를 입력하세요" className="master-search-box"
             onChange={(e)=> {setSearch(e.target.value);}}></input>
-            <button className="master-search-btn">검색</button>
           </div>
           <div className="master-select-box">
             <span className="master-select-box-span">카테고리:</span>
@@ -136,31 +339,25 @@ const AdminPage = () => {
               defaultValue={userOption[0]}/>
             }
             { manageType ==="report" &&
-              <select className="master-select-options">
-                <option value="">전체</option>
-                <option value="">신고된 유저</option>
-                <option value="">활동정지 유저</option>
-                <option value="">관리대상자 유저</option>
-                <option value="">유저 게시판</option>
-              </select>
+              <Select className="master-select-options"
+              options={reportOption}
+              onChange={(e)=>{setKeyword(e.value);}}
+              placeholder="유형 선택"
+              defaultValue={userOption[0]}/>
             }
             { manageType ==="ban" &&
-              <select className="master-select-options">
-                <option value="">전체</option>
-                <option value="">신고된 유저</option>
-                <option value="">활동정지 유저</option>
-                <option value="">관리대상자 유저</option>
-                <option value="">유저 게시판</option>
-              </select>
+              <Select className="master-select-options"
+              options={bannedOption}
+              onChange={(e)=>{setKeyword(e.value);}}
+              placeholder="유형 선택"
+              defaultValue={userOption[0]}/>
             }
             { manageType ==="board" &&
-              <select className="master-select-options">
-                <option value="">전체</option>
-                <option value="">1 게시판</option>
-                <option value="">2 게시판</option>
-                <option value="">3 게시판</option>
-                <option value="">유저 게시판</option>
-              </select>
+              <Select className="master-select-options"
+              options={boardOption}
+              onChange={(e)=>{setKeyword(e.value);}}
+              placeholder="유형 선택"
+              defaultValue={userOption[0]}/>
             }
           </div>
         </div>
@@ -184,19 +381,7 @@ const AdminPage = () => {
             </ul>
           }
           {manageType === "user" &&
-            userList.filter(
-              filterUserList
-              // (item) => item.status != "S" 
-              // &&
-              // search == "" ?
-              // item :(item.nickname
-              //   ? item.nickname.includes(search)
-              //   : false) ||
-              //   (keyword === "" ? item 
-              //   : (keyword === "banned" ?  item.bannedYn.includes("Y")
-              //    : keyword === "notBanned" ? item.bannedYn.includes("N") 
-              //    : false))
-              ).map((item) => (
+            userList.filter(filterUserList).map((item) => (
               <ul key={item.id} className="master-list">
                 <li className="master-list-item">
                   {item.loginId}
@@ -252,7 +437,7 @@ const AdminPage = () => {
         {/* 위에boardData 데이터 삽입 and filter이용해서 버튼검색 나눔 */}
         {/* filter(item => item.status ==="U"). */}
         {manageType === "report" &&
-          reportedUserList.map((item) => (
+          reportedUserList.filter(filterReportList).map((item) => (
             <ul key={item.id} className="master-list">
               <li className="master-list-item">
                 {item.reportedUserNickName}
@@ -298,7 +483,7 @@ const AdminPage = () => {
           }
           {/* 위에boardData 데이터 삽입 and filter이용해서 버튼검색 나눔 */}
           {manageType === "ban" &&
-            bannedUserList.filter(item => item.bannedYn ==="Y").map((item) => (
+            bannedUserList.filter(filterBanList).map((item) => (
               <ul key={item.id} className="master-list">
                 <li className="master-list-item">
                   {item.loginId}
@@ -337,7 +522,7 @@ const AdminPage = () => {
         }
         {/* 위에boardData 데이터 삽입 and filter이용해서 버튼검색 나눔 */}
         {manageType === "board" &&
-          boardList.filter(item => item.delYn ==="N").map((item) => (
+          boardList.filter(filterBoardList).map((item) => (
             <ul key={item.id} className="master-list">
               <li className="master-list-item">
                 {item.kind}
@@ -394,9 +579,7 @@ const AdminPage = () => {
 
         <div className="board_page">{/* 페이징 버튼 등 추가 */}</div>
         <div className="bt_wrap">
-          <a href="/BoardList2.jsx" className="on">
-            등록
-          </a>
+          
         </div>
       </div>
     </div>

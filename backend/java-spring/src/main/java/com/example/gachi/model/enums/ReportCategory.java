@@ -6,7 +6,7 @@ import lombok.Getter;
 public enum ReportCategory {
     B("게시판"),
     D("댓글"),
-    C("신고 처리 완료");
+    C("채팅");
 
     private final String value;
 
