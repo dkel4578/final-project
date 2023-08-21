@@ -1,19 +1,18 @@
 package com.example.gachi.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ChatMessage {
+public class ChatMessage extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false)
@@ -22,21 +21,19 @@ public class ChatMessage {
     @Column(nullable = false)
     private String message;
 
-    @Column(nullable = false)
-    private LocalDateTime chatTime;
-
     @ManyToOne
     @JoinColumn(name = "room_id", nullable = false)
+    @JsonBackReference
     private ChatRoom chatRoom;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonBackReference
     private User writer;
 
     @Builder
-    public ChatMessage(String message, LocalDateTime chatTime, ChatRoom chatRoom, User writer) {
+    public ChatMessage(String message, ChatRoom chatRoom, User writer) {
         this.message = message;
-        this.chatTime = chatTime;
         this.chatRoom = chatRoom;
         this.writer = writer;
     }

@@ -3,7 +3,6 @@ import axios from 'axios';
 // import { customHistory } from "../configureStore.js";
 // import { browserHistory } from 'react-router';
 import { produce } from "immer";
-
 //Actions
 const GET_CHAT_ROOM_LIST = "GET_CHAT_ROOM_LIST";  // ChatRoom List들 가져와서 화면에 뿌리기
 const CREATE_CHAT_ROOM = "CREATE_CHAT_ROOM";
@@ -12,30 +11,35 @@ const CREATE_CHAT_ROOM = "CREATE_CHAT_ROOM";
 const getChatRoomList = createAction(GET_CHAT_ROOM_LIST, (chatRoomList) => ({ chatRoomList }));
 const createChatRoom = createAction(CREATE_CHAT_ROOM, (chatRoom) => ({ chatRoom }));
 
+
 const initialState = {
   chatRoomList : [],
   chatRoom : {},
 };
 
 // 채팅방 리스트 조회
-const getChatRoomAPI = () => {
+const getChatRoomAPI = (userId) => {
   return async function (dispatch, getState, { history }) {
-    const API = '/api/chatroom';
+    console.log("userId>>>>>>" , userId)
+    const API = `/api/chatroom?userId=${encodeURIComponent(userId)}`;
     let chatRoomList = [];
 
     axios.get(API)
       .then((response) => {
+        console.log("response >>> ", response);
+        console.log("response.data >>> ", response.data)
+        
       if (response.data && response.data.length > 0) { 
         response.data.forEach((_chatRoom) => {
+          console.log("_chatRoom >>> ", _chatRoom);
           let chatRoom = {
             id: _chatRoom.id,
             roomName: _chatRoom.name,
-            roomMasterNickName: _chatRoom.user.nickname
+            roomMasterNickName: _chatRoom.user.nickname,
+            
           };
           chatRoomList = chatRoomList.concat(chatRoom);
         })
-      } else {
-        alert('생성된 채팅방이 없습니다.');
       }
       console.log('chatRoomList: ', chatRoomList);
       dispatch(getChatRoomList(chatRoomList));
@@ -84,7 +88,7 @@ const createChatRoomAPI = (props) => {
       // history.push(`/chat/room/list/${response.data}`);
       // window.location.href = '/chat/room/list/' + response.data + '/first';
       // window.location.href = '/chat/room/list/' + response.data;
-      window.location.href = '/chat/room/list';
+      window.location.href = '/chat/room/list2';
     }).catch((error) => {
       console.log(error)
       window.alert("새로운 채팅방을 만들지 못했습니다.")
