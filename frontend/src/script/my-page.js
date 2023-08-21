@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import Swal from 'sweetalert2'; // eslint-disable-line no-unused-vars
 /* my-page 모달 */
 /* 정보수정하기 버튼 클릭시 모달창 나오기 */
 $(function(){

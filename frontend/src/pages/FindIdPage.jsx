@@ -1,10 +1,14 @@
 import React, { useState, useRef, useContext, useEffect } from 'react'; // eslint-disable-line no-unused-vars
-import axios from 'axios';    // eslint-disable-line no-unused-vars
 import { useNavigate } from 'react-router-dom';  
-import '../css/find-id.css'; 
-import '../custom'
-import $ from 'jquery'
-// import JQueryCdn from '../cdn/JQueryCdn'; // eslint-disable-line no-unused-vars
+import axios from 'axios';    // eslint-disable-line no-unused-vars
+import "../css/total.css";
+import "../css/find-id.css";
+import "../css/variables.css";
+import $ from "jquery"; // eslint-disable-line no-unused-vars
+import "../script/find-id.js";
+import 'bootstrap-icons/font/bootstrap-icons.css';
+import 'font-awesome/css/font-awesome.min.css';
+import "../script/custom.js";
 
 async function getCode(email){
   
@@ -170,18 +174,18 @@ function FindIdPage() {
         <h1 className="find-id-title">아이디 찾기</h1>
         <form>
           <fieldset>
-            <div className="input-cf-email">
+          <div className="input-find-id-cf-email">
               <input type="email" placeholder="이메일을 입력해주세요." className="email-input-cf-text" onChange={handleEmailChange}/>
               <i className="bi bi-envelope-fill"></i>
             </div>
-            <p className="please-email-input">이메일주소를 작성해주십시오.</p>
-            <div className="email-cf-send">
+            <p className="please-find-id-email-input">이메일주소를 작성해주십시오.</p>
+            <div className="email-find-id-cf-send">
               <i className="bi bi-send-fill"></i>
-              <input type="button" className="email-cf-send-btn" value="인증메일 보내기" onClick={handleSendEmail}/>
+              <input type="button" className="email-find-id-cf-send-btn" value="인증메일 보내기" onClick={handleSendEmail}/>
             </div>
-            <p className="after-send-email">메일주소 작성 시 인증번호를 보내드리겠습니다.</p>
-            <div className="input-cf-number">
-              <input type="text" placeholder="인증번호를 입력해주세요." className="cf-number-input-text" onChange={handleCodeChange}/>
+            <p className="after-find-id-send-eamil">메일주소 작성 시 인증번호를 보내드리겠습니다.</p>
+            <div className="input-find-id-cf-number">
+              <input type="text" placeholder="인증번호를 입력해주세요." className="cf-number-find-id-input-text" onChange={handleCodeChange}/>
               <i className="bi bi-envelope-check-fill"></i>
             </div>
           </fieldset>
@@ -192,7 +196,7 @@ function FindIdPage() {
             <span>{id}</span>
           </div>
         </form>
-        <div className="user-find">
+        <div className="find-id-user-find">
           <a href="#none">회원가입</a>
           <a href="/passwordChange">비밀번호 변경</a>
         </div>

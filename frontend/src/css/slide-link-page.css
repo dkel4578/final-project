@@ -1,0 +1,115 @@
+.post-content-inner{
+  padding: 20px;
+}
+.post-title{
+  font-size: 2em;
+  font-weight: bold;
+  letter-spacing: 1px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+/* post-main-contents */
+.post-main-contents{
+  margin: 20px 0;
+  border-top: 2px solid var(--maincolor);
+  border-bottom: 2px solid var(--maincolor);
+  padding: 20px 0;
+}
+.post-main-contents p{
+
+}
+/* post-main-content */
+.post-main-content{}
+.post-main-content img{
+  width: 320px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+}
+.post-main-content p{
+  font-size: 1.2em;
+}
+.post-main-content p span{
+  font-weight: bold;
+  color: red;
+}
+/* post-main-content-btns */
+.post-main-content-btns{
+  margin-top: 20px;
+  display: flex;
+  justify-content: end;
+  gap: 10px;
+}
+.post-main-content-btns input[type=button]{
+  cursor: pointer;
+  padding: 8px 15px;
+  font-size: 1.1em;
+  color: white;
+  border-radius: 20px;
+  transition: 0.4s;
+}
+.post-main-content-btns input[type=button]:nth-of-type(1){
+  background-color: var(--remonblue);
+}
+.post-main-content-btns input[type=button]:nth-of-type(1):hover{
+  background-color: royalblue;
+  box-shadow: 0 0 10px rgba(65, 105, 225, 0.808);
+}
+.post-main-content-btns input[type=button]:nth-of-type(2){
+  background-color: crimson;
+}
+.post-main-content-btns input[type=button]:nth-of-type(2):hover{
+  background-color: red;
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.788);
+}
+/* post-user-info */
+.post-user-info{
+  border-bottom: 2px solid var(--maincolor);
+  padding-bottom: 20px;
+  display: flex;
+  position: relative;
+  align-items: center;
+}
+.post-user-img{
+  flex: 4;
+}
+.post-user-img img{
+  width: 120px;
+  height: 120px;
+  background-color: #ccc;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow:  0 0 8px rgba(0, 0, 0, 0.431);
+}
+.post-user-information{
+  flex: 6;
+}
+.post-users-infos{
+  display: flex;
+  /* border: 1px solid red; */
+  font-size: 1.3em;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 7px;
+}
+.post-users-infos:last-child{
+  margin-bottom: 0px;
+}
+.post-users-infos p{
+  flex: 1;
+  display: flex;
+}
+.post-users-infos p:nth-of-type(1){
+  justify-content: end;
+}
+.post-users-infos p:nth-of-type(2){
+  justify-content: end;
+}
+/* post-user-comment */
+.post-user-comment,.comment-place-content{
+  padding: 20px 0;
+}
+.comment-place{}
+.comment-place li{
+  margin-bottom: 10px;
+}

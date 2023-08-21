@@ -4,11 +4,16 @@ import { useState, useEffect, useRef } from "react"; // eslint-disable-line no-u
 import { useCookies } from "react-cookie"; // eslint-disable-line no-unused-vars
 import Swal from "sweetalert2"; // eslint-disable-line no-unused-vars
 import axios from "axios";
-
 import "../css/total.css";
+import "../css/change-info.css";
 import "../css/variables.css";
+import $ from "jquery"; // eslint-disable-line no-unused-vars
+import "../script/change-info.js";
+import "bootstrap-icons/font/bootstrap-icons.css";
+import "font-awesome/css/font-awesome.min.css";
 import "../script/custom.js";
-import "../css/changeInfo.css";
+
+
 async function getCode(email) {
 	await axios
 		.post("/api/email-cert?email=" + email, {
@@ -481,10 +486,10 @@ function ChangeInfo() {
 							<div className="id-subject subject">
 								<p>아이디</p>
 							</div>
-							<div className="input-box input-id">
+							<div className="input-box input-ids">
 								<input
 									type="text"
-									className="input-kind id-input"
+									className="input-kinds id-input"
 									value={loginId}
 									disabled
 								/>
@@ -503,7 +508,7 @@ function ChangeInfo() {
 							<div className="input-box input-email">
 								<input
 									type="email"
-									className="input-kind email-input"
+									className="input-kinds email-input"
 									placeholder="해당메일로 인증번호를 보냅니다."
 									value={email}
 									ref={emailRef}
@@ -538,7 +543,7 @@ function ChangeInfo() {
 							<div className="input-box input-cfnumber">
 								<input
 									type="text"
-									className="input-kind cfnumber-input"
+									className="input-kinds cfnumber-input"
 									placeholder="메일로 보낸 인증번호를 입력하세요."
 									ref={authenticationRef}
 									onChange={handleCfNumberInput}
@@ -560,7 +565,7 @@ function ChangeInfo() {
 							<div className="input-box input-nickname">
 								<input
 									type="text"
-									className="input-kind nick-input"
+									className="input-kinds nick-input"
 									placeholder="사용하실 닉네임을 입력해주세요."
 									value={nickname}
 									ref={nicknameRef}
@@ -576,7 +581,7 @@ function ChangeInfo() {
 							<div className="input-box input-name">
 								<input
 									type="text"
-									className="input-kind name-input"
+									className="input-kinds name-input"
 									placeholder="실명을 입력해주세요."
 									value={name}
 									ref={nameRef}
@@ -593,7 +598,7 @@ function ChangeInfo() {
 							<div className="input-box input-phone">
 								<input
 									type="tel"
-									className="input-kind phone-input"
+									className="input-kinds phone-input"
 									placeholder="휴대폰 번호를 입력해주세요."
 									onChange={handleNumberInput}
 									value={phone}
@@ -609,7 +614,7 @@ function ChangeInfo() {
 							<div className="input-box input-phone">
 								<input
 									type="text"
-									className="input-kind birth-input"
+									className="input-kinds birth-input"
 									placeholder="생년월일 8자리 ( - 제외 )"
 									onChange={handleBirthInput}
 									value={birth}

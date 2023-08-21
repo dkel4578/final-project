@@ -4,7 +4,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useLayoutEffect, useCallback } from "react"; // eslint-disable-line no-unused-vars
 import { useCookies } from "react-cookie";
 import Swal from "sweetalert2";
-
+import "bootstrap-icons/font/bootstrap-icons.css";
+import "font-awesome/css/font-awesome.min.css";
+import "../script/custom.js";
 import "../css/header.css";
 import "../script/custom.js";
 import "../css/variables.css";
