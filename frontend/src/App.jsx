@@ -17,7 +17,7 @@ import PasswordChangePage from './pages/PasswordChangePage';
 import Calnedar from './pages/Calendar';
 import ChatRoomListPage from './pages/ChatRoomListPage';
 import ChatPage from './pages/ChatPage';
-import MasterPage from './pages/MasterPage';
+import AdminPage from './components/AdminPage';
 
 
 const queryClient = new QueryClient();
@@ -44,7 +44,7 @@ function App() {
           <Route path="/calendar" element={<Calnedar/>}/>
           <Route path="/chat/room/list" element={<ChatRoomListPage />}/>
           <Route path="/chat/room/list/:channelId" element={<ChatPage />}/>
-          <Route path="/MasterPage" element={<MasterPage />}/>
+          <Route path="/admin" element={<AdminPage />}/>
         </Routes>
       </QueryClientProvider>
     </>
