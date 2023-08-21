@@ -187,7 +187,7 @@ a {
 .board_page a:first-child {
   border-left: 1px solid #ddd;
 }
-.SuspendButton {
+.SuspendButton,.delteButton  {
   width: 55px;
   padding: 10px;
   font-size: 1px;
@@ -313,6 +313,7 @@ a {
 .master-list{
   display: flex;
   justify-content: space-around;
+  margin-top: 5px;
 
 }
 .master-list li{
@@ -346,6 +347,8 @@ a {
   display: flex;
   float: right;
   gap: 15px;
+  margin-bottom: 10px;
+
 }
 /* master-search */
 .master-search{
@@ -382,9 +385,23 @@ a {
   font-size: 1.1em;
 }
 .master-select-options{
+  width: 150px;
   font-size: 1.1em;
   border: none;
-  border-bottom: 2px solid var(--maincolor);
+  /* border-bottom: 2px solid var(--maincolor); */
 }
-
-
+.category-btn{
+  width: 150px;
+  font-size: 1.15em;
+}
+.ban-btn{
+   font-size: 1em;
+}
+.delteButton{
+  background-color: red;
+  transition: 0.3s;
+}
+.delteButton:hover{
+  background-color: crimson;
+  box-shadow: 0 0 5px crimson;
+}

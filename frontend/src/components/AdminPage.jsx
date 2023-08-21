@@ -284,16 +284,16 @@ const AdminPage = () => {
       <div className="board_title">
         <strong>관리자</strong>
         <p>{manageName}</p>
-        <button className="ReportedUser" onClick={goToManageUsers}>
+        <button className="ReportedUser category-btn" onClick={goToManageUsers}>
           전체 유저
         </button>
-        <button className="SuspendedUser" onClick={goToReportedUsers}>
+        <button className="SuspendedUser category-btn" onClick={goToReportedUsers}>
           신고된 유저
         </button>
-        <button className="ManageUsers" onClick={goToSuspendedUsers}>
+        <button className="ManageUsers category-btn" onClick={goToSuspendedUsers}>
           활동 정지 유저
         </button>
-        <button className="UserBoard" onClick={goToUserBoard}>
+        <button className="UserBoard category-btn" onClick={goToUserBoard}>
           게시판 관리
         </button>
         <div className="master-select-search">
@@ -416,8 +416,8 @@ const AdminPage = () => {
                   <li className="master-list-item">정상</li>
                 }
                 <li className="master-list-item master-btns">
-                  <button className="SuspendButton" onClick={handleSuspendButtonClick}>정지</button>
-                  <button className="UnsuspendButton">정지 해제</button>
+                  <button className="SuspendButton ban-btn" onClick={handleSuspendButtonClick}>정지</button>
+                  <button className="UnsuspendButton ban-btn">해제</button>
                 </li>
               </ul>
             ))}
@@ -464,8 +464,8 @@ const AdminPage = () => {
                 <li className="master-list-item">정상</li>
               }
               <li className="master-list-item master-btns">
-                <button className="SuspendButton" onClick={handleSuspendButtonClick}>정지</button>
-                <button className="UnsuspendButton">정지 해제</button>
+                <button className="SuspendButton ban-btn" onClick={handleSuspendButtonClick}>정지</button>
+                <button className="UnsuspendButton ban-btn">해제</button>
               </li>
             </ul>
           ))}
@@ -504,8 +504,8 @@ const AdminPage = () => {
                   {item.banEndAt}
                 </li>
                 <li className="master-list-item master-btns">
-                  <button className="SuspendButton" onClick={handleSuspendButtonClick}>정지</button>
-                  <button className="UnsuspendButton">정지 해제</button>
+                  <button className="SuspendButton ban-btn" onClick={handleSuspendButtonClick}>정지</button>
+                  <button className="UnsuspendButton ban-btn">해제</button>
                 </li>
               </ul>
             ))}
@@ -540,8 +540,8 @@ const AdminPage = () => {
                 {item.cnt}
               </li>
               <li className="master-list-item master-btns">
-                <button className="SuspendButton" onClick={handleSuspendButtonClick}>정지</button>
-                <button className="UnsuspendButton">정지 해제</button>
+                <button className="delteButton ban-btn" onClick={handleSuspendButtonClick}>삭제</button>
+
               </li>
             </ul>
           ))}
