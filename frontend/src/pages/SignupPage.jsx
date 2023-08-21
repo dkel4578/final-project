@@ -1,12 +1,15 @@
-import React, { useState, useRef, useContext, useEffect } from "react"; // eslint-disable-line no-unused-vars
+import React, { useState, useRef, useContext, useEffect } from "react";  // eslint-disable-line no-unused-vars
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import "../css/join-in.css";
+import "../css/join-in.css" ;
 import "../css/total.css";
 import "../css/variables.css";
 import "../script/custom.js";
-import "../script/signup.js";
-import Swal from "sweetalert2";
+import "../script/signup.js"; 
+import Swal from 'sweetalert2';
+import 'bootstrap-icons/font/bootstrap-icons.css';
+import 'font-awesome/css/font-awesome.min.css';
+import "../script/custom.js";
 
 async function getCode(email) {
   await axios
@@ -558,7 +561,7 @@ function SignupPage() {
               <div className="pw-subject subject">
                 <p>비밀번호</p>
               </div>
-              <div className="input-box input-pw">
+              <div className="input-box input-pwd">
                 <input
                   type="password"
                   className="input-kind pw-input"
@@ -570,7 +573,7 @@ function SignupPage() {
               </div>
               <span
                 className="input-pw-text"
-                style={{ color: pwdCheckFlg ? "green" : "red" }}
+                style={{ color: pwdCheckFlg ? "red" : "#2ECC71" }}
               >
                 영어 대/소문자, 숫자, 특수문자(!@#$%^&*)가 모두 포함된 8자리
                 이상의 조합이어야 합니다!
@@ -594,7 +597,7 @@ function SignupPage() {
               <span
                 className="input-pw-check-text"
                 style={{
-                  color: passwordCheck === password ? "#2ECC71" : "red",
+                  color: passwordCheck === password ? "red" : "#2ECC71",
                 }}
               >
                 {passwordCheckText}

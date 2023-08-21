@@ -3,6 +3,7 @@ footer{
   width: 360px;
   margin: auto;
   position: relative;
+  color: white;
 }
 .footer-inner{
   padding: 20px;
@@ -11,7 +12,7 @@ footer{
   color: white;
 }
 .company-title{
-
+  font-size: 1.3em;
   padding: 0;
   margin: 0 0 10px 0;
  
@@ -22,6 +23,7 @@ address{
   line-height: 1.3em;
 }
 .company-marketing{
+  margin-top: 15px;
   letter-spacing: 2px;
   position: relative;
   margin-left: 20px;
@@ -34,17 +36,17 @@ address{
   transform: translateY(3px);
 }
 .copy-right{
-  margin: 0;
+  margin-top: 15px;
   font-size: 0.88em;
 }
-.to-top{
+.to-top{ 
   display: block;
   position: absolute;
   width: 40px;
   height: 40px;
   text-align: center;
-  right: 5px;
-  bottom: 5px;
+  right: 2px;
+  bottom: 2px;
 }
 .to-top::after{
   display: block;

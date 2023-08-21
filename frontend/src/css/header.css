@@ -30,8 +30,7 @@ header{
   height: 25px;
   position: absolute;
   cursor: pointer;
-  z-index: 5;
-  /* border: 1px solid red; */
+  z-index: 20;
   left: 10px;
 }
 .header-hamburger label[for=trigger] span{
@@ -39,7 +38,7 @@ header{
   width: 100%;
   height: 2px;
   background-color: #2acf7dc2;
-  /* transition: 1s; */
+  transition: 0.6s;
 }
 .header-hamburger label[for=trigger] span:nth-child(1){
   top: 0;
@@ -64,14 +63,14 @@ input[id="trigger"]:checked ~ label[for=trigger] span:nth-child(3){
 
 /* 사이드바 */
 .side-var{
-  z-index: 3;
+  z-index: 15;
   background-color: #e2f5f9;
   width: inherit;
   position: absolute;
   left:-9999px;
   transform: translateX(-50%);
   top: -25px;
-  /* transition: 0.5s; */
+  transition: 0.6s;
 }
 input[id=trigger]:checked ~ .side-var{
   position: absolute;
@@ -102,6 +101,39 @@ input[id=side-close]:checked~.side-var{
 .login-area .fa{
   color:  white;
   font-size: 2em;
+}
+/* 사이드바 알람박스 */
+.side-var-alram-box{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 1;
+  gap: 8px;
+}
+.side-var-alram-box-none-alram{}
+.side-var-alram-box-new-alram{
+  position: relative;
+}
+
+.side-var-alram-box-new-alram::before{
+  z-index: 2;
+  content: 'N';
+  position: absolute;
+  font-size: 0.9em;
+  color:white;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: var(--orangered);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: -8px;
+  left: -5px;
+}
+.side-var-alram-box-new-alram a .bi,
+.side-var-alram-box-none-alram a .bi{
+  color: white;
 }
 
 /* 카테고리 */
@@ -148,6 +180,7 @@ input[id=side-close]:checked~.side-var{
 .category-content i, .category-content a {
   font-size: 1.5em;
 }
+
 
 
 

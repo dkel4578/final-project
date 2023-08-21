@@ -6,9 +6,11 @@ import Swal from 'sweetalert2'; // eslint-disable-line no-unused-vars
 import "../css/total.css";
 import "../css/variables.css";
 import "../script/custom.js";
-import "../css/mypage.css";
-import "../script/mypage.js";
-
+import "../css/my-page.css";
+import "../script/my-page.js";
+import 'bootstrap-icons/font/bootstrap-icons.css';
+import 'font-awesome/css/font-awesome.min.css';
+import "../script/custom.js";
 
 function MyPage() {
 
@@ -141,7 +143,7 @@ function MyPage() {
   }
   return (
     <div>
-      <section className="my-page">
+      <section className='my-page-container'>
       <div className="my-page-inner">
         <h1 className="my-page-title">나의 정보</h1>
         <div className="picture-place">

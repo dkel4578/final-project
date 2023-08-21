@@ -5,6 +5,11 @@ import { useCookies } from 'react-cookie';
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as userActions } from "../store/modules/user";
 import Swal from "sweetalert2";
+import 'bootstrap-icons/font/bootstrap-icons.css';
+import 'font-awesome/css/font-awesome.min.css';
+import "../script/login.js";
+import $ from 'jquery'; // eslint-disable-line no-unused-vars
+import "../script/custom.js";
 
 function LoginPage() {
   // const dispatch = useDispatch();
@@ -80,11 +85,11 @@ function LoginPage() {
         </a>
         <form onSubmit={submitHandler}>
           <fieldset>
-            <div className="input-id">
+            <div className="input-login-id">
               <input type="text" placeholder="ID" required ref={loginIdRef}/>
               <i className="bi bi-person-fill-check"></i>
             </div>
-            <div className="input-pw">
+            <div className="input-login-pw">
               <input type="password" placeholder="password" required ref={passwordRef}/>
               <i className="bi bi-key-fill"></i>
             </div>
