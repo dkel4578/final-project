@@ -1,13 +1,13 @@
 package com.example.gachi.service.chat;
 
 import com.example.gachi.model.ChatRoom;
-import com.example.gachi.model.ChatRoomJoin;
-import com.example.gachi.model.User;
+import com.example.gachi.model.dto.chat.ChatRoomResponseDto;
 import com.example.gachi.repository.ChatRoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -19,7 +19,10 @@ public class ChatRoomService {
         return chatRoomRepository.findById(id);
     }
 
-    public List<ChatRoom> findAll() {
-        return chatRoomRepository.findAllByOrderByIdDesc();
+    public List<ChatRoomResponseDto> findAll(Long userId) {
+        List<ChatRoom> chatRoomList = chatRoomRepository.findAllByUserId(userId);
+        return chatRoomList.stream()
+                .map(ChatRoomResponseDto::of)
+                .toList();
     }
 }

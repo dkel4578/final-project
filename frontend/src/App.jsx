@@ -1,7 +1,6 @@
-// eslint-disable-next-line no-unused-vars
-import React from "react"; // eslint-disable-next-line no-unused-vars
-import { Route, Routes } from "react-router-dom"; // eslint-disable-next-line no-unused-vars
-import { QueryClient, QueryClientProvider } from "react-query"; // eslint-disable-next-line no-unused-vars
+
+import React from "react"; 
+import { Route, Routes } from "react-router-dom"; 
 import { Helmet } from 'react-helmet';
 import Header from "./layout/Header";
 import LoginPage from "./pages/LoginPage";
@@ -29,36 +28,40 @@ import PassWordChangeComplete from "./pages/password-change-complete";
 import PostContentModify from "./pages/post-content-modify";
 import PostContent from "./pages/post-content";
 import WritePost from "./pages/write-post";
-import Calendar from "./pages/Calendar";
+import Calnedar from './pages/Calendar';
+import ChatRoomListPage from './pages/ChatRoomListPage';
 
-const queryClient = new QueryClient();
 
 function App() {
-	return (
-		<>
-			<Header />
-			<Helmet>
+  return (
+    <>
+      <Header />
+    			<Helmet>
         <title>같이갈래?</title>
       </Helmet>
-			<QueryClientProvider client={queryClient}>
-				<Routes>
-					<Route path="/" element={<HomePage />} />
-					<Route path="/login" element={<LoginPage />} />
-					<Route path="/findId" element={<FindIdPage />} />
-					<Route path="/signup" element={<SignupPage />} />
-					<Route path="/myPage" element={<MyPage />} />
-					<Route path="/changeInfo" element={<ChangeInfo />} />
-					<Route path="/board" element={<BoardListPage />} />
-					<Route path="/board/view" element={<BoardViewPage />} />
-					<Route path="/passwordChange" element={<PasswordChangePage />} />
+        <Routes>
+          <Route path="/" element={<HomePage/>}/>
+          <Route path="/login" element={<LoginPage/>}/>
+          <Route path="/findId" element={<FindIdPage/>}/>
+          <Route path="/signup" element={<SignupPage/>}/>
+          <Route path="/myPage" element={<MyPage/>}/>
+          <Route path="/changeInfo" element={<ChangeInfo/>}/>
+          <Route path="/board/view" element={<BoardViewPage/>}/>
+            	<Route path="/passwordChange" element={<PasswordChangePage />} />
 					<Route path="/passwordChangeComplete" element={<PassWordChangeComplete />} />
-					<Route path="/board/coffee" element={<BoardCoffee/>}/>
+          <Route path="/board/write" element={<BoardWritePage />}/>
+          <Route path="/board/coffee" element={<BoardCoffee/>}/>
 					<Route path="/board/drink" element={<BoardDrink/>}/>
 					<Route path="/board/meal" element={<BoardMeal/>}/>
 					<Route path="/board/trip" element={<BoardTrip/>}/>
 					<Route path="/board/notice" element={<BoardNotice/>}/>
-					<Route path="/chatListRoom" element={<ChatListRoom/>}/>
-					<Route path="/coffeeEventPage" element={<CoffeeEventPage/>}/>
+          <Route path="/passwordChange" element={<PasswordChangePage/>}/>
+          <Route path="/calendar" element={<Calnedar/>}/>
+          <Route path="/chat/room/list" element={<ChatRoomListPage />}/>
+          <Route path="/chat/room/list2" element={<ChatingRoomListPage />}/>
+          <Route path="/chat/room/list/:channelId" element={<ChatPage />}/>
+          <Route path="/admin" element={<AdminPage />}/>
+          <Route path="/coffeeEventPage" element={<CoffeeEventPage/>}/>
 					<Route path="/criminalPage" element={<CriminalPage/>}/>
 					<Route path="/faq" element={<FAQ/>}/>
 					<Route path="/launching" element={<Launching/>}/>
