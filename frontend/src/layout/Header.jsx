@@ -19,6 +19,7 @@ function Header() {
 
 	const [cookies, setCookie, removeCookie] = useCookies(["token"]);
 	const [nickname, setNickname] = useState("");
+	const [userId, setUserId] = useState("");
 	const [isLogin, setIsLogin] = useState(false);
 
   const navigate = useNavigate();
@@ -53,9 +54,6 @@ function Header() {
 
 	const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
 	useEffect(() => {
-		console.log("cookies : " + cookies);
-		console.log("cookies token : " + cookies.token);
-		console.log("isLogin : ", isLogin);
 		if (isLogin && cookies.token) {
 			fetch("/api/user/me", {
 				method: "GET",
@@ -123,7 +121,7 @@ function Header() {
 								<div className="category-title">
 									<div className="category-content">
 										<i className="fa fa-comment" aria-hidden="true"></i>
-										{isLogin ? <Link to={"/chat/room/list"}>채팅하기(후)</Link> : <a href="#">채팅하기(전)</a>}
+										{isLogin ? <Link to={"/chat/room/list2"}>채팅하기(후)</Link> : <a href="#">채팅하기(전)</a>}
 									</div>
 								</div>
 								<div className="category-title">
