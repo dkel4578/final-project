@@ -663,16 +663,18 @@ function ChangeInfo() {
 								<p>프로필 이미지</p>
 							</div>
 							<div className="user-profile">
-								{imageSrc && <img src={imageSrc} alt="Uploaded" />}
+								{imageSrc && <img src={imageSrc} alt="Uploaded" className="user-profile-basic" />}
 							</div>
 							<div className="upload-profile-img">
-								<input
-									type="file"
-									className="upload-profile-img-btn"
-									accept="image/*"
-									onChange={onUpload}
-									ref={fileInputRef}
-								></input>
+							<label className="upload-profile-custom-file-input">
+							<i class="bi bi-image"></i>
+									  <input
+									    type="file"
+									    accept="image/*"
+									    onChange={onUpload}
+									    ref={fileInputRef}
+									  />파일을 선택해주세요.
+									</label>
 							</div>
 						</div>
 						<div className="introduce-place place">

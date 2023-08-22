@@ -6,13 +6,15 @@ import "../script/post-content.js";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'font-awesome/css/font-awesome.min.css';
 import "../script/custom.js";
+import { Link } from 'react-router-dom';
+
 
 const PostContent = () => {
 	return (
 		<section className="post-content">
 			<div className="user-report-modal">
 				<div className="user-report-modal-contents">
-					<h2>신고하기</h2>
+					<h2 className="user-report-title">신고하기</h2>
 					<i className="fa fa-times modal-close" aria-hidden="true"></i>
 					<fieldset>
 						<label htmlFor="doubling-the-post">
@@ -45,7 +47,7 @@ const PostContent = () => {
 			<div className="post-content-inner">
 				<div className="post-title">글제목 데이터로 불러오기</div>
 				<div className="post-main-contents">
-					<div className="post-main-content">
+					<div className="post-main-content-detail">
 						<p>
 							내용 데이터로 받아오기 Lorem ipsum dolor, sit amet consectetur
 							adipisicing elit. Officia sequi quam, animi distinctio, dicta
@@ -62,11 +64,13 @@ const PostContent = () => {
 						</p>
 					</div>
 					<div className="post-main-content-btns">
+						<Link to ="/postContentModify">
 						<input
 							type="button"
 							className="post-modify-btn"
 							value="수정"
 						></input>
+						</Link>
 						<input
 							type="button"
 							className="post-delete-btn"
@@ -116,13 +120,13 @@ const PostContent = () => {
 						<li className="comment-container-content">
 							<div className="comment-container-content-user-info">
 								<div className="user-nick-name">
-									<p>홍찰찰옥수수</p>
+									<p>생존전문가김병철</p>
 								</div>
 								<div className="user-gender">
-									<p>성별 데이터로</p>
+									<p>성별 : 남성</p>
 								</div>
 								<div className="user-manner">
-									<p>매너점수 : 데이터로</p>
+									<p>매너점수 : 4.7</p>
 								</div>
 							</div>
 							<div className="btnsAndtext">
@@ -141,12 +145,12 @@ const PostContent = () => {
 									<div className="modify-delete-btns">
 										<input
 											type="button"
-											className="modify-btn"
+											className="post-modify-btn"
 											value="수정"
 										></input>
 										<input
 											type="button"
-											className="delete-btn"
+											className="post-delete-btn"
 											value="삭제"
 										></input>
 									</div>
@@ -176,7 +180,7 @@ const PostContent = () => {
 						<li className="recomment-container-content">
 							<div className="recomment-container-content-user-info">
 								<div className="user-nick-name">
-									<p>홍독배</p>
+									<p>스피드왕조닦달</p>
 								</div>
 								<div className="user-gender">
 									<p>남성</p>
@@ -202,12 +206,12 @@ const PostContent = () => {
 									<div className="modify-delete-btns">
 										<input
 											type="button"
-											className="modify-btn"
+											className="post-modify-btn"
 											value="수정"
 										></input>
 										<input
 											type="button"
-											className="delete-btn"
+											className="post-delete-btn"
 											value="삭제"
 										></input>
 									</div>
