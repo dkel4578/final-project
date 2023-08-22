@@ -64,12 +64,10 @@ function Header() {
 			})
 				.then((res) => {
 					if (res) {
-						console.log(res);
 						return res.json();
 					}
 				})
 				.then((data) => {
-					console.log(data);
 					if (data.nickname) {
 						setNickname(data.nickname);
             dispatch(userActions.loginSaveAPI(data.id, data.nickname));
