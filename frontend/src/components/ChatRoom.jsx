@@ -34,27 +34,28 @@ function ChatRoom(props) {
   return (
     <>
       <li className="chat-list-single">
-        <div className="chat-user-profile">
-          <img src="../images/user-profile-test.jpg" alt="프로필" />
-        </div>
-        <div className="chat-user-opponent">
-          {props.userData && props.userData.length > 0 ? (
-            <div>
-              {props.userData.map((user, index) => (
-                <p key={index}>{user.nickname}</p>
-              ))}
-            </div>
-          ) : (
-            <p>No user data available</p>
-          )}
-        </div>
         <div className="chat-sub">{props.roomName}</div>
-        <div className="chat-head-count">10/10</div>
-        <div className="chat-list-icons">
-          <i className="bi bi-share-fill share">
-            <div className="share-box">공유하기</div>
-          </i>
-          <i className="bi bi-box-arrow-right chat-leave"></i>
+        <div className="chat-dynamic-infos">
+          <div className="chat-user-profile">
+            <img src={require("../images/user-profile-test.jpg")}/>
+          </div>
+          <div className="chat-user-opponent">
+            {props.userData && props.userData.length > 0 ? (
+              <div className="chat-user-opponent-user-id">
+                {props.userData.map((user, index) => (
+                  <span  key={index}>{user.nickname}</span>
+                ))}
+              </div>
+            ) : (
+              <p></p>
+            )}
+          </div>
+          <div className="chat-list-icons">
+            <i className="bi bi-share-fill share">
+              <div className="share-box">공유하기</div>
+            </i>
+            <i className="bi bi-box-arrow-right chat-leave"></i>
+          </div>
         </div>
       </li>
       {/* <ChatRoomStyle>
