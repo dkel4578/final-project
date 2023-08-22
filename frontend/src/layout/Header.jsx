@@ -120,12 +120,24 @@ function Header() {
 								{!isLogin && <Link to="/login">로그인</Link>}
 								<i className="fa fa-angle-right" aria-hidden="true"></i>
 								{isLogin && <Link to="/myPage"> {nickname} 님 </Link>}
+								<div className="side-var-alram-box">
+									<div className="side-var-alram-box-none-alram">
+										<a href="">
+											<i className="bi bi-bell-fill"></i>
+										</a>
+									</div>
+									<div className="side-var-alram-box-new-alram">
+										<a href="">
+											<i className="bi bi-bell-fill"></i>
+										</a>
+									</div>
+								</div>
 							</div>
 							<div className="categorys">
 								<div className="category-title">
 									<div className="category-content">
 										<i className="bi bi-megaphone-fill"></i>
-										<a href="#">공지사항</a>
+										<a href="/board/notice">공지사항</a>
 									</div>
 								</div>
 								<div className="category-title">
@@ -137,7 +149,7 @@ function Header() {
 								<div className="category-title">
 									<div className="category-content">
 										<i className="fa fa-calendar-o" aria-hidden="true"></i>
-										<a href="#">일정</a>
+										<a href="/calendar">일정</a>
 									</div>
 								</div>
 								<div className="category-title category-comu">
@@ -149,25 +161,31 @@ function Header() {
 								<div className="category-sub">
 									<div className="category-content">
 										<i className="fa fa-coffee" aria-hidden="true"></i>
-										<a href="#">커피한잔할래요?</a>
+										<a href="/board/coffee">커피한잔할래요?</a>
 									</div>
 								</div>
 								<div className="category-sub">
 									<div className="category-content">
 										<i className="fa fa-plane" aria-hidden="true"></i>
-										<a href="#">여행같이갈래요?</a>
+										<a href="/board/trip">여행같이갈래요?</a>
 									</div>
 								</div>
 								<div className="category-sub">
 									<div className="category-content">
 										<i className="fa fa-cutlery" aria-hidden="true"></i>
-										<a href="#">식사같이할래요?</a>
+										<a href="/board/meal">식사같이할래요?</a>
 									</div>
 								</div>
 								<div className="category-sub">
 									<div className="category-content">
 										<i className="fa fa-glass" aria-hidden="true"></i>
-										<a href="#">술한잔할래요?</a>
+										<a href="/board/drink">술한잔할래요?</a>
+									</div>
+								</div>
+								<div className="category-title">
+									<div className="category-content">
+									<i class="bi bi-compass-fill"></i>
+										<a href="#none">여행지 추천</a>
 									</div>
 								</div>
 								{isLogin && (
@@ -180,6 +198,9 @@ function Header() {
 										</div>
 									</div>
 								)}
+							</div>
+							<div className="header-white-space">
+								
 							</div>
 						</div>
 					</div>

@@ -107,8 +107,8 @@ function LoginPage() {
         </div>
         <div className="user-find">
           <Link to="/signup">회원가입</Link>
-          <a href="#none">아이디 찾기</a>
-          <a href="#none">비밀번호 변경</a>
+          <a href="/findId">아이디 찾기</a>
+          <a href="/passwordChange">비밀번호 변경</a>
         </div>
       </div>
     </section>

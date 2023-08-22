@@ -109,15 +109,13 @@
 }
 
 /* p태그들 */
-.please-email-input,.after-send-eamil{
+.please-find-id-email-input,.after-find-id-send-email{
     padding: 0;
     margin: 0;
     color: red;
     font-size: 1.1em;
     white-space: pre-line;
 }
-
-
 /* find-id-user-find */
 .find-id-user-find{
     margin-top: 15px;

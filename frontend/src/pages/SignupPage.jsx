@@ -1,7 +1,7 @@
 import React, { useState, useRef, useContext, useEffect } from "react";  // eslint-disable-line no-unused-vars
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import "../css/join-in.css" ;
+import "../css/signup.css" ;
 import "../css/total.css";
 import "../css/variables.css";
 import "../script/custom.js";
@@ -127,7 +127,7 @@ function SignupPage() {
 
   const setupPasswordValidation = () => {
     const passwordInput = document.querySelector(
-      ".input-pw input[type=password]"
+      ".input-pwd input[type=password]"
     );
 
     passwordInput.addEventListener("input", function () {
@@ -573,7 +573,7 @@ function SignupPage() {
               </div>
               <span
                 className="input-pw-text"
-                style={{ color: pwdCheckFlg ? "red" : "#2ECC71" }}
+                style={{ color: pwdCheckFlg ? "#2ECC71" : "red" }}
               >
                 영어 대/소문자, 숫자, 특수문자(!@#$%^&*)가 모두 포함된 8자리
                 이상의 조합이어야 합니다!
@@ -583,7 +583,7 @@ function SignupPage() {
               <div className="pw-check-subject subject">
                 <p>비밀번호 확인</p>
               </div>
-              <div className="input-box input-pw-check">
+              <div className="input-box input-pwd-check">
                 <input
                   type="password"
                   className="input-kind pw-check-input"
@@ -595,7 +595,7 @@ function SignupPage() {
                 <i className="bi bi-check-all"></i>
               </div>
               <span
-                className="input-pw-check-text"
+                className="input-pwd-check-text"
                 style={{
                   color: passwordCheck === password ? "red" : "#2ECC71",
                 }}
