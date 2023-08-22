@@ -8,4 +8,8 @@ import java.util.Optional;
 public interface ProfileImgRepository extends JpaRepository<ProfileImg, Long> {
 
     Optional<ProfileImg> findFirstByUserIdOrderByCreateAtDesc(Long id);
+
+    String findFirstImgSrcByUserIdOrderByCreateAtDesc(Long id);
+
+
 }
