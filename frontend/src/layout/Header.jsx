@@ -86,12 +86,22 @@ function Header() {
 			icon: "success",
 			title: "로그아웃", // Alert 제목
 			text: "로그아웃 완료",
-			width: 300, // Alert 내용
+			width: 360, // Alert 내용
 		});
 		removeCookie("token");
 		setIsLogin(false);
 		navigate("/", true);
 	};
+
+	const handleNotLogin = (e) =>{
+		e.preventDefault();
+		Swal.fire({
+			icon: "error",
+			title: "로그인", // Alert 제목
+			text: "로그인이 필요한 서비스입니다!",
+			width: 360, // Alert 내용
+		});
+	}
 
 	return (
 		<div>
@@ -133,7 +143,7 @@ function Header() {
 								<div className="category-title">
 									<div className="category-content">
 										<i className="fa fa-comment" aria-hidden="true"></i>
-										{isLogin ? <Link to={"/chat/room/list2"}>채팅하기(후)</Link> : <a href="#">채팅하기(전)</a>}
+										{isLogin ? <Link to={"/chat/room/list2"}>채팅하기(후)</Link> : <a href="#" onClick={handleNotLogin}>채팅하기(전)</a>}
 									</div>
 								</div>
 								<div className="category-title">

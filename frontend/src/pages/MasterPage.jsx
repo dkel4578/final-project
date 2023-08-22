@@ -1,7 +1,7 @@
 
-import MasterPage2 from "../components/MasterPage2"
+// import MasterPage2 from "../components/MasterPage2"
 
-import "../css/masterPage.css";
+// import "../css/masterPage.css";
 
 
 function materPage() {
@@ -9,7 +9,7 @@ function materPage() {
     <div>
       
 
-      <MasterPage2 />
+      {/* <MasterPage2 /> */}
     </div>
   );
 }
