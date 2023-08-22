@@ -19,6 +19,9 @@
 .map_api_address{
   font-size: 1em;
 }
+.map_api_items{
+  padding: 10px;
+}
 .map_api_item {
   display: flex;
   flex-direction: column;
@@ -29,8 +32,10 @@
   border:solid 1px #ccc; 
   justify-content: center;
   margin-bottom: 12px;
-  gap: 5px;
+  gap: 8px;
   border-radius: 10px; 
+  padding: 10px 15px;
+  box-shadow: 0 0 7px #ccc;
   
 }
 .search_container{
@@ -38,7 +43,7 @@
   align-items: center;
   justify-content: center;
   gap: 5px;
-  margin-bottom: 11px;
+  margin: 11px 0;
 }
 .search-btn{
   background-color: #2ACF7D;
@@ -50,6 +55,7 @@
   width: 70px;
   cursor: pointer;
   border: 1px solid transparent;
+  font-size: 1.2em;
 }
 .search-btn:hover{
   box-shadow: 0 0 5px #26be72;
@@ -65,7 +71,38 @@
   border: 1px solid #2ACF7D;
   outline: none;
   transition: 0.4s;
+  font-size: 1.2em;
 }
 .enter-search:focus{
   box-shadow: 0 0 3px #2ACF7D;
+}
+.map_api_see_more{
+  padding: 5px 15px;
+  border-radius: 20px;
+  background-color: #2ACF7D;
+  color: white;
+  font-size: 1.2em;
+}
+.map_api_description{
+  line-height: 1.2em;
+  letter-spacing: 1px;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
+}
+.map_api_no{
+ font-size: 11px;
+ color: #ffff;
+ text-shadow: 0 0 4px #000000;
+ margin: 10px 0;
+ 
+}
+a {
+  color: blue; /* 눌리지 않은 상태의 링크 색상 */
+ 
+  transition: color 0.3s; /* 색상 변경에 애니메이션을 추가 */
+}
+
+/* 링크가 눌렸을 때 */
+a:visited {
+  color: purple; /* 눌렀을 때 링크 색상 */
 }
