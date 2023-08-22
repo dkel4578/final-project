@@ -27,7 +27,7 @@ function MyPage() {
 	const [phone, setPhone] = useState(''); // eslint-disable-line no-unused-vars
 	const [profileMessage, setProfileMessage] = useState(''); // eslint-disable-line no-unused-vars
 	const [birth, setBirth] = useState(''); // eslint-disable-line no-unused-vars
-  const [imgSrc, setImgSrc] = useState('default-image.svg')
+  const [imgSrc, setImgSrc] = useState('/profileImg/default-image.svg')
 
   
 	if(cookies.token != 'undefined'){
@@ -145,6 +145,22 @@ function MyPage() {
     <div>
       <section className='my-page-container'>
       <div className="my-page-inner">
+      <div className="my-page-modal">
+        <div className="modal-content">
+          <i className="fa fa-times modal-close" aria-hidden="true"></i>
+          <fieldset>   
+            <legend>비밀번호 입력</legend>
+            <div className="my-page-modal-pw-container">
+              <input type="password" placeholder="비밀번호를 입력해주세요." ref={passwordRef}/>
+              <i className="bi bi-key-fill key"></i> 
+              <i className="bi bi-eye-slash toggle-eye"></i>       
+            </div>
+          </fieldset>
+          <div className="change-info-btn">
+            <a onClick={passwordCheckHandler}>정보 수정하러 가기</a>
+          </div>
+        </div>
+      </div>
         <h1 className="my-page-title">나의 정보</h1>
         <div className="picture-place">
           <div className="user-profile-img">
@@ -190,22 +206,7 @@ function MyPage() {
           </div>
         </div>
       </div>
-      <div className="my-page-modal">
-        <div className="modal-content">
-          <i className="fa fa-times modal-close" aria-hidden="true"></i>
-          <fieldset>   
-            <legend>비밀번호 입력</legend>
-            <div className="my-page-modal-pw-container">
-              <input type="password" placeholder="비밀번호를 입력해주세요." ref={passwordRef}/>
-              <i className="bi bi-key-fill key"></i> 
-              <i className="bi bi-eye-slash toggle-eye"></i>       
-            </div>
-          </fieldset>
-          <div className="change-info-btn">
-            <a onClick={passwordCheckHandler}>정보 수정하러 가기</a>
-          </div>
-        </div>
-      </div>
+
     </section>
       
     </div>

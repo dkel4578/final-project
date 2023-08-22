@@ -22,47 +22,49 @@ function LoginPage() {
   const loginIdRef = useRef(null);
   const passwordRef = useRef(null);
 
-  const submitHandler = async (e) =>{
+  const submitHandler = async (e) => {
     e.preventDefault();
     const loginId = loginIdRef.current.value;
     const password = passwordRef.current.value;
-
+  
     const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
-
-    fetch('api/login', {
-      method: 'POST',
-      headers : {
-        "Content-Type" : jsonContent,
-      },
-      body :JSON.stringify({
-        loginId : loginId,
-        password : password
-      })
-    })
-    .then(res => {
-      if(res.status !== 200){
-        return Swal.fire({
-          icon: "error",
-          title: "로그인",
-          text: "사용자 정보가 올바르지 않습니다.",
-          width: 360,
-        });
-      } 
-      return res.json();
-    })
-    .then(data =>{
-      if(data){
+  
+    try {
+      const response = await fetch('api/login', {
+        method: 'POST',
+        headers: {
+          "Content-Type": jsonContent,
+        },
+        body: JSON.stringify({
+          loginId: loginId,
+          password: password
+        })
+      });
+  
+      if (response.status !== 200) {
+        throw new Error("로그인 실패");
+      }
+  
+      const data = await response.json();
+  
+      if (data) {
         removeCookie('token');
-        const expireTikmeDate = new Date(Number(data.accessTokenExpireIn));
-        setCookie('token', data.accessToken, { expires: expireTikmeDate});
+        const expireTimeDate = new Date(Number(data.accessTokenExpireIn));
+        setCookie('token', data.accessToken, { expires: expireTimeDate });
         console.log(cookies);
-        // console.log('loginAPI Data:', data);
-        
+  
         // dispatch(userActions.loginSaveAPI(data.id, data.nickname));
-
+  
         navigate('/', true);
       }
-    })
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "로그인",
+        text: "사용자 정보가 올바르지 않습니다.",
+        width: 360,
+      });
+    }
   }
   return (
     <>

@@ -18,6 +18,7 @@ import BoardDrink from "./pages/board-drink";
 import BoardMeal from "./pages/board-meal";
 import BoardTrip from "./pages/board-trip";
 import BoardNotice from "./pages/board-notice";
+import BoardWritePage from "./pages/BoardWritePage";
 import ChatListRoom from "./pages/chat-list-room";
 import CoffeeEventPage from "./pages/coffee-event-page";
 import CriminalPage from "./pages/criminal-page";
@@ -30,6 +31,9 @@ import PostContent from "./pages/post-content";
 import WritePost from "./pages/write-post";
 import Calnedar from './pages/Calendar';
 import ChatRoomListPage from './pages/ChatRoomListPage';
+import ChatingRoomListPage from './pages/ChatingRoomListPage';
+
+
 
 
 function App() {
@@ -47,7 +51,7 @@ function App() {
           <Route path="/myPage" element={<MyPage/>}/>
           <Route path="/changeInfo" element={<ChangeInfo/>}/>
           <Route path="/board/view" element={<BoardViewPage/>}/>
-            	<Route path="/passwordChange" element={<PasswordChangePage />} />
+          <Route path="/passwordChange" element={<PasswordChangePage />} />
 					<Route path="/passwordChangeComplete" element={<PassWordChangeComplete />} />
           <Route path="/board/write" element={<BoardWritePage />}/>
           <Route path="/board/coffee" element={<BoardCoffee/>}/>

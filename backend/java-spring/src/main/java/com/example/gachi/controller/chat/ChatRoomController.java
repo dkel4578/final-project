@@ -4,6 +4,7 @@ import com.example.gachi.model.ChatRoom;
 import com.example.gachi.model.ChatRoomJoin;
 import com.example.gachi.model.User;
 import com.example.gachi.model.dto.chat.ChatRoomResponseDto;
+import com.example.gachi.model.dto.user.ProfileImgResponseDto;
 import com.example.gachi.repository.ChatRoomJoinRepository;
 import com.example.gachi.repository.ChatRoomRepository;
 import com.example.gachi.service.chat.ChatRoomJoinService;
@@ -24,6 +25,7 @@ public class ChatRoomController {
     private final ChatRoomService chatRoomService;
     private final ChatRoomRepository chatRoomRepository;
     private final ChatRoomJoinRepository chatRoomJoinRepository;
+
 
     /**
      * @param userId
@@ -51,7 +53,7 @@ public class ChatRoomController {
     }
 
     @GetMapping("/chatUser")
-    public ResponseEntity<List<User>> chatUser(@RequestParam Long roomId) {
+    public ResponseEntity<List<User>> chatUser(@RequestParam(required = false) Long roomId) {
         List<ChatRoomJoin> chatRoomJoins = chatRoomJoinRepository.findAllByChatRoomId(roomId);
         List<User> users = chatRoomJoins.stream()
                 .map(ChatRoomJoin::getUser)
@@ -60,9 +62,16 @@ public class ChatRoomController {
     }
 
     @GetMapping("/chatMaster")
-    public Long chatMaster(@RequestParam Long id){
+    public Long chatMaster(@RequestParam(required = false) Long id){
         ChatRoom chatRoom = chatRoomRepository.findAllById(id);
 
         return chatRoom.getUser().getId();
+    }
+    //채팅방 대표 이미지 가져오기
+    @GetMapping("/chatProfile")
+    public ResponseEntity<List<ProfileImgResponseDto>> getRoomProfileImg(@RequestParam(required = false) Long userId){
+        List<ProfileImgResponseDto> profileImgResponseDtos = chatRoomService.getRoomMasterProfileImg(userId);
+
+        return ResponseEntity.ok(profileImgResponseDtos);
     }
 }
