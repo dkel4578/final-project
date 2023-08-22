@@ -1,17 +1,16 @@
-.title-area{
-  text-align: center;
-  padding: 20px 0;
-}
-.title-area h1{
-  font-size: 3em;
-  letter-spacing: 5px;
-}
 .faq{
   background-color: var(--mintcolor);
   width: 360px;
   margin: auto;
 }
-.faq-inner{}
+.faq-title-area{
+  text-align: center;
+  padding: 20px 0;
+}
+.faq-title-area h1{
+  font-size: 3em;
+  letter-spacing: 5px;
+}
 .faq-inner h1{
   text-align: center;
   font-size: 3em;
@@ -22,7 +21,6 @@
   align-items: center;
   padding: 20px 0;
   flex-direction: column;
-  height: 100vh;
 }
 .faq-items{
   cursor: pointer;
@@ -42,7 +40,7 @@
 }
 .faq-title{
   cursor: pointer;
-  font-size: 1.3em;
+  font-size: 1.15em;
   font-weight: bold;
   /* padding-bottom: 15px; */
   position: relative;
@@ -70,3 +68,33 @@
   border-top: 1px solid black;
   display: none;
 }
+/* faq-modify-btns */
+.faq-modify-btns{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+.faq-btn{
+  border-radius: 30px;
+  font-size: 0.85em;
+  padding: 5px 10px;
+  color: white;
+  transition: 0.3s;
+}
+.faq-modify-btn{
+  background-color: var(--remonblue);
+}
+.faq-modify-btn:hover{
+  background-color: var(--royalblue);
+  box-shadow: 0 0 8px var(--royalblue);
+}
+.faq-delte-btn{
+  background-color: crimson;
+}
+.faq-delte-btn:hover{
+  background-color: red;
+  box-shadow: 0 0 8px red;
+}
+

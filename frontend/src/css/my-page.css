@@ -1,0 +1,237 @@
+.my-page{
+  max-width: 360px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.my-page-inner{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px;
+}
+.my-page-title{
+  font-size: 2.5em;
+}
+
+/* .picture-place */
+.picture-place{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+  border-bottom: 1px solid var(--maincolor);
+  padding-bottom: 10px;
+}
+.user-profile-img{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.user-profile-img img{
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow:  0 0 10px rgba(0, 0, 0, 0.452);
+}
+.user-nick-names{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+}
+.user-nick-names p{
+  font-size: 1.3em;
+}
+
+/* user-info-place */
+.user-info-place{
+  width: 100%;
+}
+.user-basic-info{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 20px 0;
+}
+.user-place{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+
+}
+.user-place p {
+  font-size: 1.3em;
+  display: flex;
+}
+.user-place p:nth-of-type(1){
+  flex: 0.4;
+  font-weight: bold;
+}
+.user-place p:nth-of-type(2){
+  flex: 0.6;
+  justify-content: end;
+}
+
+/* user-introduce */
+.user-introduce{
+ 
+}
+.user-introduce-title{
+  font-size: 2em;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.user-introduce-content{
+  border: 1px solid var(--maincolor);
+  padding: 10px;
+  border-radius: 5px;
+}
+.user-introduce-content p{
+  font-size: 1.3em;
+  letter-spacing: 1px;
+}
+
+/* info-change-btn */
+.info-change-btn{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+.info-change-btn input[type=button]{
+  cursor: pointer;
+  display: block;
+  width: 70%;
+  font-size: 1.5em;
+  background-color: var(--maincolor);
+  color: white;
+  border-radius: 25px;
+  padding: 10px;
+  transition: 0.4s;
+}
+.info-change-btn input[type=button]:hover{
+  background-color: var(--forestgreen);
+  box-shadow: 0 0 10px var(--forestgreen);
+}
+
+/* 비밀번호 입력 모달창 */
+.my-page-modal{
+  width: 360px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.418);
+  transition: 0.35s;
+  opacity: 0;
+  visibility: hidden;
+}
+.my-page-modal.active{
+  opacity: 1;
+  visibility: visible;
+}
+.modal-content{
+  position: relative;
+  background-color: white;
+  width: 95%;
+  border-radius: 5px;
+  text-align: center;
+  padding: 20px;
+}
+.modal-close{
+  color: var(--light-black);
+  cursor: pointer;
+  position: absolute;
+  right: 20px;
+  top: 15px;
+  transition: 0.4s;
+}
+.modal-close:hover{
+  color: var(--dim-black);
+}
+fieldset{
+  border: 2px solid var(--maincolor);
+  border-radius: 5px;
+}
+fieldset legend{
+  border-radius: 30px;
+  background-color: var(--maincolor);
+  padding: 10px 20px;
+  color: white;
+  font-size: 1.5em;
+}
+.my-page-modal-pw-container{
+  position: relative;
+  margin: 20px 0;
+}
+.my-page-modal-pw-container .bi{
+  position: absolute;
+  font-size: 2em;
+  top: 55%;
+  transform: translateY(-50%);
+  transition: 0.4s;
+}
+.key{
+  left: 8px;
+}
+.toggle-eye{
+  right: 30px;
+  cursor: pointer;
+}
+.my-page-modal-pw-container input[type=password],
+.my-page-modal-pw-container input[type=text]{
+  border: 1px solid var(--maincolor);
+  border-radius: 5px;
+  width: 100%;
+  padding: 12.5px;
+  font-size: 1.2em;
+  padding-left: 45px;
+}
+.my-page-modal-pw-container input[type=password]:focus,
+.my-page-modal-pw-container input[type=text]:focus{
+  box-shadow: 0 0 10px var(--maincolor);
+}
+.my-page-modal-pw-container input:focus ~ .bi{
+  color: var(--maincolor);
+}
+.my-page-modal-pw-container input::placeholder{
+  transition: 0.4s;
+}
+.my-page-modal-pw-container input:focus::placeholder{
+  opacity: 0;
+}
+
+/* change-info-btn */
+.change-info-btn{
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+
+}
+.change-info-btn a{
+  width: 80%;
+  display: block;
+  padding: 12.5px;
+  font-size: 1.5em;
+  color:  white;
+  background-color: var(--maincolor);
+  border-radius: 25px;
+  transition: 0.4s;
+  cursor: pointer;
+}
+.change-info-btn a:hover{
+  background-color: var(--forestgreen);
+  box-shadow: 0 0 10px var(--forestgreen);
+}
+
+

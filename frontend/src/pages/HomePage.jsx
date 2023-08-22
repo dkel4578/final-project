@@ -4,6 +4,9 @@ import "../css/index.css";
 import "../css/total.css";
 import "../css/variables.css";
 import "../css/slides.scss";
+import 'bootstrap-icons/font/bootstrap-icons.css';
+import 'font-awesome/css/font-awesome.min.css';
+import "../script/custom.js";
 
 function HomePage() {
   const slides = [
@@ -46,22 +49,22 @@ function HomePage() {
         <div className="category-items">
 
             <div className="category-item">
-              <Link to={"/board/C"}>
+              <Link to={"/board"}>
                 <img src="./images/cofee-together.jpg" alt="커피한잔 할래요"/>
               </Link>
             </div>
             <div className="category-item">
-              <Link to={"/board/T"}>
+              <Link to={"/board/trip"}>
                 <img src="./images/trip-together.jpg" alt="여행같이 할래요"/>
               </Link>
             </div>
             <div className="category-item">
-              <Link to={"/board/F"}>
+              <Link to={"/board/food"}>
                 <img src="./images/eat-together.jpg" alt="식사같이 할래요"/>
               </Link>
             </div>
             <div className="category-item">
-              <Link to={"/board/A"}>
+              <Link to={"/board/drink"}>
                 <img src="./images/drink-together.jpg" alt="술한잔 할래요"/>
               </Link>
             </div>

@@ -11,9 +11,6 @@ import '../css/write-post.css';
 import Editor from "./EditorComponent.jsx"; //에디터
 // import MapComponent from './MapComponent';
 
-
-
-
 function BoardWriteForm() { // Receive the 'kind' prop
     let navigate = useNavigate();
     const { kind } = useParams(); // kind 값을 추출

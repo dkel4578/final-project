@@ -12,7 +12,6 @@ const BoardPreview = ({ boardInfo,kind }) => {
             <div className="board-info">
                 <div className="board-title">
                     {kind === 'C' &&  <span>커피한잔할래요</span>} {/* 커피*/}
-
                     <a href={`/board/view?id=${boardInfo.id}`}>{boardInfo.title}</a>
                 </div>
                 <div className="board-user-log">

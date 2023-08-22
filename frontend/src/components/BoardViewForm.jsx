@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import {useLocation, useParams} from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import {Link} from 'react-router-dom'
 import dayjs from 'dayjs';
 import "../css/index.css";
@@ -11,11 +11,11 @@ import "../css/post-content.css";
 
 
 function BoardViewForm() {
+  const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const id = searchParams.get('id'); // Extract id from URL parameter
   const [data, setData] = useState('');
-
   const { kind } = useParams(); // kind 값을 추출
 
 
@@ -24,7 +24,7 @@ function BoardViewForm() {
     fetch(`/api/board/${id}`)
         .then(res => res.json())
         .then(data => {
-          console.log(data)
+          console.log("data  ========> ",data)
           setData(data);
         })
   }
@@ -33,6 +33,15 @@ function BoardViewForm() {
     fetchData();
   },[id]);
 
+  const handleEditClick = () => {
+    // 수정 페이지로 이동
+    navigate(`/board/edit?id=${data.id}`);
+  };
+
+  const handleDeleteClick = () => {
+    // 수정 페이지로 이동
+    navigate(`/board/delete?id=${data.id}`);
+  };
 
 
   return (
@@ -56,12 +65,6 @@ function BoardViewForm() {
               </Link>
             </div>
             <div className="search-area">
-
-              <div className="write-button">
-                <a href="#none">
-                  <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
-                </a>
-              </div>
             </div>
             <div className="post-content-inner">
               <div className="post-title">{data.title}</div>
@@ -74,8 +77,14 @@ function BoardViewForm() {
                   </p>
                 </div>
                 <div className="post-main-content-btns">
-                  <input type="button" className="post-modify-btn" value="수정"></input>
-                  <input type="button" className="post-delete-btn" value="삭제"></input>
+                  <input type="button"
+                         className="post-modify-btn"
+                         onClick={handleEditClick}
+                         value="수정"></input>
+                  <input type="button"
+                         className="post-delete-btn"
+                         onClick={handleDeleteClick}
+                         value="삭제"></input>
                 </div>
               </div>
               <div className="post-user-info">
@@ -129,7 +138,10 @@ function BoardViewForm() {
                           {/*<p>{{데이터로 시간 끌어오기}}</p>*/}
                         </div>
                         <div className="modify-delete-btns">
-                          <input type="button" className="modify-btn" value="수정" />
+                          <input
+                              type="button"
+                              className="modify-btn"
+                              value="수정" />
                             <input type="button" className="delete-btn" value="삭제" />
                         </div>
                         <div className="reply-btn">

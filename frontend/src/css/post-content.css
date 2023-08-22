@@ -1,5 +1,5 @@
 .post-content{
-
+  max-width: 360px;
 }
 .post-content-inner{
   padding: 20px;
@@ -20,7 +20,7 @@
   padding: 20px 0;
 }
 .post-main-contents p{
-
+  font-size: 1.1em;
 }
 /* post-main-content-btns */
 .post-main-content-btns{
@@ -75,7 +75,7 @@
 .post-users-infos{
   display: flex;
   /* border: 1px solid red; */
-  font-size: 1.3em;
+  font-size: 1.1em;
   justify-content: center;
   align-items: center;
   margin-bottom: 7px;
@@ -84,14 +84,15 @@
   margin-bottom: 0px;
 }
 .post-users-infos p{
-  flex: 1;
   display: flex;
 }
 .post-users-infos p:nth-of-type(1){
-  justify-content: end;
+  justify-content: center;
+  flex: 0.8;
 }
 .post-users-infos p:nth-of-type(2){
   justify-content: end;
+  flex: 1;
 }
 .siren{
   position: absolute;
@@ -102,15 +103,15 @@
   right:0;
 }
 /* post-user-comment */
-.post-user-comment,.comment-place-content{
+.post-user-comment,.comment-container-content{
   padding: 20px 0;
 }
 .comment-place{}
 .comment-place li{
   margin-bottom: 10px;
 }
-/* comment-place-content */
-.comment-place-content{
+/* comment-container-content */
+.comment-container-content{
   border-top: 1.5px solid #ccc;
   border-bottom: 1.5px solid #ccc;
   display: flex;
@@ -119,14 +120,14 @@
   flex-direction: column;
   clear: both;
 }
-/* .comment-place-content-user-info */
-.comment-place-content-user-info{
+/* .comment-container-content-user-info */
+.comment-container-content-user-info{
   /* border: 1px solid blue; */
   display: flex;
   gap: 10px;
   font-size: 1.5em;
 }
-.comment-place-content-user-info div{
+.comment-container-content-user-info div{
   margin-bottom: 10px;
 }
 .user-nick-name{
@@ -137,16 +138,16 @@
 .user-manner{
 
 }
-/* comment-place-content-main-text */
-.comment-place-content-main-text{
+/* comment-container-content-main-text */
+.comment-container-content-main-text{
   word-wrap: break-word;
   margin: 10px 0;
 }
-.comment-place-content-main-text p,.comment-time p{
-  font-size: 1.3em;
+.comment-container-content-main-text p,.comment-time p{
+  font-size: 1.2em;
 }
-/* comment-place-content-timeAndbtns */
-.comment-place-content-timeAndbtns{
+/* comment-container-content-timeAndbtns */
+.comment-container-content-timeAndbtns{
   /* border: 1px solid green; */
   display: flex;
   flex-direction: column;
@@ -193,10 +194,8 @@
 .siren2{
   cursor: pointer;
 }
-/* recomment-place-content*/
-.recomment-place-content{
-  border-top: 1.5px solid #ccc;
-  border-bottom: 1.5px solid #ccc;
+/* recomment-container-content*/
+.recomment-container-content{
   display: flex;
   font-size: 0.75em;
   width: 80%;
@@ -205,7 +204,7 @@
   float: right;
   position: relative;
 }
-.recomment-place-content::before{
+.recomment-container-content::before{
   position: absolute;
   content: '\F132';
   font-size: 3em;
@@ -214,25 +213,25 @@
   transform: translateY(-40%);
   left: -60px;
 }
-/* .recomment-place-content-user-info */
-.recomment-place-content-user-info{
+/* .recomment-container-content-user-info */
+.recomment-container-content-user-info{
   /* border: 1px solid blue; */
   display: flex;
   gap: 10px;
   font-size: 1.5em;
 }
-.recomment-place-content-user-info div{
+.recomment-container-content-user-info div{
   margin-bottom: 10px;
 }
-.recomment-place-content-main-text{
+.recomment-container-content-main-text{
   word-wrap: break-word;
   margin: 10px 0;
 }
-.recomment-place-content-main-text p,.recomment-time p{
-  font-size: 1.3em;
+.recomment-container-content-main-text p,.recomment-time p{
+  font-size: 1.1em;
 }
-/* recomment-place-content-timeAndbtns */
-.recomment-place-content-timeAndbtns{
+/* recomment-container-content-timeAndbtns */
+.recomment-container-content-timeAndbtns{
   /* border: 1px solid green; */
   display: flex;
   flex-direction: column;
@@ -269,7 +268,6 @@
   width: 360px;
   height: 100vh;
   position: fixed;
-  background-color: rgba(0, 0, 0, 0.514);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -293,6 +291,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.384);
 }
 .user-report-modal-contents h2{
   margin-bottom: 10px;
