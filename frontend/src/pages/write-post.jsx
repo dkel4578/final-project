@@ -20,6 +20,8 @@ const WritePost = () => {
               <option>같이여행할래요</option>
               <option>식사같이할래요</option>
               <option>술한잔할래요</option>
+              {/* faq는 운영자만 보이게 */}
+              <option>FAQ</option>
             </select>
           </div>
           <div className="write-title-box">

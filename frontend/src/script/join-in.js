@@ -31,7 +31,7 @@ $(document).ready(function() {
     }
 
     if (passwordRegex.test(password)) {
-      $(".input-pw-text").css("color", "#2acf7d").text("영어 대/소문자, 숫자, 특수문자(!@#$%^&*)가 모두 포함된 8자리 이상의 조합이어야 합니다.");
+      $(".input-pw-text").css("color", "#2acf7d").text("영어 대/소문자, 숫자, 특수문자(!@#$%^&*)가 모두 포함된 8자리 이상의 조합입니다!");
     } else {
       $(".input-pw-text").css("color", "red").text("영어 대/소문자, 숫자, 특수문자(!@#$%^&*)가 모두 포함된 8자리 이상의 조합이어야 합니다.");
     }

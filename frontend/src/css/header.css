@@ -9,10 +9,10 @@ header{
 .header-inner{
   overflow: hidden;
   width: inherit;
-  display: flex;
   height: inherit;
-  align-items: center;  
+  display: flex;
   justify-content: space-around;
+  align-items: center;  
 }
 .header-hamburger{
   /* border: 1px solid red; */
@@ -61,7 +61,7 @@ input[id="trigger"]:checked ~ label[for=trigger] span:nth-child(3){
   transform: rotate(-45deg);
 }
 
-/* 사이드바 */
+/* side-var */
 .side-var{
   z-index: 15;
   background-color: #e2f5f9;
@@ -83,10 +83,15 @@ input[id=trigger]:checked ~ label[for=trigger] span{
 input[id=side-close]:checked~.side-var{
   left: -9999px;
 }
+/* header-white-space */
+.header-white-space{
+  /* width: inherit;
+  height: 30vh;
+  background-color: rgba(0, 0, 0, 0.3); */
+}
 
 /* 로그인 에이리어 */
 .login-area{
- /* background-color: #418ce1; */
  background-color: var(--maincolor);
  padding: 23px 23px 23px 50px;
  display: flex;

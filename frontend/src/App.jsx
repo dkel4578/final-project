@@ -30,13 +30,9 @@ import PostContent from "./pages/post-content";
 import WritePost from "./pages/write-post";
 import Calnedar from './pages/Calendar';
 import ChatRoomListPage from './pages/ChatRoomListPage';
-import ChatPage from './pages/ChatPage';
-import MasterPage from './pages/MasterPage';
 
 
 function App() {
-
-
   return (
     <>
       <Header />
@@ -64,7 +60,7 @@ function App() {
           <Route path="/chat/room/list" element={<ChatRoomListPage />}/>
           <Route path="/chat/room/list2" element={<ChatingRoomListPage />}/>
           <Route path="/chat/room/list/:channelId" element={<ChatPage />}/>
-          <Route path="/MasterPage" element={<MasterPage />}/>
+          <Route path="/admin" element={<AdminPage />}/>
           <Route path="/coffeeEventPage" element={<CoffeeEventPage/>}/>
 					<Route path="/criminalPage" element={<CriminalPage/>}/>
 					<Route path="/faq" element={<FAQ/>}/>
@@ -73,9 +69,12 @@ function App() {
 					<Route path="/postContentModify" element={<PostContentModify/>}/>
 					<Route path="/postContent" element={<PostContent/>}/>
 					<Route path="/writePost" element={<WritePost/>}/>
-        </Routes>
-    </>
-  )
+					<Route path="/calendar" element={<Calendar/>}/>
+				</Routes>
+			</QueryClientProvider>
+			<Footer />
+		</>
+	);
 }
 
 export default App;
