@@ -129,7 +129,7 @@
 }
 .noticeAndfaq a:hover{
   opacity: 1;
-  background-color: var(--royalblue);
+  background-color: var(--remonblue);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
 }
 .noticeAndfaq a{

@@ -13,10 +13,10 @@ function DrinkBoard() {
     <div>
       <section className="board-place">
         <div className="board-kind">
-          <a href="board-coffee.html">커피한잔할래요</a>
-          <a href="../html/board-trip.html">같이여행갈래요</a>
-          <a href="../html/board-meal.html">같이식사할래요</a>
-          <a href="../html/board-drink.html" className="active">술한잔할래요</a>
+          <a href="/board/coffee">커피한잔할래요</a>
+          <a href="/board/trip">여행같이갈래요</a>
+          <a href="/board/meal">식사같이할래요</a>
+          <a href="/board/drink" className="active">술한잔할래요</a>
         </div>
         <div className="search-area">
           <div className="search">
@@ -24,7 +24,7 @@ function DrinkBoard() {
             <i className="fa fa-search" aria-hidden="true"></i>
           </div>
           <div className="write-button">
-            <a href="../html/write-post.html">
+          <a href="/writePost">
               <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
             </a>
           </div>
@@ -33,10 +33,9 @@ function DrinkBoard() {
           <li className="board-content">
             <div className="board-info">
               <div className="board-title">
-                <span>술한잔할래요</span>
-                <a href="../html/post-content.html">
-                  왜들 그리 다운돼있어? 뭐가 문제야 say something 분위기가 겁나
-                  싸해 요새는 이런 게 유행인가
+                <span>공지사항</span>
+                <a href="/postContent">
+                  왜들 그리 다운돼있어? 뭐가 문제야 say something 분위기가 겁나 싸해 요새는 이런 게 유행인가
                 </a>
               </div>
               <div className="board-user-log">
@@ -45,11 +44,12 @@ function DrinkBoard() {
                 <span>조회수 15</span>
               </div>
             </div>
-            <a href="../html/post-content.html" className="board-comment">
+            <a href="/postContent" className="board-comment">
               <span>10</span>
               <span>댓글</span>
             </a>
           </li>
+          {/* 다른 게시글들 */}
         </ul>
         <div className="board-paging">
           <a href="#none" className="paging-arrow left">

@@ -14,7 +14,7 @@ function NoticeBoard() {
       <section className="board-place">
         <div className="board-notice">
           <i className="bi bi-megaphone-fill"></i>
-          <a href="board-notice.html" className="active">공지사항</a>
+          <a href="/board/notice" className="active">공지사항</a>
         </div>
         <div className="search-area">
           <div className="search">
@@ -22,7 +22,7 @@ function NoticeBoard() {
             <i className="fa fa-search" aria-hidden="true"></i>
           </div>
           <div className="write-button">
-            <a href="../html/write-post.html">
+            <a href="/writePost">
               <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
             </a>
           </div>
@@ -32,7 +32,7 @@ function NoticeBoard() {
             <div className="board-info">
               <div className="board-title">
                 <span>공지사항</span>
-                <a href="../html/post-content.html">
+                <a href="/postContent">
                   왜들 그리 다운돼있어? 뭐가 문제야 say something 분위기가 겁나 싸해 요새는 이런 게 유행인가
                 </a>
               </div>
@@ -42,7 +42,7 @@ function NoticeBoard() {
                 <span>조회수 15</span>
               </div>
             </div>
-            <a href="../html/post-content.html" className="board-comment">
+            <a href="/postContent" className="board-comment">
               <span>10</span>
               <span>댓글</span>
             </a>

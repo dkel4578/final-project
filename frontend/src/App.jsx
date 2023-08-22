@@ -29,8 +29,7 @@ import PassWordChangeComplete from "./pages/password-change-complete";
 import PostContentModify from "./pages/post-content-modify";
 import PostContent from "./pages/post-content";
 import WritePost from "./pages/write-post";
-
-
+import Calendar from "./pages/Calendar";
 
 const queryClient = new QueryClient();
 
@@ -67,6 +66,7 @@ function App() {
 					<Route path="/postContentModify" element={<PostContentModify/>}/>
 					<Route path="/postContent" element={<PostContent/>}/>
 					<Route path="/writePost" element={<WritePost/>}/>
+					<Route path="/calendar" element={<Calendar/>}/>
 				</Routes>
 			</QueryClientProvider>
 			<Footer />

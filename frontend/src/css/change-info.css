@@ -99,9 +99,9 @@ label[for=male],label[for=female]{
   justify-content: center;
   align-items: center;
 }
-.user-profile img{
-  width: 80px;
-  height: 80px;
+.user-profile .user-profile-basic{
+  width: 120px;
+  height: 120px;
   border: 1px solid transparent;
   background-color: var(--mintcolor);
   border-radius: 50%;
@@ -116,18 +116,30 @@ label[for=male],label[for=female]{
   flex-direction: column;
   gap: 15px;
 }
-.upload-profile-img-btn{
-  cursor: pointer;
-  background-color: var(--remonblue) !important;
-  padding: 10px 20px !important;
-  transition: 0.4s;
-  color: white;
-  border-radius: 10px;
-  font-size: 1.25em;
+.upload-profile-img input[type="file"]{
+  display: none;
 }
-.upload-profile-img-btn:hover{
-  background-color: royalblue !important;
-  box-shadow: 0 0 10px royalblue;
+.upload-profile-custom-file-input{
+  background-color: var(--remonblue);
+  color: white;
+  padding: 10px 40px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.4em;
+  transition: 0.4s;
+  position: relative;
+}
+.upload-profile-custom-file-input:hover{
+  background-color: var(--royalblue);
+  box-shadow:  0 0 5px var(--royalblue);
+}
+.upload-profile-custom-file-input .bi{
+  position: absolute;
+  left: 8px;
+  top: 60%;
+  transform: translateY(-60%);
+  font-size: 1.1em;
+  color: white;
 }
 .user-profile-input{
   width: 90%;
@@ -188,17 +200,16 @@ label[for=male],label[for=female]{
 
 /* change-info-complete-btn */
 .change-info-complete-btn{
-  margin-top: 15px;
+  margin-top: 10px;
 }
 .change-info-complete-btn .change-info-btn{
   text-align: center;
   display: block;
-  width: 100%;
   border-radius: 35px;
   background-color: var(--maincolor);
   color: white;
-  font-size: 2em;
-  padding:  10px;
+  font-size: 1.65em;
+  padding:  10px 20px;
   transition: 0.4s;
 }
 .change-info-complete-btn .change-info-btn:hover{
