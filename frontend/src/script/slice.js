@@ -1,3 +1,5 @@
+import $ from 'jquery';
+import Swal from 'sweetalert2'; // eslint-disable-line no-unused-vars
 const pageSize = 5;
 let currentPage = 0;
 

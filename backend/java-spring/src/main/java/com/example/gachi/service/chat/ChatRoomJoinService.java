@@ -20,10 +20,6 @@ public class ChatRoomJoinService {
     private final ChatRoomRepository chatRoomRepository;
     private final UserService userService;
 
-    public List<ChatRoomJoin> findByUser(User user) {
-        return chatRoomJoinRepository.findByUser(user);
-    }
-
     @Transactional
     public Long newRoom(HashMap<String, Object> paramMap) {
         Long uid = Long.valueOf(String.valueOf(paramMap.get("uid")));
@@ -45,6 +41,8 @@ public class ChatRoomJoinService {
 
         return newChatRoom.getId();
     }
+
+
 
 //    @Transactional(readOnly = true)
 //    public Long check(String user1,String user2){

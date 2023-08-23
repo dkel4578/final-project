@@ -1,9 +1,12 @@
-import React, { useState, useRef, useContext, useEffect } from 'react'; // eslint-disable-line no-unused-vars
-import axios from 'axios';    // eslint-disable-line no-unused-vars
-import { useNavigate } from 'react-router-dom';  // eslint-disable-line no-unused-vars
-import '../css/password-change.css';
-import $ from 'jquery'; // eslint-disable-line no-unused-vars
+import React, { useState, useRef, useContext, useEffect } from "react"; // eslint-disable-line no-unused-vars
+import axios from "axios"; // eslint-disable-line no-unused-vars
+import { useNavigate } from "react-router-dom"; // eslint-disable-line no-unused-vars
+import "../css/password-change.css";
+import $ from "jquery"; // eslint-disable-line no-unused-vars
 import Swal from "sweetalert2";
+import "bootstrap-icons/font/bootstrap-icons.css";
+import "font-awesome/css/font-awesome.min.css";
+import "../script/custom.js";
 
 async function getCode(email){
   
@@ -180,26 +183,26 @@ function PasswordChangePage() {
           <h1 className="password-change-title">비밀번호 변경</h1>
           <form>
             <fieldset>
-              <div className="input-id">
+            <div className="password-change-input-id">
                 <input type="text" placeholder="아이디"  onChange={handleLoginIdChange}/>
                 <i className="bi bi-person-fill-check"></i>
               </div>
-              <div className="input-cf-email">
+              <div className="password-change-input-cf-email">
               <input type="email" placeholder="이메일을 입력해주세요." className="email-input-cf-text" onChange={handleEmailChange}/>
               <i className="bi bi-envelope-fill"></i>
             </div>
-              <div className="input-cf-number">
+            <div className="password-change-input-cf-number">
                 <input type="text" placeholder="인증번호" className="cf-number-input-text"  onChange={handleCodeChange}/>
                 <i className="bi bi-envelope-check-fill"></i>
                 <input type="button" value="인증번호 발송" onClick={handleSendEmail} />
-              </div>
+            </div>
               <p className="after-send-email">메일주소 작성 시 인증번호를 보내드리겠습니다.</p>
             </fieldset>
             <div className="password-change-btn">
               <a href="#none"  onClick={handleCheckCode}>비밀번호 변경</a>
             </div>
           </form>
-          <div className="user-find">
+          <div className="password-change-user-find">
             <a href="#none">회원가입</a>
             <a href="findId">아이디 찾기</a>
           </div>

@@ -1,12 +1,12 @@
 package com.example.gachi.model;
+
 import com.example.gachi.model.enums.Authority;
-import com.example.gachi.model.enums.Provider;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -97,6 +97,7 @@ public class User extends BaseEntity{
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     @ToString.Exclude
+    @JsonManagedReference
     private List<ProfileImg> profileImg;
 
 
@@ -115,6 +116,18 @@ public class User extends BaseEntity{
     @ToString.Exclude
     private List<Report> reports;
 
+//    @OneToMany(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "user_id")
+//    @ToString.Exclude
+//    @JsonManagedReference
+//    private List<ChatRoom> chatRooms;
+//
+//    @OneToMany(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "user_id")
+//    @ToString.Exclude
+//    @JsonManagedReference
+//    private List<ChatMessage> chatMessages;
+//
 //    @OneToMany
 //    @JoinColumn(name = "room_id")
 //    @ToString.Exclude
