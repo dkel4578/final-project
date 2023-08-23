@@ -187,54 +187,41 @@ a {
 .board_page a:first-child {
   border-left: 1px solid #ddd;
 }
-.SuspendButton,.delteButton  {
+.SuspendButton,.UnsuspendButton,.delteButton  {
   width: 55px;
   padding: 10px;
   font-size: 1px;
-  background-color: #9acd32; /* 변경된 배경색 */
-  color: rgb(255, 255, 255);
+  color: white;
   border: none;
   cursor: pointer;
   transition:0.4s;
   font-weight: bold;
-
   border-radius: 10px;
 }
-
+.SuspendButton{
+  background-color: red;
+}
 .SuspendButton:hover {
-  background-color: #e41515; /* 변경된 배경색 */
-  color: #000000;
+  background-color: crimson;
+  box-shadow: 0 0 8px crimson;
 }
 
 .UnsuspendButton {
-  width: 55px;
-  padding: 10px;
-  font-size: 1px;
-  background-color: #4169e1; /* 변경된 배경색 */
-  color: white;
-  border: none;
-
-  transition: 0.4s;
-  font-weight: bold;
- 
-  border-radius: 10px;
+  background-color: var(--remonblue);
 }
 .UnsuspendButton:hover {
-  background-color: #2dc1cc; /* 변경된 배경색 */
-  color: #000000;
+  background-color: royalblue;
+  box-shadow: 0 0 8px royalblue;
 }
 .modalButton{
   padding: 9px 12px;
-  font-size: 1px;
   color: white;
   cursor: pointer;
   font-weight: bold;
-  font-size: 11px;
   border-radius: 10px;
-  border: 1px solid #ccc;
   border-radius: 5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: 0.4s;
+  font-size: 0.8em;
 }
 
 .modalButton1 {
@@ -242,36 +229,48 @@ a {
 }
 
 .modalButton1:hover {
-  background-color: #ff0000; /* 변경된 배경색 */
-  color: #000000;
+  background-color: crimson;
+  box-shadow: 0 0 8px crimson;
 }
 
 .modalButton2 {
-  background-color: #dfdb12; /* 변경된 배경색 */
+  background-color: var(--remonblue);
 }
 
 .modalButton2:hover {
-  background-color: #dfdb12; /* 변경된 배경색 */
-  color: #000000;
+  background-color: royalblue;
+  box-shadow: 0 0 8px royalblue;
 }
-
+.input-stop-box{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.day-stop{
+  font-size: 1.2em;
+}
 .inputNumber {
-  width: 30px;
-  height: 25px;
-  border: solid 1px #000000;
-  border-radius: 4px;
+  width: 70px;
+  height: 40px;
+  border: solid 2px black;
+  border-radius: 5px;
   text-align: center;
-  font-size: 14px;
-  color: #ff0000;
   margin-right: 5px;
+  font-size: 1em;
   
 }
 .daySuspension{
-  border: solid 1px #ff0000;
+  border: solid 2px var(--maincolor);
   border-radius: 5px;
   display: flex;
+  align-items: center;
+  justify-content: center;
   flex-direction: column;
-  padding: 90px;
+  font-size: 2.5em;
+  padding: 20px;
+  width: 300px;
+  height: 300px;
+  gap: 10px;
 
 }
 .bottomSection{
@@ -279,23 +278,33 @@ a {
   gap: 15px;
   margin-top: 10px;
 }
-
+.popup_overlay{
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}  
 .popup_content{
   background-color: #ffffff;
-  width: 300px;
-  height: 300px;
+  width: 450px;
+  height: 450px;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
   position: absolute;
-  top: 50%; /* 모달을 수직 중앙으로 정렬 */
-  left: 50%; /* 모달을 수평 중앙으로 정렬 */
-  transform: translate(-50%, -50%); /* 모달을 정 가운데로 이동 */
+  top: 50%; 
+  left: 50%; 
+  transform: translate(-50%, -50%);
   background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px #ccc;
+}
+.stop{
+  font-size: 3em;
+  margin-bottom: 10px;
 }
 
 
