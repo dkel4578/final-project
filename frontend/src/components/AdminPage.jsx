@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import axios from 'axios';
 import Select from "react-select";
 import "../css/masterPage.css";
-
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 
 const addBan = async(banDays,userId,reportId,banReason)=>{
@@ -65,9 +65,48 @@ const changeReportStatus = async(reportedId)=>{
   });
 }
 
+const returnBoard = async(id)=>{
+  const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
+
+        fetch(`/api/board/recovery/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': jsonContent,
+                id: id,
+                delYn: "N",
+            },
+            body: JSON.stringify({}),
+        }).then((data) => {
+            if (data && data.status === 200) {
+                alert('게시글이 복구되었습니다.');
+            } else {
+                alert('게시글 복구를 실패했습니다.');
+            }
+        });
+}
+const delBoard = async(id)=>{
+  const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
+
+        fetch(`/api/board/delete/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': jsonContent,
+                id: id,
+                delYn: "Y",
+            },
+            body: JSON.stringify({}),
+        }).then((data) => {
+            if (data && data.status === 200) {
+                alert('게시글이 삭제되었습니다.');
+            } else {
+                alert('게시글 삭제 실패했습니다.');
+            }
+        });
+}
+
 
 const AdminPage = () => {
-
+  
   const userOption = [
     {value : "", label : "선택해 주세요"},
     {value : "banned", label : "정지된 사용자"},
@@ -296,13 +335,17 @@ const AdminPage = () => {
     // setCurrentContent(id);
   };
   const handleBoardCloseButtonClick = () => {
-
     setShowBoardReturnModal(false);
     setShowBoardDelModal(false);
   };
+  const handleBoarddelModalButtonClick = () => {
+    delBoard(boardId);
+    // alert("삭제 완료!");
+    setShowBoardDelModal(false);
+  }
   const handleBoardRetModalButtonClick = () => {
-    // returnBoard(boardId);
-    alert("복구 완료!");
+    returnBoard(boardId);
+    // alert("복구 완료!");
     setShowBoardReturnModal(false);
   }
 
@@ -321,13 +364,13 @@ const AdminPage = () => {
           true:
             searchKeyword === "id" 
             ? item.loginId.includes(search)
-          : searchKeyword === "nickname"
-          ? item.nickname.includes(search)
-          : searchKeyword === "phone"
-          ? item.phone.includes(search)
-          : searchKeyword === "email"
-          ? item.email.includes(search)
-          : false)
+            : searchKeyword === "nickname"
+            ? item.nickname.includes(search)
+            : searchKeyword === "phone"
+            ? item.phone.includes(search)
+            : searchKeyword === "email"
+            ? item.email.includes(search)
+            : false)
         ) &&
         (keyword === "" ?
         true :
@@ -715,12 +758,12 @@ const AdminPage = () => {
               }
               {item.delYn === "Y" &&
                 <li className="master-list-item master-btns">
-                <button className="delteButton ban-btn" onClick={handleBoardRetButtonClick(item.id)}>복구</button>
+                <button className="delteButton ban-btn" onClick={()=>{handleBoardRetButtonClick(item.id)}}>복구</button>
               </li>
               }
               {item.delYn === "N" &&
                 <li className="master-list-item master-btns">
-                <button className="delteButton ban-btn" onClick={handleBoardButtonClick(item.id)}>삭제</button>
+                <button className="delteButton ban-btn" onClick={()=>{handleBoardButtonClick(item.id)}}>삭제</button>
               </li>
               }
             </ul>
@@ -796,7 +839,7 @@ const AdminPage = () => {
                   <div className="bottomSection">
                     <button
                       className="modalButton1 modalButton"
-                      onClick={handleBoardButtonClick}
+                      onClick={handleBoarddelModalButtonClick}
                     >
                       삭제
                     </button>
