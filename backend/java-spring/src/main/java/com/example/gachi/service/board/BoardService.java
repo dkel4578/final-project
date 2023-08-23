@@ -1,14 +1,13 @@
 package com.example.gachi.service.board;
 
 import com.example.gachi.model.Board;
+import com.example.gachi.model.Comment;
 import com.example.gachi.model.User;
-import com.example.gachi.model.dto.board.AddBoardRequestDto;
-import com.example.gachi.model.dto.board.BoardResponseDto;
-import com.example.gachi.model.dto.board.DeleteBoardRequestDto;
-import com.example.gachi.model.dto.board.UpdateBoardRequestDto;
+import com.example.gachi.model.dto.board.*;
 import com.example.gachi.model.enums.Kind;
 import com.example.gachi.repository.BoardRepository;
 import com.example.gachi.repository.BoardsRepository;
+import com.example.gachi.repository.CommentRepository;
 import com.example.gachi.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.javassist.NotFoundException;
@@ -16,8 +15,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,8 +30,10 @@ public class BoardService {
     private final BoardRepository boardRepository;
     private final BoardsRepository boardsRepository;
     private final UserRepository userRepository;
+    private final CommentRepository commentRepository;
 
     //게시판 저장
+    @Transactional
     public Board save(AddBoardRequestDto addBoardRequestDto) throws NotFoundException{
         System.out.println("addBoardRequestDto: ---------------=>"  +  addBoardRequestDto);
         User userEntity = userRepository.findById(addBoardRequestDto.getUserId()).orElseThrow(() -> new NotFoundException("User not found444444"));
@@ -89,8 +92,6 @@ public class BoardService {
 
 
 
-
-
     public Page<Board> getBoardAll(Pageable pageable) {
         return boardRepository.findAll(pageable);
     }
@@ -120,5 +121,48 @@ public class BoardService {
         board.updateBoard(updateBoardRequestDto.getTitle(), updateBoardRequestDto.getContent());
         return board;
     }
+
+
+
+    //댓글 저장
+    @Transactional
+    public Comment saveComment(AddCommentRequestDto addCommentRequestDto) throws NotFoundException{
+        System.out.println("addCommentRequestDto: ---------------=>"  +  addCommentRequestDto);
+        User userEntity = userRepository.findById(addCommentRequestDto.getUserId()).orElseThrow(() -> new NotFoundException("User not found_comment_service"));
+        Board boarEntity = boardRepository.findById(addCommentRequestDto.getBoardId()).orElseThrow(() -> new NotFoundException("User not found_comment_service"));
+        Comment comment = addCommentRequestDto.toEntity(boarEntity, userEntity);
+        return commentRepository.save(comment);
+    }
+
+    //댓글 수정하기
+    @Transactional
+    public Comment updateComment(Long id, UpdateCommentRequestDto updateCommentRequestDto) throws NotFoundException{
+        System.out.println("updateCommentRequestDto: ---------------=>"  +  updateCommentRequestDto);
+        Comment comment = commentRepository.findById(id).orElseThrow(()->
+                new IllegalArgumentException("해당 댓글이 존재 하지 않습니다."));
+        comment.updateComment(updateCommentRequestDto.getContent());
+        return comment;
+    }
+
+
+    //댓글 삭제하기
+    @Transactional
+    public void deleteComment(Long comId){
+        Comment comment = commentRepository.findById(comId).orElseThrow(() -> new IllegalArgumentException("not found: "));
+        comment.deleteComment("Y");
+    }
+
+
+    // 댓글 목록 가져오기
+    public List<CommentResponseDto> fetchCommentBy(Long boardId) {
+    // 댓글을 해당 게시글(boardId)에 대한 것만 가져와야 합니다.
+    List<Comment> comments = commentRepository.findByBoardIdOrderByCreateAtDesc(boardId);
+
+    return comments.stream()
+            .map(CommentResponseDto::of)
+            .collect(Collectors.toList());
+    }
+
+
 
 }
