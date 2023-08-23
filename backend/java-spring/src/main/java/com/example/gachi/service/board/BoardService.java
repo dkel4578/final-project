@@ -108,6 +108,11 @@ public class BoardService {
         Board board = boardRepository.findById(boardId).orElseThrow(() -> new IllegalArgumentException("not found: "));
         board.deleteBoard("Y");
     }
+    @Transactional
+    public void recovery(Long boardId){
+        Board board = boardRepository.findById(boardId).orElseThrow(() -> new IllegalArgumentException("not found: "));
+        board.deleteBoard("N");
+    }
 //    public void delete(Long boardId){
 //        System.out.println("delete: id" + boardId);
 //        boardRepository.deleteById(boardId);
