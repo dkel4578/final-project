@@ -76,6 +76,8 @@ public class WebSecurityConfig {
             .requestMatchers(mvcMatcherBuilder.pattern("/ws-stomp/chat/**")).permitAll()
             .requestMatchers(mvcMatcherBuilder.pattern("/oauth2/**")).permitAll()
             .requestMatchers(mvcMatcherBuilder.pattern("/upload/**")).permitAll()
+                .requestMatchers(mvcMatcherBuilder.pattern("/sub/**")).permitAll()
+                .requestMatchers(mvcMatcherBuilder.pattern("/pub/**")).permitAll()
     //                .requestMatchers(mvcMatcherBuilder.pattern("/email-login","user/email-login","/EmailTemplate")).permitAll()
             .requestMatchers(mvcMatcherBuilder.pattern("\"/\", \"/css/**\", \"/images/**\", \"/js/**\", \"/h2-console/**\", \"/api/**\"")).permitAll()
             .anyRequest().authenticated()

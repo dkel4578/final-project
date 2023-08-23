@@ -28,7 +28,8 @@ function ChatRoom(props) {
   const navigate = useNavigate();
 
   const goChatRoomClick = (roomId, e) => {
-    navigate(`/chat/room/list/${roomId}`);
+    
+    navigate(`/chat/room/list/${roomId}`, { state: { chatRoomProps: props } });
   };
 
   return (
@@ -39,7 +40,7 @@ function ChatRoom(props) {
           <div className="chat-user-profile">
             <img src={props.imgSrc} alt="Profile" />
           </div>
-          <div className="chat-user-opponent" onClick={goChatRoomClick}>
+          <div className="chat-user-opponent" onClick={() => {goChatRoomClick(props.id)}}>
             {props.userData && props.userData.length > 0 ? (
               <div className="chat-user-opponent-user-id">
                 {props.userData.map((user, index) => (

@@ -125,6 +125,10 @@ function SignupPage() {
     checkPasswords();
   }, [password, passwordCheck]);
 
+  useEffect(() => {
+    setupPasswordValidation();
+  }, [password])
+
   const setupPasswordValidation = () => {
     const passwordInput = document.querySelector(
       ".input-pwd input[type=password]"
@@ -352,34 +356,8 @@ function SignupPage() {
     const email = emailRef.current.value;
 
     const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
-    if(!pwdFlg){
-      Swal.fire({
-        icon: "warning",
-        title: "비밀번호", // Alert 제목
-        text: "비밀번호의 형식을 다시 확인해주세요",
-        width: 300,
-      });
-      return;
-    }
-    else if(!pwdCheckFlg){
-      Swal.fire({
-        icon: "warning",
-        title: "비밀번호", // Alert 제목
-        text: "비밀번호 확인이 일치하지 않습니다",
-        width: 300,
-      });
-      return;
-    }
-    else if(!nameFlg){
-      Swal.fire({
-        icon: "warning",
-        title: "이름", // Alert 제목
-        text: "이름이 올바르지 않습니다",
-        width: 300,
-      });
-      return;
-    }
-    else if (!email) {
+   
+    if (!email) {
       Swal.fire({
         icon: "warning",
         title: "중복 검사", // Alert 제목
@@ -452,6 +430,32 @@ function SignupPage() {
         text: "이메일 인증을 완료하십시오.",
         width: 300,
       });
+    } else if(!pwdFlg){
+      Swal.fire({
+        icon: "warning",
+        title: "비밀번호", // Alert 제목
+        text: "비밀번호의 형식을 다시 확인해주세요",
+        width: 300,
+      });
+      return;
+    }
+    else if(!pwdCheckFlg){
+      Swal.fire({
+        icon: "warning",
+        title: "비밀번호", // Alert 제목
+        text: "비밀번호 확인이 일치하지 않습니다",
+        width: 300,
+      });
+      return;
+    }
+    else if(!nameFlg){
+      Swal.fire({
+        icon: "warning",
+        title: "이름", // Alert 제목
+        text: "이름이 올바르지 않습니다",
+        width: 300,
+      });
+      return;
     } else {
       const loginId = loginIdRef.current.value;
       const password = passwordRef.current.value;
@@ -568,6 +572,7 @@ function SignupPage() {
                   placeholder="비밀번호"
                   required
                   ref={passwordRef}
+                  onChange={(e)=> setPassword(e.target.value)}
                 />
                 <i className="bi bi-eye-slash toggle-eye"></i>
               </div>

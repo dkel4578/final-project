@@ -31,7 +31,7 @@ form {
   position: relative;
   max-width:70%;
   display: block;
-  float: right;
+  float: left;
   clear: both;
   word-wrap: break-word;
 }
@@ -40,7 +40,7 @@ form {
   position: relative;
   max-width: 70%;
   display: block;
-  float: left;
+  float: right;
   clear: both;
   word-wrap: break-word;
 }

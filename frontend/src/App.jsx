@@ -33,6 +33,7 @@ import Calendar from './pages/Calendar';
 import ChatRoomListPage from './pages/ChatRoomListPage'; //선생님거
 import ChatingRoomListPage from './pages/ChatingRoomListPage'; //내가 만든거
 import MasterPage from "./pages/MasterPage";
+import ChatPage from "./pages/ChatPage";
 
 
 
@@ -64,6 +65,7 @@ function App() {
           <Route path="/calendar" element={<Calendar/>}/>
           <Route path="/chat/room/list" element={<ChatRoomListPage />}/>
           <Route path="/chat/room/list2" element={<ChatingRoomListPage />}/>
+          <Route path="/chat/room/list/:id" element={<ChatPage/>} />
           <Route path="/admin" element={<MasterPage />}/>
           <Route path="/coffeeEventPage" element={<CoffeeEventPage/>}/>
 					<Route path="/criminalPage" element={<CriminalPage/>}/>

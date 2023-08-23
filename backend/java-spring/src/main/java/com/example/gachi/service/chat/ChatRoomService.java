@@ -67,6 +67,12 @@ public class ChatRoomService {
         for (User users : chatRoomUserList) {
             ProfileImg profileImg = profileImgRepository.findFirstByUserIdOrderByCreateAtDesc(users.getId())
                     .orElse(null); // Optional이 비어있을 때 null 반환
+
+            if (profileImg == null) {
+                // profileImg가 null인 경우 id가 3인 ProfileImg 요소 가져오기
+                profileImg = profileImgRepository.findById(3L).orElse(null);
+            }
+
             profileImgList.add(profileImg);
         }
         System.out.println("profileImgList.profileImg >>>>>> " +profileImgList.get(0).getId());
