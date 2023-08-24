@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import axios from 'axios';
 import Select from "react-select";
 import "../css/masterPage.css";
-import InfiniteScroll from 'react-infinite-scroll-component';
 
 
 const addBan = async(banDays,userId,reportId,banReason)=>{

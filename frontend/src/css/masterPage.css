@@ -187,7 +187,7 @@ a {
 .board_page a:first-child {
   border-left: 1px solid #ddd;
 }
-.SuspendButton,.UnsuspendButton,.delteButton  {
+.SuspendButton,.UnsuspendButton,.delteButton,.recoveryButton  {
   width: 55px;
   padding: 10px;
   font-size: 1px;
@@ -206,10 +206,11 @@ a {
   box-shadow: 0 0 8px crimson;
 }
 
-.UnsuspendButton {
+.UnsuspendButton,.recoveryButton {
   background-color: var(--remonblue);
 }
-.UnsuspendButton:hover {
+.UnsuspendButton:hover,
+.recoveryButton:hover {
   background-color: royalblue;
   box-shadow: 0 0 8px royalblue;
 }
