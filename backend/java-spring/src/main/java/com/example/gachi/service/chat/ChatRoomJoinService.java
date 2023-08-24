@@ -5,6 +5,7 @@ import com.example.gachi.model.ChatRoomJoin;
 import com.example.gachi.model.User;
 import com.example.gachi.repository.ChatRoomJoinRepository;
 import com.example.gachi.repository.ChatRoomRepository;
+import com.example.gachi.repository.UserRepository;
 import com.example.gachi.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import java.util.List;
 public class ChatRoomJoinService {
     private final ChatRoomJoinRepository chatRoomJoinRepository;
     private final ChatRoomRepository chatRoomRepository;
+    private final UserRepository userRepository;
     private final UserService userService;
 
     @Transactional
@@ -42,6 +44,14 @@ public class ChatRoomJoinService {
         return newChatRoom.getId();
     }
 
+    // 종료버튼 누를시 해당 유저의 bannedYn 변경
+    @Transactional
+    public void chatEnd(Long userId, Long roomId){
+        User user = userRepository.findById(userId).orElse(null);
+        ChatRoom chatRoom = chatRoomRepository.findById(roomId).orElse(null);
+        ChatRoomJoin chatRoomJoin = chatRoomJoinRepository.findChatRoomJoinByUserAndChatRoom(user, chatRoom);
+        chatRoomJoin.setBannedYn("Y");
+    }
 
 
 //    @Transactional(readOnly = true)

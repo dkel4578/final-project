@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
 
-    ChatRoom findAllById(Long id);
+    ChatRoom findAllByIdAndDeleteYn(Long id, String deleteYn);
     //해당 유저가 속해 있는 채팅방들 중 마스터 조회
 
 }

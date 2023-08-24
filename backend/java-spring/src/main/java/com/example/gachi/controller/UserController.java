@@ -1,7 +1,9 @@
 package com.example.gachi.controller;
 
+import com.example.gachi.model.ProfileImg;
 import com.example.gachi.model.User;
 import com.example.gachi.model.dto.user.*;
+import com.example.gachi.repository.ProfileImgRepository;
 import com.example.gachi.repository.UserRepository;
 import com.example.gachi.service.user.UserService;
 import com.example.gachi.util.BadRequestException;
@@ -9,6 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import net.minidev.json.JSONObject;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.UnsupportedEncodingException;
@@ -22,6 +25,8 @@ import java.util.Optional;
 public class UserController {
     private final UserService userService;
     private final UserRepository userRepository;
+    private final ProfileImgRepository profileImgRepository;
+    private final PasswordEncoder passwordEncoder;
 
     //아이디 중복 체크
     @GetMapping("/idCheck")
@@ -79,7 +84,19 @@ public class UserController {
 
     //로그인
     @PostMapping("/login")
-    public ResponseEntity<JwtTokenDto> login(@RequestBody UserLoginRequestDto userLoginRequestDto) {
+    public ResponseEntity<?> login(@RequestBody UserLoginRequestDto userLoginRequestDto) {
+        String loginId = userLoginRequestDto.getLoginId();
+        User user = userRepository.findByLoginId(loginId).orElse(null);
+        String password = userLoginRequestDto.getPassword();
+        String realPassword = user != null ? user.getPassword() : null;
+        if (user != null && user.getBannedYn().equals("Y")) {
+            String errorMessage = "정지당한 아이디입니다.";
+            return ResponseEntity.badRequest().body(Collections.singletonMap("error", errorMessage));
+        }
+        if(!userRepository.existsByLoginId(loginId) || !passwordEncoder.matches(password, realPassword)){
+            String errorMessage = "존재하지 않는 사용자입니다.";
+            return ResponseEntity.badRequest().body(Collections.singletonMap("error", errorMessage));
+        }
         return ResponseEntity.ok(userService.login(userLoginRequestDto));
     }
     //로그아웃
