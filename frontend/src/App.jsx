@@ -32,6 +32,7 @@ import WritePost from "./pages/write-post";
 import Calnedar from './pages/Calendar';
 import ChatRoomListPage from './pages/ChatRoomListPage';
 import ChatingRoomListPage from './pages/ChatingRoomListPage';
+import Admin from "./components/AdminPage"; 
 
 
 
@@ -63,8 +64,8 @@ function App() {
           <Route path="/calendar" element={<Calnedar/>}/>
           <Route path="/chat/room/list" element={<ChatRoomListPage />}/>
           <Route path="/chat/room/list2" element={<ChatingRoomListPage />}/>
-          <Route path="/chat/room/list/:channelId" element={<ChatPage />}/>
-          <Route path="/admin" element={<AdminPage />}/>
+          <Route path="/chat/room/list/:channelId" element={<ChatListRoom />}/>
+          <Route path="/admin" element={<Admin />}/>
           <Route path="/coffeeEventPage" element={<CoffeeEventPage/>}/>
 					<Route path="/criminalPage" element={<CriminalPage/>}/>
 					<Route path="/faq" element={<FAQ/>}/>
@@ -73,9 +74,8 @@ function App() {
 					<Route path="/postContentModify" element={<PostContentModify/>}/>
 					<Route path="/postContent" element={<PostContent/>}/>
 					<Route path="/writePost" element={<WritePost/>}/>
-					<Route path="/calendar" element={<Calendar/>}/>
+					<Route path="/calendar" element={<Calnedar/>}/>
 				</Routes>
-			</QueryClientProvider>
 			<Footer />
 		</>
 	);
