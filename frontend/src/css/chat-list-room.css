@@ -7,6 +7,7 @@
 }
 .chat-list-room-inner{
   padding: 5px;
+  min-height: 70vh;
   text-align: center;
 }
 /* chat-list-room-title */

@@ -54,7 +54,7 @@ public class ChatRoomController {
 
     @GetMapping("/chatUser")
     public ResponseEntity<List<User>> chatUser(@RequestParam(required = false) Long roomId) {
-        List<ChatRoomJoin> chatRoomJoins = chatRoomJoinRepository.findAllByChatRoomId(roomId);
+        List<ChatRoomJoin> chatRoomJoins = chatRoomJoinRepository.findAllByChatRoomIdAndBannedYn(roomId, "N");
         List<User> users = chatRoomJoins.stream()
                 .map(ChatRoomJoin::getUser)
                 .toList();
@@ -63,7 +63,7 @@ public class ChatRoomController {
 
     @GetMapping("/chatMaster")
     public Long chatMaster(@RequestParam(required = false) Long id){
-        ChatRoom chatRoom = chatRoomRepository.findAllById(id);
+        ChatRoom chatRoom = chatRoomRepository.findAllByIdAndDeleteYn(id, "N");
 
         return chatRoom.getUser().getId();
     }
@@ -73,5 +73,10 @@ public class ChatRoomController {
         List<ProfileImgResponseDto> profileImgResponseDtos = chatRoomService.getRoomMasterProfileImg(userId);
 
         return ResponseEntity.ok(profileImgResponseDtos);
+    }
+
+    @PutMapping("/quitChatRoom")
+    public void quitChatRoom(@RequestParam Long userId, @RequestParam Long roomId){
+        chatRoomJoinService.chatEnd(userId, roomId);
     }
 }

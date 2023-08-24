@@ -26,12 +26,11 @@ function ChatPage(chatRoomProps) {
   const dispatch = useDispatch();
   const [messageList, setMessageList] = useState([]);
   const stompClient = useRef({});
-  let { channelId } = useParams();
-  console.log("channelId: ", channelId);
   console.log("roomId: ", props.id);
   // const chatRoomNumber = Number(channelId);
   const roomId = props.id;
   const chatRoomNumber = props.id;
+  const chatRoomName = props.roomName;
 
   const chatConnect = () => {
     if (chatRoomNumber === 0) {
@@ -92,35 +91,48 @@ function ChatPage(chatRoomProps) {
       }),
     });
   };
-
-  useEffect(()=>{
+  let [chattingMessageList, setChattingMesssageList] = useState([]);
+  //채팅메세지 불러오기
+  useEffect(() => {
     const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
-    fetch(`api/messageHistory?roomId=${encodeURIComponent(roomId)}`,{
+    console.log(roomId);
+
+    fetch(`/api/messageHistory?roomId=${encodeURIComponent(roomId)}`, {
       method: "GET",
-      headers : {
-        "Content-Type" : jsonContent,
-      }
+      headers: {
+        "Content-Type": jsonContent,
+      },
     })
-    .then((res)=>{
-      if(!res.ok){
-        Swal.fire({
-          icon: "error",
-          title: "채팅", // Alert 제목
-          text: "채팅 메세지 호출에 실패하였습니다.",
-          width: 360, // Alert 내용
-        });
-      }
-    })
-    .then((data) =>{
-      const updatedMessageList = [...messageList];
-      data.forEacth(item =>{
-        if(item.message != null){
-          updatedMessageList.push(item.message);
+      .then((res) => {
+        console.log("ChatPage Res >>>>> ", res);
+        if (!res.ok) {
+          Swal.fire({
+            icon: "error",
+            title: "채팅",
+            text: "채팅 메세지 호출에 실패하였습니다.",
+            width: 360,
+          });
         }
+        return res.json();
       })
-      setMessageList(updatedMessageList);
-    })
-  }, [])
+      .then((data) => {
+        console.log("ChatPage Data >>>>> ", data);
+        const updatedMessageList = [];
+
+        data.forEach((item) => {
+          if (item && item.message != null) {
+            updatedMessageList.push({
+              message: item.message,
+              userId: item.user.id,
+              nickname: item.user.nickname,
+            });
+          }
+        });
+
+        setMessageList(updatedMessageList);
+        // window.scrollTo(0, document.body.scrollHeight);
+      });
+  }, [roomId, chattingMessageList]);
 
   const chatSubscribe = () => {
     stompClient.current.subscribe("/sub/chat/room/" + roomId, (response) => {
@@ -173,7 +185,7 @@ function ChatPage(chatRoomProps) {
     };
   }, []);
 
-  let [chattingMessageList, setChattingMesssageList] = useState([]);
+ 
   let keyId = 0;
 
   const handleChatSend = (event) => {
@@ -205,7 +217,7 @@ function ChatPage(chatRoomProps) {
     input.current.value = "";
     input.current.focus();
     setIsButtonEnabled(false);
-    window.scrollTo(0, document.body.scrollHeight);
+    // window.scrollTo(0, document.body.scrollHeight);
   };
 
   const input = useRef();
@@ -237,7 +249,31 @@ function ChatPage(chatRoomProps) {
   return (
     <>
       <div id="msgList">
-        <ul>{chattingMessageList}</ul>
+        <p>{chatRoomName}</p>
+        <ul>
+          {messageList.map((messageObject, index) => (
+            <li
+              key={index}
+              className={
+                messageObject.userId === userInfo.uid ? "my-msg" : "other-msg"
+              }
+            >
+              <div className="msg">
+                <pre>
+                  {messageObject.userId === userInfo.uid ? (
+                    messageObject.message
+                  ) : (
+                    <>
+                      <p>{messageObject.nickname}</p>
+                      <p>{messageObject.message}</p>
+                    </>
+                  )}
+                </pre>
+              </div>
+            </li>
+          ))}
+        </ul>
+        {/* <ul>{chattingMessageList}</ul> */}
       </div>
       <form onSubmit={handleChatSend}>
         <div className="msg-send-part">

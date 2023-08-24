@@ -39,7 +39,7 @@ public class ChatRoomService {
         }
 
         User user = userOptional.get();
-        List<ChatRoomJoin> chatRoomJoins = chatRoomJoinRepository.findChatRoomJoinByUser(user);
+        List<ChatRoomJoin> chatRoomJoins = chatRoomJoinRepository.findChatRoomJoinByUserAndBannedYn(user, "N");
         List<ChatRoom> chatRoomList = new ArrayList<>();
 
         for (ChatRoomJoin chatRoomJoin : chatRoomJoins) {
@@ -58,7 +58,7 @@ public class ChatRoomService {
             return Collections.emptyList();
         }
         User user = userOptional.get();
-        List<ChatRoomJoin> chatRoomJoins = chatRoomJoinRepository.findChatRoomJoinByUser(user);
+        List<ChatRoomJoin> chatRoomJoins = chatRoomJoinRepository.findChatRoomJoinByUserAndBannedYn(user, "N");
         List<User> chatRoomUserList = new ArrayList<>();
         List<ProfileImg> profileImgList = new ArrayList<>();
         for (ChatRoomJoin chatRoomJoin : chatRoomJoins) {

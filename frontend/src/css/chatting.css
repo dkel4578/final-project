@@ -1,14 +1,15 @@
 form {
   background: white;
-  position: fixed;
+  /* position: fixed; */
   bottom: 0;
-  /* width: 100%; */
+  width: 100%;
   border-top: 1px solid gray;
   display : table;
+  margin-bottom: 10px;
 }
 
 #msgList {
-  height: 100%;
+  min-height: 70vh;
   margin-bottom: 52px;
   padding: 0;
   overflow: auto;

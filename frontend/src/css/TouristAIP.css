@@ -96,13 +96,3 @@
  margin: 10px 0;
  
 }
-a {
-  color: blue; /* 눌리지 않은 상태의 링크 색상 */
- 
-  transition: color 0.3s; /* 색상 변경에 애니메이션을 추가 */
-}
-
-/* 링크가 눌렸을 때 */
-a:visited {
-  color: purple; /* 눌렀을 때 링크 색상 */
-}

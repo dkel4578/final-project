@@ -115,7 +115,7 @@ function Header() {
 						<div className="side-var">
 							<div className="login-area">
 								<i className="fa fa-unlock-alt" aria-hidden="true"></i>
-								{!isLogin && <Link to="/login">로그인</Link>}
+								{!isLogin && <a href="/login">로그인</a>}
 								<i className="fa fa-angle-right" aria-hidden="true"></i>
 								{isLogin && <Link to="/myPage"> {nickname} 님 </Link>}
 								<div className="side-var-alram-box">
