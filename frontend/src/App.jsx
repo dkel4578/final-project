@@ -34,6 +34,7 @@ import ChatingRoomListPage from './pages/ChatingRoomListPage'; //내가 만든�
 import MasterPage from "./pages/MasterPage";
 import Admin from "./components/AdminPage"; 
 import TouristAIP from './pages/TouristAIP';
+import ChatPage from "./pages/ChatPage";
 
 
 
@@ -75,6 +76,7 @@ function App() {
 					<Route path="/postContentModify" element={<PostContentModify/>}/>
 					<Route path="/postContent" element={<PostContent/>}/>
 					<Route path="/writePost" element={<WritePost/>}/>
+          <Route path="/chat/room/list/:roomId" element={<ChatPage/>}/>
 				</Routes>
 			<Footer />
 		</>
