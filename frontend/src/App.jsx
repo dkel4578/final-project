@@ -32,8 +32,8 @@ import Calendar from './pages/Calendar';
 import ChatRoomListPage from './pages/ChatRoomListPage'; //선생님거
 import ChatingRoomListPage from './pages/ChatingRoomListPage'; //내가 만든거
 import MasterPage from "./pages/MasterPage";
+import Admin from "./components/AdminPage"; 
 import TouristAIP from './pages/TouristAIP';
-
 
 
 
@@ -66,7 +66,7 @@ function App() {
           <Route path="/chat/room/list" element={<ChatRoomListPage />}/>
           <Route path="/TouristAIP" element={<TouristAIP />}/>
           <Route path="/chat/room/list2" element={<ChatingRoomListPage />}/>
-          <Route path="/admin" element={<MasterPage />}/>
+          <Route path="/admin" element={<Admin />}/>
           <Route path="/coffeeEventPage" element={<CoffeeEventPage/>}/>
 					<Route path="/criminalPage" element={<CriminalPage/>}/>
 					<Route path="/faq" element={<FAQ/>}/>
@@ -75,7 +75,6 @@ function App() {
 					<Route path="/postContentModify" element={<PostContentModify/>}/>
 					<Route path="/postContent" element={<PostContent/>}/>
 					<Route path="/writePost" element={<WritePost/>}/>
-					<Route path="/calendar" element={<Calendar/>}/>
 				</Routes>
 			<Footer />
 		</>
