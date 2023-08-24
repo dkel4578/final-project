@@ -24,18 +24,14 @@ import CoffeeEventPage from "./pages/coffee-event-page";
 import CriminalPage from "./pages/criminal-page";
 import FAQ from "./pages/faq";
 import Launching from "./pages/launching";
-import MannerScore from "./pages/manner-score";
 import PassWordChangeComplete from "./pages/password-change-complete";
 import PostContentModify from "./pages/post-content-modify";
 import PostContent from "./pages/post-content";
 import WritePost from "./pages/write-post";
-import Calnedar from './pages/Calendar';
+import Calendar from './pages/Calendar';
 import ChatRoomListPage from './pages/ChatRoomListPage';
 import ChatingRoomListPage from './pages/ChatingRoomListPage';
 import Admin from "./components/AdminPage"; 
-
-
-
 
 function App() {
   return (
@@ -61,7 +57,7 @@ function App() {
 					<Route path="/board/trip" element={<BoardTrip/>}/>
 					<Route path="/board/notice" element={<BoardNotice/>}/>
           <Route path="/passwordChange" element={<PasswordChangePage/>}/>
-          <Route path="/calendar" element={<Calnedar/>}/>
+          <Route path="/calendar" element={<Calendar/>}/>
           <Route path="/chat/room/list" element={<ChatRoomListPage />}/>
           <Route path="/chat/room/list2" element={<ChatingRoomListPage />}/>
           <Route path="/chat/room/list/:channelId" element={<ChatListRoom />}/>
@@ -70,11 +66,9 @@ function App() {
 					<Route path="/criminalPage" element={<CriminalPage/>}/>
 					<Route path="/faq" element={<FAQ/>}/>
 					<Route path="/launching" element={<Launching/>}/>
-					<Route path="/mannerScore" element={<MannerScore/>}/>
 					<Route path="/postContentModify" element={<PostContentModify/>}/>
 					<Route path="/postContent" element={<PostContent/>}/>
 					<Route path="/writePost" element={<WritePost/>}/>
-					<Route path="/calendar" element={<Calnedar/>}/>
 				</Routes>
 			<Footer />
 		</>

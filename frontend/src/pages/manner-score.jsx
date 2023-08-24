@@ -1,11 +1,11 @@
 import React from "react"; // eslint-disable-line no-unused-vars
-import "../css/total.css";
-import "../css/manner-score.css";
-import "../css/variables.css";
-import "../script/manner-score.js";
-import "bootstrap-icons/font/bootstrap-icons.css";
-import "font-awesome/css/font-awesome.min.css";
-import "../script/custom.js";
+// import "../css/total.css";
+// import "../css/manner-score.css";
+// import "../css/variables.css";
+// import "../script/manner-score.js";
+// import "bootstrap-icons/font/bootstrap-icons.css";
+// import "font-awesome/css/font-awesome.min.css";
+// import "../script/custom.js";
 
 const MannerScore = () => {
 	return (
