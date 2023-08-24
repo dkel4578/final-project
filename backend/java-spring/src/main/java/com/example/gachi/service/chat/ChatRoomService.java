@@ -69,7 +69,7 @@ public class ChatRoomService {
                     .orElse(null); // Optional이 비어있을 때 null 반환
             profileImgList.add(profileImg);
         }
-
+        System.out.println("profileImgList.profileImg >>>>>> " +profileImgList.get(0).getId());
         return profileImgList.stream()
                 .map(ProfileImgResponseDto::of)
                 .toList();

@@ -42,7 +42,7 @@ function ChatingRoomListPage() {
 
   const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
   useEffect(() => {
-    console.log("ChatingroomListPage >>>>>> ", isLogin);
+
   
     if (isLogin && cookies.token) {
       fetch("/api/user/me", {
@@ -54,17 +54,17 @@ function ChatingRoomListPage() {
       })
         .then((res) => {
           if (res) {
-            console.log("ChatingroomListPage Res >>>>>> ", res);
+
             return res.json();
           }
         })
         .then((data) => {
-          console.log("ChatingroomListPage Data >>>>>> ", data);
+
           if (data.nickname) {
             setNickname(data.nickname);
             setUserId(data.id);
             dispatch(userActions.loginSaveAPI(data.id, data.nickname));
-            console.log("ChatingRoomListPage userId>>>> ", userId);
+
           }
         });
     } else {
@@ -86,12 +86,11 @@ function ChatingRoomListPage() {
         })
           .then((res) => {
             if (res.ok) {
-              console.log("UserData => ", res);
+
               return res.json();
             }
           })
           .catch((error) => {
-            console.error("Error fetching user data:", error);
             return null; // 에러 시에도 빈 데이터 반환
           })
       );
@@ -105,13 +104,11 @@ function ChatingRoomListPage() {
           const newDataList = validData.filter((data) =>
             prevUserDataList.every((prevData) => prevData.id !== data.id)
           );
-          console.log("userDataList >>>>>> ", [...prevUserDataList, ...newDataList]);
+        
           return [...prevUserDataList, ...newDataList];
         });
       });
   }, [isLogin, cookies, chatRoomList]);
-  // const userInfo = useSelector((state) => state.user.user);
-  // console.log('ChatRoomListPage userInfo:', userInfo);
 
   //프로필 이미지 정보 가져오기
   useEffect(() => {
@@ -129,23 +126,27 @@ function ChatingRoomListPage() {
         return res.json();
       })
       .then(data => {
-        console.log(data);
-        console.log(data.imgSrc);
-        const updatedImgSrcList = [...imgSrcList]; // Create a copy of the existing imgSrcList
-        if (data.imgSrc != null) {
-          const publicIndex = data.imgSrc.indexOf('\\public\\');
-          if (publicIndex !== -1) {
-            const webPath = data.imgSrc.substring(publicIndex + '\\public\\'.length).replace(/\\/g, '/');
-            updatedImgSrcList.push('/' + webPath); // Push the new imgSrc to the list
-            setImgSrcList(updatedImgSrcList); // Update the state with the new imgSrcList
-          }
+        console.log("ImgSrcData >>>>>>>>>>>>>>>>>>", data);
+        if (data.length > 0) {
+          const updatedImgSrcList = [...imgSrcList]; // Create a copy of the existing imgSrcList
+          data.forEach(item => {
+            if (item.imgSrc != null) {
+              const publicIndex = item.imgSrc.indexOf('\\public\\');
+              if (publicIndex !== -1) {
+                const webPath = item.imgSrc.substring(publicIndex + '\\public\\'.length).replace(/\\/g, '/');
+                updatedImgSrcList.push('/' + webPath); // Push the new imgSrc to the list
+              }
+            }
+          });
+          setImgSrcList(updatedImgSrcList); // Update the state with the new imgSrcList
+          console.log("imgSrcList", updatedImgSrcList);
         }
       })
       .catch(error => {
         console.error('Error fetching data:', error);
       });
     }
-  }, [isLogin, userId, imgSrcList]);
+  }, [isLogin, userId]);
 
 
   const goChatRoomCreate = async (e) => {
@@ -174,7 +175,6 @@ function ChatingRoomListPage() {
   };
 
   React.useEffect(() => {
-    console.log(userId);
     dispatch(chattingActions.getChatRoomAPI(userId));
   }, [userId]);
 

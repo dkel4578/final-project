@@ -1,6 +1,7 @@
 package com.example.gachi.model;
 
 import com.example.gachi.model.enums.Authority;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -96,6 +97,7 @@ public class User extends BaseEntity{
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     @ToString.Exclude
+    @JsonManagedReference
     private List<ProfileImg> profileImg;
 
 
@@ -171,6 +173,8 @@ public class User extends BaseEntity{
         return this.banLists;
     }
 
-
+    public void updateUserBan(String bannedYn){
+        this.bannedYn = bannedYn;
+    }
 
 }

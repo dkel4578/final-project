@@ -3,9 +3,110 @@ import { useState, useEffect } from "react";
 import axios from 'axios';
 import Select from "react-select";
 import "../css/masterPage.css";
+import InfiniteScroll from 'react-infinite-scroll-component';
+
+
+const addBan = async(banDays,userId,reportId,banReason)=>{
+
+  return await axios
+  .post("/api/admin/ban/add?banDays="+banDays+"&userId="+userId+"&reportId="+reportId+"&banReason="+banReason,{
+    banDays : banDays,
+    userId : userId,
+    reportId : reportId,
+    banReason : banReason
+  })
+  .then((response)=>{
+    console.log(response);
+  })
+  .catch((error)=>{
+    console.log(error);				//오류발생시 실행
+  });
+}
+const searchBan = async(userId)=>{
+  
+  return axios.get("/api/admin/getBanUser/"+userId,{
+    userId : userId
+  })
+  .then((response)=>{
+    console.log(response);
+    console.log(response.data);
+    return response.data;
+  })
+  .catch((error)=>{
+    console.log(error);				//오류발생시 실행
+  });
+}
+const clearBan = async(userId)=>{
+  
+  return axios.post("/api/admin/ban/clearBan?id="+userId+"&userId="+userId,{
+    userId : userId,
+  })
+  .then((response)=>{
+    console.log(response);
+    console.log(response.data);
+    return response.data;
+  })
+  .catch((error)=>{
+    console.log(error);				//오류발생시 실행
+  });
+}
+const changeReportStatus = async(reportedId)=>{
+  
+  return axios.post("/api/admin/ban/update?reportedId="+reportedId,{
+    reportedId : reportedId,
+  })
+  .then((response)=>{
+    console.log(response);
+    // console.log(response.data);
+    // return response.data;
+  })
+  .catch((error)=>{
+    console.log(error);				//오류발생시 실행
+  });
+}
+
+const returnBoard = async(id)=>{
+  const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
+
+        fetch(`/api/board/recovery/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': jsonContent,
+                id: id,
+                delYn: "N",
+            },
+            body: JSON.stringify({}),
+        }).then((data) => {
+            if (data && data.status === 200) {
+                alert('게시글이 복구되었습니다.');
+            } else {
+                alert('게시글 복구를 실패했습니다.');
+            }
+        });
+}
+const delBoard = async(id)=>{
+  const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
+
+        fetch(`/api/board/delete/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': jsonContent,
+                id: id,
+                delYn: "Y",
+            },
+            body: JSON.stringify({}),
+        }).then((data) => {
+            if (data && data.status === 200) {
+                alert('게시글이 삭제되었습니다.');
+            } else {
+                alert('게시글 삭제 실패했습니다.');
+            }
+        });
+}
+
 
 const AdminPage = () => {
-
+  
   const userOption = [
     {value : "", label : "선택해 주세요"},
     {value : "banned", label : "정지된 사용자"},
@@ -81,6 +182,23 @@ const AdminPage = () => {
   const [searchKeyword,setSearchKeyword] = useState(userOption[0].value);
 
 
+  const [banChanged,setBanChanged] = useState(false);
+  const [clearId,setClearId] = useState();
+  const [banId,setBanId] = useState();
+  const [reportType,setReportType] = useState("");
+  const [reportedId,setReportedId] = useState("");
+  const [banDay,setBanDay] = useState();
+
+  //모달창
+  const [showSuspendModal, setShowSuspendModal] = useState(false);
+  //모달창
+  const [showClearModal, setShowClearModal] = useState(false);
+  //모달창
+  const [showBoardDelModal, setShowBoardDelModal] = useState(false);
+  const [showBoardReturnModal, setShowBoardReturnModal] = useState(false);
+  const [boardId, setBoardId] = useState();
+
+
   
   useEffect(() => {    
     axios.get("/api/admin/userList")
@@ -103,13 +221,17 @@ const AdminPage = () => {
       console.log(response.data);
       setBoardList(response.data);
     });    
-  }, []);
+  }, [showSuspendModal,showClearModal,showBoardDelModal,showBoardReturnModal]);
 
   const goToManageUsers = () => {
     setManageName("유저 관리 페이지");
     setManageType("user");
     setKeyword(userOption[0].value);
     setSearch("");
+    setShowSuspendModal(false);
+    setShowClearModal(false);
+    setShowBoardDelModal(false);
+    setShowBoardReturnModal(false);
   };
 
   // 활동 정지 버튼만 눌리게 설정
@@ -118,6 +240,10 @@ const AdminPage = () => {
     setManageType("report");
     setKeyword(userOption[0].value);
     setSearch("");
+    setShowSuspendModal(false);
+    setShowClearModal(false);
+    setShowBoardDelModal(false);
+    setShowBoardReturnModal(false);
   };
 
   // 관리자 버튼만 눌리게 설정
@@ -126,6 +252,10 @@ const AdminPage = () => {
     setManageType("ban");
     setKeyword(userOption[0].value);
     setSearch("");
+    setShowSuspendModal(false);
+    setShowClearModal(false);
+    setShowBoardDelModal(false);
+    setShowBoardReturnModal(false);
   }
   // 유저 게시판만 눌리게 설정
   const goToUserBoard = () => {
@@ -133,15 +263,91 @@ const AdminPage = () => {
     setManageType("board");
     setKeyword(userOption[0].value);
     setSearch("");
+    setShowSuspendModal(false);
+    setShowClearModal(false);
+    setShowBoardDelModal(false);
+    setShowBoardReturnModal(false);
   };
 
-  //모달창
-  const [showSuspendModal, setShowSuspendModal] = useState(false);
 
-  const handleSuspendButtonClick = () => {
+
+  const handleSuspendButtonClick = (userId,banReason,reportedId) => {
     // "정지" 버튼을 클릭했을 때 팝업을 열도록 설정
+    setBanId(userId);
+    setReportType(banReason);
+    setReportedId(reportedId);
     setShowSuspendModal(true);
+    
   };
+  const handleBanDayChange = (e) =>{
+    setBanDay(e.currentTarget.value);
+    console.log(banDay);
+  }
+  const handleModalBanButtonClick = (id,banReason,reportedId) => {
+
+      console.log(banDay);
+      changeReportStatus(id);
+      addBan(banDay,id,reportedId,banReason);
+      alert(banDay + "일 정지 완료");
+    
+    
+    setShowSuspendModal(false);
+  };
+  const handleClearButtonClick = (userId) => {
+    // "정지" 버튼을 클릭했을 때 팝업을 열도록 설정
+    let clearUserId = userId;
+    let clearTemp = searchBan(userId);
+    
+    console.log("clear: ",clearTemp);
+    console.log(handleClearDataResponse(clearUserId));
+    setShowClearModal(true);
+    
+    // setCurrentContent(id);
+  };
+  const handleClearDataResponse = async(userId) =>{
+    // e.preventDefault();
+    let clearTemp = await searchBan(userId);
+    setClearId(clearTemp);
+    console.log(clearTemp);
+  }
+  const handleClearButtonYes = () => {
+
+    clearBan(clearId[0].userId);
+    // searchBan(userId);
+    alert("정지 해제 완료!");
+    setShowClearModal(false);
+    
+    // setCurrentContent(id);
+  };
+  const handleClearStopButtonClick = () => {
+
+    setShowClearModal(false);
+  };
+  const handleBoardButtonClick = (id) => {
+    // "정지" 버튼을 클릭했을 때 팝업을 열도록 설정
+    setBoardId(id);
+    setShowBoardDelModal(true); 
+  };
+  const handleBoardRetButtonClick = (id) => {
+    // "정지" 버튼을 클릭했을 때 팝업을 열도록 설정
+    setBoardId(id);
+    setShowBoardReturnModal(true);
+    // setCurrentContent(id);
+  };
+  const handleBoardCloseButtonClick = () => {
+    setShowBoardReturnModal(false);
+    setShowBoardDelModal(false);
+  };
+  const handleBoarddelModalButtonClick = () => {
+    delBoard(boardId);
+    // alert("삭제 완료!");
+    setShowBoardDelModal(false);
+  }
+  const handleBoardRetModalButtonClick = () => {
+    returnBoard(boardId);
+    // alert("복구 완료!");
+    setShowBoardReturnModal(false);
+  }
 
   const handleSuspendModalClose = () => {
     // 팝업을 닫을 때 호출되는 함수
@@ -158,13 +364,13 @@ const AdminPage = () => {
           true:
             searchKeyword === "id" 
             ? item.loginId.includes(search)
-          : searchKeyword === "nickname"
-          ? item.nickname.includes(search)
-          : searchKeyword === "phone"
-          ? item.phone.includes(search)
-          : searchKeyword === "email"
-          ? item.email.includes(search)
-          : false)
+            : searchKeyword === "nickname"
+            ? item.nickname.includes(search)
+            : searchKeyword === "phone"
+            ? item.phone.includes(search)
+            : searchKeyword === "email"
+            ? item.email.includes(search)
+            : false)
         ) &&
         (keyword === "" ?
         true :
@@ -220,6 +426,7 @@ const AdminPage = () => {
     if (manageType === "ban") {
       return (
         (item.bannedYn === "Y") &&
+        (item.banStatus === "J") &&
         (search === "" || 
         (
           searchKeyword === "" ?
@@ -247,7 +454,7 @@ const AdminPage = () => {
   const filterBoardList = (item) => {
     if (manageType === "board") {
       return (
-        (item.delYn ==="N") &&
+        // (item.delYn ==="N") &&
         (search === "" || 
         (
           searchKeyword === "" ?
@@ -362,9 +569,6 @@ const AdminPage = () => {
           </div>
         </div>
       </div>
-
-      <div>
-      </div>
       <div className="board_list_wrap">
         <div className="board_list">
           {manageType === "user" &&
@@ -416,8 +620,14 @@ const AdminPage = () => {
                   <li className="master-list-item">정상</li>
                 }
                 <li className="master-list-item master-btns">
-                  <button className="SuspendButton ban-btn" onClick={handleSuspendButtonClick}>정지</button>
-                  <button className="UnsuspendButton ban-btn">해제</button>
+                {item.bannedYn === "Y" &&
+                  <button className="UnsuspendButton ban-btn" onClick={() => {
+                    handleClearButtonClick(item.id)}}>해제</button>
+                }
+                {item.bannedYn === "N" &&
+                <button className="SuspendButton ban-btn" onClick={() => {
+                  handleSuspendButtonClick(item.id,"E","")}}>정지</button>
+                }
                 </li>
               </ul>
             ))}
@@ -430,8 +640,7 @@ const AdminPage = () => {
             <li className="tab-menu">신고 유형</li>
             <li className="tab-menu">신고 처리 여부</li>
             <li className="tab-menu">유형</li>
-            <li className="tab-menu">신고 위치</li>
-            <li className="tab-menu">신고버튼</li>
+            <li className="tab-menu">정지 버튼</li>
           </ul>
         }
         {/* 위에boardData 데이터 삽입 and filter이용해서 버튼검색 나눔 */}
@@ -454,19 +663,17 @@ const AdminPage = () => {
               <li className="master-list-item">
                 {item.category}
               </li>
-              <li className="master-list-item">
+              {/* <li className="master-list-item">
                 {item.contentId}
-              </li>
-              {item.bannedYn === "Y" &&
-                <li className="master-list-item">정지됨</li>
+              </li> */}
+              {(item.reportStatusKeyword ==="C" ||item.bannedYn === "Y")&&
+                <li className="master-list-item">처리 완료.</li>
               }
-              {item.bannedYn === "N" &&
-                <li className="master-list-item">정상</li>
+              {(item.reportStatusKeyword !="C" && item.bannedYn === "N") &&
+                <li className="master-list-item master-btns">
+                  <button className="SuspendButton ban-btn" onClick={()=>{handleSuspendButtonClick(item.reportedUsersId,item.reportTypeKeyword,item.reportersId)}}>정지</button>
+                </li>
               }
-              <li className="master-list-item master-btns">
-                <button className="SuspendButton ban-btn" onClick={handleSuspendButtonClick}>정지</button>
-                <button className="UnsuspendButton ban-btn">해제</button>
-              </li>
             </ul>
           ))}
 
@@ -504,8 +711,7 @@ const AdminPage = () => {
                   {item.banEndAt}
                 </li>
                 <li className="master-list-item master-btns">
-                  <button className="SuspendButton ban-btn" onClick={handleSuspendButtonClick}>정지</button>
-                  <button className="UnsuspendButton ban-btn">해제</button>
+                  <button className="UnsuspendButton ban-btn" onClick={()=>{handleClearButtonClick(item.bannedId)}}>해제</button>
                 </li>
               </ul>
             ))}
@@ -517,6 +723,7 @@ const AdminPage = () => {
             <li className="tab-menu">작성자</li>
             <li className="tab-menu">작성일</li>
             <li className="tab-menu">조회수</li>
+            <li className="tab-menu">삭제 여부</li>
             <li className="tab-menu">삭제버튼</li>
           </ul>
         }
@@ -539,10 +746,26 @@ const AdminPage = () => {
               <li className="master-list-item">
                 {item.cnt}
               </li>
-              <li className="master-list-item master-btns">
-                <button className="delteButton ban-btn" onClick={handleSuspendButtonClick}>삭제</button>
-
+              {item.delYn === "N" &&
+                <li className="master-list-item">
+                정상
               </li>
+              }
+              {item.delYn === "Y" &&
+                <li className="master-list-item">
+                삭제됨
+              </li>
+              }
+              {item.delYn === "Y" &&
+                <li className="master-list-item master-btns">
+                <button className="delteButton ban-btn" onClick={()=>{handleBoardRetButtonClick(item.id)}}>복구</button>
+              </li>
+              }
+              {item.delYn === "N" &&
+                <li className="master-list-item master-btns">
+                <button className="delteButton ban-btn" onClick={()=>{handleBoardButtonClick(item.id)}}>삭제</button>
+              </li>
+              }
             </ul>
           ))}
 
@@ -554,13 +777,13 @@ const AdminPage = () => {
                 <h2 className="stop">정지</h2>
                 <div className="daySuspension">
                   <div className="input-stop-box">
-                    <input className="inputNumber" type="number" />
-                    <span>일 정지</span>
+                    <input className="inputNumber" type="number" min="1" onChange={handleBanDayChange}/>
+                    <span className='day-stop'>일 정지</span>
                   </div>
                   <div className="bottomSection">
                     <button
                       className="modalButton1 modalButton"
-                      onClick={handleSuspendButtonClick}
+                      onClick={()=>{handleModalBanButtonClick(banId,reportType,reportedId)}}
                     >
                       정지
                     </button>
@@ -576,11 +799,90 @@ const AdminPage = () => {
             </div>
           </div>
         )}
-
-        <div className="board_page">{/* 페이징 버튼 등 추가 */}</div>
-        <div className="bt_wrap">
-          
-        </div>
+        {showClearModal && (
+          <div className="popup_overlay active">
+            <div className="popup_content">
+              <div className="popup_conten">
+                <h2 className="stop">정지 해제</h2>
+                <div className="daySuspension">
+                  <div className="input-stop-box">
+                    <span>정지 해제 <br></br> 하시겠습니까?</span>
+                  </div>
+                  <div className="bottomSection">
+                    <button
+                      className="modalButton1 modalButton"
+                      onClick={handleClearButtonYes}
+                    >
+                      해제
+                    </button>
+                    <button
+                      className="modalButton2 modalButton"
+                      onClick={handleClearStopButtonClick}
+                    >
+                      취소
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+        {showBoardDelModal && (
+          <div className="popup_overlay active">
+            <div className="popup_content">
+              <div className="popup_conten">
+                <h2 className="stop">삭제</h2>
+                <div className="daySuspension">
+                  <div className="input-stop-box">
+                    <span>삭제 <br></br> 하시겠습니까?</span>
+                  </div>
+                  <div className="bottomSection">
+                    <button
+                      className="modalButton1 modalButton"
+                      onClick={handleBoarddelModalButtonClick}
+                    >
+                      삭제
+                    </button>
+                    <button
+                      className="modalButton2 modalButton"
+                      onClick={handleBoardCloseButtonClick}
+                    >
+                      취소
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+        {showBoardReturnModal && (
+          <div className="popup_overlay active">
+            <div className="popup_content">
+              <div className="popup_conten">
+                <h2 className="stop">복구</h2>
+                <div className="daySuspension">
+                  <div className="input-stop-box">
+                    <span>복구 <br></br> 하시겠습니까?</span>
+                  </div>
+                  <div className="bottomSection">
+                    <button
+                      className="modalButton1 modalButton"
+                      onClick={handleBoardRetModalButtonClick}
+                    >
+                      복구
+                    </button>
+                    <button
+                      className="modalButton2 modalButton"
+                      onClick={handleBoardCloseButtonClick}
+                    >
+                      취소
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
