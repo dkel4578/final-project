@@ -17,4 +17,5 @@ import java.util.List;
     List<Report> findAll(); //ReportStatus 살릴경우 findByReportStatus 할것
 
 
+    List<Report> findAllByReportedUser_Id(Long reportedId);
 }

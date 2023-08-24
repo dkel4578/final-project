@@ -99,9 +99,7 @@ public class OAuth2CustomUserService implements OAuth2UserService {
                 .map(u -> u.update(
                         jwtTokenDto.getAccessToken(),
                         jwtTokenDto.getTokenExpiresIn(),
-                        userProfile.getLoginId(),
-                        jwtTokenDto.getRefreshToken(),
-                        jwtTokenDto.getRefreshTokenExpiresIn()
+                        userProfile.getLoginId()
                         )) // OAuth 서비스 사이트에서 유저 정보 변경이 있을 수 있기 때문에 우리 DB에도 update
                 .orElse(userProfile.loginUser(jwtTokenDto));
 

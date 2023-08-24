@@ -11,13 +11,14 @@
 /* 패스워드 모달 */
 .find-password-modal{
   z-index: 3;
-  width: inherit;
+  width: 360px;
   position: fixed;
   transition: 0.5s;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.651);
   opacity: 0;
   visibility: hidden;
+  padding: 5px;
 }
 
 .find-password-modal.active{
@@ -94,8 +95,8 @@
 .find-password-modal fieldset .modal-close{
   cursor: pointer;
   position: absolute;
-  right: .625rem;
-  top: 0;
+  right: 18px;
+  top: -15px;
   color: var(--dark-gray);
   transition: 0.45s;
 }
@@ -104,7 +105,7 @@
 }
 .find-password-modal fieldset legend{
   text-align: center;
-  padding: .9375rem;
+  padding: 15px;
   background-color: var(--maincolor);
   border-radius: 1.5625rem;
   color: white;
@@ -136,36 +137,39 @@
   flex-direction: column;
   gap: 20px;
 }
-.input-id, .input-pw{
+.toggle-eye{
+  cursor: pointer;
+}
+.input-login-id, .input-login-pw{
   position: relative;
 }
-.input-id .bi, .input-pw .bi{
-  top: 50%;
+.input-login-id .bi, .input-login-pw .bi{
+  top: 55%;
   transform: translateY(-50%);
   position: absolute;
-  font-size: 2.2em;
+  font-size: 2.25em;
   left: 25px;
   transition: 0.5s;
 }
-.input-id input[type=text],.input-pw input[type=password]{
+.input-login-id input[type=text],.input-login-pw input[type=password],.input-login-pw input[type=text]{
   width: 90%;
   padding: .9375rem;
   padding-left: 50px;
-  border-radius: .3125rem;
+  border-radius: .3125rem ;
   outline: none;
   border: .0625rem solid var(--maincolor);
   font-size: 1.3em;
 }
-.input-id input[type=text]::placeholder,.input-pw input[type=password]::placeholder{
+.input-login-id input[type=text]::placeholder,.input-login-pw input[type=password]::placeholder,.input-login-pw input[type=text]::placeholder{
   transition: 0.5s;
 }
-.input-id input[type=text]:focus,.input-pw input[type=password]:focus{
+.input-login-id input[type=text]:focus,.input-login-pw input[type=password]:focus,.input-login-pw input[type=text]:focus{
   box-shadow: 0 0 10px #2acf7dc4;
 }
-.input-id input[type=text]:focus ~ .bi,.input-pw input[type=password]:focus ~ .bi{
+.input-login-id input[type=text]:focus ~ .bi,.input-login-pw input[type=password]:focus ~ .bi,.input-login-pw input[type=text]:focus ~ .bi{
   color: var(--maincolor);
 }
-.input-id input[type=text]:focus::placeholder,.input-pw input[type=password]:focus::placeholder{
+.input-login-id input[type=text]:focus::placeholder,.input-login-pw input[type=password]:focus::placeholder{
   opacity: 0;
 }
 .login-btn{
@@ -194,6 +198,9 @@
 .btn-area{
   margin-top: 25px;
   position: relative;
+}
+.btn-area p{
+  margin: 20px 0;
 }
 .google-logo{
   z-index: 2;
@@ -245,4 +252,5 @@
   height: 10px;
   background-color: var(--dark-gray);
 }
+
 

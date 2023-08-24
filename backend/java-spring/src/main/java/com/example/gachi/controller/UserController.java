@@ -11,6 +11,9 @@ import net.minidev.json.JSONObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
+import java.time.LocalDate;
+import java.util.Collections;
 import java.util.Optional;
 
 @RestController
@@ -49,15 +52,31 @@ public class UserController {
     }
     //회원 가입
     @PostMapping("/signup")
-    public ResponseEntity<UserResponseDto> signup(@RequestBody UserSignUpRequestDto userSignUpRequestDto){
-        System.out.println("dataname>>>>>>>>>>>>" + userSignUpRequestDto.getName());
-        if(userSignUpRequestDto.getName() == null){
-            throw new IllegalArgumentException("이름을 입력해주세요.");
+    public ResponseEntity<?> signup(@RequestBody UserSignUpRequestDto userSignUpRequestDto) throws UnsupportedEncodingException {
+        System.out.println("data Birth >>>>>>>>>>>>" + userSignUpRequestDto.getBirth());
+        System.out.println("data Phone >>>>>>>>>>>>" + userSignUpRequestDto.getPhone());
+        String charset = "euc-kr";
+        if(userSignUpRequestDto.getName().isEmpty()) {
+            String errorMessage = "이름을 입력해주세요.";
+            return ResponseEntity.badRequest().body(Collections.singletonMap("error", errorMessage));
+        }
+        else if(userSignUpRequestDto.getBirth()==null){
+            String errorMessage = "생년월일을 입력해주세요.";
+            return ResponseEntity.badRequest().body(Collections.singletonMap("error", errorMessage));
+        }  else if(userSignUpRequestDto.getPhone().isEmpty()){
+            String errorMessage = "핸드폰 번호를 입력해주세요.";
+            return ResponseEntity.badRequest().body(Collections.singletonMap("error", errorMessage));
+        }else if(userSignUpRequestDto.getPhone().length()<10 || !userSignUpRequestDto.getPhone().startsWith("01")){
+            String errorMessage = "전화번호의 형식이 올바르지 않습니다.";
+            return ResponseEntity.badRequest().body(Collections.singletonMap("error", errorMessage));
+        }else if(userSignUpRequestDto.getNickname().getBytes(charset).length > 16){
+            String errorMessage = "닉네임은 8글자를 넘을 수 없습니다.";
+            return ResponseEntity.badRequest().body(Collections.singletonMap("error", errorMessage));
         }
         UserResponseDto userResponseDto = userService.signup(userSignUpRequestDto);
         return ResponseEntity.ok(userResponseDto);
-
     }
+
     //로그인
     @PostMapping("/login")
     public ResponseEntity<JwtTokenDto> login(@RequestBody UserLoginRequestDto userLoginRequestDto) {
@@ -86,8 +105,27 @@ public class UserController {
     }
     //유저 정보 업데이트
     @PutMapping("/update/{id}")
-    public void update(@PathVariable Long id, @RequestBody UserInfoUpdateDto userInfoUpdateDto){
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody UserInfoUpdateDto userInfoUpdateDto) throws UnsupportedEncodingException {
+        String charset = "euc-kr";
+        if(userInfoUpdateDto.getName().isEmpty()) {
+            String errorMessage = "이름을 입력해주세요.";
+            return ResponseEntity.badRequest().body(Collections.singletonMap("error", errorMessage));
+        }
+        else if(userInfoUpdateDto.getBirth()==null){
+            String errorMessage = "생년월일을 입력해주세요.";
+            return ResponseEntity.badRequest().body(Collections.singletonMap("error", errorMessage));
+        }  else if(userInfoUpdateDto.getPhone().isEmpty()){
+            String errorMessage = "핸드폰 번호를 입력해주세요.";
+            return ResponseEntity.badRequest().body(Collections.singletonMap("error", errorMessage));
+        }else if(userInfoUpdateDto.getPhone().length()<10 || !userInfoUpdateDto.getPhone().startsWith("01")){
+            String errorMessage = "전화번호의 형식이 올바르지 않습니다.";
+            return ResponseEntity.badRequest().body(Collections.singletonMap("error", errorMessage));
+        }else if(userInfoUpdateDto.getNickname().getBytes(charset).length > 16){
+            String errorMessage = "닉네임은 8글자를 넘을 수 없습니다.";
+            return ResponseEntity.badRequest().body(Collections.singletonMap("error", errorMessage));
+        }
         userService.update(id, userInfoUpdateDto);
+        return ResponseEntity.ok(userInfoUpdateDto);
     }
 
     //비밀번호 변경

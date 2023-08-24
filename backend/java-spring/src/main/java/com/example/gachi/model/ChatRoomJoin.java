@@ -2,6 +2,7 @@ package com.example.gachi.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,10 +10,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ChatRoomJoin {
+@Builder
+public class ChatRoomJoin extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "join_id")
+    @Column(updatable = false)
     private Long id;
 
     @ManyToOne
@@ -22,6 +24,10 @@ public class ChatRoomJoin {
     @ManyToOne
     @JoinColumn(name = "room_id")
     private ChatRoom chatRoom;
+
+    @Column(columnDefinition = "char(1)")
+    @Builder.Default
+    private String bannedYn = "N";
 
     public ChatRoomJoin(User user, ChatRoom chatRoom){
         this.user = user;
