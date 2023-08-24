@@ -43,18 +43,8 @@ const getChatRoomAPI = (userId) => {
       }
       console.log('chatRoomList: ', chatRoomList);
       dispatch(getChatRoomList(chatRoomList));
-      // dispatch(getChatRoomList(chatRoomList)).then(() => {
-      //   console.log('!!!:123');
-      // });
-      // console.log('$$$');
-      // history.replace("/");
-      // history.replace("/chat/room/list");
-      // history.push("/chat/room/list");
-      // window.location.href = '/chat/room/list';
-      // browserHistory.push('/chat/room/list')
     }).catch((error) => {
       console.log(error)
-      window.alert("채팅방들을 가져오지 못했습니다.")
     });
   } 
 }

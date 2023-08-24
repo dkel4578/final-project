@@ -1,5 +1,6 @@
 package com.example.gachi.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.AllArgsConstructor;
@@ -29,5 +30,6 @@ public class ProfileImg extends BaseEntity{
     private String orgName;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     private User user;
 }

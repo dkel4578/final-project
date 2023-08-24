@@ -37,19 +37,20 @@ function ChatRoom(props) {
         <div className="chat-sub">{props.roomName}</div>
         <div className="chat-dynamic-infos">
           <div className="chat-user-profile">
-            <img src={require("../images/user-profile-test.jpg")}/>
+            <img src={props.imgSrc} alt="Profile" />
           </div>
-          <div className="chat-user-opponent">
+          <div className="chat-user-opponent" onClick={goChatRoomClick}>
             {props.userData && props.userData.length > 0 ? (
               <div className="chat-user-opponent-user-id">
                 {props.userData.map((user, index) => (
-                  <span  key={index}>{user.nickname}</span>
+                  <span key={index}>{user.nickname} </span>
                 ))}
               </div>
             ) : (
               <p></p>
             )}
           </div>
+
           <div className="chat-list-icons">
             <i className="bi bi-share-fill share">
               <div className="share-box">공유하기</div>

@@ -3,7 +3,6 @@ package com.example.gachi.repository;
 import com.example.gachi.model.Board;
 import com.example.gachi.model.enums.Kind;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -17,6 +16,7 @@ import org.springframework.stereotype.Repository;
     @Query(value = "SELECT p " +
                     "FROM Board p " +
                     "WHERE p.kind = :kindValue " +
+                    "AND p.delYn='N' " +
                     "AND (:searchWord IS NULL OR p.title LIKE %:searchWord% OR p.content LIKE %:searchWord%) " +
                     "ORDER BY p.createAt DESC ")
     Page<Board> findByKindAndTitleContainingOrderByCreateAtDesc(
@@ -27,6 +27,7 @@ import org.springframework.stereotype.Repository;
     @Query(value = "SELECT p " +
                     "FROM Board p " +
                     "WHERE p.kind = :kindValue " +
+                    "AND p.delYn='N' " +
                     "AND p.id < :lastBoardId " +
                     "ORDER BY p.createAt DESC ")
     Page<Board> findByKindOrderByCreateAtDesc(

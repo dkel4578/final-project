@@ -1,8 +1,11 @@
 package com.example.gachi.model;
 
 import com.example.gachi.model.enums.BanReason;
+import com.example.gachi.model.enums.ReportStatus;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -32,5 +35,14 @@ public class BanList extends BaseEntity{
 
     @Column(nullable = false)
     private LocalDateTime banEndAt;
+
+    @Column(nullable = false)
+    @Enumerated(value = EnumType.STRING)
+    @Builder.Default
+    private ReportStatus banStatus = ReportStatus.J;
+
+    public void updateUserBan(ReportStatus banStatus){
+        this.banStatus = banStatus;
+    }
 
 }
