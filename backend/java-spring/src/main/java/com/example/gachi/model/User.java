@@ -173,6 +173,8 @@ public class User extends BaseEntity{
         return this.banLists;
     }
 
-
+    public void updateUserBan(String bannedYn){
+        this.bannedYn = bannedYn;
+    }
 
 }

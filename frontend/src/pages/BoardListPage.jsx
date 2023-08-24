@@ -9,7 +9,6 @@ const BoardListPage = ({kind}) => {
 
   return (
       <BoardListForm3 kind={kind} />
-
   );
 };
 
