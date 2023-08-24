@@ -23,7 +23,6 @@ import CoffeeEventPage from "./pages/coffee-event-page";
 import CriminalPage from "./pages/criminal-page";
 import FAQ from "./pages/faq";
 import Launching from "./pages/launching";
-import MannerScore from "./pages/manner-score";
 import PassWordChangeComplete from "./pages/password-change-complete";
 import PostContentModify from "./pages/post-content-modify";
 import PostContent from "./pages/post-content";
@@ -31,12 +30,8 @@ import WritePost from "./pages/write-post";
 import Calendar from './pages/Calendar';
 import ChatRoomListPage from './pages/ChatRoomListPage'; //선생님거
 import ChatingRoomListPage from './pages/ChatingRoomListPage'; //내가 만든거
-import MasterPage from "./pages/MasterPage";
 import Admin from "./components/AdminPage"; 
 import TouristAIP from './pages/TouristAIP';
-
-
-
 
 function App() {
   return (
@@ -71,7 +66,6 @@ function App() {
 					<Route path="/criminalPage" element={<CriminalPage/>}/>
 					<Route path="/faq" element={<FAQ/>}/>
 					<Route path="/launching" element={<Launching/>}/>
-					<Route path="/mannerScore" element={<MannerScore/>}/>
 					<Route path="/postContentModify" element={<PostContentModify/>}/>
 					<Route path="/postContent" element={<PostContent/>}/>
 					<Route path="/writePost" element={<WritePost/>}/>
