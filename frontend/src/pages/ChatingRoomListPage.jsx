@@ -9,7 +9,7 @@ import { useState, useEffect, useLayoutEffect, useCallback } from "react";
 import { customHistory } from "../store/configureStore.js";
 import { useDispatch, useSelector } from "react-redux";
 import $ from "jquery";
-import "../script/chat-list-room.js";
+
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "font-awesome/css/font-awesome.min.css";
 import "../script/custom.js";
@@ -19,62 +19,28 @@ import { actionCreators as userActions } from "../store/modules/user";
 
 function ChatingRoomListPage() {
   const navigate = useNavigate();
-
+  
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.user.user);
   const cookieToken = cookies.token;
-  let isLogin = false;
   const [nickname, setNickname] = useState("");
   const [userId, setUserId] = useState("");
-  const [masterId, setMasterId] = useState("")
+  const [masterId, setMasterId] = useState("");
   const [userDataList, setUserDataList] = useState([]);
   const chatRoomList = useSelector((state) => state.chatting.chatRoomList);
   const roomIds = chatRoomList.map((p) => p.id);
   const [roomId, setRoomId] = useState("");
-  const [imgSrc, setImgSrc] = useState('default-image.svg')
   const [imgSrcList, setImgSrcList] = useState([]);
-  if (cookies.token != "undefined") {
-    isLogin = true;
-  } else {
-    isLogin = false;
-  }
+  const [profileImgList, setProfileImgList] = useState([]);
 
   const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
+
+  console.log("chatRoomList >>>>", chatRoomList)
   useEffect(() => {
-
-  
-    if (isLogin && cookies.token) {
-      fetch("/api/user/me", {
-        method: "GET",
-        headers: {
-          "Content-Type": jsonContent,
-          Authorization: "Bearer " + cookies.token,
-        },
-      })
-        .then((res) => {
-          if (res) {
-
-            return res.json();
-          }
-        })
-        .then((data) => {
-
-          if (data.nickname) {
-            setNickname(data.nickname);
-            setUserId(data.id);
-            dispatch(userActions.loginSaveAPI(data.id, data.nickname));
-
-          }
-        });
-    } else {
-      setNickname(""); // 이 부분을 추가하여 nickname을 초기화합니다.
-      setUserId("");
-    }
-  
     // fetch 요청을 저장할 배열
+    console.log("도달하는가?")
     const fetchPromises = [];
-  
     // roomIds 배열을 기반으로 fetch 요청을 생성하여 배열에 추가
     roomIds.forEach((roomId) => {
       fetchPromises.push(
@@ -85,67 +51,75 @@ function ChatingRoomListPage() {
           },
         })
           .then((res) => {
-            if (res.ok) {
-
-              return res.json();
+            console.log("res >>>>>>>>>>>>>>>>", res);
+            if (!res.ok) {
+              return;
             }
+            return res.json();
+          })
+          .then((data) =>{
+            console.log("DATA >>>> ", data)
           })
           .catch((error) => {
+            console.log ("ERROR >>>>>> ", error)
             return null; // 에러 시에도 빈 데이터 반환
           })
       );
     });
-  
+
     // 모든 fetch 요청이 완료되면 실행
-    Promise.all(fetchPromises)
-      .then((results) => {
-        const validData = results.filter((data) => data !== null);
-        setUserDataList((prevUserDataList) => {
-          const newDataList = validData.filter((data) =>
-            prevUserDataList.every((prevData) => prevData.id !== data.id)
-          );
-        
-          return [...prevUserDataList, ...newDataList];
-        });
+    Promise.all(fetchPromises).then((results) => {
+      const validData = results.filter((data) => data !== null);
+      
+      // userDataList와 profileImgList에 데이터 추가
+      setUserDataList((prevUserDataList) => {
+        const newDataList = validData.filter((data) =>
+          prevUserDataList.every((prevData) => prevData.id !== data.id)
+        );
+  
+        return [...prevUserDataList, ...newDataList];
       });
-  }, [isLogin, cookies, chatRoomList]);
+      console.log("UserData >>>>>>>>>>>>>> ", userDataList)
+    });
+  }, [chatRoomList, userInfo]);
 
   //프로필 이미지 정보 가져오기
   useEffect(() => {
-    if (isLogin) {
-      fetch(`/api/chatProfile?userId=${encodeURIComponent(userId)}`, {
-        method: 'GET',
+   
+      fetch(`/api/chatProfile?userId=${encodeURIComponent(userInfo.uid)}`, {
+        method: "GET",
         headers: {
           "Content-Type": jsonContent,
         },
       })
-      .then(res => {
-        if (!res.ok) {
-          throw new Error('Response was not OK');
-        }
-        return res.json();
-      })
-      .then(data => {
-        if (data.length > 0) {
-          const updatedImgSrcList = [...imgSrcList]; // Create a copy of the existing imgSrcList
-          data.forEach(item => {
-            if (item.imgSrc != null) {
-              const publicIndex = item.imgSrc.indexOf('\\public\\');
-              if (publicIndex !== -1) {
-                const webPath = item.imgSrc.substring(publicIndex + '\\public\\'.length).replace(/\\/g, '/');
-                updatedImgSrcList.push('/' + webPath); // Push the new imgSrc to the list
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error("Response was not OK");
+          }
+          return res.json();
+        })
+        .then((data) => {
+          if (data.length > 0) {
+            const updatedImgSrcList = [...imgSrcList]; // Create a copy of the existing imgSrcList
+            data.forEach((item) => {
+              if (item.imgSrc != null) {
+                const publicIndex = item.imgSrc.indexOf("\\public\\");
+                if (publicIndex !== -1) {
+                  const webPath = item.imgSrc
+                    .substring(publicIndex + "\\public\\".length)
+                    .replace(/\\/g, "/");
+                  updatedImgSrcList.push("/" + webPath); // Push the new imgSrc to the list
+                }
               }
-            }
-          });
-          setImgSrcList(updatedImgSrcList); // Update the state with the new imgSrcList
-        }
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      });
-    }
-  }, [isLogin, userId]);
-
+            });
+            setImgSrcList(updatedImgSrcList); // Update the state with the new imgSrcList
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+    
+  }, [userInfo.uid]);
 
   const goChatRoomCreate = async (e) => {
     const result = await Swal.fire({
@@ -173,9 +147,8 @@ function ChatingRoomListPage() {
   };
 
   React.useEffect(() => {
-    dispatch(chattingActions.getChatRoomAPI(userId));
-  }, [userId]);
-
+    dispatch(chattingActions.getChatRoomAPI(userInfo.uid));
+  }, [userInfo.uid]);
 
   return (
     <div>
@@ -191,12 +164,17 @@ function ChatingRoomListPage() {
           </div>
           <div className="chat-list-room-place">
             <ul className="chat-listes">
-            {chatRoomList.map((p, idx) => {
-      console.log("chatRoomList element:", p);
-      return (
-        <ChatRoom key={p.id} {...p} userData={userDataList[idx]} imgSrc={imgSrcList[idx]} />
-      );
-    })}
+              {chatRoomList.map((p, idx) => {
+                console.log("chatRoomList element:", p);
+                return (
+                  <ChatRoom
+                    key={p.id}
+                    {...p}
+                    userData={userDataList[idx]}
+                    imgSrc={imgSrcList[idx]}
+                  />
+                );
+              })}
             </ul>
           </div>
         </div>

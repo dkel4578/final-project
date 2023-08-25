@@ -33,6 +33,7 @@ import ChatingRoomListPage from './pages/ChatingRoomListPage'; //내가 만든�
 import Admin from "./components/AdminPage"; 
 import TouristAIP from './pages/TouristAIP';
 import ChatPage from "./pages/ChatPage";
+import ChatTest from "./pages/chat-list-room"
 
 function App() {
   return (
@@ -71,6 +72,7 @@ function App() {
 					<Route path="/postContent" element={<PostContent/>}/>
 					<Route path="/writePost" element={<WritePost/>}/>
           <Route path="/chat/room/list/:roomId" element={<ChatPage/>}/>
+          <Route path="/chat/room/list/test" element={<ChatTest/>}/>
 				</Routes>
 			<Footer />
 		</>
