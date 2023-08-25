@@ -8,6 +8,7 @@
     "axios": "^1.4.0",
     "bootstrap": "^5.3.1",
     "create-react-app": "^5.0.1",
+    "cross-env": "^7.0.3",
     "date-fns": "^2.30.0",
     "dayjs": "^1.11.9",
     "gh-pages": "^5.0.0",

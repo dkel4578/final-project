@@ -17,6 +17,8 @@ import ChatRoomListPage from './pages/ChatRoomListPage';
 import ChatPage from './pages/ChatPage';
 import MasterPage from './pages/MasterPage';
 import TouristAIP from './pages/TouristAIP';
+import  KakaoMap from  './pages/KakaoMap';
+
 
 
 const queryClient = new QueryClient();
@@ -43,6 +45,9 @@ function App() {
           <Route path="/chat/room/list/:channelId" element={<ChatPage />}/>
           <Route path="/MasterPage" element={<MasterPage />}/>
           <Route path="/TouristAIP" element={<TouristAIP />}/>
+          <Route path="/KakaoMap" element={<KakaoMap />}/>
+        
+         
           
         </Routes>
       </QueryClientProvider>
