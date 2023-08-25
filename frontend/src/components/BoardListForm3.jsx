@@ -18,7 +18,6 @@ function BoardListForm3() { // Receive the 'kind' prop
   console.log("kind:  =============> ",kind);
 
 
-
   //************************
   // enum 유형으로 설정
   //************************
