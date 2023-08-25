@@ -1,0 +1,122 @@
+.map { 
+ text-align: center; /* 수평 가운데 정렬 */
+ display: flex; /* 컨테이너 내부 컨텐츠 정렬을 위해 flex 사용 */
+ align-items: center; /* 수직 가운데 정렬 */
+ justify-content: center; /* 수평 가운데 정렬 */
+ flex-direction: column; 
+ 
+ 
+ } 
+ul,li { 
+ margin: 0; 
+ padding: 0; 
+ list-style: none; 
+ text-align: left; 
+ max-height: 200px; /* 최대 높이를 설정 */
+ overflow: auto; /* 내용이 높이를 초과할 경우 스크롤이 나타남 */
+ text-align: center; 
+
+ } 
+
+ 
+.map_wrap { 
+ position:absolute; 
+ bottom: 0; 
+ left:-10px; 
+ margin:10px 0 30px 10px; 
+ padding:5px; 
+ overflow-y: auto; 
+ background:rgba(255, 255, 255, 0.7); 
+ width: 350px; 
+ z-index: 3; 
+ font-size:11px; 
+ border-radius: 17px; 
+ } 
+#myMap { 
+ position: relative; 
+ } 
+.search-marker-hide-box { 
+  display: flex;
+  width: 340px;
+  position: absolute;
+  text-align: center;
+  left: 50%;
+  top:  2%;
+  transform: translateX(-50%);
+  z-index: 3;
+  justify-content: space-between;
+  gap: 8px;
+ } 
+ .search-festival-input{
+  border: 1px solid #f2f0f0;  
+  padding: 8px;
+  border-radius: 5px;
+  outline: none;
+  text-align: center;
+  width: 270px;
+ }
+.placesList-item { 
+ border-bottom: 1px solid #ccc; 
+ margin-bottom: 5px; 
+ } 
+ .placesList-item strong{
+  font-size: 15px;
+ }
+ .placesList-item p{
+  margin: 0;
+  padding: 0px;
+ }
+.place_place_name { 
+ font-weight: bold; 
+ font-size: 5px; 
+ } 
+.place_address_name { 
+ font-size: 13px; 
+ color: blue; 
+ } 
+.place_phone { 
+ color: forestgreen; 
+ font-size: 13px; 
+ } 
+ .search_btn{
+  background-color: rgb(84 85 182);
+  border: rebeccapurple;
+  border-radius: 10px;
+  color: #ffff;
+  width: 70px;
+  height: 40px; 
+  cursor: pointer;
+ }
+
+.marker-hide-btn{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+}
+.place-marker-name,
+.place-marker-address-name,
+.place-marker-phone
+{
+  width: 152px;
+  font-size: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.place-marker-name{
+  font-weight: bold;
+}
+.place-marker-address-name{
+color: blue;
+padding: 2px 0;
+}
+.place-marker-phone{
+  color: forestgreen;
+}
+
+
