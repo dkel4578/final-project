@@ -1,4 +1,3 @@
-
 import React from "react"; 
 import { Route, Routes } from "react-router-dom"; 
 import { Helmet } from 'react-helmet';
@@ -29,11 +28,14 @@ import PostContentModify from "./pages/post-content-modify";
 import PostContent from "./pages/post-content";
 import WritePost from "./pages/write-post";
 import Calendar from './pages/Calendar';
-import ChatRoomListPage from './pages/ChatRoomListPage';
-import ChatingRoomListPage from './pages/ChatingRoomListPage';
+import ChatRoomListPage from './pages/ChatRoomListPage'; //선생님거
+import ChatingRoomListPage from './pages/ChatingRoomListPage'; //내가 만든거
 import Admin from "./components/AdminPage"; 
 import ChatName from "./pages/chatting-room-name";
 import Header2 from "./layout/Header2";
+import TouristAIP from './pages/TouristAIP';
+import ChatPage from "./pages/ChatPage";
+
 
 function App() {
   return (
@@ -61,8 +63,8 @@ function App() {
           <Route path="/passwordChange" element={<PasswordChangePage/>}/>
           <Route path="/calendar" element={<Calendar/>}/>
           <Route path="/chat/room/list" element={<ChatRoomListPage />}/>
+          <Route path="/TouristAIP" element={<TouristAIP />}/>
           <Route path="/chat/room/list2" element={<ChatingRoomListPage />}/>
-          <Route path="/chat/room/list/:channelId" element={<ChatListRoom />}/>
           <Route path="/admin" element={<Admin />}/>
           <Route path="/coffeeEventPage" element={<CoffeeEventPage/>}/>
 					<Route path="/criminalPage" element={<CriminalPage/>}/>
@@ -71,8 +73,9 @@ function App() {
 					<Route path="/postContentModify" element={<PostContentModify/>}/>
 					<Route path="/postContent" element={<PostContent/>}/>
 					<Route path="/writePost" element={<WritePost/>}/>
-					<Route path="/chatName" element={<ChatName/>}/>
+					<Route path="/chatName" element={<ChatName/>}/
 					<Route path="/header2" element={<Header2/>}/>
+          <Route path="/chat/room/list/:roomId" element={<ChatPage/>}/>
 				</Routes>
 			<Footer />
 		</>

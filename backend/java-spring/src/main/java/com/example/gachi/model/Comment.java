@@ -1,7 +1,12 @@
 package com.example.gachi.model;
 
+import com.example.gachi.model.enums.Kind;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.time.LocalDate;
 
 @Data
 @Builder
@@ -29,5 +34,23 @@ public class Comment extends BaseEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     private Board board;
 
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+    public void setUser(User user) {
+        this.user = user;
+    }
+    public void deleteComment(String delYn){
+        this.delYn = delYn;
+    }
+    public void updateComment(String content){
+        this.content = content;
+    }
+
+    @JsonCreator
+    public Comment(@JsonProperty("content") String content) {
+        this.content = content;
+    }
 
 }

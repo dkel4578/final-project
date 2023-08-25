@@ -91,8 +91,9 @@ function BoardWriteForm() { // Receive the 'kind' prop
 
 
 
-
-
+    //*****************************
+    //유저정보 가져오기
+    //*****************************
     const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
     useEffect(() => {
         if (cookies.token) {

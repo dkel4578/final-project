@@ -1,8 +1,12 @@
 package com.example.gachi.service.user;
 
 import com.example.gachi.config.jwt.JwtTokenProvider;
+import com.example.gachi.model.BanList;
 import com.example.gachi.model.User;
+import com.example.gachi.model.dto.Report.BanDto;
 import com.example.gachi.model.dto.user.*;
+import com.example.gachi.model.enums.ReportStatus;
+import com.example.gachi.repository.BanListRepository;
 import com.example.gachi.repository.ProfileImgRepository;
 import com.example.gachi.repository.RefreshTokenRepository;
 import com.example.gachi.repository.UserRepository;
@@ -15,6 +19,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -27,6 +33,7 @@ public class UserService {
     private final JwtTokenProvider jwtTokenProvider;
     private final ProfileImgRepository profileImgRepository;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final BanListRepository banListRepository;
 
 
     //아이디 중복 검사
@@ -127,5 +134,48 @@ public class UserService {
         Optional<User> user = userRepository.findById(uid);
 
         return user.get();
+    }
+
+
+    //밴 리스트 존재 여부 확인
+//    public boolean checkBanEnd(Long userId){
+//
+//        BanDto banDto = banListRepository.findByUserIdAndBanStatus(userId, ReportStatus.J);
+//        Optional<User> user = userRepository.findById(userId);
+//        if (banDto != null){
+//            if(LocalDateTime.now().isAfter(banDto.getBanEndAt())){
+//                user.get().setBannedYn("N");
+//                banDto.setBanStatus(ReportStatus.G);
+//                return true;
+//            }else{
+//                return false;
+//            }
+//        }else {
+//            return false;
+//        }
+//    }
+    // 밴 리스트 존재 여부 확인
+    public boolean checkBanEnd(Long userId) {
+        List<BanList> banList = banListRepository.findByUserIdAndBanStatus(userId, ReportStatus.J);
+
+        Optional<User> user = userRepository.findById(userId);
+
+        boolean isBanned = false;  // 유저가 밴 상태인지 여부
+
+        for (BanList ban : banList) {
+            BanDto banDto = new BanDto(ban);
+            if (banDto.getBanStatus() == ReportStatus.J && LocalDateTime.now().isAfter(banDto.getBanEndAt())) {
+                user.get().setBannedYn("N");
+                ban.setBanStatus(ReportStatus.G);  // 밴 상태 변경
+                isBanned = true;
+                break;  // 만료된 밴을 찾았으면 루프 종료
+            }
+        }
+        if (isBanned) {
+            // 만료된 밴이 있을 경우 유저의 상태 업데이트
+            userRepository.save(user.get());
+        }
+
+        return isBanned;
     }
 }

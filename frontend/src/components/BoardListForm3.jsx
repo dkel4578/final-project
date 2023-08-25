@@ -35,6 +35,8 @@ function BoardListForm3() { // Receive the 'kind' prop
   * 2023.8.16
   * */
   const fetchBoardList = async (lastBoardId, pageNumber, searchWord) => {
+    console.log("lastBoardId: --->",lastBoardId);
+    console.log("pageNumber: --->",pageNumber);
     try {
       if (noMoreData) {
         return; // 더 이상 데이터가 없을 때 요청하지 않도록 중지
@@ -64,8 +66,12 @@ function BoardListForm3() { // Receive the 'kind' prop
   //****************************************************
   useEffect(() => {
     setBoardList([]); // 카테고리가 바뀌며 리스트를 초기화 한다.
+    console.log("useEffect - kind:  =============> ",kind);
     fetchBoardList(99999, 0);
+
+
   }, [kind]);
+
 
 
   //****************************************************
@@ -98,26 +104,7 @@ function BoardListForm3() { // Receive the 'kind' prop
     }
   };
 
-  // const handleSearch = () => {
-  //   setBoardList([]); // 검색 결과 초기화
-  //   setNoMoreData(false); // 더 이상 데이터가 없음을 초기화
-  //   fetchBoardList(99999, 0, searchWord);
-  // };
 
-  // useEffect(() => {
-  //   if (inView && boardList.length > 0 && !searchWord.trim()) {
-  //     const lastBoardId = 99999;
-  //     const nextPage = Math.floor(boardList.length / pageSize);
-  //     fetchBoardList(lastBoardId, nextPage, searchWord);
-  //   }
-  // }, [searchWord]);
-
-
-
-  // console.log("boardList.length: ",boardList.length);
-  // console.log("!noMoreData: ",!noMoreData);
-  // console.log("!searchWord: ",!searchWord);
-  // console.log("ref: ",ref);
 
   console.log("inView: ",inView);
   console.log("boardList.length: ",boardList.length);
