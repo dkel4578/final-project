@@ -4,7 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory, useNavigate, useParams } from 'react-router-dom';
 import { customHistory } from "../store/configureStore.js";
 import { actionCreators as chattingActions } from "../store/modules/chatting";
+
 import ChatRoom from "../components/ChatRoom";
+import { fetchChatRoomList } from "../store/modules/chatting"; // 경로 조정
+import { actionCreators as userActions } from "../store/modules/user";
 
 const WrapChatRooms = styled.div`
   text-align: center;
@@ -36,7 +39,7 @@ function ChatRoomListPage() {
   
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.user.user);
-
+  const uid = useSelector((state) => state.user.user.uid); // Redux에서 uid 가져오기
   // const userInfo = useSelector((state) => state.user.user);
   // console.log('ChatRoomListPage userInfo:', userInfo);
   const chatRoomList = useSelector((state) => state.chatting.chatRoomList);
@@ -63,6 +66,7 @@ function ChatRoomListPage() {
         <div style={{ fontSize: "20px" }}>채팅방 리스트</div>
         <br/>
         {chatRoomList.map((p, idx) => {
+
           return <ChatRoom key={p.id} {...p} />
         })}
       </WrapChatRooms>

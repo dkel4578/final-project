@@ -16,6 +16,7 @@
 .nanumgothic * {
  font-family: 'Nanum Gothic', sans-serif;
 }
+
 html{
   scroll-behavior: smooth;
 }
@@ -24,6 +25,7 @@ html{
   font-family: 'omyu_pretty', sans-serif;
   outline: none;
   color: #333;
+  /* border: 1px solid red; */
 }
 button,input{
   outline: none;
@@ -41,24 +43,35 @@ h1,h2,h3,h4,h5,h6{
 body{
   margin: 0;
   padding: 0;
-  margin: 0 auto;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: white;
-}
-input[type=password],input[type=text],input[type=email],input[type=tel],textarea{
   background-color: white;
+}
+input[type=text],input[type=password],input[type=tel],input[type=email],textarea{
+  background-color: white;
+}
+input[type=button]{
+  cursor: pointer;
+}
+section{
+  /* width: 360px;
+  margin: auto; */
 }
 a{
   text-decoration: none;
+}
+p{
+  margin: 0;
+  padding: 0;
 }
 button{
   cursor: pointer;
 }
 [class*=inner]{
-  margin: auto;
-  max-width: 360px;
+  /* margin: auto;
+  max-width: 360px; */
 }
 ul{
   margin: 0;

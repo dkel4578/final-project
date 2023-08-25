@@ -4,8 +4,10 @@ import com.example.gachi.model.ChatRoom;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
-    List<ChatRoom> findAllByOrderByIdDesc();
+
+    ChatRoom findAllById(Long id);
+    //해당 유저가 속해 있는 채팅방들 중 마스터 조회
+
 }

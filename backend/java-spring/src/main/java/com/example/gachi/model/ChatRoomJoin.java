@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ChatRoomJoin {
+public class ChatRoomJoin extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false)
@@ -24,6 +24,10 @@ public class ChatRoomJoin {
     @ManyToOne
     @JoinColumn(name = "room_id")
     private ChatRoom chatRoom;
+
+    @Column(columnDefinition = "char(1)")
+    @Builder.Default
+    private String bannedYn = "N";
 
     public ChatRoomJoin(User user, ChatRoom chatRoom){
         this.user = user;

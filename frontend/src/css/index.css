@@ -1,8 +1,8 @@
 /* 슬라이드 섹션 */
-/* .slide-area{
+.slide-area{
   width: 360px;
   margin: auto;
-
+  margin-top: 20px;
 }
 .slide-items{
   display: flex;
@@ -24,24 +24,26 @@
   justify-content: center;
   align-items: center;
   flex: 0.7;
-} */
+}
 /* 카테고리 섹션 */
 .category-area{
   width: 100%;
 }
 .category-inner{
-  width: 100%;
   margin: 10px auto;
   overflow: hidden;
-
+  width: 100%;
 }
-.category-items{}
+.category-items{
+  width: 100%;
+}
 .category-item{
   margin: 20px 0;
   position: relative;
   text-align: center;
   border-radius: 15px;
   overflow: hidden;
+  z-index: 2;
   border: 1px solid #ccc;
 }
 .category-item::before,.category-item::after{
@@ -51,6 +53,11 @@
   z-index: 1;
   color: white;
   text-shadow: 0px 0px 5px black;
+
+}
+.category-item:hover::before,.category-item:hover::after{
+  opacity: 0;
+  visibility: hidden;
 }
 .category-item::before{
   content: '커피한잔할래요?';
@@ -78,7 +85,6 @@
   top: 60%;
   left: 0;
   font-size: 1.1em;
-  /* border: 1px solid red; */
 }
 .category-item:nth-of-type(2):after{
   content: '이곳저곳 함께 여행할 영혼의 단짝을 찾으세요';
@@ -103,10 +109,7 @@
 
   filter: grayscale(1);
 }
-.category-item:hover .category-slogan{
-  opacity: 0;
-  visibility: hidden;
-}
+
 /* faq */
 .noticeAndfaq{
   margin: auto;
@@ -115,7 +118,7 @@
   justify-content: space-between;
   gap: 15px;
 }
-.noticeAndfaq div{
+.noticeAndfaq a{
   text-align: center;
   border-radius: 15px;
   background-color: var(--maincolor);
@@ -124,26 +127,12 @@
   margin-bottom: 20px;
   transition: 0.5s;
 }
-.noticeAndfaq div:hover{
+.noticeAndfaq a:hover{
   opacity: 1;
-  background-color: var(--turquoise);
+  background-color: var(--remonblue);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
 }
-.noticeAndfaq div a{
+.noticeAndfaq a{
   color: white;
-  font-size: 2.5em;
-}
-.notice-link{
-
-}
-.faq-link{
-
-}
-.body{
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  
+  font-size: 2em;
 }

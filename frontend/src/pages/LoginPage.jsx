@@ -5,6 +5,11 @@ import { useCookies } from 'react-cookie';
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as userActions } from "../store/modules/user";
 import Swal from "sweetalert2";
+import 'bootstrap-icons/font/bootstrap-icons.css';
+import 'font-awesome/css/font-awesome.min.css';
+import "../script/login.js";
+import $ from 'jquery'; // eslint-disable-line no-unused-vars
+import "../script/custom.js";
 
 function LoginPage() {
   // const dispatch = useDispatch();
@@ -17,47 +22,49 @@ function LoginPage() {
   const loginIdRef = useRef(null);
   const passwordRef = useRef(null);
 
-  const submitHandler = async (e) =>{
+  const submitHandler = async (e) => {
     e.preventDefault();
     const loginId = loginIdRef.current.value;
     const password = passwordRef.current.value;
-
+  
     const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
-
-    fetch('api/login', {
-      method: 'POST',
-      headers : {
-        "Content-Type" : jsonContent,
-      },
-      body :JSON.stringify({
-        loginId : loginId,
-        password : password
-      })
-    })
-    .then(res => {
-      if(res.status !== 200){
-        return Swal.fire({
-          icon: "error",
-          title: "로그인",
-          text: "사용자 정보가 올바르지 않습니다.",
-          width: 360,
-        });
-      } 
-      return res.json();
-    })
-    .then(data =>{
-      if(data){
+  
+    try {
+      const response = await fetch('api/login', {
+        method: 'POST',
+        headers: {
+          "Content-Type": jsonContent,
+        },
+        body: JSON.stringify({
+          loginId: loginId,
+          password: password
+        })
+      });
+  
+      if (response.status !== 200) {
+        throw new Error("로그인 실패");
+      }
+  
+      const data = await response.json();
+  
+      if (data) {
         removeCookie('token');
-        const expireTikmeDate = new Date(Number(data.accessTokenExpireIn));
-        setCookie('token', data.accessToken, { expires: expireTikmeDate});
+        const expireTimeDate = new Date(Number(data.accessTokenExpireIn));
+        setCookie('token', data.accessToken, { expires: expireTimeDate });
         console.log(cookies);
-        // console.log('loginAPI Data:', data);
-        
+  
         // dispatch(userActions.loginSaveAPI(data.id, data.nickname));
-
+  
         navigate('/', true);
       }
-    })
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "로그인",
+        text: "사용자 정보가 올바르지 않습니다.",
+        width: 360,
+      });
+    }
   }
   return (
     <>
@@ -80,11 +87,11 @@ function LoginPage() {
         </a>
         <form onSubmit={submitHandler}>
           <fieldset>
-            <div className="input-id">
+            <div className="input-login-id">
               <input type="text" placeholder="ID" required ref={loginIdRef}/>
               <i className="bi bi-person-fill-check"></i>
             </div>
-            <div className="input-pw">
+            <div className="input-login-pw">
               <input type="password" placeholder="password" required ref={passwordRef}/>
               <i className="bi bi-key-fill"></i>
             </div>
@@ -100,8 +107,8 @@ function LoginPage() {
         </div>
         <div className="user-find">
           <Link to="/signup">회원가입</Link>
-          <a href="#none">아이디 찾기</a>
-          <a href="#none">비밀번호 변경</a>
+          <a href="/findId">아이디 찾기</a>
+          <a href="/passwordChange">비밀번호 변경</a>
         </div>
       </div>
     </section>

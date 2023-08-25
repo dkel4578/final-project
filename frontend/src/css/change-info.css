@@ -2,26 +2,13 @@
   width: 100%;
   margin-top: 20px;
 }
-/* [className *= place]{
+[class *= input-kinds]{
   width: 100%;
-  margin-top: 20px;
-} */
-/* [className *= input-kind]{
-  width: 100%;
-  padding: 10px;
-  border-radius: 5px;
-  outline: none;
+  padding: 10px ;
+  border-radius: 5px ;
+  outline: none ;
   border: 1px solid var(--maincolor);
-  font-size: 1.3em;
-  padding-left: 55px;
-} */
-[class *= input-kind]{
-  width: 100%;
-  padding: 10px;
-  border-radius: 5px;
-  outline: none;
-  border: 1px solid var(--maincolor);
-  font-size: 1.3em;
+  font-size: 1.3em ;
   padding-left: 55px;
 }
 .subject{
@@ -33,13 +20,13 @@
 .subject p{
   font-size: 1.6em;
 }
-.input-kind::placeholder{
+.input-kinds::placeholder{
   transition: 0.5s;
 }
-.input-kind:focus::placeholder{
+.input-kinds:focus::placeholder{
   opacity: 0;
 }
-.input-kind:focus{
+.input-kinds:focus{
   box-shadow: 0 0 10px #2acf7d96;
 }
 .change-info{
@@ -99,24 +86,24 @@ label[for=male],label[for=female]{
   margin-right: 10px;
   appearance: none;
   vertical-align: middle;
-  border: max(2px, 0.1em) solid var(--maincolor);
+  border: 2px solid var(--maincolor);
   border-radius: 50%;
   width: 1.5em;
   height: 1.5em;
 }
 .gender-input:checked{
-  border: 0.4em solid var(--forestgreen);
+  border: 5px solid var(--forestgreen);
 }
 .user-profile{
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.user-profile img{
-  width: 100px;
-  height: 100px;
+.user-profile .user-profile-basic{
+  width: 120px;
+  height: 120px;
   border: 1px solid transparent;
-  background-color: #ccc;
+  background-color: var(--mintcolor);
   border-radius: 50%;
   object-fit: cover;
   text-align: center;
@@ -126,16 +113,37 @@ label[for=male],label[for=female]{
   justify-content: center;
   align-items: center;
   margin-top: 15px;
+  flex-direction: column;
+  gap: 15px;
 }
-.upload-profile-img-btn{
+.upload-profile-img input[type="file"]{
+  display: none;
+}
+.upload-profile-custom-file-input{
+  background-color: var(--remonblue);
+  color: white;
+  padding: 10px 40px;
+  border-radius: 5px;
   cursor: pointer;
-  background-color: var(--remonblue) !important;
-  padding: 10px 20px !important;
+  font-size: 1.4em;
   transition: 0.4s;
+  position: relative;
 }
-.upload-profile-img-btn:hover{
-  background-color: royalblue !important;
-  box-shadow: 0 0 10px royalblue;
+.upload-profile-custom-file-input:hover{
+  background-color: var(--royalblue);
+  box-shadow:  0 0 5px var(--royalblue);
+}
+.upload-profile-custom-file-input .bi{
+  position: absolute;
+  left: 8px;
+  top: 60%;
+  transform: translateY(-60%);
+  font-size: 1.1em;
+  color: white;
+}
+.user-profile-input{
+  width: 90%;
+  text-align: center;
 }
 .input-box .bi{
   /* 아이콘 전체 조정 */
@@ -146,7 +154,7 @@ label[for=male],label[for=female]{
   top: 50%;
   transform: translateY(-50%);
 }
-.input-kind:focus ~ .bi{
+.input-kinds:focus ~ .bi{
   color: var(--maincolor);
 } 
 .introduce-place textarea{
@@ -178,6 +186,7 @@ label[for=male],label[for=female]{
 }
 .toggle-eye{
   cursor: pointer;
+  width: 10px;
 }
 
 /* 각 영역별 아이콘 정렬 (각 아이콘 크기 달라서 각자 조정) */
@@ -191,17 +200,16 @@ label[for=male],label[for=female]{
 
 /* change-info-complete-btn */
 .change-info-complete-btn{
-  margin-top: 15px;
+  margin-top: 10px;
 }
 .change-info-complete-btn .change-info-btn{
   text-align: center;
   display: block;
-  width: 100%;
   border-radius: 35px;
   background-color: var(--maincolor);
   color: white;
-  font-size: 2em;
-  padding:  10px;
+  font-size: 1.65em;
+  padding:  10px 20px;
   transition: 0.4s;
 }
 .change-info-complete-btn .change-info-btn:hover{

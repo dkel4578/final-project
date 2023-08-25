@@ -12,10 +12,8 @@ a {
   color: inherit;
 }
 .board_wrap {
-  width: 1200px;
+  width: 1440px;
   margin: 100px auto;
-}
-.board_title {
 }
 .board_title strong {
   font-size: 3rem;
@@ -73,64 +71,16 @@ a {
 .board_list > div .top > div {
   font-weight: 600;
 }
-.board_list .ReportNumber {
-  width: 10%;
-  background-color: #2acf7d;
-  color: #ffffff;
-  font-weight: bold;
-}
-.board_list .ReportedDate {
-  width: 10%;
-  background-color: #2acf7d;
-  color: #ffffff;
-  font-weight: bold;
-}
-.board_list .Username {
-  width: 10%;
-  background-color: #2acf7d;
-  color: #ffffff;
-  font-weight: bold;
-}
-
-.board_list .Report {
-  width: 10%;
-  background-color: #2acf7d;
-  color: #ffffff;
-  font-weight: bold;
-}
 
 .tab-menu {
   flex: 1;
   font-size: 0.8em;
+  background-color: #2acf7d;
+  color: #ffffff;
+  font-weight: bold;
 }
 
-.board_list .SuspensionStatus {
-  text-align: left;
-  text-align: center;
-}
-.board_list .top .SuspensionStatus {
-  text-align: center;
-  background-color: #2acf7d;
-  color: #ffffff;
-  font-weight: bold;
-}
-.board_list .Start_Suspension {
-  background-color: #2acf7d;
-  color: #ffffff;
-  font-weight: bold;
-}
-.board_list .Date_Suspension {
-  background-color: #2acf7d;
-  color: #ffffff;
-  font-weight: bold;
-  height: 30px;
-}
 
-.board_list .Suspend {
-  background-color: #2acf7d;
-  color: #ffffff;
-  font-weight: bold;
-}
 
 /*아래는 리스트*/
 .master-list {
@@ -237,8 +187,8 @@ a {
 .board_page a:first-child {
   border-left: 1px solid #ddd;
 }
-.SuspendButton {
-  width: 70px;
+.SuspendButton,.delteButton  {
+  width: 55px;
   padding: 10px;
   font-size: 1px;
   background-color: #9acd32; /* 변경된 배경색 */
@@ -257,7 +207,7 @@ a {
 }
 
 .UnsuspendButton {
-  width: 70px;
+  width: 55px;
   padding: 10px;
   font-size: 1px;
   background-color: #4169e1; /* 변경된 배경색 */
@@ -363,6 +313,7 @@ a {
 .master-list{
   display: flex;
   justify-content: space-around;
+  margin-top: 5px;
 
 }
 .master-list li{
@@ -381,6 +332,9 @@ a {
   display: flex;
   gap: 3px;
 }
+.master-btn button{
+  padding: 0;
+}
 .SearchFunction{
   display: flex;
   justify-content: flex-end;
@@ -393,6 +347,8 @@ a {
   display: flex;
   float: right;
   gap: 15px;
+  margin-bottom: 10px;
+
 }
 /* master-search */
 .master-search{
@@ -429,9 +385,23 @@ a {
   font-size: 1.1em;
 }
 .master-select-options{
+  width: 150px;
   font-size: 1.1em;
   border: none;
-  border-bottom: 2px solid var(--maincolor);
+  /* border-bottom: 2px solid var(--maincolor); */
 }
-
-
+.category-btn{
+  width: 150px;
+  font-size: 1.15em;
+}
+.ban-btn{
+   font-size: 1em;
+}
+.delteButton{
+  background-color: red;
+  transition: 0.3s;
+}
+.delteButton:hover{
+  background-color: crimson;
+  box-shadow: 0 0 5px crimson;
+}

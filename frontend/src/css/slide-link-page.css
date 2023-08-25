@@ -1,0 +1,110 @@
+.slide-page{
+  margin: auto;
+  width: 360px;
+}
+.slide-page-inner{
+  padding: 20px;
+}
+.slide-page-title{
+  font-size: 2em;
+  font-weight: bold;
+  letter-spacing: 1px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+/* slide-page-main-contents */
+.slide-page-main-contents{
+  margin: 20px 0;
+  border-top: 2px solid var(--maincolor);
+  border-bottom: 2px solid var(--maincolor);
+  padding: 20px 0;
+}
+
+/* slide-page-main-content */
+.slide-page-main-content{}
+.slide-page-main-content img{
+  width: 320px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+}
+.slide-page-main-content p{
+  font-size: 1.2em;
+}
+.slide-page-main-content p span{
+  font-weight: bold;
+  color: red;
+}
+/* slide-page-main-content-btns */
+.slide-page-main-content-btns{
+  margin-top: 20px;
+  display: flex;
+  justify-content: end;
+  gap: 10px;
+}
+.slide-page-main-content-btns input[type=button]{
+  cursor: pointer;
+  padding: 8px 15px;
+  font-size: 1.1em;
+  color: white;
+  border-radius: 20px;
+  transition: 0.4s;
+}
+.slide-page-main-content-btns .slide-page-modify-btn{
+  background-color: var(--remonblue);
+}
+.slide-page-main-content-btns .slide-page-modify-btn:hover{
+  background-color: royalblue;
+  box-shadow: 0 0 10px rgba(65, 105, 225, 0.808);
+}
+.slide-page-main-content-btns .slide-page-delete-btn{
+  background-color: crimson;
+}
+.slide-page-main-content-btns .slide-page-delete-btn:hover{
+  background-color: red;
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.788);
+}
+/* post-user-info */
+.slide-page-user-info{
+  border-bottom: 2px solid var(--maincolor);
+  padding-bottom: 20px;
+  display: flex;
+  position: relative;
+  align-items: center;
+}
+.slide-page-user-img{
+  flex: 4;
+}
+.slide-page-user-img img{
+  width: 120px;
+  height: 120px;
+  background-color: #ccc;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow:  0 0 8px rgba(0, 0, 0, 0.431);
+}
+.slide-page-user-information{
+  flex: 6;
+}
+.slide-page-users-infos{
+  display: flex;
+  /* border: 1px solid red; */
+  font-size: 1.3em;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 7px;
+}
+.slide-page-users-infos:last-child{
+  margin-bottom: 0px;
+}
+.slide-page-users-infos p{
+  flex: 1;
+  display: flex;
+}
+.slide-page-users-infos p:nth-of-type(1){
+  justify-content: end;
+}
+.slide-page-users-infos p:nth-of-type(2){
+  justify-content: end;
+}
+
