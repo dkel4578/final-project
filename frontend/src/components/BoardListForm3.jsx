@@ -8,6 +8,7 @@ import '../css/index.css';
 import '../css/total.css';
 import '../css/board.css';
 import '../css/variables.css';
+import {useSelector} from "react-redux";
 
 
 
@@ -15,7 +16,7 @@ function BoardListForm3() { // Receive the 'kind' prop
   const { kind } = useParams(); // kind 값을 추출
   console.log("kind:  =============> ",kind);
 
-
+  const userInfo = useSelector((state) => state.user.user);
 
 
   //************************
