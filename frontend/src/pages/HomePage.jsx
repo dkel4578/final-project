@@ -57,22 +57,22 @@ function HomePage() {
         <div className="category-inner">
           <div className="category-items">
             <div className="category-item">
-              <a href="/board/coffee">
+              <a href="/board/C">
                 <img src="./images/cofee-together.jpg" alt="커피한잔 할래요" />
               </a>
             </div>
             <div className="category-item">
-              <a href="/board/trip">
+              <a href="/board/T">
                 <img src="./images/trip-together.jpg" alt="여행같이 할래요" />
               </a>
             </div>
             <div className="category-item">
-              <Link to={"/board/meal"}>
+              <Link to={"/board/F"}>
                 <img src="./images/eat-together.jpg" alt="식사같이 할래요" />
               </Link>
             </div>
             <div className="category-item">
-              <Link to={"/board/drink"}>
+              <Link to={"/board/A"}>
                 <img src="./images/drink-together.jpg" alt="술한잔 할래요" />
               </Link>
             </div>
@@ -83,6 +83,7 @@ function HomePage() {
         <a href="/board/notice" className="notice-link">
           공지사항
         </a>
+
         <a href="/faq" className="faq-link">
           FAQ
         </a>

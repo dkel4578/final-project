@@ -8,8 +8,9 @@ import '../css/total.css';
 import '../css/board.css';
 import '../css/variables.css';
 import '../css/write-post.css';
-import Editor from "./EditorComponent.jsx"; //에디터
-// import MapComponent from './MapComponent';
+import Editor from "./EditorComponent.jsx";
+import {useSelector} from "react-redux"; //에디터
+ import MapComponent from './MapComponent';
 
 function BoardWriteForm() { // Receive the 'kind' prop
     let navigate = useNavigate();
@@ -22,6 +23,20 @@ function BoardWriteForm() { // Receive the 'kind' prop
     const [userData, setUserData] = useState(null); // 쿠키에서 유저정보 가져오기
     const [imageSrc, setImageSrc] = useState(""); //이미지 정보
     const fileInputRef = useRef(null);
+    const userInfo = useSelector((state) => state.user.user); //유저 정보
+
+
+    console.log("userInfo: ======>",userInfo);
+
+    // 추가한 상태 변수 showMap를 통해 MapComponent를 표시 여부를 제어
+    const [showMap, setShowMap] = useState(false); //지도 표시
+    // "지도 첨부" 버튼을 클릭하면 MapComponent를 보여주도록 설정
+
+
+    const toggleMap = () => {
+        setShowMap((prevShowMap) => !prevShowMap); // 상태를 반전시킵니다.
+    };
+
 
 
     //**********************
@@ -78,7 +93,7 @@ function BoardWriteForm() { // Receive the 'kind' prop
                     kind: enteredKind,
                     title: enteredTitle,
                     content: enteredDesc,
-                    userId: userData,
+                    userId: userInfo.uid,
                 }),
             });
 
@@ -152,37 +167,7 @@ function BoardWriteForm() { // Receive the 'kind' prop
     }
 
 
-
-    //*****************************
-    //유저정보 가져오기
-    //*****************************
     const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
-    useEffect(() => {
-        if (cookies.token) {
-            fetch('/api/user/me', {
-                method: 'GET',
-                headers: {
-                    "Content-Type" : jsonContent,
-                    "Authorization" : "Bearer "+ cookies.token,
-                }
-            })
-                .then(res => {
-                    if (res) {
-                        console.log(res);
-                        return res.json();
-                    }
-                })
-                .then(userData => {
-                    console.log(userData);
-                    setUserData(userData.id)
-                })
-        }
-    }, [cookies.token]);
-
-    console.log("BoardWriteFrom userData: ==========>>",userData)
-
-
-
 
 
     //게시글 사진 업로드
@@ -263,13 +248,9 @@ function BoardWriteForm() { // Receive the 'kind' prop
                                 <div className="write-post-map"></div>
                             </div>
                         </div>
-                        <div className="write-post-content-btns">
-                            <input type="button" className="map-attach-btn" value="지도 첨부"></input>
-
-                        </div>
                         {/*파일 업로드*/}
                         <div className="user-profile">
-                            {imageSrc && <img src={imageSrc} alt="Uploaded" />}
+                            {imageSrc && <img src={imageSrc} alt="Uploaded" style={{ width: '100px' }} />}
                         </div>
                         <div className="user-profile">
                             <input
@@ -278,13 +259,27 @@ function BoardWriteForm() { // Receive the 'kind' prop
                                 accept="image/*"
                                 onChange={onUpload}
                                 ref={fileInputRef}
-                                ></input>
+                            ></input>
                         </div>
+                        <div className="write-post-content-btns">
+                            {/* showMap 상태에 따라 MapComponent를 표시 또는 숨김 */}
+                            <input
+                                type="button"
+                                className="map-attach-btn"
+                                onClick={toggleMap}
+                                value={showMap ? "지도 숨기기" : "지도 첨부"}
+                            >
+                            </input>
+
+                        </div>
+
                         <div>
-                            {/*<MapComponent />*/}
+
+                            {/* showMap 상태에 따라 MapComponent를 표시 또는 숨김 */}
+                            {showMap && <MapComponent />}
                         </div>
                         <div className="write-post-btn-place">
-                            {userData &&
+                            {userInfo.uid &&
                             <input type="submit" className="write-post-btn" value="등록하기" ></input>
                             }
                         </div>
