@@ -12,18 +12,20 @@ import "../script/custom.js";
 import "../css/variables.css";
 import "../css/total.css";
 
-function Header() {
+function Header({userInfo}) {
+	
 	const dispatch = useDispatch();
-  const userInfo = useSelector((state) => state.user.user);
-  console.log('userInfo', userInfo);
 
 	const [cookies, setCookie, removeCookie] = useCookies(["token"]);
 	const [nickname, setNickname] = useState("");
+	const [status, setStatus] = useState("");
 	const [userId, setUserId] = useState("");
 	const [isLogin, setIsLogin] = useState(false);
 
   const navigate = useNavigate();
 	const cookieToken = cookies.token;
+
+	
 
 	useEffect(() => {
 		if (!cookieToken) {
@@ -70,7 +72,8 @@ function Header() {
 				.then((data) => {
 					if (data.nickname) {
 						setNickname(data.nickname);
-            dispatch(userActions.loginSaveAPI(data.id, data.nickname));
+            dispatch(userActions.loginSaveAPI(data.id, data.nickname, data.status));
+						
 					}
 				});
 		} else {
