@@ -200,16 +200,16 @@ function BoardWriteForm() { // Receive the 'kind' prop
                 <div className="header-inner">
                     {/*카테고리*/}
                     <div className="board-kind">
-                        <Link to="/board/C" className={kind === 'C' ? 'active' : ''}>
+                        <Link to="/board/coffee" className={kind === 'C' ? 'active' : ''}>
                             커피한잔할래요
                         </Link>
-                        <Link to="/board/T" className={kind === 'T' ? 'active' : ''}>
+                        <Link to="/board/trip" className={kind === 'T' ? 'active' : ''}>
                             같이여행갈래요
                         </Link>
-                        <Link to="/board/F" className={kind === 'F' ? 'active' : ''}>
+                        <Link to="/board/meal" className={kind === 'F' ? 'active' : ''}>
                             같이식사할래요
                         </Link>
-                        <Link to="/board/A" className={kind === 'A' ? 'active' : ''}>
+                        <Link to="/board/drink" className={kind === 'A' ? 'active' : ''}>
                             술한잔할래요
                         </Link>
                     </div>

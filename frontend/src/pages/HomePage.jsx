@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../css/index.css";
 import "../css/total.css";
 import "../css/variables.css";
@@ -7,6 +7,8 @@ import "../css/slides.scss";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "font-awesome/css/font-awesome.min.css";
 import "../script/custom.js";
+
+const SLIDE_INTERVAL = 5000;
 
 function HomePage() {
   const slides = [
@@ -24,12 +26,18 @@ function HomePage() {
     },
   ];
 
+  const navigate = useNavigate();
+  
+  const handlebannerClick = (slide)=>{
+    console.log("handle: "+JSON.stringify(slide));
+    navigate(slide.link);
+  }
+
   const [currentSlide, setCurrentSlide] = useState(0);
   useEffect(() => {
-    //슬라이드 자동 재생을 위한 타이머 설정
     const timer = setInterval(() => {
-      setCurrentSlide((prevSlide) => (prevSlide + 1) % slides.length);
-    }, 5000);
+      setCurrentSlide(prevSlide => (prevSlide + 1) % slides.length);
+    }, SLIDE_INTERVAL);
 
     return () => {
       clearInterval(timer);
@@ -44,13 +52,15 @@ function HomePage() {
   return (
     <div className="body">
       <section className="slide-area">
-        {slides.map((slide, index) => (
-          <Link to={slide.link} key={index}>
+      {slides.map((slide, index) => (
+          // <Link to={slide.link} key={index}>
             <div
               className={`slide ${index === currentSlide ? "active" : ""}`}
               style={{ backgroundImage: `url(${slide.image})` }}
+              onClick={()=>{handlebannerClick(slides[currentSlide])}}
+              key={index}
             ></div>
-          </Link>
+          //</Link> 
         ))}
       </section>
       <section className="category-area">

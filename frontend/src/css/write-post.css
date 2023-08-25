@@ -1,5 +1,5 @@
 .write-post{
-
+  width: 360px;
 }
 .write-post-inner{
   padding: 20px;
@@ -16,7 +16,6 @@
 .write-post-contents{
   margin: 20px 0;
   border-top: 2px solid var(--maincolor);
-  border-bottom: 2px solid  var(--maincolor);
   padding: 20px 0;
 }
 .select-board-box,.write-title-box{

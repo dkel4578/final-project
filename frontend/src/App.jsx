@@ -60,8 +60,13 @@ function App(props) {
           <Route path="/board/view" element={<BoardViewPage/>}/>
           <Route path="/board/edit" element={<BoardEditPage/>}/>
           <Route path="/board/write" element={<BoardWritePage />}/>
+          <Route path="/board/:kind" element={<BoardListPage />}/>
+          <Route path="/board/view" element={<BoardViewPage/>}/>
+          <Route path="/board/edit" element={<BoardEditPage/>}/>
+          <Route path="/board/write" element={<BoardWritePage />}/>
           <Route path="/board/delete" element={<BoardDeletePage />}/>
-          <Route path="/board/notice" element={<BoardNotice/>}/>
+					<Route path="/board/notice" element={<BoardNotice/>}/>
+
           <Route path="/passwordChange" element={<PasswordChangePage/>}/>
           <Route path="/calendar" element={<Calendar/>}/>
           <Route path="/chat/room/list" element={<ChatRoomListPage />}/>
@@ -76,7 +81,7 @@ function App(props) {
 					<Route path="/postContent" element={<PostContent/>}/>
 					<Route path="/writePost" element={<WritePost/>}/>
 					<Route path="/chatName" element={<ChatName/>}/>
-					<Route path="/header2" element={<Header2/>}/>
+          <Route path="/header2" element={<Header2/>}/>
           <Route path="/chat/room/list/:roomId" element={<ChatPage/>}/>
         </Routes>
 			<Footer />

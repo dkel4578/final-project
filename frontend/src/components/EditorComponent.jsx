@@ -83,7 +83,7 @@ class EditorComponent extends React.Component {
         // eslint-disable-next-line react/prop-types
         const { value, onChange } = this.props;
         return (
-            <div style={{ height: '350px' }}>
+            <div style={{ height: '350px', width:'320px' }}>
                 <ReactQuill
                     ref={this.quillRef}
                     style={{ height: '300px', width: '320px' }}

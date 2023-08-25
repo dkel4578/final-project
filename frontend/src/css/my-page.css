@@ -161,6 +161,7 @@
 .modal-content fieldset{
   border: 2px solid var(--maincolor);
   border-radius: 5px;
+  padding: 10px;
 }
 fieldset legend{
   border-radius: 30px;
