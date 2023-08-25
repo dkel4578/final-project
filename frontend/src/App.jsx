@@ -1,4 +1,4 @@
-import React from "react"; 
+import React, { useState } from "react"; 
 import { Route, Routes } from "react-router-dom"; 
 import { Helmet } from 'react-helmet';
 import Header from "./layout/Header";
@@ -8,6 +8,7 @@ import SignupPage from "./pages/SignupPage";
 import FindIdPage from "./pages/FindIdPage";
 import MyPage from "./pages/MyPage";
 import ChangeInfo from "./pages/ChangeInfo";
+import { useDispatch, useSelector } from "react-redux";
 import BoardListPage from "./pages/BoardListPage";
 import BoardViewPage from "./pages/BoardViewPage";
 import BoardEditPage from "./pages/BoardEditPage";
@@ -33,12 +34,15 @@ import ChatName from "./pages/chatting-room-name";
 import Header2 from "./layout/Header2";
 import TouristAIP from './pages/TouristAIP';
 import ChatPage from "./pages/ChatPage";
+import AdminPage from './components/AdminPage';
+import AdminAuth from './components/AdminAuth';
 
 
-function App() {
+function App(props) {
+  const userInfo = useSelector((state) => state.user.user);
   return (
     <>
-      <Header />
+      <Header userInfo={userInfo} />
     			<Helmet>
         <title>같이갈래?</title>
       </Helmet>
@@ -62,17 +66,17 @@ function App() {
           <Route path="/calendar" element={<Calendar/>}/>
           <Route path="/chat/room/list" element={<ChatRoomListPage />}/>
           <Route path="/TouristAIP" element={<TouristAIP />}/>
-          <Route path="/chat/room/list2" element={<ChatingRoomListPage />}/>
-          <Route path="/admin" element={<Admin />}/>
+          <Route path="/chat/room/list2" element={<ChatingRoomListPage />}/>          
+          <Route path="/admin" element={<AdminAuth Component={AdminPage} userInfo={userInfo} />} />
           <Route path="/coffeeEventPage" element={<CoffeeEventPage/>}/>
-          <Route path="/criminalPage" element={<CriminalPage/>}/>
-          <Route path="/faq" element={<FAQ/>}/>
-          <Route path="/launching" element={<Launching/>}/>
-          <Route path="/postContentModify" element={<PostContentModify/>}/>
-          <Route path="/postContent" element={<PostContent/>}/>
-          <Route path="/writePost" element={<WritePost/>}/>
-          <Route path="/chatName" element={<ChatName/>}/>
-          <Route path="/header2" element={<Header2/>}/>
+					<Route path="/criminalPage" element={<CriminalPage/>}/>
+					<Route path="/faq" element={<FAQ/>}/>
+					<Route path="/launching" element={<Launching/>}/>
+					<Route path="/postContentModify" element={<PostContentModify/>}/>
+					<Route path="/postContent" element={<PostContent/>}/>
+					<Route path="/writePost" element={<WritePost/>}/>
+					<Route path="/chatName" element={<ChatName/>}/>
+					<Route path="/header2" element={<Header2/>}/>
           <Route path="/chat/room/list/:roomId" element={<ChatPage/>}/>
         </Routes>
 			<Footer />
