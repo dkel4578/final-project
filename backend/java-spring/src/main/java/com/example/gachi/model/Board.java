@@ -53,6 +53,12 @@ public class Board extends BaseEntity{
     @ToString.Exclude
     private List<BrdImg> brdImgs;
 
+    private int commentCount; // 댓글 수를 저장할 필드 추가
+
+    // 댓글 수 설정 메소드 추가
+    public void setCommentCount(int commentCount) {
+        this.commentCount = commentCount;
+    }
 
     public void setKind(Kind  kind) {
         this.kind = kind;

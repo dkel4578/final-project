@@ -8,12 +8,15 @@ import '../css/index.css';
 import '../css/total.css';
 import '../css/board.css';
 import '../css/variables.css';
+import {useSelector} from "react-redux";
 
 
 
 function BoardListForm3() { // Receive the 'kind' prop
   const { kind } = useParams(); // kind 값을 추출
+  const userInfo = useSelector((state) => state.user.user); //유저 정보
   console.log("kind:  =============> ",kind);
+
 
   //************************
   // enum 유형으로 설정
@@ -24,7 +27,7 @@ function BoardListForm3() { // Receive the 'kind' prop
 
   let [boardList, setBoardList] = useState([]);
   const { ref, inView } = useInView();
-  const pageSize = 2;
+  const [pageSize, setPageSize] = useState(2); // 페이지 크기
   const [noMoreData, setNoMoreData] = useState(false); // 새로운 상태 추가
   const [searchWord, setSearchWord] = useState(""); // 초기값을 설정
 
@@ -40,6 +43,12 @@ function BoardListForm3() { // Receive the 'kind' prop
     try {
       if (noMoreData) {
         return; // 더 이상 데이터가 없을 때 요청하지 않도록 중지
+      }
+
+      if(searchWord){
+        setPageSize(100);
+      }else{
+        setPageSize(2);
       }
       const response = await axios.post(`/api/boardss`, {
         lastBoardId: lastBoardId,
@@ -66,10 +75,9 @@ function BoardListForm3() { // Receive the 'kind' prop
   //****************************************************
   useEffect(() => {
     setBoardList([]); // 카테고리가 바뀌며 리스트를 초기화 한다.
+    setNoMoreData(false);
     console.log("useEffect - kind:  =============> ",kind);
     fetchBoardList(99999, 0);
-
-
   }, [kind]);
 
 
@@ -139,13 +147,13 @@ function BoardListForm3() { // Receive the 'kind' prop
                     onChange={(e) => setSearchWord(e.target.value)}
                     onKeyPress={handleKeyPress} // Enter 키 입력 처리
                 />
-                <button onClick={handleSearchButtonClick}>검색</button>
+                {/*<button onClick={handleSearchButtonClick}>검색</button>*/}
                 <i className="fa fa-search" aria-hidden="true"></i>
               </div>
               <div className="write-button">
                 <a href="#none">
                   <Link to="/board/write">
-                  <i className="bi bi-pencil-square"></i>
+                  <i className="fa fa-pencil-square-o"></i>
                   </Link>
 
                 </a>
@@ -156,9 +164,7 @@ function BoardListForm3() { // Receive the 'kind' prop
                 {boardList.map((boardInfo, index) => (
                     <div key={index}>
                       {/* kind 값에 따라 다른 게시판 뷰를 렌더링 */}
-                      <BoardPreview boardInfo={boardInfo} />
-                      {/*{kind === 'T' && <BoardPreview boardInfo={boardInfo} /> /* 여행*!/*!/*/}
-
+                      <BoardPreview boardInfo={boardInfo} kind={kind} />
                     </div>
                 ))}
               </div>
