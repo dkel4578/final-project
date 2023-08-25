@@ -13,41 +13,103 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import "font-awesome/css/font-awesome.min.css";
 import "../script/post-content.js";
 import "../script/custom.js";
+import PropTypes from "prop-types";
+import {useSelector} from "react-redux";
+
 
 function BoardViewForm() {
   const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const id = searchParams.get("id"); // Extract id from URL parameter
-  const [data, setData] = useState(""); // 게시글
+
+  const id = searchParams.get('id'); // Extract id from URL parameter
+  const [data, setData] = useState(''); // 게시글
+  const [imgData, setImgData] = useState(''); // 게시글 이미지
   let [commentList, setCommentList] = useState([]); //댓글리스트
-  const { kind } = useParams(); // kind 값을 추출
-  const [cookies] = useCookies(["token"]);
+  //const { kind } = searchParams.get('kind'); // kind 값을 추출
+  const kind: string = searchParams.get('kind');
+  const [cookies] = useCookies(['token']);
   const [userData, setUserData] = useState(null); // 쿠키에서 유저정보 가져오기
+  const [userNickname, setUserNickname] = useState(null); // 쿠키에서 유저정보 가져오기 / 닉네임
+  const [userGender, setUserGender] = useState(null); // 쿠키에서 유저정보 가져오기 / 성별
+  const userInfo = useSelector((state) => state.user.user); //유저 정보
+
+
+
 
   const commentInputRef = useRef(null);
   const commentInputRef2 = useRef(null);
   const parentId = useRef(null); //대댓글 id
+  const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
+
+
+  console.log(window.location.href);
+  console.log("kind  ===>", kind);
+  console.log("토큰: ", cookies.token);
+
+  //************************
+  // enum 유형으로 설정
+  //************************
+  BoardViewForm.propTypes = {
+    kind: PropTypes.oneOf(['N', 'Q', 'F', 'C', 'A', 'T']).isRequired,
+  };
+
+
+
 
   //*************************************
   //게시글 정보 가져오기
   //*************************************
   const fetchData = () => {
     fetch(`/api/board/${id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("data  ========> ", data);
-        setData(data);
-      });
-  };
+
+        .then(res => {
+              console.log("게시글: ",res)
+          return res.json()
+        })
+        .then(data => {
+          console.log("data  ========> ",data)
+          setData(data);
+        })
+  }
+
+
+  //*************************************
+  //게시글 이미지 정보 가져오기
+  //*************************************
+  const fetchImgData = () => {
+    let brdId = `${id}`;
+    fetch(`/api/brdImg/${brdId}`)
+        .then(res => {
+          if (!res.ok) {
+            throw new Error('네트워크 응답이 올바르지 않습니다.');
+          }
+          console.log("이미지: ==============> ",res);
+          return res.json()
+        })
+        .then(imgInfo => {
+          console.log("imgInfo  ===========================================> ",imgInfo)
+          setImgData(imgInfo);
+        })
+        .catch(error => {
+          console.error('이미지를 가져오는 중 오류 발생:', error);
+          // 여기에서 오류를 처리하십시오. 예: 사용자에게 메시지 표시
+        });
+  }
+
+
+
+  console.log("========================",imgData.imgSrc);
+
 
   useEffect(() => {
     fetchData();
-  }, [id]);
+    fetchImgData();
+  },[id]);
 
   const handleEditClick = () => {
     // 수정 페이지로 이동
-    navigate(`/board/edit?id=${data.id}`);
+    navigate(`/board/edit?id=${data.id}&kind=${kind}`);
   };
 
   const handleDeleteClick = () => {
@@ -160,33 +222,6 @@ function BoardViewForm() {
     }
   };
 
-  //*****************************
-  //유저정보 가져오기
-  //*****************************
-  const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
-  useEffect(() => {
-    if (cookies.token) {
-      fetch("/api/user/me", {
-        method: "GET",
-        headers: {
-          "Content-Type": jsonContent,
-          Authorization: "Bearer " + cookies.token,
-        },
-      })
-        .then((res) => {
-          if (res) {
-            console.log(res);
-            return res.json();
-          }
-        })
-        .then((userData) => {
-          console.log("userData: ======>", userData);
-          setUserData(userData.id);
-        });
-    }
-  }, [cookies.token]);
-
-  console.log("BoardWriteFrom userData: ==========>>", userData);
 
   // 댓글 수정모드를 관리할 상태
   const [isEditingComment, setIsEditingComment] = useState({});
@@ -261,6 +296,10 @@ function BoardViewForm() {
       }
     }
   };
+
+console.log("kind  ===>", kind);
+  console.log("data  ===>", data); // 게시글 유저
+  
   return (
     <div className="body">
       <section className="post-content">
@@ -354,6 +393,9 @@ function BoardViewForm() {
               {/* quill 에디터로 작성된 HTML 내용을 표시 */}
               <div dangerouslySetInnerHTML={{ __html: data.content }} />
               <p>{dayjs(data.creatAt).format("YYYY/MM/DD HH:mm:ss")}</p>
+
+
+
             </div>
             <div className="post-main-content-btns">
               <input
@@ -460,7 +502,7 @@ function BoardViewForm() {
                           className="comment-delete-btn comment-about-btn"
                           onClick={() => handleDeleteComment(commentInfo.id)}
                         >
-                          삭제
+                          삭제ㅁ
                         </button>
                       </div>
                     </div>
@@ -485,6 +527,7 @@ function BoardViewForm() {
               </form>
             </ul>
           </div>
+
         </div>
         <div className="board-paging"></div>
       </section>

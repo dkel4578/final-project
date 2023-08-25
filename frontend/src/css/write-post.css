@@ -36,9 +36,9 @@
   border: 2px solid var(--maincolor);
   border-radius: 5px;
   padding: 10px;
-  font-size: 1.3em;
   letter-spacing: 2px;
   transition: 0.4s;
+  font-size: 16px;
 }
 .write-title::placeholder{
   transition: 0.5s;

@@ -13,8 +13,6 @@ import java.util.Optional;
 
 @Repository
     public interface BanListRepository extends JpaRepository<BanList, Long> {
-
-
     BanDto findByUser(User user);
     List<BanList> findByUserAndBanStatus(User user, ReportStatus banStatus);
 
