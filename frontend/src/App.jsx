@@ -10,12 +10,10 @@ import MyPage from "./pages/MyPage";
 import ChangeInfo from "./pages/ChangeInfo";
 import BoardListPage from "./pages/BoardListPage";
 import BoardViewPage from "./pages/BoardViewPage";
+import BoardEditPage from "./pages/BoardEditPage";
+import BoardDeletePage from "./pages/BoardDeletePage";
 import PasswordChangePage from "./pages/PasswordChangePage";
 import Footer from "./layout/Footer";
-import BoardCoffee from "./pages/board-coffee";
-import BoardDrink from "./pages/board-drink";
-import BoardMeal from "./pages/board-meal";
-import BoardTrip from "./pages/board-trip";
 import BoardNotice from "./pages/board-notice";
 import BoardWritePage from "./pages/BoardWritePage";
 import ChatListRoom from "./pages/chat-list-room";
@@ -53,13 +51,13 @@ function App() {
           <Route path="/changeInfo" element={<ChangeInfo/>}/>
           <Route path="/board/view" element={<BoardViewPage/>}/>
           <Route path="/passwordChange" element={<PasswordChangePage />} />
-					<Route path="/passwordChangeComplete" element={<PassWordChangeComplete />} />
+          <Route path="/passwordChangeComplete" element={<PassWordChangeComplete />} />
+          <Route path="/board/:kind" element={<BoardListPage />}/>
+          <Route path="/board/view" element={<BoardViewPage/>}/>
+          <Route path="/board/edit" element={<BoardEditPage/>}/>
           <Route path="/board/write" element={<BoardWritePage />}/>
-          <Route path="/board/coffee" element={<BoardCoffee/>}/>
-					<Route path="/board/drink" element={<BoardDrink/>}/>
-					<Route path="/board/meal" element={<BoardMeal/>}/>
-					<Route path="/board/trip" element={<BoardTrip/>}/>
-					<Route path="/board/notice" element={<BoardNotice/>}/>
+          <Route path="/board/delete" element={<BoardDeletePage />}/>
+          <Route path="/board/notice" element={<BoardNotice/>}/>
           <Route path="/passwordChange" element={<PasswordChangePage/>}/>
           <Route path="/calendar" element={<Calendar/>}/>
           <Route path="/chat/room/list" element={<ChatRoomListPage />}/>
@@ -67,16 +65,16 @@ function App() {
           <Route path="/chat/room/list2" element={<ChatingRoomListPage />}/>
           <Route path="/admin" element={<Admin />}/>
           <Route path="/coffeeEventPage" element={<CoffeeEventPage/>}/>
-					<Route path="/criminalPage" element={<CriminalPage/>}/>
-					<Route path="/faq" element={<FAQ/>}/>
-					<Route path="/launching" element={<Launching/>}/>
-					<Route path="/postContentModify" element={<PostContentModify/>}/>
-					<Route path="/postContent" element={<PostContent/>}/>
-					<Route path="/writePost" element={<WritePost/>}/>
-					<Route path="/chatName" element={<ChatName/>}/
-					<Route path="/header2" element={<Header2/>}/>
+          <Route path="/criminalPage" element={<CriminalPage/>}/>
+          <Route path="/faq" element={<FAQ/>}/>
+          <Route path="/launching" element={<Launching/>}/>
+          <Route path="/postContentModify" element={<PostContentModify/>}/>
+          <Route path="/postContent" element={<PostContent/>}/>
+          <Route path="/writePost" element={<WritePost/>}/>
+          <Route path="/chatName" element={<ChatName/>}/>
+          <Route path="/header2" element={<Header2/>}/>
           <Route path="/chat/room/list/:roomId" element={<ChatPage/>}/>
-				</Routes>
+        </Routes>
 			<Footer />
 		</>
 	);

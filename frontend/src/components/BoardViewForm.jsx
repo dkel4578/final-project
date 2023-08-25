@@ -10,6 +10,7 @@ import "../css/post-content.css";
 import {useCookies} from "react-cookie";
 import axios from "axios";
 import PropTypes from "prop-types";
+import {useSelector} from "react-redux";
 
 
 
@@ -27,6 +28,8 @@ function BoardViewForm() {
   const [userData, setUserData] = useState(null); // 쿠키에서 유저정보 가져오기
   const [userNickname, setUserNickname] = useState(null); // 쿠키에서 유저정보 가져오기 / 닉네임
   const [userGender, setUserGender] = useState(null); // 쿠키에서 유저정보 가져오기 / 성별
+  const userInfo = useSelector((state) => state.user.user); //유저 정보
+
 
 
 
@@ -46,31 +49,31 @@ function BoardViewForm() {
     kind: PropTypes.oneOf(['N', 'Q', 'F', 'C', 'A', 'T']).isRequired,
   };
 
-  //*****************************
-  //유저정보 가져오기
-  //*****************************
-  useEffect(() => {
-    if (cookies.token) {
-      fetch('/api/user/me', {
-        method: 'GET',
-        headers: {
-          "Content-Type" : jsonContent,
-          "Authorization" : "Bearer "+ cookies.token,
-        }
-      })
-          .then(res => {
-            if (res) {
-              console.log(res);
-              return res.json();
-            }
-          })
-          .then(userData => {
-            console.log("userData: ======>",userData);
-            setUserNickname(userData.nickname)
-            setUserGender(userData.gender)
-          })
-    }
-  }, [cookies.token]);
+  // //*****************************
+  // //유저정보 가져오기
+  // //*****************************
+  // useEffect(() => {
+  //   if (cookies.token) {
+  //     fetch('/api/user/me', {
+  //       method: 'GET',
+  //       headers: {
+  //         "Content-Type" : jsonContent,
+  //         "Authorization" : "Bearer "+ cookies.token,
+  //       }
+  //     })
+  //         .then(res => {
+  //           if (res) {
+  //             console.log(res);
+  //             return res.json();
+  //           }
+  //         })
+  //         .then(userData => {
+  //           console.log("userData: ======>",userData);
+  //           setUserNickname(userData.nickname)
+  //           setUserGender(userData.gender)
+  //         })
+  //   }
+  // }, [cookies.token]);
 
 
   //*************************************
@@ -357,7 +360,7 @@ console.log("kind  ===>", kind);
                     </p>
                     {imgData && <img src={`/boardImg/${imgData.imgName}`} style={{ width: '100px' }}  />}
                 </div>
-                {userData === data.userId &&
+                {userInfo.uid === data.userId &&
                 <div className="post-main-content-btns">
                   <input type="button"
                          className="post-modify-btn"
@@ -377,7 +380,7 @@ console.log("kind  ===>", kind);
                 <div className="post-user-information">
                   <div className="post-users-infos post-user-nick-name">
                     <p>닉네임</p>
-                    <p>{userNickname}</p>
+                    <p>{userInfo.nickname}</p>
                   </div>
                   <div className="post-users-infos post-user-gender">
                     <p>성별</p>
@@ -431,7 +434,7 @@ console.log("kind  ===>", kind);
                             <div>
                               <p>{commentInfo.content}</p> {/* 댓글 */}
                               {dayjs(commentInfo.creatAt).format('YYYY/MM/DD HH:mm:ss')}
-                              {userData === commentInfo.userId &&
+                              {userInfo.uid === commentInfo.userId &&
                               <div className="comment-about-btns">
                                   <button
                                       className="comment-modify-btn comment-about-btn"
@@ -452,7 +455,7 @@ console.log("kind  ===>", kind);
                         className="write-comment-text"
                         ref={commentInputRef}
                     ></textarea>
-                    {userData &&
+                    {userInfo.uid &&
                     <input type="submit" value="댓글작성" className= "board-view-comment-write"/>
                     }
                   </li>

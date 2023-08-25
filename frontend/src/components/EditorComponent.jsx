@@ -86,7 +86,7 @@ class EditorComponent extends React.Component {
             <div style={{ height: '350px' }}>
                 <ReactQuill
                     ref={this.quillRef}
-                    style={{ height: '300px' }}
+                    style={{ height: '300px', width: '320px' }}
                     theme="snow"
                     modules={this.modules}
                     formats={this.formats}
