@@ -18,7 +18,7 @@
   background-color: rgba(0, 0, 0, 0.651);
   opacity: 0;
   visibility: hidden;
-  padding: 5px;
+  padding:7px;
 }
 
 .find-password-modal.active{
@@ -36,6 +36,7 @@
   top: 50%;
   transform: translateY(-50%);
   border: none;
+  padding: 15px;
 }
 .find-password-modal fieldset p{
   font-size: 1.25em;

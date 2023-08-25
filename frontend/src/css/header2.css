@@ -1,0 +1,28 @@
+.header2{
+  width: 1440px;
+  height: 80px;
+  background: url(../images/header2-background.png);
+}
+.header2-container{
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+.header2-container .move-to-main {
+  display: block;
+  margin-top: 5px;
+} 
+.header2-container .move-to-main img {} 
+.logout-container{
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  right: 20px;
+  top: 10px;
+}
+.logout-container .fa, .logout-container a{
+  color: white;  
+  font-size: 1.5em;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.568);
+}

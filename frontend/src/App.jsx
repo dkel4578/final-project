@@ -32,6 +32,8 @@ import Calendar from './pages/Calendar';
 import ChatRoomListPage from './pages/ChatRoomListPage';
 import ChatingRoomListPage from './pages/ChatingRoomListPage';
 import Admin from "./components/AdminPage"; 
+import ChatName from "./pages/chatting-room-name";
+import Header2 from "./layout/Header2";
 
 function App() {
   return (
@@ -69,6 +71,8 @@ function App() {
 					<Route path="/postContentModify" element={<PostContentModify/>}/>
 					<Route path="/postContent" element={<PostContent/>}/>
 					<Route path="/writePost" element={<WritePost/>}/>
+					<Route path="/chatName" element={<ChatName/>}/>
+					<Route path="/header2" element={<Header2/>}/>
 				</Routes>
 			<Footer />
 		</>
