@@ -131,7 +131,8 @@ function SignupPage() {
 
   const setupPasswordValidation = () => {
     const passwordInput = document.querySelector(
-      ".input-pwd input[type=password]"
+      ".input-pwd input"
+      // [type=password]
     );
 
     passwordInput.addEventListener("input", function () {
@@ -572,7 +573,7 @@ function SignupPage() {
                   placeholder="비밀번호"
                   required
                   ref={passwordRef}
-                  onChange={(e)=> setPassword(e.target.value)}
+                  onChange={(e)=> {setPassword(e.target.value)}}
                 />
                 <i className="bi bi-eye-slash toggle-eye"></i>
               </div>
@@ -601,9 +602,6 @@ function SignupPage() {
               </div>
               <span
                 className="input-pwd-check-text"
-                style={{
-                  color: passwordCheck === password ? "red" : "#2ECC71",
-                }}
               >
                 {passwordCheckText}
               </span>

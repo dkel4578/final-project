@@ -204,11 +204,11 @@ $(function() {
     var passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     
     if (!password) {
-      $(".input-pw-check-text").css("color", "red").text("공란입니다!");
+      $(".input-pwd-check-text").css("color", "red").text("공란입니다!");
     } else if (password === confirmPassword) {
-      $(".input-pw-check-text").css("color", "#2acf7d").text("비밀번호가 일치합니다!");
+      $(".input-pwd-check-text").css("color", "#2acf7d").text("비밀번호가 일치합니다!");
     } else {
-      $(".input-pw-check-text").css("color", "red").text("비밀번호가 일치하지 않습니다!");
+      $(".input-pwd-check-text").css("color", "red").text("비밀번호가 일치하지 않습니다!");
     }
 
     if (passwordRegex.test(password)) {

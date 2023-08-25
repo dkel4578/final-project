@@ -53,6 +53,7 @@
     transition: 0.5s;
 }
 .email-find-id-cf-send .bi{
+    left: 18px;
     color: white;
 }
 .input-find-id-cf-email input[type=email],.input-find-id-cf-number input[type=text],.email-find-id-cf-send input[type=button]{
@@ -63,7 +64,13 @@
     border: 1px solid var(--maincolor);
     font-size: 1.3em;
 }
+.email-find-id-cf-send {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .email-find-id-cf-send input[type=button]{
+    width: 93%;
     padding-left: 0;
     cursor: pointer;
     display: block;

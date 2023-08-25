@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../css/index.css";
 import "../css/total.css";
 import "../css/variables.css";
@@ -7,6 +7,8 @@ import "../css/slides.scss";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "font-awesome/css/font-awesome.min.css";
 import "../script/custom.js";
+
+const SLIDE_INTERVAL = 5000;
 
 function HomePage() {
   const slides = [
@@ -24,12 +26,18 @@ function HomePage() {
     },
   ];
 
+  const navigate = useNavigate();
+  
+  const handlebannerClick = (slide)=>{
+    console.log("handle: "+JSON.stringify(slide));
+    navigate(slide.link);
+  }
+
   const [currentSlide, setCurrentSlide] = useState(0);
   useEffect(() => {
-    //슬라이드 자동 재생을 위한 타이머 설정
     const timer = setInterval(() => {
-      setCurrentSlide((prevSlide) => (prevSlide + 1) % slides.length);
-    }, 5000);
+      setCurrentSlide(prevSlide => (prevSlide + 1) % slides.length);
+    }, SLIDE_INTERVAL);
 
     return () => {
       clearInterval(timer);
@@ -44,35 +52,37 @@ function HomePage() {
   return (
     <div className="body">
       <section className="slide-area">
-        {slides.map((slide, index) => (
-          <Link to={slide.link} key={index}>
+      {slides.map((slide, index) => (
+          // <Link to={slide.link} key={index}>
             <div
               className={`slide ${index === currentSlide ? "active" : ""}`}
               style={{ backgroundImage: `url(${slide.image})` }}
+              onClick={()=>{handlebannerClick(slides[currentSlide])}}
+              key={index}
             ></div>
-          </Link>
+          //</Link> 
         ))}
       </section>
       <section className="category-area">
         <div className="category-inner">
           <div className="category-items">
             <div className="category-item">
-              <a href="/board/coffee">
+              <a href="/board/C">
                 <img src="./images/cofee-together.jpg" alt="커피한잔 할래요" />
               </a>
             </div>
             <div className="category-item">
-              <a href="/board/trip">
+              <a href="/board/T">
                 <img src="./images/trip-together.jpg" alt="여행같이 할래요" />
               </a>
             </div>
             <div className="category-item">
-              <Link to={"/board/meal"}>
+              <Link to={"/board/F"}>
                 <img src="./images/eat-together.jpg" alt="식사같이 할래요" />
               </Link>
             </div>
             <div className="category-item">
-              <Link to={"/board/drink"}>
+              <Link to={"/board/A"}>
                 <img src="./images/drink-together.jpg" alt="술한잔 할래요" />
               </Link>
             </div>
@@ -83,6 +93,7 @@ function HomePage() {
         <a href="/board/notice" className="notice-link">
           공지사항
         </a>
+
         <a href="/faq" className="faq-link">
           FAQ
         </a>
