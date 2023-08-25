@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from 'react';
 
 function MapComponent() {
-    const [keyword, setKeyword] = useState(''); // 검색어 상태
-    const [map, setMap] = useState(null); // Kakao Map 객체 상태
-    const [places, setPlaces] = useState([]); // 장소 검색 결과 상태
+    // 상태 변수들
+    const [keyword, setKeyword] = useState('');
+    const [map, setMap] = useState(null);
+    const [places, setPlaces] = useState([]);
+    const [selectedMarkerIndex, setSelectedMarkerIndex] = useState(null);
+    const [markers, setMarkers] = useState([]);
+    const [infowindows, setInfowindows] = useState([]);
 
+    // Kakao 지도 초기화
     useEffect(() => {
         const script = document.createElement('script');
         script.async = true;
@@ -20,7 +25,7 @@ function MapComponent() {
                 const mapInstance = new window.kakao.maps.Map(document.getElementById('map'), options);
                 setMap(mapInstance);
 
-                // 이벤트 핸들러 등록
+                // 지도 클릭 이벤트 핸들러 등록
                 window.kakao.maps.event.addListener(mapInstance, 'click', function (mouseEvent) {
                     const latlng = mouseEvent.latLng;
                     console.log("Clicked at", latlng.getLat(), latlng.getLng());
@@ -36,12 +41,12 @@ function MapComponent() {
         };
     }, []);
 
-    // 검색어 변경 시 처리
+    // 검색어 변경 핸들러
     const handleKeywordChange = (e) => {
         setKeyword(e.target.value);
     };
 
-    // 검색 버튼 클릭 시 처리
+    // 검색 버튼 클릭 핸들러
     const handleSearch = () => {
         if (map && keyword) {
             // 검색 API 호출 및 결과 처리
@@ -63,6 +68,18 @@ function MapComponent() {
         if (map) {
             const bounds = new window.kakao.maps.LatLngBounds();
 
+            // 이전 마커와 인포윈도우 제거
+            markers.forEach((marker) => {
+                marker.setMap(null);
+            });
+            infowindows.forEach((infowindow) => {
+                infowindow.close();
+            });
+
+            // 새로운 마커와 인포윈도우 생성 및 배열에 추가
+            const newMarkers = [];
+            const newInfowindows = [];
+
             places.forEach((place, index) => {
                 // 마커 생성
                 const marker = new window.kakao.maps.Marker({
@@ -81,16 +98,40 @@ function MapComponent() {
                 });
 
                 bounds.extend(new window.kakao.maps.LatLng(place.y, place.x));
+
+                newMarkers.push(marker);
+                newInfowindows.push(infowindow);
             });
+
+            // 새로운 마커와 인포윈도우 배열로 업데이트
+            setMarkers(newMarkers);
+            setInfowindows(newInfowindows);
 
             // 검색된 장소 위치를 기준으로 지도 범위 재설정
             map.setBounds(bounds);
         }
     };
 
+    // 리스트 아이템 클릭 핸들러
+    const handleListItemClick = (index) => {
+        // 선택한 마커만 표시하고 나머지는 숨김
+        markers.forEach((marker, i) => {
+            if (i === index) {
+                marker.setMap(map);
+                infowindows[i].open(map, marker);
+            } else {
+                marker.setMap(null);
+                infowindows[i].close();
+            }
+        });
+
+        // 선택한 마커 인덱스 업데이트
+        setSelectedMarkerIndex(index);
+    };
+
     return (
         <div>
-            <div style={{ width: '50px', height: '20px' }}>
+            <div style={{ width: '300px', height: '30px' }}>
                 <input
                     type="text"
                     placeholder="장소를 검색하세요"
@@ -104,7 +145,9 @@ function MapComponent() {
                 <h3>검색 결과</h3>
                 <ul>
                     {places.map((place, index) => (
-                        <li key={index}>{`${index + 1}. ${place.place_name}`}</li>
+                        <li key={index} onClick={() => handleListItemClick(index)}>
+                            {`${index + 1}. ${place.place_name}`}
+                        </li>
                     ))}
                 </ul>
             </div>
