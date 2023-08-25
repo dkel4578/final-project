@@ -9,6 +9,7 @@ import "../css/variables.css";
 import "../css/post-content.css";
 import {useCookies} from "react-cookie";
 import axios from "axios";
+import PropTypes from "prop-types";
 
 
 
@@ -18,16 +19,58 @@ function BoardViewForm() {
   const searchParams = new URLSearchParams(location.search);
   const id = searchParams.get('id'); // Extract id from URL parameter
   const [data, setData] = useState(''); // 게시글
+  const [imgData, setImgData] = useState(''); // 게시글 이미지
   let [commentList, setCommentList] = useState([]); //댓글리스트
-  const { kind } = useParams(); // kind 값을 추출
+  //const { kind } = searchParams.get('kind'); // kind 값을 추출
+  const kind: string = searchParams.get('kind');
   const [cookies] = useCookies(['token']);
   const [userData, setUserData] = useState(null); // 쿠키에서 유저정보 가져오기
+  const [userNickname, setUserNickname] = useState(null); // 쿠키에서 유저정보 가져오기 / 닉네임
+  const [userGender, setUserGender] = useState(null); // 쿠키에서 유저정보 가져오기 / 성별
+
+
 
   const commentInputRef = useRef(null);
   const commentInputRef2 = useRef(null);
   const parentId = useRef(null); //대댓글 id
+  const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
 
+  console.log(window.location.href);
+  console.log("kind  ===>", kind);
+  console.log("토큰: ", cookies.token);
 
+  //************************
+  // enum 유형으로 설정
+  //************************
+  BoardViewForm.propTypes = {
+    kind: PropTypes.oneOf(['N', 'Q', 'F', 'C', 'A', 'T']).isRequired,
+  };
+
+  //*****************************
+  //유저정보 가져오기
+  //*****************************
+  useEffect(() => {
+    if (cookies.token) {
+      fetch('/api/user/me', {
+        method: 'GET',
+        headers: {
+          "Content-Type" : jsonContent,
+          "Authorization" : "Bearer "+ cookies.token,
+        }
+      })
+          .then(res => {
+            if (res) {
+              console.log(res);
+              return res.json();
+            }
+          })
+          .then(userData => {
+            console.log("userData: ======>",userData);
+            setUserNickname(userData.nickname)
+            setUserGender(userData.gender)
+          })
+    }
+  }, [cookies.token]);
 
 
   //*************************************
@@ -35,20 +78,52 @@ function BoardViewForm() {
   //*************************************
   const fetchData = () => {
     fetch(`/api/board/${id}`)
-        .then(res => res.json())
+        .then(res => {
+              console.log("게시글: ",res)
+          return res.json()
+        })
         .then(data => {
           console.log("data  ========> ",data)
           setData(data);
         })
   }
 
+  //*************************************
+  //게시글 이미지 정보 가져오기
+  //*************************************
+  const fetchImgData = () => {
+    let brdId = `${id}`;
+    fetch(`/api/brdImg/${brdId}`)
+        .then(res => {
+          if (!res.ok) {
+            throw new Error('네트워크 응답이 올바르지 않습니다.');
+          }
+          console.log("이미지: ==============> ",res);
+          return res.json()
+        })
+        .then(imgInfo => {
+          console.log("imgInfo  ===========================================> ",imgInfo)
+          setImgData(imgInfo);
+        })
+        .catch(error => {
+          console.error('이미지를 가져오는 중 오류 발생:', error);
+          // 여기에서 오류를 처리하십시오. 예: 사용자에게 메시지 표시
+        });
+  }
+
+
+
+  console.log("========================",imgData.imgSrc);
+
+
   useEffect(() => {
     fetchData();
+    fetchImgData();
   },[id]);
 
   const handleEditClick = () => {
     // 수정 페이지로 이동
-    navigate(`/board/edit?id=${data.id}`);
+    navigate(`/board/edit?id=${data.id}&kind=${kind}`);
   };
 
   const handleDeleteClick = () => {
@@ -166,33 +241,7 @@ function BoardViewForm() {
 
   }
 
-  //*****************************
-  //유저정보 가져오기
-  //*****************************
-  const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
-  useEffect(() => {
-    if (cookies.token) {
-      fetch('/api/user/me', {
-        method: 'GET',
-        headers: {
-          "Content-Type" : jsonContent,
-          "Authorization" : "Bearer "+ cookies.token,
-        }
-      })
-          .then(res => {
-            if (res) {
-              console.log(res);
-              return res.json();
-            }
-          })
-          .then(userData => {
-            console.log("userData: ======>",userData);
-            setUserData(userData.id)
-          })
-    }
-  }, [cookies.token]);
 
-  console.log("BoardWriteFrom userData: ==========>>",userData)
 
 
 // 댓글 수정모드를 관리할 상태
@@ -268,6 +317,9 @@ function BoardViewForm() {
     }
   };
 
+console.log("kind  ===>", kind);
+  console.log("userData  ===>", userData); // 댓글 유저
+  console.log("data  ===>", data); // 게시글 유저
 
 
 
@@ -278,16 +330,16 @@ function BoardViewForm() {
 
           <section className="coffee-board">
             <div className="board-kind">
-              <Link to="/board/C" className={kind === 'C' ? 'active' : ''}>
+              <Link to={`/board/${kind}`} className={kind === 'C' ? 'active' : ''}>
                 커피한잔할래요
               </Link>
-              <Link to="/board/T" className={kind === 'T' ? 'active' : ''}>
+              <Link to={`/board/${kind}`} className={kind === 'T' ? 'active' : ''}>
                 같이여행갈래요
               </Link>
-              <Link to="/board/F" className={kind === 'F' ? 'active' : ''}>
+              <Link to={`/board/${kind}`} className={kind === 'F' ? 'active' : ''}>
                 같이식사할래요
               </Link>
-              <Link to="/board/A" className={kind === 'A' ? 'active' : ''}>
+              <Link to={`/board/${kind}`} className={kind === 'A' ? 'active' : ''}>
                 술한잔할래요
               </Link>
             </div>
@@ -299,10 +351,13 @@ function BoardViewForm() {
                 <div className="post-main-content">
                   {/* quill 에디터로 작성된 HTML 내용을 표시 */}
                   <div dangerouslySetInnerHTML={{ __html: data.content }} />
-                  <p>
-                    {dayjs(data.creatAt).format('YYYY/MM/DD HH:mm:ss')}
-                  </p>
+                  <br/><br/>
+                    <p>
+                      {dayjs(data.creatAt).format('YYYY/MM/DD HH:mm:ss')}
+                    </p>
+                    {imgData && <img src={`/boardImg/${imgData.imgName}`} style={{ width: '100px' }}  />}
                 </div>
+                {userData === data.userId &&
                 <div className="post-main-content-btns">
                   <input type="button"
                          className="post-modify-btn"
@@ -313,6 +368,7 @@ function BoardViewForm() {
                          onClick={handleDeleteClick}
                          value="삭제"></input>
                 </div>
+                }
               </div>
               <div className="post-user-info">
                 <div className="post-user-img">
@@ -321,11 +377,11 @@ function BoardViewForm() {
                 <div className="post-user-information">
                   <div className="post-users-infos post-user-nick-name">
                     <p>닉네임</p>
-                    <p>홍찰찰</p>
+                    <p>{userNickname}</p>
                   </div>
                   <div className="post-users-infos post-user-gender">
                     <p>성별</p>
-                    <p>남성</p>
+                    <p>{userGender === "F"?"여성":"남성"}</p>
                   </div>
                   <div className="post-users-infos post-user-manner">
                     <p>매너지수</p>
@@ -367,82 +423,28 @@ function BoardViewForm() {
                                   })
                               }
                           />
-
                               <button className="board-view-recomment-about board-view-recomment-save" onClick={(e) => handleEditCommentSubmit(e, commentInfo.id)}>저장</button>
                               <button className="board-view-recomment-about board-view-recomment-cancel" onClick={() => handleToggleEditComment(commentInfo.id)}>취소</button>
                             </div>
                         ) : (
                             // 수정 폼이 아닌 경우
                             <div>
-                              <p>{commentInfo.content}</p>
-                              <p>{commentInfo.id}</p>
+                              <p>{commentInfo.content}</p> {/* 댓글 */}
+                              {dayjs(commentInfo.creatAt).format('YYYY/MM/DD HH:mm:ss')}
+                              {userData === commentInfo.userId &&
                               <div className="comment-about-btns">
-                                <button
-                                    className="comment-modify-btn comment-about-btn"
-                                    onClick={() => handleToggleEditComment(commentInfo.id)}>수정
-                                </button>
-                                <button className="comment-delete-btn comment-about-btn" onClick={() => handleDeleteComment(commentInfo.id)}>삭제</button></div>
-
+                                  <button
+                                      className="comment-modify-btn comment-about-btn"
+                                      onClick={() => handleToggleEditComment(commentInfo.id)}>수정
+                                  </button>
+                                  <button className="comment-delete-btn comment-about-btn" onClick={() => handleDeleteComment(commentInfo.id)}>삭제</button>
+                              </div>
+                              }
                             </div>
                         )}
                       </li>
                   ))}
-                  <li className="recomment-place-content">
-                    <div className="recomment-place-content-user-info">
-                      <div className="user-nick-name">
-                        <p>홍독배</p>
-                      </div>
-                      <div className="user-gender">
-                        <p>남성</p>
-                      </div>
-                      <div className="user-manner">
-                        <p>매너점수 : 3.8</p>
-                      </div>
-                    </div>
-                    <div className="btnsAndtext">
-                      <div className="recomment-place-content-main-text">
-                        <p>
-                          {/*{{댓글}}*/}
-                        </p>
-                      </div>
-                      <div className="recomment-place-content-timeAndbtns">
-                        <div className="recomment-time">
-                          <p>
-                            {/*{{데이터로 시간 끌어오기}}*/}
-                          </p>
-                        </div>
-                        <div className="modify-delete-btns">
-                          <input
-                              type="button"
-                              className="modify-btn"
-                              value="수정" />
-                            <input type="button" className="delete-btn" value="삭제" />
-                        </div>
-                        {/*댓글 수정모드 시작*/}
-                          <form onSubmit={submitHandler2}>
-                            <li className="write-comment">
-                      <textarea
-                          name="content" id='content' required
-                          className="write-comment-text"
-                          ref={commentInputRef}
-                      ></textarea>
-                              <input type="submit" value="답변하기" />
-                            </li>
-                          </form>
-                        {/*댓글 수정모드 끝*/}
 
-                        <div className="reply-btn">
-                          <svg xmlns="http://www.w3.org/2000/svg" className="siren2 icon icon-tabler icon-tabler-urgent" width="30" height="30" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#dc143c" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                            <path d="M8 16v-4a4 4 0 0 1 8 0v4" />
-                            <path d="M3 12h1m8 -9v1m8 8h1m-15.4 -6.4l.7 .7m12.1 -.7l-.7 .7" />
-                            <path d="M6 16m0 1a1 1 0 0 1 1 -1h10a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1z" />
-                          </svg>
-                          <input type="button" value="답글" />
-                        </div>
-                      </div>
-                    </div>
-                  </li>
                   <form onSubmit={submitHandler}>
                   <li className="write-comment">
                     <textarea
@@ -450,7 +452,9 @@ function BoardViewForm() {
                         className="write-comment-text"
                         ref={commentInputRef}
                     ></textarea>
+                    {userData &&
                     <input type="submit" value="댓글작성" className= "board-view-comment-write"/>
+                    }
                   </li>
                   </form>
 

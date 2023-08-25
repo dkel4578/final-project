@@ -87,11 +87,11 @@
     align-items: flex-end;
     flex: 1;
 }
-.write-button a .fa{
+.write-button .fa{
     font-size: 2.5em;
     transition: 0.4s;
 }
-.write-button a:hover .fa{
+.write-button .fa:hover{
     color: var(--maincolor);
 }
 /* borad-main */

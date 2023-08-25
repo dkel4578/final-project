@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link, useParams } from 'react-router-dom'; // useParams 추가
 import { useCookies } from 'react-cookie';
@@ -18,9 +18,10 @@ function BoardWriteForm() { // Receive the 'kind' prop
     // const contentInputRef = useRef(null);
     const kindInputRef = useRef(null);
     const descInputRef = useRef(null);
-
     const [cookies] = useCookies(['token']);
     const [userData, setUserData] = useState(null); // 쿠키에서 유저정보 가져오기
+    const [imageSrc, setImageSrc] = useState(""); //이미지 정보
+    const fileInputRef = useRef(null);
 
 
     //**********************
@@ -40,6 +41,7 @@ function BoardWriteForm() { // Receive the 'kind' prop
     };
 
 
+    //게시글 입력 및 파일 업로드
     const submitHandler = async (event) => {
         event.preventDefault();
 
@@ -64,29 +66,89 @@ function BoardWriteForm() { // Receive the 'kind' prop
 
 
         const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
+        let brdId = null;
 
-        fetch('/api/board/insert', {
-            method: 'POST',
-            headers: {
-                "Content-Type": jsonContent,
-            },
-            body: JSON.stringify({
-                kind: enteredKind,
-                title: enteredTitle,
-                content: enteredDesc,
-                userId: userData,
+        try {
+            const response = await fetch('/api/board/insert', {
+                method: 'POST',
+                headers: {
+                    "Content-Type": jsonContent,
+                },
+                body: JSON.stringify({
+                    kind: enteredKind,
+                    title: enteredTitle,
+                    content: enteredDesc,
+                    userId: userData,
+                }),
+            });
 
-            })
-        }).then(data => {
-            console.log(data);
-            console.log('status: ', data.status);
-            if (data && data.status === 201) {
-                alert('게시글이 입력되었습니다..');
-                navigate('/');
+            if (response.ok) {
+                const data = await response.json();
+                brdId = data; // 서버에서 게시글 ID를 반환
+                console.log("게시글입력후 id: ",data);
+
+                // 파일 업로드 처리 함수 호출
+                if(imageSrc){
+                    const uploadResponse = await submitHandler2();
+                    if (uploadResponse.status === 200) {
+                        alert('게시글이 입력되었습니다.');
+                        navigate('/');
+                    } else {
+                        alert('게시글 등록이 실패되었습니다. 2');
+                    }
+                }else{
+                    if(data){
+                        alert('게시글이 입력되었습니다.');
+                        navigate('/');
+                    }else{
+                        alert('게시글 등록이 실패되었습니다. 3');
+                    }
+                }
+
+
+
+
             } else {
                 alert('게시글 등록이 실패되었습니다.');
+                return;
             }
-        });
+        }catch (error){
+            console.error("Error creating board:", error);
+            return;
+        }
+
+
+        // 파일 업로드 처리
+        async function submitHandler2() {
+        // const submitHandler2 = async (event) => {
+            const file = fileInputRef.current.files[0];
+            if (file) {
+                const formData = new FormData();
+                const userId = userData;
+
+                console.log("userId / brdId : ",userId, brdId);
+
+                formData.append("file", file);
+                formData.append("userId", userId);
+                formData.append("brdId", brdId);
+
+                try {
+                    const uploadResponse = await fetch("/api/board/boardImg", {
+                        method: "POST",
+                        body: formData,
+                    });
+
+                    if (!uploadResponse.ok) {
+                        throw new Error("File upload failed");
+                    }
+
+                    return uploadResponse; // uploadResponse를 리턴
+
+                } catch (error) {
+                    console.error("Error updating board info:", error);
+                }
+            }
+        }
     }
 
 
@@ -118,6 +180,34 @@ function BoardWriteForm() { // Receive the 'kind' prop
     }, [cookies.token]);
 
     console.log("BoardWriteFrom userData: ==========>>",userData)
+
+
+
+
+
+    //게시글 사진 업로드
+    const onUpload = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+                setImageSrc(reader.result);
+            };
+
+            const formData = new FormData();
+            const userId = userData;
+
+            formData.append("file", file);
+            formData.append("userId", userId);
+        }
+    };
+
+
+
+
+
+
 
     return (
         <div className="body">
@@ -175,13 +265,28 @@ function BoardWriteForm() { // Receive the 'kind' prop
                         </div>
                         <div className="write-post-content-btns">
                             <input type="button" className="map-attach-btn" value="지도 첨부"></input>
-                            <input type="button" className="image-attach-btn" value="이미지 첨부"></input>
+
+                        </div>
+                        {/*파일 업로드*/}
+                        <div className="user-profile">
+                            {imageSrc && <img src={imageSrc} alt="Uploaded" />}
+                        </div>
+                        <div className="user-profile">
+                            <input
+                                type="file"
+                                className="image-attach-btn"
+                                accept="image/*"
+                                onChange={onUpload}
+                                ref={fileInputRef}
+                                ></input>
                         </div>
                         <div>
                             {/*<MapComponent />*/}
                         </div>
                         <div className="write-post-btn-place">
+                            {userData &&
                             <input type="submit" className="write-post-btn" value="등록하기" ></input>
+                            }
                         </div>
                     </div>
                 </form>
