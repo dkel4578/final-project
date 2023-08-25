@@ -29,12 +29,12 @@ public class ChatMessage extends BaseEntity{
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     @JsonBackReference
-    private User writer;
+    private User user;
 
     @Builder
-    public ChatMessage(String message, ChatRoom chatRoom, User writer) {
+    public ChatMessage(String message, ChatRoom chatRoom, User user) {
         this.message = message;
         this.chatRoom = chatRoom;
-        this.writer = writer;
+        this.user = user;
     }
 }

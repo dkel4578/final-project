@@ -40,13 +40,10 @@ function LoginPage() {
           password: password
         })
       });
-  
-      if (response.status !== 200) {
-        throw new Error("로그인 실패");
-      }
-  
+      // if (response.status !== 200) {
+      //   throw new Error("로그인 실패");
+      // }
       const data = await response.json();
-  
       if (data) {
         removeCookie('token');
         const expireTimeDate = new Date(Number(data.accessTokenExpireIn));
@@ -61,7 +58,7 @@ function LoginPage() {
       Swal.fire({
         icon: "error",
         title: "로그인",
-        text: "사용자 정보가 올바르지 않습니다.",
+        text: error.message,
         width: 360,
       });
     }

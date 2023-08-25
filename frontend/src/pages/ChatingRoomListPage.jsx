@@ -126,7 +126,6 @@ function ChatingRoomListPage() {
         return res.json();
       })
       .then(data => {
-        console.log("ImgSrcData >>>>>>>>>>>>>>>>>>", data);
         if (data.length > 0) {
           const updatedImgSrcList = [...imgSrcList]; // Create a copy of the existing imgSrcList
           data.forEach(item => {
@@ -139,7 +138,6 @@ function ChatingRoomListPage() {
             }
           });
           setImgSrcList(updatedImgSrcList); // Update the state with the new imgSrcList
-          console.log("imgSrcList", updatedImgSrcList);
         }
       })
       .catch(error => {

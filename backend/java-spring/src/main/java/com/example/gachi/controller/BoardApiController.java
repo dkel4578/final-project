@@ -125,6 +125,11 @@ public class BoardApiController {
         System.out.println("===================="+id);
         boardService.delete(id); //글 삭제
     }
+    @PutMapping("/board/recovery/{id}")
+    public void recovery(@PathVariable Long id){
+        System.out.println("===================="+id);
+        boardService.recovery(id); //글 삭제
+    }
 
     //댓글 입력
     @PostMapping("/comment/insert")
