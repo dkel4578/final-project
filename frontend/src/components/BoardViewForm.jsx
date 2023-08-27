@@ -33,6 +33,12 @@ function BoardViewForm() {
   const [userNickname, setUserNickname] = useState(null); // 쿠키에서 유저정보 가져오기 / 닉네임
   const [userGender, setUserGender] = useState(null); // 쿠키에서 유저정보 가져오기 / 성별
   const userInfo = useSelector((state) => state.user.user); //유저 정보
+  const [reportType,setReportType] = useState("D");
+  const [reportedId,setReportedId] = useState(null);
+  const [reporterId,setReporterId] = useState(null);
+  const [contentId,setContentId] = useState(null);
+  const [category,setCategory] = useState(null);
+
 
 
 
@@ -299,6 +305,48 @@ function BoardViewForm() {
 
 console.log("kind  ===>", kind);
   console.log("data  ===>", data); // 게시글 유저
+
+
+
+  //****************************
+  //신고하기
+  //****************************
+
+  // data.userId => reportedId
+  // reporterId => JSON.stringify(userInfo.uid)
+  // reportType
+  // category B로 전송
+  // contentId data.id
+
+  const handleReportButtonClick = async (event) => {
+    event.preventDefault();
+    setReportedId(data.userId);
+    setReporterId(JSON.stringify(userInfo.uid));
+    setContentId(data.id);
+      const response = await axios.post("/api/report/insert?category="+category+"&contentId="+contentId+"&reportedId="+reportedId+"&reporterId="+reporterId+"&reportType="+reportType,{
+      contentId : data.id,
+      category : "B",
+      reportedId : reportedId,
+      reporterId : reporterId,
+      reportType : reportType
+    })
+    .then((response)=>{
+      console.log(response);
+      console.log(response.data);
+      return response;
+    })
+    .catch((error)=>{
+      console.log(error);				//오류발생시 실행
+    });
+    if (response && response.status === 201) {
+      alert("신고가 완료되었습니다.");
+    } else {
+      alert("신고 등록이 실패되었습니다.");
+    }
+    // 여기에 모달끄는거 입력할것!!!
+  }
+
+
   
   return (
     <div className="body">
@@ -316,6 +364,8 @@ console.log("kind  ===>", kind);
                   type="radio"
                   id="doubling-the-post"
                   name="report"
+                  value="D"
+                  onChange={(e)=>{setReportType(e.target.value)}}
                   className="user-report-modal-content-radio"
                 />
                 <span>게시글 / 댓글 도배</span>
@@ -328,6 +378,8 @@ console.log("kind  ===>", kind);
                   type="radio"
                   id="obscene-posts"
                   name="report"
+                  value="P"
+                  onChange={(e)=>{setReportType(e.target.value)}}
                   className="user-report-modal-content-radio"
                 ></input>
                 <span>음란성 게시글 / 댓글 작성</span>
@@ -340,6 +392,8 @@ console.log("kind  ===>", kind);
                   type="radio"
                   id="abusive-comments"
                   name="report"
+                  value="F"
+                  onChange={(e)=>{setReportType(e.target.value)}}
                   className="user-report-modal-content-radio"
                 ></input>
                 <span>욕설 / 혐오 발언 게시글 / 댓글 작성</span>
@@ -352,6 +406,8 @@ console.log("kind  ===>", kind);
                   type="radio"
                   id="advertising-post"
                   name="report"
+                  value="A"
+                  onChange={(e)=>{setReportType(e.target.value)}}
                   className="user-report-modal-content-radio"
                 ></input>
                 <span>광고성 게시글 / 댓글 작성</span>
@@ -361,13 +417,15 @@ console.log("kind  ===>", kind);
                   type="radio"
                   id="false-review"
                   name="report"
+                  value="R"
+                  onChange={(e)=>{setReportType(e.target.value)}}
                   className="user-report-modal-content-radio"
                 ></input>
                 <span>허위 리뷰</span>
               </label>
             </fieldset>
             <div className="user-report-modal-btns">
-              <input type="button" value="신고" />
+              <input type="button" value="신고" onClick={handleReportButtonClick}/>
               <input type="button" value="취소" id="user-report-modal-cancel" />
             </div>
           </div>
