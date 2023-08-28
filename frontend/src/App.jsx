@@ -17,7 +17,7 @@ import PasswordChangePage from "./pages/PasswordChangePage";
 import Footer from "./layout/Footer";
 import BoardNotice from "./pages/board-notice";
 import BoardWritePage from "./pages/BoardWritePage";
-import ChatListRoom from "./pages/chat-list-room";
+// import ChatListRoom from "./pages/chat-list-room";
 import CoffeeEventPage from "./pages/coffee-event-page";
 import CriminalPage from "./pages/criminal-page";
 import FAQ from "./pages/faq";
@@ -29,20 +29,33 @@ import WritePost from "./pages/write-post";
 import Calendar from './pages/Calendar';
 import ChatRoomListPage from './pages/ChatRoomListPage'; //선생님거
 import ChatingRoomListPage from './pages/ChatingRoomListPage'; //내가 만든거
-import Admin from "./components/AdminPage"; 
+// import Admin from "./components/AdminPage"; 
 import ChatName from "./pages/chatting-room-name";
 import Header2 from "./layout/Header2";
 import TouristAIP from './pages/TouristAIP';
 import ChatPage from "./pages/ChatPage";
 import AdminPage from './components/AdminPage';
 import AdminAuth from './components/AdminAuth';
+import {useLocation} from "react-router-dom";
 
 
 function App(props) {
+
   const userInfo = useSelector((state) => state.user.user);
+  const location = useLocation();
+  const shouldHideFooter = location.pathname === '/admin2';
+  const renderHeader = () => {
+    // 'admin' 페이지에만 'Header2'를 표시
+    if (location.pathname === '/admin2') {
+      return <Header2 />;
+    }
+    // 그 외 페이지에는 기본 'Header'를 표시
+    return <Header userInfo={userInfo} />;
+  };
   return (
     <>
-      <Header userInfo={userInfo} />
+
+       {renderHeader()}
     			<Helmet>
         <title>같이갈래?</title>
       </Helmet>
@@ -60,6 +73,10 @@ function App(props) {
           <Route path="/board/view" element={<BoardViewPage/>}/>
           <Route path="/board/edit" element={<BoardEditPage/>}/>
           <Route path="/board/write" element={<BoardWritePage />}/>
+          <Route path="/board/:kind" element={<BoardListPage />}/>
+          <Route path="/board/view" element={<BoardViewPage/>}/>
+          <Route path="/board/edit" element={<BoardEditPage/>}/>
+          <Route path="/board/write" element={<BoardWritePage />}/>
           <Route path="/board/delete" element={<BoardDeletePage />}/>
 					<Route path="/board/notice" element={<BoardNotice/>}/>
           <Route path="/passwordChange" element={<PasswordChangePage/>}/>
@@ -68,6 +85,7 @@ function App(props) {
           <Route path="/TouristAIP" element={<TouristAIP />}/>
           <Route path="/chat/room/list2" element={<ChatingRoomListPage />}/>          
           <Route path="/admin" element={<AdminAuth Component={AdminPage} userInfo={userInfo} />} />
+          <Route path="/admin2" element={< AdminPage/>} />
           <Route path="/coffeeEventPage" element={<CoffeeEventPage/>}/>
 					<Route path="/criminalPage" element={<CriminalPage/>}/>
 					<Route path="/faq" element={<FAQ/>}/>
@@ -79,7 +97,7 @@ function App(props) {
           <Route path="/header2" element={<Header2/>}/>
           <Route path="/chat/room/list/:roomId" element={<ChatPage/>}/>
         </Routes>
-			<Footer />
+        {shouldHideFooter ? null : <Footer />} {/* footer를 숨김 */}
 		</>
 	);
 }
