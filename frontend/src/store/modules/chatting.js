@@ -28,17 +28,12 @@ const getChatRoomAPI = (userId) => {
 
     try {
       const response = await axios.get(API);
-      console.log("chatting.js res >>>>>>> ", response);
-      console.log("chatting.js res.data >>>>>>> ", response.data);
-      console.log("chatting.js res >>>>>>> ", response.data.length);
       if (response.data && response.data.length > 0) {
         response.data.forEach((_chatRoom) => {
-          console.log('_chatRoom:', _chatRoom);
           let chatRoom = {
             id: _chatRoom.id,
             roomName: _chatRoom.name,
           };
-          console.log("chatRoom >>> ", chatRoom);
           chatRoomList = chatRoomList.concat(chatRoom);
         });
       }

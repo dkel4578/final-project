@@ -165,6 +165,9 @@ public class UserController {
     public ResponseEntity<ProfileImgResponseDto> getMyUserProfileImg(@RequestParam Long userId) {
         System.out.println(">>>>>>>>>>>>>>profile/me");
         ProfileImgResponseDto myUserProfileImg = userService.getMyUserProfileImg(userId);
+        if(myUserProfileImg == null){
+            return ResponseEntity.ok(userService.getMyUserProfileImg(0L));
+        }
 
         return ResponseEntity.ok(myUserProfileImg);
     }

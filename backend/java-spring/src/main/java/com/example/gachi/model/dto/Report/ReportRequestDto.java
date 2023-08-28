@@ -3,12 +3,14 @@ package com.example.gachi.model.dto.Report;
 import com.example.gachi.model.Report;
 import com.example.gachi.model.User;
 import com.example.gachi.model.enums.BanReason;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@JsonIgnoreProperties({"reporter", "reportedUser"})
 
 public class ReportRequestDto {
     private BanReason reportType;

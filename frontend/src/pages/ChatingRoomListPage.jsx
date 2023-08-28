@@ -19,7 +19,7 @@ import { actionCreators as userActions } from "../store/modules/user";
 
 function ChatingRoomListPage() {
   const navigate = useNavigate();
-  
+
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.user.user);
@@ -36,12 +36,10 @@ function ChatingRoomListPage() {
 
   const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
 
-  console.log("chatRoomList >>>>", chatRoomList)
+  console.log("chatRoomList >>>>", chatRoomList);
   useEffect(() => {
-    // fetch 요청을 저장할 배열
-    console.log("도달하는가?")
     const fetchPromises = [];
-    // roomIds 배열을 기반으로 fetch 요청을 생성하여 배열에 추가
+  
     roomIds.forEach((roomId) => {
       fetchPromises.push(
         fetch(`/api/chatUser?roomId=${encodeURIComponent(roomId)}`, {
@@ -51,74 +49,80 @@ function ChatingRoomListPage() {
           },
         })
           .then((res) => {
-            console.log("res >>>>>>>>>>>>>>>>", res);
             if (!res.ok) {
-              return;
+              throw new Error("Fetch error");
             }
             return res.json();
           })
-          .then((data) =>{
-            console.log("DATA >>>> ", data)
-          })
           .catch((error) => {
-            console.log ("ERROR >>>>>> ", error)
-            return null; // 에러 시에도 빈 데이터 반환
+            console.log("ERROR >>>>>> ", error);
+            return [];
+          })
+          .then((data) => {
+            // 여기서 roomId를 추가하여 data를 가공하고 userDataList에 추가
+            const userDataWithRoomId = data.map((userData) => ({
+              ...userData,
+              roomId: roomId
+            }));
+            return userDataWithRoomId;
           })
       );
     });
-
-    // 모든 fetch 요청이 완료되면 실행
+  
     Promise.all(fetchPromises).then((results) => {
-      const validData = results.filter((data) => data !== null);
-      
-      // userDataList와 profileImgList에 데이터 추가
+      const validData = results.flat();
+  
       setUserDataList((prevUserDataList) => {
         const newDataList = validData.filter((data) =>
-          prevUserDataList.every((prevData) => prevData.id !== data.id)
+          !prevUserDataList.some((prevData) => prevData.userId === data.userId)
         );
   
-        return [...prevUserDataList, ...newDataList];
+        const updatedUserDataList = [...prevUserDataList, ...newDataList];
+        console.log("Updated userDataList >>>> ", updatedUserDataList);
+        return updatedUserDataList;
       });
-      console.log("UserData >>>>>>>>>>>>>> ", userDataList)
     });
   }, [chatRoomList, userInfo]);
+  
+
+  useEffect(() => {
+    console.log("userDataList >>>>>>>> ", userDataList);
+  }, [userDataList]);
 
   //프로필 이미지 정보 가져오기
   useEffect(() => {
-   
-      fetch(`/api/chatProfile?userId=${encodeURIComponent(userInfo.uid)}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": jsonContent,
-        },
+    fetch(`/api/chatProfile?userId=${encodeURIComponent(userInfo.uid)}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": jsonContent,
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Response was not OK");
+        }
+        return res.json();
       })
-        .then((res) => {
-          if (!res.ok) {
-            throw new Error("Response was not OK");
-          }
-          return res.json();
-        })
-        .then((data) => {
-          if (data.length > 0) {
-            const updatedImgSrcList = [...imgSrcList]; // Create a copy of the existing imgSrcList
-            data.forEach((item) => {
-              if (item.imgSrc != null) {
-                const publicIndex = item.imgSrc.indexOf("\\public\\");
-                if (publicIndex !== -1) {
-                  const webPath = item.imgSrc
-                    .substring(publicIndex + "\\public\\".length)
-                    .replace(/\\/g, "/");
-                  updatedImgSrcList.push("/" + webPath); // Push the new imgSrc to the list
-                }
+      .then((data) => {
+        if (data.length > 0) {
+          const updatedImgSrcList = [...imgSrcList]; // Create a copy of the existing imgSrcList
+          data.forEach((item) => {
+            if (item.imgSrc != null) {
+              const publicIndex = item.imgSrc.indexOf("\\public\\");
+              if (publicIndex !== -1) {
+                const webPath = item.imgSrc
+                  .substring(publicIndex + "\\public\\".length)
+                  .replace(/\\/g, "/");
+                updatedImgSrcList.push("/" + webPath); // Push the new imgSrc to the list
               }
-            });
-            setImgSrcList(updatedImgSrcList); // Update the state with the new imgSrcList
-          }
-        })
-        .catch((error) => {
-          console.error("Error fetching data:", error);
-        });
-    
+            }
+          });
+          setImgSrcList(updatedImgSrcList); // Update the state with the new imgSrcList
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
   }, [userInfo.uid]);
 
   const goChatRoomCreate = async (e) => {
@@ -164,17 +168,21 @@ function ChatingRoomListPage() {
           </div>
           <div className="chat-list-room-place">
             <ul className="chat-listes">
-              {chatRoomList.map((p, idx) => {
+
+              {/* list : [1,2,3,4,] */}
+              {/* {chatRoomList.map((p, idx) => {
                 console.log("chatRoomList element:", p);
-                return (
+                console.log("userDataList console >>>>>", userDataList)
+                return (              
                   <ChatRoom
                     key={p.id}
                     {...p}
-                    userData={userDataList[idx]}
+                    userData={userDataList[idx]} // userDataList의 각 요소를 userData로 전달
                     imgSrc={imgSrcList[idx]}
                   />
                 );
-              })}
+              })} */}
+              {<ChatRoom userData={userDataList} imgSrc={imgSrcList} chatRoomList={chatRoomList}/>}
             </ul>
           </div>
         </div>
@@ -184,27 +192,3 @@ function ChatingRoomListPage() {
 }
 
 export default ChatingRoomListPage;
-{
-  /* <li className="chat-list-single">
-                <div className="chat-user-profile">
-                  <img src="../images/user-profile-test.jpg" alt="프로필" />
-                </div>
-                <div className="chat-user-opponent">
-                  <p>user.nickname</p> 
-                  <p>user2.nickname</p> 
-                </div>
-                <div className="chat-sub">
-                 name
-                </div>
-                <div className="chat-head-count">10/10</div>
-                <div className="chat-list-icons">
-                  <i className="bi bi-share-fill share">
-                    <div className="share-box">공유하기</div>
-                  </i>
-                  <i className="bi bi-box-arrow-right chat-leave"></i>
-                </div>
-              </li> */
-}
-{
-  /* 다른 채팅방 정보도 마찬가지로 구성 */
-}

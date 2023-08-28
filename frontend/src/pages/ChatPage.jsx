@@ -17,6 +17,8 @@ import "../css/chatting.css";
 function ChatPage(chatRoomProps) {
   const location = useLocation();
   const props = location.state && location.state.chatRoomProps;
+  const roomId = location.state?.roomId;
+  const roomName = location.state?.roomName;
   console.log("ChatPage props:", props);
   console.log("ChatPage chatRoomProps:", chatRoomProps);
   const navigate = useNavigate();
@@ -26,11 +28,12 @@ function ChatPage(chatRoomProps) {
   const dispatch = useDispatch();
   const [messageList, setMessageList] = useState([]);
   const stompClient = useRef({});
-  console.log("roomId: ", props.id);
   // const chatRoomNumber = Number(channelId);
-  const roomId = props.id;
-  const chatRoomNumber = props.id;
-  const chatRoomName = props.roomName;
+  // const roomId = location.state.roomId;
+
+  console.log("roomId: ", roomId);
+  const chatRoomNumber = roomId;
+  const chatRoomName = roomName;
 
   const chatConnect = () => {
     if (chatRoomNumber === 0) {
@@ -123,8 +126,8 @@ function ChatPage(chatRoomProps) {
           if (item && item.message != null) {
             updatedMessageList.push({
               message: item.message,
-              userId: item.user.id,
-              nickname: item.user.nickname,
+              userId: item.userId,
+              nickname: item.nickname,
             });
           }
         });
@@ -149,6 +152,7 @@ function ChatPage(chatRoomProps) {
       });
 
       let myOther = "";
+      console.log("jsonBody. >>>>>> ", jsonBody)
       // if (Number(jsonBody.writerId) != Number(localStorage.getItem('uid'))) {
       if (jsonBody.userId != userInfo.uid) {
         myOther = "other-msg";
@@ -185,7 +189,6 @@ function ChatPage(chatRoomProps) {
     };
   }, []);
 
- 
   let keyId = 0;
 
   const handleChatSend = (event) => {
@@ -251,7 +254,9 @@ function ChatPage(chatRoomProps) {
       <div id="msgList">
         <p>{chatRoomName}</p>
         <ul>
+        {console.log(messageList)}
           {messageList.map((messageObject, index) => (
+             
             <li
               key={index}
               className={

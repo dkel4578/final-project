@@ -8,13 +8,14 @@ import { actionCreators as userActions } from "../store/modules/user";
 import "../script/custom.js";
 import "../script/manner-score.js";
 import "../script/chat-list-room.js";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 
 function ChatRoom(props) {
   const userInfo = useSelector((state) => state.user.user);
   console.log("chatroom props:", props);
+  console.log("chatroom props.userData:", props.userData);
   const [imgSrcList, setImgSrcList] = useState([]);
-  const [selectedReview, setSelectedReview] = useState(""); 
+  const [selectedReview, setSelectedReview] = useState("");
 
   const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
   const navigate = useNavigate();
@@ -22,8 +23,10 @@ function ChatRoom(props) {
   const handleStarClick = (starIndex) => {
     setSelectedStars(starIndex + 1);
   };
-  const goChatRoomClick = (roomId, e) => {
-    navigate(`/chat/room/list/${roomId}`, { state: { chatRoomProps: props } });
+
+  const goChatRoomClick = (roomId, roomName) => {
+    
+    navigate(`/chat/room/list/${roomId}`, { state: { chatRoomProps: props, roomId : roomId, roomName : roomName} });
   };
 
   const [isValid, setIsValid] = useState(false);
@@ -50,14 +53,10 @@ function ChatRoom(props) {
   };
 
   useEffect(() => {
-    if (
-      props.userData &&
-      props.userData.profileImg &&
-      props.userData.profileImg.imgSrc
-    ) {
-      const publicIndex = props.userData.profileImg.imgSrc.indexOf("/public/");
+    if (props.userData && props.userData.imgSrc) {
+      const publicIndex = props.userData.imgSrc.indexOf("/public/");
       if (publicIndex !== -1) {
-        const updatedSrc = props.userData.profileImg.imgSrc.substring(
+        const updatedSrc = props.userData.imgSrc.substring(
           publicIndex + "/public/".length
         );
         setUpdatedImgSrc(updatedSrc);
@@ -71,19 +70,18 @@ function ChatRoom(props) {
 
     fetch(`/api/manner/add`, {
       method: "POST",
-      headers :{
+      headers: {
         "Content-Type": jsonContent,
       },
-      body: JSON.stringify ({
-        userId : reviewUserId,
-        reviewerId : userInfo.uid,
+      body: JSON.stringify({
+        userId: reviewUserId,
+        reviewerId: userInfo.uid,
         score: selectedStars,
-        review : selectedReview
-      })
-    })
-    .then((res) => {
-      console.log("Chatroom REs >>>>> ", res)
-      if (res.status !== 200){
+        review: selectedReview,
+      }),
+    }).then((res) => {
+      console.log("Chatroom REs >>>>> ", res);
+      if (res.status !== 200) {
         return Swal.fire({
           icon: "error",
           title: "리뷰", // Alert 제목
@@ -97,22 +95,26 @@ function ChatRoom(props) {
         text: "리뷰 등록에 성공하였습니다.",
         width: 300, // Alert 내용
       });
-      navigate("/chat/room/list2")
+      navigate("/chat/room/list2");
       return res.json();
-    })
+    });
   };
 
-  const quitChat = (e) =>{
+  const quitChat = (e) => {
     e.preventDefault();
 
-    fetch(`/api/quitChatRoom?userId=${encodeURIComponent(userInfo.uid)}&roomId=${encodeURIComponent(props.id)}`, {
-      method : "PUT",
-      headers : {
-        "Content-Type" : jsonContent,
+    fetch(
+      `/api/quitChatRoom?userId=${encodeURIComponent(
+        userInfo.uid
+      )}&roomId=${encodeURIComponent(props.id)}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": jsonContent,
+        },
       }
-    })
-    .then((res) =>{
-      if(!res.ok){
+    ).then((res) => {
+      if (!res.ok) {
         return Swal.fire({
           icon: "error",
           title: "채팅", // Alert 제목
@@ -126,9 +128,9 @@ function ChatRoom(props) {
         text: "채팅방 종료에 성공했습니다.",
         width: 360, // Alert 내용
       });
-      navigate("/chat/room/list2")
-    })
-  }
+      navigate("/chat/room/list2");
+    });
+  };
 
   return (
     <section className="chat-list-room">
@@ -140,9 +142,9 @@ function ChatRoom(props) {
             <p>유저에 대한 리뷰를 남겨주세요!</p>
           </div>
           <div className="chat-user-evaluation-modal-content-user-list">
-            {props.userData && props.userData.length > 0 ? (
+            {props.userData ? (
               props.userData.map((data, index) => {
-                if (data.user.id === userInfo.uid) {
+                if (data.userId === userInfo.uid) {
                   return null; // 해당 사용자는 랜더링하지 않음
                 }
                 return (
@@ -161,7 +163,7 @@ function ChatRoom(props) {
                       )}
                     </div>
                     <div className="chat-user-evaluation-modal-content-user-nickname">
-                      <span>{data.user.nickname}</span>
+                      <span>{data.nickname}</span>
                     </div>
                     <div className="chat-user-evaluation-modal-content-give-star">
                       <input
@@ -169,7 +171,7 @@ function ChatRoom(props) {
                         value="별점주기"
                         onClick={() => {
                           handleClassName2();
-                          reviewUserHandler(data.user.id);
+                          reviewUserHandler(data.userId);
                         }}
                       />
                     </div>
@@ -227,7 +229,7 @@ function ChatRoom(props) {
                 id="so-fun"
                 className="manner-check-box"
                 name="manner-radio"
-                value ="D"
+                value="D"
                 onChange={handleReviewChange}
               />
               <i className="manner-check"></i>
@@ -239,7 +241,7 @@ function ChatRoom(props) {
                 id="great-talk"
                 className="manner-check-box"
                 name="manner-radio"
-                value = "F"
+                value="F"
                 onChange={handleReviewChange}
               />
               <i className="manner-check"></i>
@@ -288,40 +290,45 @@ function ChatRoom(props) {
           </div>
         </div>
       </div>
-      <li className="chat-list-single">
-        <div className="chat-sub">{props.roomName}</div>
-        <div className="chat-user-detail-informations">
-          <div className="chat-user-profile">
-            <img src={props.imgSrc} alt="Profile" />
-          </div>
-          <div
-            className="chat-user-opponent"
-            onClick={() => {
-              goChatRoomClick(props.id);
-            }}
-          >
-            {props.userData && props.userData.length > 0 ? (
-              <div className="chat-user-opponent-user-id">
-                {props.userData.map((user, index) => (
-                  <span key={index}>{user.user.nickname} </span>
-                ))}
-              </div>
-            ) : (
-              <p></p>
-            )}
-          </div>
 
-          <div className="chat-list-icons">
-            <i className="bi bi-share-fill share">
-              <div className="share-box">공유하기</div>
-            </i>
-            <i
-              className="bi bi-box-arrow-right chat-leave"
-              onClick={handleClassName}
-            ></i>
+      {props.chatRoomList.map((chatRoom, idx) => (
+        <li className="chat-list-single" key={idx}>
+          <div className="chat-sub">{chatRoom.roomName}</div>
+          <div className="chat-user-detail-informations">
+            <div className="chat-user-profile">
+              <img src={props.imgSrc[idx]} alt="Profile" />
+            </div>
+            <div
+              className="chat-user-opponent"
+              onClick={() => {
+                goChatRoomClick(chatRoom.id, chatRoom.roomName);
+              }}
+            >
+              {props.userData ? (
+                <div className="chat-user-opponent-user-id">
+                  {props.userData.map((user, idx) => (
+                    user.roomId==chatRoom.id ?
+                    <span key={idx}>{user.nickname} </span>
+                    : <span></span>
+                  ))}
+                </div>
+              ) : (
+                <p>데이터 없음</p>
+              )}
+            </div>
+
+            <div className="chat-list-icons">
+              <i className="bi bi-share-fill share">
+                <div className="share-box">공유하기</div>
+              </i>
+              <i
+                className="bi bi-box-arrow-right chat-leave"
+                onClick={handleClassName}
+              ></i>
+            </div>
           </div>
-        </div>
-      </li>
+        </li>
+      ))}
       {/* <ChatRoomStyle>
         <ChatRoomName>{props.roomName}({props.nickname})님꺼~</ChatRoomName>
         <ChatRoomEnter onClick={() => {
