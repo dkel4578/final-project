@@ -16,6 +16,7 @@ public class AddBoardRequestDto {
     private String content;
     private User user;
     private Long userId;
+    private String localAddress;
 
     //게시글 입력
     public Board toEntity(User user) throws NotFoundException{
@@ -24,6 +25,7 @@ public class AddBoardRequestDto {
                 .title(title)
                 .content(content)
                 .user(user)
+                .localAddress(localAddress)
                 .build();
     }
 

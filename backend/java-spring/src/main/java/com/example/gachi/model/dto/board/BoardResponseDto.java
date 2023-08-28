@@ -26,6 +26,7 @@ public class BoardResponseDto {
     private int commentCount;
     private User user;
     private Long userId;
+    private String localAddress;
 
 
     public static BoardResponseDto of(Board board){
@@ -37,6 +38,7 @@ public class BoardResponseDto {
                 .creatAt(board.getCreateAt())
                 .commentCount(board.getCommentCount())
                 .userId(board.getUser().getId())
+                .localAddress(board.getLocalAddress())
                 .build();
     }
 }
