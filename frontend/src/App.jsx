@@ -12,18 +12,15 @@ import BoardListPage from "./pages/BoardListPage";
 import BoardViewPage from "./pages/BoardViewPage";
 import PasswordChangePage from "./pages/PasswordChangePage";
 import Footer from "./layout/Footer";
-import BoardCoffee from "./pages/board-coffee";
-import BoardDrink from "./pages/board-drink";
-import BoardMeal from "./pages/board-meal";
-import BoardTrip from "./pages/board-trip";
+import BoardEditPage from "./pages/BoardEditPage";
+import BoardDeletePage from "./pages/BoardDeletePage";
 import BoardNotice from "./pages/board-notice";
 import BoardWritePage from "./pages/BoardWritePage";
-import ChatListRoom from "./pages/chat-list-room";
+
 import CoffeeEventPage from "./pages/coffee-event-page";
 import CriminalPage from "./pages/criminal-page";
 import FAQ from "./pages/faq";
 import Launching from "./pages/launching";
-import MannerScore from "./pages/manner-score";
 import PassWordChangeComplete from "./pages/password-change-complete";
 import PostContentModify from "./pages/post-content-modify";
 import PostContent from "./pages/post-content";
@@ -31,25 +28,19 @@ import WritePost from "./pages/write-post";
 import Calendar from './pages/Calendar';
 import ChatRoomListPage from './pages/ChatRoomListPage'; //선생님거
 import ChatingRoomListPage from './pages/ChatingRoomListPage'; //내가 만든거
-import MasterPage from "./pages/MasterPage";
+import Admin from "./components/AdminPage"; 
 import TouristAIP from './pages/TouristAIP';
-import  KakaoMap from  './pages/KakaoMap';
+import KakaoMap from './pages/KakaoMap';
 
 
 
 
-
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 2f069d3e5dded263893a201dab1e6546e3fac48e
 
 function App() {
   return (
     <>
       <Header />
-    			<Helmet>
+             <Helmet>
         <title>같이갈래?</title>
       </Helmet>
         <Routes>
@@ -61,49 +52,35 @@ function App() {
           <Route path="/changeInfo" element={<ChangeInfo/>}/>
           <Route path="/board/view" element={<BoardViewPage/>}/>
           <Route path="/passwordChange" element={<PasswordChangePage />} />
-					<Route path="/passwordChangeComplete" element={<PassWordChangeComplete />} />
+               <Route path="/passwordChangeComplete" element={<PassWordChangeComplete />} />
           <Route path="/board/write" element={<BoardWritePage />}/>
-          <Route path="/board/coffee" element={<BoardCoffee/>}/>
-					<Route path="/board/drink" element={<BoardDrink/>}/>
-					<Route path="/board/meal" element={<BoardMeal/>}/>
-					<Route path="/board/trip" element={<BoardTrip/>}/>
-					<Route path="/board/notice" element={<BoardNotice/>}/>
+          <Route path="/board/:kind" element={<BoardListPage />}/>
+          <Route path="/board/view" element={<BoardViewPage/>}/>
+          <Route path="/board/edit" element={<BoardEditPage/>}/>
+          <Route path="/board/write" element={<BoardWritePage />}/>
+          <Route path="/board/delete" element={<BoardDeletePage />}/>
+               <Route path="/board/notice" element={<BoardNotice/>}/>
           <Route path="/passwordChange" element={<PasswordChangePage/>}/>
           <Route path="/calendar" element={<Calendar/>}/>
           <Route path="/chat/room/list" element={<ChatRoomListPage />}/>
           <Route path="/TouristAIP" element={<TouristAIP />}/>
-<<<<<<< HEAD
-<<<<<<< HEAD
-          <Route path="/KakaoMap" element={<KakaoMap />}/>
-        
-         
-          
-        </Routes>
-      </QueryClientProvider>
-    </>
-  )
-=======
-=======
->>>>>>> 2f069d3e5dded263893a201dab1e6546e3fac48e
           <Route path="/chat/room/list2" element={<ChatingRoomListPage />}/>
-          <Route path="/admin" element={<MasterPage />}/>
+          <Route path="/admin" element={<Admin />}/>
           <Route path="/coffeeEventPage" element={<CoffeeEventPage/>}/>
-					<Route path="/criminalPage" element={<CriminalPage/>}/>
-					<Route path="/faq" element={<FAQ/>}/>
-					<Route path="/launching" element={<Launching/>}/>
-					<Route path="/mannerScore" element={<MannerScore/>}/>
-					<Route path="/postContentModify" element={<PostContentModify/>}/>
-					<Route path="/postContent" element={<PostContent/>}/>
-					<Route path="/writePost" element={<WritePost/>}/>
-					<Route path="/calendar" element={<Calendar/>}/>
-				</Routes>
-			<Footer />
-		</>
-	);
-<<<<<<< HEAD
->>>>>>> 2f069d3e5dded263893a201dab1e6546e3fac48e
-=======
->>>>>>> 2f069d3e5dded263893a201dab1e6546e3fac48e
+               <Route path="/criminalPage" element={<CriminalPage/>}/>
+               <Route path="/faq" element={<FAQ/>}/>
+               <Route path="/launching" element={<Launching/>}/>
+               <Route path="/postContentModify" element={<PostContentModify/>}/>
+               <Route path="/postContent" element={<PostContent/>}/>
+               <Route path="/writePost" element={<WritePost/>}/>
+               <Route path="/KakaoMap" element={<KakaoMap/>}/>
+           
+      
+         
+            </Routes>
+         <Footer />
+      </>
+   );
 }
 
 export default App;
