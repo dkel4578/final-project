@@ -3,11 +3,13 @@ package com.example.gachi.model.dto.chat;
 import com.example.gachi.model.ChatRoom;
 import com.example.gachi.model.ChatRoomJoin;
 import com.example.gachi.model.User;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
 @Builder
+@JsonIgnoreProperties({"user", "chatRoom"})
 public class ChatRoomUserDto {
     private User user;
     private ChatRoom chatRoom;

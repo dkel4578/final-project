@@ -177,67 +177,6 @@ const PostContent = () => {
 								</div>
 							</div>
 						</li>
-						<li className="recomment-container-content">
-							<div className="recomment-container-content-user-info">
-								<div className="user-nick-name">
-									<p>스피드왕조닦달</p>
-								</div>
-								<div className="user-gender">
-									<p>남성</p>
-								</div>
-								<div className="user-manner">
-									<p>매너점수 : 3.8</p>
-								</div>
-							</div>
-							<div className="btnsAndtext">
-								<div className="recomment-container-content-main-text">
-									<p>
-									이렇게 멋진 파란 하늘 위로
-                  나르는 마법 융단을 타고
-                  이렇게 멋진
-                  푸른 세상 속을 나르는 우리
-                  두 사람
-									</p>
-								</div>
-								<div className="recomment-container-content-timeAndbtns">
-									<div className="recomment-time">
-										<p>데이터로 시간 끌어오기</p>
-									</div>
-									<div className="modify-delete-btns">
-										<input
-											type="button"
-											className="post-modify-btn"
-											value="수정"
-										></input>
-										<input
-											type="button"
-											className="post-delete-btn"
-											value="삭제"
-										></input>
-									</div>
-									<div className="reply-btn">
-										<svg
-											xmlns="http://www.w3.org/2000/svg"
-											className="icon icon-tabler icon-tabler-urgent siren2"
-											width="20"
-											height="20"
-											viewBox="0 0 24 24"
-											strokeWidth="1.5"
-											stroke="#dc143c"
-											fill="none"
-											strokeLinecap="round"
-											strokeLinejoin="round"
-										>
-											<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-											<path d="M8 16v-4a4 4 0 0 1 8 0v4" />
-											<path d="M3 12h1m8 -9v1m8 8h1m-15.4 -6.4l.7 .7m12.1 -.7l-.7 .7" />
-											<path d="M6 16m0 1a1 1 0 0 1 1 -1h10a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1z" />
-										</svg>
-										<input type="button" value="답글"></input>
-									</div>
-								</div>
-							</div>
-						</li>
 						<li className="write-comment">
 							<textarea className="write-comment-text"></textarea>
 							<input type="button" value="답변하기"></input>

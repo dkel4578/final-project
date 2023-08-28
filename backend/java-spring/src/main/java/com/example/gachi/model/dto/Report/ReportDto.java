@@ -5,6 +5,7 @@ import com.example.gachi.model.User;
 import com.example.gachi.model.enums.BanReason;
 import com.example.gachi.model.enums.ReportCategory;
 import com.example.gachi.model.enums.ReportStatus;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties({"reporter", "reportedUser"})
+
 public class ReportDto {
     private Long id;
     private String reportType;

@@ -121,7 +121,7 @@ function BoardListForm3() { // Receive the 'kind' prop
 
   return (
       <div className="body">
-        <div className="header-inner">
+        <div className="board-inner">
           <section className="coffee-board">
             <div className="board-kind">
               <Link to="/board/C" className={kind === 'C' ? 'active' : ''}>

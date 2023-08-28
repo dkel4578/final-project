@@ -8,8 +8,10 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import "font-awesome/css/font-awesome.min.css";
 import "../script/custom.js";
 import "../script/manner-score.js"
+import { useState } from "react";
 
 function ChatListRoom() {
+
   return (
     <div>
       <section className="chat-list-room">
@@ -38,8 +40,8 @@ function ChatListRoom() {
           </div>
         </div>
         {/* 유저평가 모달 */}
-        <div className="chat-user-evaluation-modal">
-          <div className="chat-user-evaluation-modal-content">
+        <div className='chat-user-evaluation-modal'>
+          <div className='chat-user-evaluation-modal-content'>
             <div className="chat-user-evaluation-modal-content-title">
               <p>잠깐!</p>
               <p>유저에 대한 리뷰를 남겨주세요!</p>
@@ -180,6 +182,7 @@ function ChatListRoom() {
             <i className="bi bi-plus-circle-fill plus"></i>
           </div>
           <div className="chat-list-room-place">
+            {/* 채팅창 */}
             <ul className="chat-listes">
               <li className="chat-list-single">
                 <div className="chat-sub">안녕하세요</div>
