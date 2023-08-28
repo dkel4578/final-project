@@ -1,10 +1,13 @@
 package com.example.gachi.model;
 
 import com.example.gachi.model.enums.Kind;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -70,6 +73,8 @@ public class Board extends BaseEntity{
         this.user = user;
     }
 
+
+
     public Board update(String title, String content) {
         this.title = title;
         this.content = content;
@@ -90,6 +95,24 @@ public class Board extends BaseEntity{
         this.delYn = delYn;
         this.user = user;
         this.cnt = 0;
+    }
+
+
+    public void updateBoard(String title,
+                           String content){
+        this.title = title;
+        this.content = content;
+    }
+
+    public void deleteBoard(String delYn){
+        this.delYn = delYn;
+    }
+
+    @JsonCreator
+    public Board(@JsonProperty("kind") Kind kind, @JsonProperty("title") String title, @JsonProperty("content") String content) {
+        this.kind = kind;
+        this.title = title;
+        this.content = content;
     }
 
 

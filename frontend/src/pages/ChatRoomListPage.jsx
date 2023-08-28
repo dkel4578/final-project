@@ -4,20 +4,26 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory, useNavigate, useParams } from 'react-router-dom';
 import { customHistory } from "../store/configureStore.js";
 import { actionCreators as chattingActions } from "../store/modules/chatting";
+
 import ChatRoom from "../components/ChatRoom";
+import { fetchChatRoomList } from "../store/modules/chatting"; // 경로 조정
+import { actionCreators as userActions } from "../store/modules/user";
 
 const WrapChatRooms = styled.div`
-  display:flex;
-  flex-direction:row;
-  flex-wrap:wrap;
-  justify-content: center;
+  text-align: center;
+  // display:flex;
+  // flex-direction:row;
+  // flex-wrap:wrap;
+  // justify-content: center;
 `;
 
 const HHtalk = styled.button`
+  // display: flex;
+  // align-items: center;
+  // justify-content: center;
   width: 120px;
   height: 30px;
-  align-items: center;
-  text-align: center;
+  // text-align: center;
   /* padding-top: 10px; */
   border: none;
   border-radius: 2px;
@@ -30,45 +36,38 @@ const HHtalk = styled.button`
 
 function ChatRoomListPage() {
   const navigate = useNavigate();
+  
   const dispatch = useDispatch();
-
+  const userInfo = useSelector((state) => state.user.user);
+  const uid = useSelector((state) => state.user.user.uid); // Redux에서 uid 가져오기
   // const userInfo = useSelector((state) => state.user.user);
   // console.log('ChatRoomListPage userInfo:', userInfo);
   const chatRoomList = useSelector((state) => state.chatting.chatRoomList);
 
   const goChatRoomCreate = (e) => {
-    // customHistory.replace("/chat/room/list/0");
-    navigate('/chat/room/list/0');
+    // navigate('/chat/room/list/0');
+    const chatRoomName = prompt('채팅방 이름을 넣어주세요');
+    
+    // 채팅방 새로 생성
+    if (chatRoomName) {
+      dispatch(chattingActions.createChatRoomAPI({ chatRoomName: chatRoomName, uid: userInfo.uid }));
+    }
   }
 
-  const goChatRoomClick = (e, id) => {
-    console.log('id:', id);
-    // customHistory.replace(`/chat/room/list/${id}`);
-  }
-
-  console.log('@@@:', chatRoomList);
   React.useEffect(() => {
-    dispatch(chattingActions.getChatRoomAPI())
-      // .then(() => {
-      //   console.log('@@@123:', chatRoomList);
-      // })
-    ;
-    // console.log('###');
-    // const test1Handler = async () => {
-    //   dispatch(await chattingActions.getChatRoomAPI());
-    //   console.log('@@@123:', chatRoomList);
-    // };
-    // test1Handler();
-
-    // navigate('/chat/room/list');
+    dispatch(chattingActions.getChatRoomAPI());
   }, []);
 
   return (
     <>
       <WrapChatRooms>
         <HHtalk onClick={goChatRoomCreate}>채팅방 생성</HHtalk>
+        <br/><br/>
+        <div style={{ fontSize: "20px" }}>채팅방 리스트</div>
+        <br/>
         {chatRoomList.map((p, idx) => {
-          return <ChatRoom key={p.id} onClick={goChatRoomClick(p.id)} {...p}/>
+
+          return <ChatRoom key={p.id} {...p} />
         })}
       </WrapChatRooms>
     </>

@@ -18,7 +18,7 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/upload")
+@RequestMapping("/api/upload")
 public class FileUploadController {
 
     private final FileUploadService fileUploadService;
@@ -31,7 +31,7 @@ public class FileUploadController {
         try{
 
         if(file.isEmpty()){
-            return ResponseEntity.badRequest().body("업로드할 파일이 존재하지 않습니다.");
+            return ResponseEntity.ok("");
         }
 
             String orgName = file.getOriginalFilename();

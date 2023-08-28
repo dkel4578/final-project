@@ -1,8 +1,8 @@
 import $ from 'jquery';
-import Swal from 'sweetalert2';
-$(document).ready(function() {
+import Swal from 'sweetalert2'; // eslint-disable-line no-unused-vars
+$(function() {
   // 비밀번호 입력 요소
-  var passwordInput = $(".input-pw input[type=password]");
+  var passwordInput = $(".input-pwd input[type=password]");
 
   // 비밀번호 입력 시 이벤트 처리
   passwordInput.on("input", function() {
@@ -19,21 +19,21 @@ $(document).ready(function() {
 
     // 모든 조건을 만족하는 경우
     if (hasLowerCase && hasUpperCase && hasNumber && hasSpecialChar && isLengthValid) {
-      $(".input-pw-text").css("color", "#2ECC71"); // 초록색으로 변경
-      $(".input-pw-text").text("영어 대/소문자, 숫자, 특수문자(!@#$%^&*)가 모두 포함된 8자리 이상의 조합입니다!");
+      $(".input-pwd-text").css("color", "#2ECC71"); // 초록색으로 변경
+      $(".input-pwd-text").text("영어 대/소문자, 숫자, 특수문자(!@#$%^&*)가 모두 포함된 8자리 이상의 조합입니다!");
     } else {
-      $(".input-pw-text").css("color", ""); // 원래 색상으로 변경
-      $(".input-pw-text").text("영어 대/소문자, 숫자, 특수문자(!@#$%^&*)가 모두 포함된 8자리 이상의 조합이어야 합니다!");
+      $(".input-pwd-text").css("color", "red"); // 원래 색상으로 변경
+      $(".input-pwd-text").text("영어 대/소문자, 숫자, 특수문자(!@#$%^&*)가 모두 포함된 8자리 이상의 조합이어야 합니다!");
     }
   });
 });
 
 /* 비밀번호 창과 비밀번호 확인 창이 같으면 아래 글씨 색 변경 */
-$(document).ready(function() {
+$(function() {
   // 비밀번호 입력 요소
-  var passwordInput = $(".input-pw input[type=password]");
-  var passwordCheckInput = $(".input-pw-check input[type=password]");
-  var passwordCheckText = $(".input-pw-check-text");
+  var passwordInput = $(".input-pwd input[type=password]");
+  var passwordCheckInput = $(".input-pwd-check input[type=password]");
+  var passwordCheckText = $(".input-pwd-check-text");
 
   // 비밀번호 입력 시 이벤트 처리
   passwordInput.on("input", checkPasswords);
@@ -58,11 +58,11 @@ $(document).ready(function() {
 });
 
 /* 조건에 충족하지않았을때 비밀번호 변경 버튼을 누를경우*/
-$(document).ready(function() {
+$(function() {
   // 비밀번호 입력 요소
-  var passwordInput = $(".input-pw input[type=password]");
-  var passwordCheckInput = $(".input-pw-check input[type=password]");
-  var passwordCheckText = $(".input-pw-check-text");
+  var passwordInput = $(".input-pwd input[type=password]");
+  var passwordCheckInput = $(".input-pwd-check input[type=password]");
+  var passwordCheckText = $(".input-pwd-check-text");
   var changePasswordButton = $(".password-change-complete-btn a");
 
   // 비밀번호 입력 시 이벤트 처리
@@ -76,13 +76,13 @@ $(document).ready(function() {
 
     // 하나 이상의 비밀번호 입력 값이 빈 경우
     if (password === "" || passwordCheck === "") {
-      passwordCheckText.css("color", "#FF0000"); // 빨간색으로 변경
+      passwordCheckText.css("color", "red"); // 빨간색으로 변경
       passwordCheckText.text("비밀번호를 입력해주세요.");
     } else if (password === passwordCheck) { // 비밀번호가 비밀번호 확인과 일치할 경우
       passwordCheckText.css("color", "#2ECC71"); // 초록색으로 변경
       passwordCheckText.text("비밀번호가 일치합니다!");
     } else { // 비밀번호가 일치하지 않을 경우
-      passwordCheckText.css("color", "#FF0000"); // 빨간색으로 변경
+      passwordCheckText.css("color", "red"); // 빨간색으로 변경
       passwordCheckText.text("비밀번호가 일치하지 않습니다.");
     }
   }
@@ -130,7 +130,7 @@ $(document).ready(function() {
 /* find-id 페이지 */
 
 /* 이메일 형식에 따라 아래 표기 */
-$(document).ready(function() {
+$(function() {
   // 이메일 입력 요소
   var emailInput = $(".email-input-cf-text");
   var emailSendButton = $(".email-cf-send-btn");
@@ -162,7 +162,7 @@ $(document).ready(function() {
 });
 
 /* 인증메일 보내면 아래 적은 이메일 주소로 보냈다고 텍스트 띄우기 */
-$(document).ready(function() {
+$(function() {
   $(".email-cf-send-btn").click(function() {
     var email = $(".email-input-cf-text").val();
     if (isValidEmail(email)) {
@@ -182,7 +182,7 @@ $(document).ready(function() {
 /* join-in 페이지 */
 
 /* 비밀번호 입력시 정규식 충족하면 글씨 초록색으로 바뀌게 */
-$(document).ready(function() {
+$(function() {
   $(".pw-input").on("input", function() {
     var password = $(this).val();
     var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -197,7 +197,7 @@ $(document).ready(function() {
 });
 
 /* 위아래 비밀번호 같을때 / 같지않을떄 */
-$(document).ready(function() {
+$(function() {
   $(".pw-input, .pw-check-input").on("input", function() {
     var password = $(".pw-input").val();
     var confirmPassword = $(".pw-check-input").val();
@@ -236,7 +236,7 @@ $(document).ready(function() {
 });
 
 /* 인증메일 보내면 아래 텍스트 해당메일로 전달 나오게함 */
-$(document).ready(function() {
+$(function() {
   $(".cf-number-send-btn").on("click", function() {
     var email = $(".email-input").val();
     if (email) {
@@ -248,7 +248,7 @@ $(document).ready(function() {
 });
 
 /* 인증번호 6자리 숫자만 입력하게 안내문구 */
-$(document).ready(function() {
+$(function() {
   $(".cfnumber-input").on("input", function() {
     var cfNumber = $(this).val();
     
@@ -261,3 +261,18 @@ $(document).ready(function() {
     }
   });
 });
+
+/* 눈모양 누르면  비밀번호 보이게 만들기 (전체 페이지)*/
+$(function(){
+  $('.toggle-eye').click(function(){
+    /* toggle 아이콘 모양 */
+    $(this).toggleClass('bi-eye')
+    /* toggle 인풋타입 */
+    let inputType = $(this).parent().children('input').attr('type');
+    if(inputType == 'password'){
+      $(this).parent().children('input').attr('type', 'text');
+    }else{
+      $(this).parent().children('input').attr('type', 'password');
+    }
+  })
+})

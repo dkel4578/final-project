@@ -4,6 +4,7 @@ import com.example.gachi.config.jwt.JwtTokenProvider;
 import com.example.gachi.model.User;
 import com.example.gachi.model.dto.user.*;
 import com.example.gachi.repository.ProfileImgRepository;
+import com.example.gachi.repository.RefreshTokenRepository;
 import com.example.gachi.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,8 @@ public class UserService {
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
     private final ProfileImgRepository profileImgRepository;
+    private final RefreshTokenRepository refreshTokenRepository;
+
 
     //아이디 중복 검사
     public boolean loginIdCheck(String loginId) {
@@ -53,9 +56,11 @@ public class UserService {
                 =new UsernamePasswordAuthenticationToken(userLoginRequestDto.getLoginId(), userLoginRequestDto.getPassword());
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(usernamePasswordAuthenticationToken);
         JwtTokenDto jwtTokenDto = jwtTokenProvider.generateTokenDto(authentication);
+        RefreshTokenDto refreshTokenDto = jwtTokenProvider.createRefreshToken(authentication);
         Optional<User> userOptional = userRepository.findByLoginId(userLoginRequestDto.getLoginId());
         User user = userOptional.orElse(null);
         if(Objects.nonNull(user)){
+            System.out.println("refreshTokenDto >>>>>>>>>>>>> " + refreshTokenDto.getRefreshToken());
             user.setAccessToken(jwtTokenDto.getAccessToken());
             user.setAccessTokenExpireIn(jwtTokenDto.getTokenExpiresIn());
             userRepository.save(user);
@@ -114,10 +119,13 @@ public class UserService {
         System.out.println(user);
         String userLoginId = user.get().getLoginId();
 
-
         //        userLoginId = user
         return userLoginId;
     }
 
+    public User getUserById(Long uid){
+        Optional<User> user = userRepository.findById(uid);
 
+        return user.get();
+    }
 }
