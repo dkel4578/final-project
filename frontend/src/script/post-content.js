@@ -11,3 +11,9 @@ $(function(){
     $('.user-report-modal').removeClass('active');
   });
 });
+
+$(function(){
+  $('#user-report-modal-report').click(function(){
+    $('.user-report-modal').removeClass('active');
+  });
+});

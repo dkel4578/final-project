@@ -354,7 +354,6 @@ console.log("kind  ===>", kind);
     } else {
       alert("신고 등록이 실패되었습니다.");
     }
-    // 여기에 모달끄는거 입력할것!!!
   }
 
 
@@ -436,7 +435,7 @@ console.log("kind  ===>", kind);
               </label>
             </fieldset>
             <div className="user-report-modal-btns">
-              <input type="button" value="신고" onClick={handleReportButtonClick}/>
+              <input type="button" value="신고" id = "user-report-modal-report" onClick={handleReportButtonClick}/>
               <input type="button" value="취소" id="user-report-modal-cancel" />
             </div>
           </div>
