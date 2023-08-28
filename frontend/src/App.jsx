@@ -52,11 +52,7 @@ function App(props) {
     // 그 외 페이지에는 기본 'Header'를 표시
     return <Header userInfo={userInfo} />;
   };
-  return (
-    <>
        {renderHeader()}
-function App(props) {
-  const userInfo = useSelector((state) => state.user.user);
   return (
     <>
       <Header userInfo={userInfo} />
