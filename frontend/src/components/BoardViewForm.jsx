@@ -113,6 +113,12 @@ function BoardViewForm() {
     fetchImgData();
   },[id]);
 
+  useEffect(() =>{
+    setReportedId(data.userId);
+    setReporterId(JSON.stringify(userInfo.uid));
+    setContentId(data.id);
+    setCategory("B");
+  }, [data,userInfo])
   const handleEditClick = () => {
     // 수정 페이지로 이동
     navigate(`/board/edit?id=${data.id}&kind=${kind}`);
@@ -320,12 +326,17 @@ console.log("kind  ===>", kind);
 
   const handleReportButtonClick = async (event) => {
     event.preventDefault();
-    setReportedId(data.userId);
-    setReporterId(JSON.stringify(userInfo.uid));
-    setContentId(data.id);
+    console.log("data.userId: "+data.userId);
+    console.log("JSON.stringify(userInfo.uid): "+JSON.stringify(userInfo.uid));
+    console.log("data.id: "+data.id);
+    
+    console.log("repedid: " +reportedId);
+    console.log("reperid: " +reporterId);
+    console.log("conId: " +contentId);
+    console.log("cat: " +category);
       const response = await axios.post("/api/report/insert?category="+category+"&contentId="+contentId+"&reportedId="+reportedId+"&reporterId="+reporterId+"&reportType="+reportType,{
-      contentId : data.id,
-      category : "B",
+      contentId : contentId,
+      category : category,
       reportedId : reportedId,
       reporterId : reporterId,
       reportType : reportType
@@ -560,7 +571,7 @@ console.log("kind  ===>", kind);
                           className="comment-delete-btn comment-about-btn"
                           onClick={() => handleDeleteComment(commentInfo.id)}
                         >
-                          삭제ㅁ
+                          삭제
                         </button>
                       </div>
                     </div>
