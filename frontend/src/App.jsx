@@ -34,6 +34,7 @@ import ChatName from "./pages/chatting-room-name";
 import Header2 from "./layout/Header2";
 import TouristAIP from './pages/TouristAIP';
 import ChatPage from "./pages/ChatPage";
+import ChatTest from "./pages/chat-list-room"
 import AdminPage from './components/AdminPage';
 import AdminAuth from './components/AdminAuth';
 
@@ -83,7 +84,8 @@ function App(props) {
 					<Route path="/chatName" element={<ChatName/>}/>
           <Route path="/header2" element={<Header2/>}/>
           <Route path="/chat/room/list/:roomId" element={<ChatPage/>}/>
-        </Routes>
+          <Route path="/chat/room/list/test" element={<ChatTest/>}/>
+				</Routes>
 			<Footer />
 		</>
 	);

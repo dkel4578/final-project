@@ -3,6 +3,7 @@ package com.example.gachi.model.dto.chat;
 import com.example.gachi.model.ChatMessage;
 import com.example.gachi.model.ChatRoom;
 import com.example.gachi.model.User;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,6 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@JsonIgnoreProperties({"user", "chatroom"})
 public class ChatRequestDto {
 
     private String message;

@@ -1,5 +1,6 @@
 package com.example.gachi.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,10 +20,12 @@ public class ChatRoomJoin extends BaseEntity{
 
     @ManyToOne
     @JoinColumn(name =  "user_id")
+    @JsonBackReference
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "room_id")
+    @JsonBackReference
     private ChatRoom chatRoom;
 
     @Column(columnDefinition = "char(1)")

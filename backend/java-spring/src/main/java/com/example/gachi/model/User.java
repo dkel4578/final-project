@@ -76,21 +76,25 @@ public class User extends BaseEntity{
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     @ToString.Exclude
+    @JsonManagedReference
     private List<Board> boards;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     @ToString.Exclude
+    @JsonManagedReference
     private List<Comment> comments;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     @ToString.Exclude
+    @JsonManagedReference
     private List<BrdImg> brdImgs;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     @ToString.Exclude
+    @JsonManagedReference
     private List<BanList> banLists;
 
 
@@ -104,16 +108,19 @@ public class User extends BaseEntity{
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     @ToString.Exclude
+    @JsonManagedReference
     private List<Manner> manners;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     @ToString.Exclude
+    @JsonManagedReference
     private List<Schedule> schedules;
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "reported_id")
     @ToString.Exclude
+    @JsonManagedReference
     private List<Report> reports;
 
 //    @OneToMany(fetch = FetchType.EAGER)

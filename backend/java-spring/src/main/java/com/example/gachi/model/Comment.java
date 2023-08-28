@@ -1,6 +1,7 @@
 package com.example.gachi.model;
 
 import com.example.gachi.model.enums.Kind;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
@@ -29,9 +30,11 @@ public class Comment extends BaseEntity{
     private String delYn="N";
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     private Board board;
 
 

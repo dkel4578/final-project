@@ -3,6 +3,7 @@ package com.example.gachi.model;
 import com.example.gachi.model.enums.BanReason;
 import com.example.gachi.model.enums.ReportCategory;
 import com.example.gachi.model.enums.ReportStatus;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
@@ -32,11 +33,13 @@ public class Report extends BaseEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reporter_id", nullable = false)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
+    @JsonBackReference
     private User reporter;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reported_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonBackReference
     private User reportedUser;
 
     @Column(nullable = false)

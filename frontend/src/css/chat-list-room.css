@@ -441,12 +441,17 @@
   width: 80%;
   display: flex;
   justify-content: center;
+  gap: 10px;
 }
-.review-complete-btn{
-  width: 80%;
+.review-complete-btn,.review-cancel-btn{
+  flex: 1;
   color: white;
   background-color: var(--maincolor);
-  font-size: 1.8em;
+  font-size: 1.6em;
+  padding: 5px;
   border-radius: 20px;
   letter-spacing: 2px;
+}
+.review-cancel-btn{
+  background-color: red;
 }
