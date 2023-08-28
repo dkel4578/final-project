@@ -39,6 +39,11 @@ import  KakaoMap from  './pages/KakaoMap';
 
 
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 2f069d3e5dded263893a201dab1e6546e3fac48e
 
 function App() {
   return (
@@ -68,6 +73,7 @@ function App() {
           <Route path="/chat/room/list" element={<ChatRoomListPage />}/>
           <Route path="/TouristAIP" element={<TouristAIP />}/>
 <<<<<<< HEAD
+<<<<<<< HEAD
           <Route path="/KakaoMap" element={<KakaoMap />}/>
         
          
@@ -77,6 +83,8 @@ function App() {
     </>
   )
 =======
+=======
+>>>>>>> 2f069d3e5dded263893a201dab1e6546e3fac48e
           <Route path="/chat/room/list2" element={<ChatingRoomListPage />}/>
           <Route path="/admin" element={<MasterPage />}/>
           <Route path="/coffeeEventPage" element={<CoffeeEventPage/>}/>
@@ -92,6 +100,9 @@ function App() {
 			<Footer />
 		</>
 	);
+<<<<<<< HEAD
+>>>>>>> 2f069d3e5dded263893a201dab1e6546e3fac48e
+=======
 >>>>>>> 2f069d3e5dded263893a201dab1e6546e3fac48e
 }
 
