@@ -54,15 +54,19 @@ ul,li {
   outline: none;
   text-align: center;
   width: 270px;
+  font-size: 20px;
  }
-.placesList-item { 
+.mapList-item { 
  border-bottom: 1px solid #ccc; 
  margin-bottom: 5px; 
  } 
- .placesList-item strong{
-  font-size: 15px;
+ .map_title{
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
  }
- .placesList-item p{
+ .mapList-item p{
   margin: 0;
   padding: 0px;
  }
@@ -70,13 +74,15 @@ ul,li {
  font-weight: bold; 
  font-size: 5px; 
  } 
-.place_address_name { 
- font-size: 13px; 
+ #place_address_name, #place_phone{
+  font-size: 16px;
+ }
+#place_address_name { 
  color: blue; 
+ margin-top: 5px;
  } 
-.place_phone { 
+#place_phone { 
  color: forestgreen; 
- font-size: 13px; 
  } 
  .search_btn{
   background-color: rgb(84 85 182);
@@ -86,6 +92,7 @@ ul,li {
   width: 70px;
   height: 40px; 
   cursor: pointer;
+  font-size: 20px;
  }
 
 .marker-hide-btn{
@@ -97,26 +104,41 @@ ul,li {
   border: none;
   padding: 0;
 }
-.place-marker-name,
-.place-marker-address-name,
-.place-marker-phone
+.map-marker-name,
+.map-marker-address-name,
+.map-marker-phone
 {
   width: 152px;
   font-size: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 0.75em;
+  margin: 0;
+  padding: 0;
 }
 
-.place-marker-name{
+.map-marker-name{
   font-weight: bold;
 }
-.place-marker-address-name{
-color: blue;
-padding: 2px 0;
+.map-marker-address-name{
+  color: blue;
 }
-.place-marker-phone{
+.map-marker-phone{
   color: forestgreen;
+  margin-bottom: 5px;
+}
+.please-wanna-search{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+.map-back{
+  color: #333;
+  font-size: 30px;
+  margin-bottom: 10px;
 }
 
 

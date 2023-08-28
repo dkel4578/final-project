@@ -1,16 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';  // eslint-disable-line no-unused-vars
 import { Map, Marker } from 'react-kakao-maps';
-import './App.css';
-
+import "../css/KakaoMap.css";
+import { Link } from 'react-router-dom';
+import 'bootstrap-icons/font/bootstrap-icons.css';
+import 'font-awesome/css/font-awesome.min.css';
+import "../script/custom.js";
+import "../css/variables.css";
+import "../css/total.css";
 
 const { kakao } = window;
 
-const App = () => {
+const KakaoMap = () => {
   const [map, setMap] = useState(null);
   const [rv, setRv] = useState(null);
   const [markers, setMarkers] = useState([]);
   const [places, setPlaces] = useState([]);
   const [keyword, setKeyword] = useState('');
+  const searchFestival = (festivalName) => {
+    // 실제 검색 로직 구현
+    console.log(`Searching for ${festivalName}`);
+  };
 
   useEffect(() => {
     const container = document.getElementById('myMap');
@@ -32,6 +41,7 @@ const App = () => {
         const rvContainer = document.getElementById('roadview');
         const rvInstance = new kakao.maps.Roadview(rvContainer);
         setRv(rvInstance);
+
 
         kakao.maps.event.addListener(mapInstance, 'idle', function () {
           const center = mapInstance.getCenter();
@@ -118,9 +128,9 @@ const App = () => {
 
           const infowindow = new kakao.maps.InfoWindow({
             content: `
-              <div class="place-marker-name">【 ${place.place_name} 】</div>
-              <div class="place-marker-address-name">위치:${place.address_name}</div>
-              <div class="place-marker-phone">☎ : ${place.phone || '정보 없음'}</div>`,
+              <div class="map-marker-name">【 ${place.place_name} 】</div>
+              <div class="map-marker-address-name">위치:${place.address_name}</div>
+              <div class="map-marker-phone">☎ : ${place.phone || '정보 없음'}</div>`,
           });
 
           let isInfowindowOpen = false;
@@ -156,7 +166,11 @@ const App = () => {
   return (
     <div className="App">
       <div className="map">
-        <h2>* 축제일정 * </h2>
+        <div className='please-wanna-search'>
+          <Link to="/TouristAIP" className='map-back'>
+          * 뒤로가기 *
+          </Link>
+        </div>
         <div id="myMap" style={{ width: '360px', height: '600px', borderRadius: '10px' }}>
           <div className='search-marker-hide-box'>
             <input
@@ -176,11 +190,11 @@ const App = () => {
           <div className="map_wrap">
             <ul id="placesList">
               {places.map((place, index) => (
-                <li className='placesList-item' key={index}>
-                  <strong>【 {place.place_name} 】</strong>
-                  <div className="place-info">
-                    <p className="place_address_name">위치 : {place.address_name}</p>
-                    <p className="place_phone">☎ : {place.phone || '정보 없음'}</p>
+                <li className='mapList-item' key={index}>
+                  <div className='map_title'>【 {place.place_name} 】</div>
+                  <div id="place-info">
+                    <p id="place_address_name">위치 : {place.address_name}</p>
+                    <p id="place_phone">☎ : {place.phone || '정보 없음'}</p>
                   </div>
                 </li>
               ))}
@@ -197,4 +211,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default KakaoMap;
