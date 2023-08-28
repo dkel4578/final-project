@@ -15,7 +15,7 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
             "FROM Comment p " +
             "WHERE p.board.id = :boardId " +
             "AND p.delYn = 'N' " +
-            "ORDER BY p.createAt DESC ")
+            "ORDER BY p.createAt ASC ")
     List<Comment> findByBoardIdOrderByCreateAtDesc(@Param("boardId") Long boardId);
 
     default List<Comment> fetchCommentList(

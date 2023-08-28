@@ -19,10 +19,10 @@ public class ReportRequestDto {
     private User reportedUser;
     private Long reportedUserId;
     @Builder
-    public Report reportUser(User reporteUser, User reportedUser){
+    public Report reportUser(User reporterUser, User reportedUser){
         return Report.builder()
                 .reportType(reportType)
-                .reporter(reporteUser)
+                .reporter(reporterUser)
                 .reportedUser(reportedUser)
                 .build();
     }

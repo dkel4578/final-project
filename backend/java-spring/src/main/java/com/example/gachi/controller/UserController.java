@@ -90,6 +90,9 @@ public class UserController {
         String password = userLoginRequestDto.getPassword();
         String realPassword = user != null ? user.getPassword() : null;
         if (user != null && user.getBannedYn().equals("Y")) {
+            if(userService.checkBanEnd(user.getId())){
+                return ResponseEntity.ok(userService.login(userLoginRequestDto));
+            }
             String errorMessage = "정지당한 아이디입니다.";
             return ResponseEntity.badRequest().body(Collections.singletonMap("error", errorMessage));
         }
@@ -234,6 +237,17 @@ public class UserController {
             e.printStackTrace();
         }
 
+    }
+
+    //정지 종료 여부 확인
+    @PostMapping("checkBanned")
+    public ResponseEntity<?> checkBanEnd(Long userId){
+        if(userService.checkBanEnd(userId)){
+            return ResponseEntity.ok("정지 해제 완료.");
+        }else {
+            // 비밀번호가 일치하지 않는 경우 로그인 실패 처리
+            return ResponseEntity.badRequest().body("정지 중");
+        }
     }
 
 }

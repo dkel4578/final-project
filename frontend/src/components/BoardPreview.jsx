@@ -12,7 +12,7 @@ const BoardPreview = ({ boardInfo,kind }) => {
             <div className="board-info">
                 <div className="board-title">
                     {kind === 'C' &&  <span>커피한잔할래요</span>} {/* 커피*/}
-                    <a href={`/board/view?id=${boardInfo.id}`}>{boardInfo.title}</a>
+                    <a href={`/board/view?id=${boardInfo.id}&kind=${kind}`}>{boardInfo.title}</a>
                 </div>
                 <div className="board-user-log">
                     <span>글쓴이 {boardInfo.id}</span>
@@ -21,7 +21,7 @@ const BoardPreview = ({ boardInfo,kind }) => {
                 </div>
             </div>
             <a href="#" className="board-comment">
-                <span>10</span>
+                <span>{boardInfo.commentCount}</span>
                 <span>댓글</span>
             </a>
         </li>

@@ -10,7 +10,7 @@ const addBan = async(banDays,userId,reportId,banReason)=>{
   return await axios
   .post("/api/admin/ban/add?banDays="+banDays+"&userId="+userId+"&reportId="+reportId+"&banReason="+banReason,{
     banDays : banDays,
-    userId : userId,
+    userId : userId, 
     reportId : reportId,
     banReason : banReason
   })
@@ -625,7 +625,7 @@ const AdminPage = () => {
                 }
                 {item.bannedYn === "N" &&
                 <button className="SuspendButton ban-btn" onClick={() => {
-                  handleSuspendButtonClick(item.id,"E","")}}>정지</button>
+                  handleSuspendButtonClick(item.id,"E",1)}}>정지</button>
                 }
                 </li>
               </ul>

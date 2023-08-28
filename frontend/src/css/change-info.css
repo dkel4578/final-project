@@ -151,8 +151,8 @@ label[for=male],label[for=female]{
   left: 10px;
   font-size: 2.2em;
   transition: 0.4s;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 60%;
+  transform: translateY(-60%);
 }
 .input-kinds:focus ~ .bi{
   color: var(--maincolor);
@@ -195,7 +195,7 @@ label[for=male],label[for=female]{
 }
 .input-cfnumber .bi{
   font-size: 2em;
-  top: 58%;
+  top: 65%;
 }
 
 /* change-info-complete-btn */
