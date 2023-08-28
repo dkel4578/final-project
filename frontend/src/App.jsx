@@ -37,6 +37,7 @@ import ChatPage from "./pages/ChatPage";
 import ChatTest from "./pages/chat-list-room"
 import AdminPage from './components/AdminPage';
 import AdminAuth from './components/AdminAuth';
+import CalendarShare from "./pages/CalendarShare";
 
 
 function App(props) {
@@ -81,10 +82,11 @@ function App(props) {
 					<Route path="/postContentModify" element={<PostContentModify/>}/>
 					<Route path="/postContent" element={<PostContent/>}/>
 					<Route path="/writePost" element={<WritePost/>}/>
-					<Route path="/chatName" element={<ChatName/>}/>
+					<Route path="/chatName/:roomId" element={<ChatName/>}/>
           <Route path="/header2" element={<Header2/>}/>
           <Route path="/chat/room/list/:roomId" element={<ChatPage/>}/>
           <Route path="/chat/room/list/test" element={<ChatTest/>}/>
+          <Route path="calendar/:loginId" element={<CalendarShare/>}/>
 				</Routes>
 			<Footer />
 		</>

@@ -14,14 +14,15 @@ import java.time.LocalDate;
 public class ScheduleResponseDto {
 
     private Long id;
-    private User user;
     private Long userId;
     private LocalDate date;
     private String content;
+    private String loginId;
 
     public static ScheduleResponseDto of(Schedule schedule){
         return ScheduleResponseDto.builder()
                 .id(schedule.getId())
+                .loginId(schedule.getUser().getLoginId())
                 .userId(schedule.getUser().getId())
                 .date(schedule.getDate())
                 .content(schedule.getContent())

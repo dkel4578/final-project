@@ -18,7 +18,7 @@ import java.time.Duration;
 @RequiredArgsConstructor
 @Component
 public class OAuth2CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
-    public static final String REDIRECT_URI = "http://localhost:3000/";
+    public static final String REDIRECT_URI = "http://localhost:3000";
     public static final String REDIRECT_SIGNUP_URL = "http://localhost:3000/changeInfo";
     public static final String REFRESH_TOKEN_COOKIE_NAME = "refresh_token";
     public static final Duration REFRESH_TOKEN_DURATION = Duration.ofDays(14);

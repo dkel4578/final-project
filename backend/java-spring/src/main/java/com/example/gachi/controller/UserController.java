@@ -140,8 +140,8 @@ public class UserController {
         }else if(userInfoUpdateDto.getPhone().length()<10 || !userInfoUpdateDto.getPhone().startsWith("01")){
             String errorMessage = "전화번호의 형식이 올바르지 않습니다.";
             return ResponseEntity.badRequest().body(Collections.singletonMap("error", errorMessage));
-        }else if(userInfoUpdateDto.getNickname().getBytes(charset).length > 16){
-            String errorMessage = "닉네임은 8글자를 넘을 수 없습니다.";
+        }else if(userInfoUpdateDto.getNickname().getBytes(charset).length > 12){
+            String errorMessage = "닉네임은 6글자를 넘을 수 없습니다.";
             return ResponseEntity.badRequest().body(Collections.singletonMap("error", errorMessage));
         }
         userService.update(id, userInfoUpdateDto);
@@ -157,9 +157,9 @@ public class UserController {
     //유저 정보 조회
     @GetMapping("/user/me")
     public ResponseEntity<UserResponseDto> getMyUserInfo() {
-        System.out.println(">>>>>>>>>>>>>user/me");
-        UserResponseDto myInfoBySecurity = userService.getMyInfoBySecurity();
 
+        UserResponseDto myInfoBySecurity = userService.getMyInfoBySecurity();
+        System.out.println(">>>>>>>>>>>>>user/me"+myInfoBySecurity);
         return ResponseEntity.ok(myInfoBySecurity);
     }
 

@@ -4,8 +4,7 @@ import com.example.gachi.model.ChatRoom;
 import com.example.gachi.model.ChatRoomJoin;
 import com.example.gachi.model.ProfileImg;
 import com.example.gachi.model.User;
-import com.example.gachi.model.dto.chat.ChatRoomResponseDto;
-import com.example.gachi.model.dto.chat.UserWithProfileImgDto;
+import com.example.gachi.model.dto.chat.*;
 import com.example.gachi.model.dto.user.ProfileImgResponseDto;
 import com.example.gachi.repository.ChatRoomJoinRepository;
 import com.example.gachi.repository.ChatRoomRepository;
@@ -18,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -35,12 +35,11 @@ public class ChatRoomController {
 
     /**
      * @param userId
-     * @return
-     * desc: 채팅방 목록 조회
+     * @return desc: 채팅방 목록 조회
      */
     @GetMapping("/chatroom")
     public ResponseEntity<List<ChatRoomResponseDto>> chatHome(@RequestParam(value = "userId", required = false) Long userId) {
-        System.out.println("chatRoomService.findAll()>>>>>>>>>>>>>>>>>"+userId);
+        System.out.println("chatRoomService.findAll()>>>>>>>>>>>>>>>>>" + userId);
         List<ChatRoomResponseDto> chatRoomResponseDtos = chatRoomService.findAll(userId);
         return ResponseEntity.ok(chatRoomResponseDtos);
     }
@@ -48,8 +47,7 @@ public class ChatRoomController {
     /**
      * @param paramMap
      * @return
-     * @throws JsonProcessingException
-     * desc: 채팅방 생성
+     * @throws JsonProcessingException desc: 채팅방 생성
      */
     @PostMapping("/chatroom")
     public ResponseEntity<Long> createChatRoom(@RequestBody HashMap<String, Object> paramMap) throws JsonProcessingException {
@@ -85,21 +83,38 @@ public class ChatRoomController {
     }
 
     @GetMapping("/chatMaster")
-    public Long chatMaster(@RequestParam(required = false) Long id){
+    public Long chatMaster(@RequestParam(required = false) Long id) {
         ChatRoom chatRoom = chatRoomRepository.findAllByIdAndDeleteYn(id, "N");
 
         return chatRoom.getUser().getId();
     }
+
     //채팅방 대표 이미지 가져오기
     @GetMapping("/chatProfile")
-    public ResponseEntity<List<ProfileImgResponseDto>> getRoomProfileImg(@RequestParam(required = false) Long userId){
+    public ResponseEntity<List<ProfileImgResponseDto>> getRoomProfileImg(@RequestParam(required = false) Long userId) {
         List<ProfileImgResponseDto> profileImgResponseDtos = chatRoomService.getRoomMasterProfileImg(userId);
 
         return ResponseEntity.ok(profileImgResponseDtos);
     }
 
     @PutMapping("/quitChatRoom")
-    public void quitChatRoom(@RequestParam Long userId, @RequestParam Long roomId){
+    public void quitChatRoom(@RequestParam Long userId, @RequestParam Long roomId) {
         chatRoomJoinService.chatEnd(userId, roomId);
+    }
+
+    @GetMapping("/findRoomName")
+    public String findRoomName(@RequestParam Long roomId) {
+        return chatRoomRepository.findById(roomId).get().getName();
+
+    }
+
+    @PostMapping("/chatRoomJoin")
+    public ResponseEntity<?> chatRoomJoin(@RequestParam Long roomId, @RequestParam Long userId) {
+        if (chatRoomJoinService.chatRoomJoinCheck(roomId, userId)) {
+            String errorMessage = "이미 참여한 채팅방입니다.";
+            return ResponseEntity.badRequest().body(Collections.singletonMap("error", errorMessage));
+        }
+        ChatRoomJoinResponseDto chatRoomJoinResponseDto = chatRoomJoinService.signupRoom(roomId, userId);
+        return ResponseEntity.ok(chatRoomJoinResponseDto);
     }
 }

@@ -93,7 +93,7 @@ function ChatRoom(props) {
         icon: "success",
         title: "리뷰", // Alert 제목
         text: "리뷰 등록에 성공하였습니다.",
-        width: 300, // Alert 내용
+        width: 360, // Alert 내용
       });
       navigate("/chat/room/list2");
       return res.json();

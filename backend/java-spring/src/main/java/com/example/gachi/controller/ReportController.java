@@ -2,7 +2,7 @@ package com.example.gachi.controller;
 
 import com.example.gachi.model.dto.Report.AddReportDto;
 import com.example.gachi.model.dto.Report.ReportRequestDto;
-import com.example.gachi.model.dto.board.ReportResponseDto;
+import com.example.gachi.model.dto.Report.ReportResponseDto;
 import com.example.gachi.model.enums.BanReason;
 import com.example.gachi.model.enums.ReportCategory;
 import com.example.gachi.model.enums.ReportStatus;
