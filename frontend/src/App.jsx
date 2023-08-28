@@ -78,12 +78,12 @@ function App(props) {
           <Route path="/board/edit" element={<BoardEditPage/>}/>
           <Route path="/board/write" element={<BoardWritePage />}/>
           <Route path="/board/delete" element={<BoardDeletePage />}/>
-					<Route path="/board/notice" element={<BoardNotice/>}/>
+     	  <Route path="/board/notice" element={<BoardNotice/>}/>
           <Route path="/passwordChange" element={<PasswordChangePage/>}/>
           <Route path="/calendar" element={<Calendar/>}/>
           <Route path="/chat/room/list" element={<ChatRoomListPage />}/>
           <Route path="/TouristAIP" element={<TouristAIP />}/>
-          <Route path="/chat/room/list2" element={<ChatingRoomListPage />}/>          
+          <Route path="/chat/room/list2" element={<ChatingRoomListPage />}/>
           <Route path="/admin" element={<AdminAuth Component={AdminPage} userInfo={userInfo} />} />
           <Route path="/admin2" element={< AdminPage/>} />
           <Route path="/coffeeEventPage" element={<CoffeeEventPage/>}/>

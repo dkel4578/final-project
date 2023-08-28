@@ -185,7 +185,7 @@ function Header({userInfo}) {
 								</div>
 								<div className="category-title">
 									<div className="category-content">
-									<i class="bi bi-compass-fill"></i>
+									<i className="bi bi-compass-fill"></i>
 										<a href="#none">여행지 추천</a>
 									</div>
 								</div>
