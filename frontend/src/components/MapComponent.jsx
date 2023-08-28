@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import '../css/map-search.css';
 
-function MapComponent() {
+function MapComponent({ onAddressClick }) {
     // 상태 변수들
     const [keyword, setKeyword] = useState('');
     const [map, setMap] = useState(null);
@@ -8,13 +9,17 @@ function MapComponent() {
     const [selectedMarkerIndex, setSelectedMarkerIndex] = useState(null);
     const [markers, setMarkers] = useState([]);
     const [infowindows, setInfowindows] = useState([]);
+    const [selectedAddress, setSelectedAddress] = useState(''); // 선택한 주소 상태 변수 추가
+
+    const mapAppKey = process.env.REACT_APP_API_MAP_KEY;
+
 
     // Kakao 지도 초기화
     useEffect(() => {
         const script = document.createElement('script');
         script.async = true;
         script.defer = true;
-        script.src = 'https://dapi.kakao.com/v2/maps/sdk.js?appkey=a56f0d80bc172162dfbd97d2c1042bea&autoload=false&libraries=services';
+        script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${mapAppKey}&autoload=false&libraries=services`;
 
         script.onload = () => {
             window.kakao.maps.load(() => {
@@ -47,7 +52,9 @@ function MapComponent() {
     };
 
     // 검색 버튼 클릭 핸들러
-    const handleSearch = () => {
+    const handleSearch = (e) => {
+        e.preventDefault(); // 폼 제출 방지
+
         if (map && keyword) {
             // 검색 API 호출 및 결과 처리
             const ps = new window.kakao.maps.services.Places();
@@ -114,6 +121,14 @@ function MapComponent() {
 
     // 리스트 아이템 클릭 핸들러
     const handleListItemClick = (index) => {
+        const selectedPlace = places[index];
+        const roadAddress = selectedPlace.road_address_name;
+        setSelectedAddress(roadAddress); // 선택한 주소를 상태 변수에 저장
+
+        // 호출한 콜백 함수를 사용하여 선택한 주소를 부모 컴포넌트로 전달
+        onAddressClick(roadAddress);
+
+
         // 선택한 마커만 표시하고 나머지는 숨김
         markers.forEach((marker, i) => {
             if (i === index) {
@@ -131,22 +146,29 @@ function MapComponent() {
 
     return (
         <div>
-            <div style={{ width: '300px', height: '30px' }}>
+            <div className= "map-search-box">
                 <input
                     type="text"
                     placeholder="장소를 검색하세요"
                     value={keyword}
                     onChange={handleKeywordChange}
+                    className= "map-search-input"
                 />
-                <button onClick={handleSearch}>검색</button>
+                <button onClick={handleSearch} className= "map-search-btn">검색</button>
             </div>
             <div id="map" style={{ width: '100%', height: '500px' }}></div>
             <div>
                 <h3>검색 결과</h3>
                 <ul>
                     {places.map((place, index) => (
-                        <li key={index} onClick={() => handleListItemClick(index)}>
-                            {`${index + 1}. ${place.place_name}`}
+                        <li key={index} onClick={() => handleListItemClick(index)} className= "map-search-list">
+                            {`${index + 1}. ${place.place_name} `}
+                            {/*{`${place.road_address_name}`}*/}
+                            {/*{Object.keys(place).map((key) => (*/}
+                            {/*    <div key={key}>*/}
+                            {/*        <strong>{key}:</strong> {place[key]}*/}
+                            {/*    </div>*/}
+                            {/*))}*/}
                         </li>
                     ))}
                 </ul>
