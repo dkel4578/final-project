@@ -69,7 +69,9 @@ spring:
       enabled: true
       max-file-size: 10MB
       max-request-size: 50MB
-
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
 # mapper.xml
 mybatis:
   mapper-locations: mybatis-mapper/**/*.xml

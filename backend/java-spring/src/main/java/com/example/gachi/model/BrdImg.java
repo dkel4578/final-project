@@ -1,5 +1,6 @@
 package com.example.gachi.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 @Data
@@ -23,6 +24,7 @@ public class BrdImg extends BaseEntity{
     private String orgName;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -2,6 +2,7 @@ package com.example.gachi.model.dto.user;
 
 import com.example.gachi.model.ProfileImg;
 import com.example.gachi.model.User;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,6 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@JsonIgnoreProperties({"user"})
 public class ProfileImgResponseDto {
     private Long id;
     private String imgSrc;

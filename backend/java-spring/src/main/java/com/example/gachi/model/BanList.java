@@ -2,6 +2,7 @@ package com.example.gachi.model;
 
 import com.example.gachi.model.enums.BanReason;
 import com.example.gachi.model.enums.ReportStatus;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
@@ -25,6 +26,7 @@ public class BanList extends BaseEntity{
     private BanReason banReason;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     private User user;
 
     @Column(nullable = false)

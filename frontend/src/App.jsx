@@ -37,9 +37,9 @@ import ChatPage from "./pages/ChatPage";
 import AdminPage from './components/AdminPage';
 import AdminAuth from './components/AdminAuth';
 import {useLocation} from "react-router-dom";
-
-
+import ChatTest from "./pages/chat-list-room"
 function App(props) {
+
 
   const userInfo = useSelector((state) => state.user.user);
   const location = useLocation();
@@ -54,8 +54,12 @@ function App(props) {
   };
   return (
     <>
-
        {renderHeader()}
+function App(props) {
+  const userInfo = useSelector((state) => state.user.user);
+  return (
+    <>
+      <Header userInfo={userInfo} />
     			<Helmet>
         <title>같이갈래?</title>
       </Helmet>
@@ -95,9 +99,11 @@ function App(props) {
 					<Route path="/writePost" element={<WritePost/>}/>
 					<Route path="/chatName" element={<ChatName/>}/>
           <Route path="/header2" element={<Header2/>}/>
-          <Route path="/chat/room/list/:roomId" element={<ChatPage/>}/>
-        </Routes>
-        {shouldHideFooter ? null : <Footer />} {/* footer를 숨김 */}
+          <Route path="/chat/room/list/:roomId" element={<ChatPage/>}/>      
+          <Route path="/chat/room/list/test" element={<ChatTest/>}/>
+				</Routes>
+			{shouldHideFooter ? null : <Footer />} {/* footer를 숨김 */}
+
 		</>
 	);
 }

@@ -6,71 +6,61 @@ import "../css/masterPage.css";
 
 const addBan = async (banDays, userId, reportId, banReason) => {
   return await axios
-    .post(
-      "/api/admin/ban/add?banDays=" +
-        banDays +
-        "&userId=" +
-        userId +
-        "&reportId=" +
-        reportId +
-        "&banReason=" +
-        banReason,
-      {
-        banDays: banDays,
-        userId: userId,
-        reportId: reportId,
-        banReason: banReason,
-      }
-    )
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((error) => {
-      console.log(error); //오류발생시 실행
-    });
-};
-const searchBan = async (userId) => {
-  return axios
-    .get("/api/admin/getBanUser/" + userId, {
-      userId: userId,
-    })
-    .then((response) => {
-      console.log(response);
-      console.log(response.data);
-      return response.data;
-    })
-    .catch((error) => {
-      console.log(error); //오류발생시 실행
-    });
-};
-const clearBan = async (userId) => {
-  return axios
-    .post("/api/admin/ban/clearBan?id=" + userId + "&userId=" + userId, {
-      userId: userId,
-    })
-    .then((response) => {
-      console.log(response);
-      console.log(response.data);
-      return response.data;
-    })
-    .catch((error) => {
-      console.log(error); //오류발생시 실행
-    });
-};
-const changeReportStatus = async (reportedId) => {
-  return axios
-    .post("/api/admin/ban/update?reportedId=" + reportedId, {
-      reportedId: reportedId,
-    })
-    .then((response) => {
-      console.log(response);
-      // console.log(response.data);
-      // return response.data;
-    })
-    .catch((error) => {
-      console.log(error); //오류발생시 실행
-    });
-};
+  .post("/api/admin/ban/add?banDays="+banDays+"&userId="+userId+"&reportId="+reportId+"&banReason="+banReason,{
+    banDays : banDays,
+    userId : userId, 
+    reportId : reportId,
+    banReason : banReason
+  })
+  .then((response)=>{
+    console.log(response);
+  })
+  .catch((error)=>{
+    console.log(error);				//오류발생시 실행
+  });
+}
+const searchBan = async(userId)=>{
+  
+  return axios.get("/api/admin/getBanUser/"+userId,{
+    userId : userId
+  })
+  .then((response)=>{
+    console.log(response);
+    console.log(response.data);
+    return response.data;
+  })
+  .catch((error)=>{
+    console.log(error);				//오류발생시 실행
+  });
+}
+const clearBan = async(userId)=>{
+  
+  return axios.post("/api/admin/ban/clearBan?id="+userId+"&userId="+userId,{
+    userId : userId,
+  })
+  .then((response)=>{
+    console.log(response);
+    console.log(response.data);
+    return response.data;
+  })
+  .catch((error)=>{
+    console.log(error);				//오류발생시 실행
+  });
+}
+const changeReportStatus = async(reportedId)=>{
+  
+  return axios.post("/api/admin/ban/update?reportedId="+reportedId,{
+    reportedId : reportedId,
+  })
+  .then((response)=>{
+    console.log(response);
+    // console.log(response.data);
+    // return response.data;
+  })
+  .catch((error)=>{
+    console.log(error);				//오류발생시 실행
+  });
+}
 
 const returnBoard = async (id) => {
   const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;

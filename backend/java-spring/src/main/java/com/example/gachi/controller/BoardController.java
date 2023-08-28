@@ -58,12 +58,12 @@ public class BoardController {
 
 
     //상세글 가져오기
-    @GetMapping("/board/{id}")
-    public ResponseEntity<BoardResponseDto> findboards(@PathVariable long id) {
-        Board board = boardService.getBoard(id);
-//        return ResponseEntity.ok().body(new BoardResponseDto(board));
-        return ResponseEntity.ok().body(new BoardResponseDto(board.getId(), board.getTitle(), board.getContent(), board.getCnt(), board.getCreateAt()));
-    }
+//    @GetMapping("/board/{id}")
+//    public ResponseEntity<BoardResponseDto> findboards(@PathVariable long id) {
+//        Board board = boardService.getBoard(id);
+////        return ResponseEntity.ok().body(new BoardResponseDto(board));
+//        return ResponseEntity.ok().body(new BoardResponseDto(board.getId(), board.getTitle(), board.getContent(), board.getCnt(), board.getCreateAt()));
+//    }
 
 //    @GetMapping("/api/boards")
 //    public ResponseEntity<List<BoardResponseDto>> findAllBoards() {

@@ -1,6 +1,7 @@
 package com.example.gachi.model;
 
 import com.example.gachi.model.enums.Review;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.AllArgsConstructor;
@@ -19,9 +20,11 @@ public class Manner extends BaseEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     private User reviewer;
 
     @Enumerated(value = EnumType.STRING)

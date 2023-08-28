@@ -1,5 +1,6 @@
 package com.example.gachi.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDate;
@@ -17,6 +18,7 @@ public class Schedule extends BaseEntity{
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     private User user;
 
     @Column(nullable = false)

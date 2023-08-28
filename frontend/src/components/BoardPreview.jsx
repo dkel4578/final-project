@@ -24,7 +24,7 @@ const BoardPreview = ({ boardInfo,kind }) => {
                 </div>
             </div>
             <a href="#" className="board-comment">
-                <span>10</span>
+                <span>{boardInfo.commentCount}</span>
                 <span>댓글</span>
             </a>
         </li>
