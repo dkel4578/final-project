@@ -7,14 +7,15 @@ import "../css/total.css";
 import "../css/board.css";
 import "../css/variables.css";
 import "../css/post-content.css";
-import { useCookies } from "react-cookie";
-import axios from "axios";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "font-awesome/css/font-awesome.min.css";
 import "../script/post-content.js";
 import "../script/custom.js";
+import { useCookies } from "react-cookie";
+import axios from "axios";
 import PropTypes from "prop-types";
 import {useSelector} from "react-redux";
+import MapComponentView from "./MapComponentView";
 
 
 function BoardViewForm() {
@@ -29,18 +30,20 @@ function BoardViewForm() {
   //const { kind } = searchParams.get('kind'); // kind 값을 추출
   const kind: string = searchParams.get('kind');
   const [cookies] = useCookies(['token']);
-  const [userData, setUserData] = useState(null); // 쿠키에서 유저정보 가져오기
-  const [userNickname, setUserNickname] = useState(null); // 쿠키에서 유저정보 가져오기 / 닉네임
-  const [userGender, setUserGender] = useState(null); // 쿠키에서 유저정보 가져오기 / 성별
+  // const [userData, setUserData] = useState(null); // 쿠키에서 유저정보 가져오기
+  // const [userNickname, setUserNickname] = useState(null); // 쿠키에서 유저정보 가져오기 / 닉네임
+  // const [userGender, setUserGender] = useState(null); // 쿠키에서 유저정보 가져오기 / 성별
+
+  const [localAddress, setLocalAddress] = useState(''); // 주소 상태 변수 추가
+  const localAddressInputRef = useRef(null);
+
+
   const userInfo = useSelector((state) => state.user.user); //유저 정보
-  const [reportType,setReportType] = useState("D");
+  const [reportType,setReportType] = useState("D");  //
   const [reportedId,setReportedId] = useState(null);
   const [reporterId,setReporterId] = useState(null);
   const [contentId,setContentId] = useState(null);
   const [category,setCategory] = useState(null);
-
-
-
 
 
   const commentInputRef = useRef(null);
@@ -49,6 +52,8 @@ function BoardViewForm() {
   const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
 
 
+  console.log("userInfo: ", userInfo);
+
   console.log(window.location.href);
   console.log("kind  ===>", kind);
   console.log("토큰: ", cookies.token);
@@ -56,9 +61,9 @@ function BoardViewForm() {
   //************************
   // enum 유형으로 설정
   //************************
-  BoardViewForm.propTypes = {
-    kind: PropTypes.oneOf(['N', 'Q', 'F', 'C', 'A', 'T']).isRequired,
-  };
+  // BoardViewForm.propTypes = {
+  //   kind: PropTypes.oneOf(['N', 'Q', 'F', 'C', 'A', 'T']).isRequired,
+  // };
 
 
 
@@ -90,11 +95,11 @@ function BoardViewForm() {
           if (!res.ok) {
             throw new Error('네트워크 응답이 올바르지 않습니다.');
           }
-          console.log("이미지: ==============> ",res);
+          // console.log("이미지: ==============> ",res);
           return res.json()
         })
         .then(imgInfo => {
-          console.log("imgInfo  ===========================================> ",imgInfo)
+          // console.log("imgInfo  ===========================================> ",imgInfo)
           setImgData(imgInfo);
         })
         .catch(error => {
@@ -103,21 +108,18 @@ function BoardViewForm() {
         });
   }
 
-
-
-  console.log("========================",imgData.imgSrc);
-
+  // console.log("========================",imgData.imgSrc);
 
   useEffect(() => {
-    fetchData();
-    fetchImgData();
+    fetchData(); //게시글
+    fetchImgData(); //이미지
   },[id]);
 
-  useEffect(() =>{
-    setReportedId(data.userId);
-    setReporterId(JSON.stringify(userInfo.uid));
-    setContentId(data.id);
-    setCategory("B");
+    useEffect(() =>{
+      setReportedId(data.userId);
+      setReporterId(JSON.stringify(userInfo.uid));
+      setContentId(data.id);
+      setCategory("B");
   }, [data,userInfo])
   const handleEditClick = () => {
     // 수정 페이지로 이동
@@ -155,6 +157,8 @@ function BoardViewForm() {
       });
   };
 
+  console.log("commentList +++++++++++> : ",commentList);
+
   useEffect(() => {
     fetchCommentData();
   }, [id]);
@@ -179,7 +183,7 @@ function BoardViewForm() {
       // }
       const response = await axios.post(`/api/comment/insert`, {
         content: enteredComment,
-        userId: userData,
+        userId: userInfo.uid,
         boardId: `${id}`,
       });
       console.log("response.data ============>>>>>>>>>> ", response.status);
@@ -216,7 +220,7 @@ function BoardViewForm() {
       // }
       const response2 = await axios.post(`/api/comment2/insert`, {
         content: enteredComment2,
-        userId: userData,
+        userId: userInfo.uid,
         boardId: `${id}`,
         parentId: parentId,
       });
@@ -317,12 +321,11 @@ console.log("kind  ===>", kind);
   //****************************
   //신고하기
   //****************************
-
-  // data.userId => reportedId
-  // reporterId => JSON.stringify(userInfo.uid)
-  // reportType
-  // category B로 전송
-  // contentId data.id
+  // data.userId => reportedId // 게시글, 댓글의 작성한 사람 (신고 대상자)
+  // reporterId => JSON.stringify(userInfo.uid)  // 유저id(로그인 id)
+  // reportType // 신고 내용
+  // category B로 전송  (보드: B, 댓글 : C)
+  // contentId data.id  // 보드의 id
 
   const handleReportButtonClick = async (event) => {
     event.preventDefault();
@@ -358,14 +361,117 @@ console.log("kind  ===>", kind);
   }
 
 
+  //********************************
+  //모달 창 관리하기
+  //********************************
+
+  const [mainPostReportInfo, setMainPostReportInfo] = useState(null); // 메인 게시글에 대한 신고 정보
+  const [commentReportInfo, setCommentReportInfo] = useState({}); // 댓글에 대한 신고 정보 (각 댓글 별로 관리)
+
+  // 모달 열기 함수 (신고 정보를 받아서 설정)
+  const openModal = (reportInfo) => {
+    console.log("reportInfo: ===========> ",reportInfo);
+    if (reportInfo.isMainPost) {
+      setMainPostReportInfo(reportInfo);
+    } else {
+      setCommentReportInfo((prevInfo) => ({
+        ...prevInfo,
+        [reportInfo.commentId]: reportInfo,
+      }));
+    }
+  };
+
+  // 모달 닫기 함수
+  const closeModal = () => {
+    setMainPostReportInfo(null);
+    setCommentReportInfo({});
+  };
+
+
+  //모달
+  // data.userId => reportedId // 게시글, 댓글의 작성한 사람 (신고 대상자)
+  // reporterId => JSON.stringify(userInfo.uid)  // 유저id(로그인 id)
+  // reportType // 신고 내용
+  // category B로 전송  (보드: B, 댓글 : C)
+  // contentId data.id  // 보드의 id
+
+  //************************************
+  // 메인 게시글의 신고 버튼 클릭 시 모달 열기
+  //************************************
+  const handleMainPostReportButtonClick = () => {
+    setCategory("B"); // 보드
+    // setReportedId(commentUserId) //신고 대상자
+    setContentId(data.id) // 댓글 id
+    const reportInfo = {
+      isMainPost: true,
+      reportedId: reportedId,
+      reporterId: reporterId,
+      contentId: contentId,
+      category: category,
+      // 신고 정보 설정 (reportedId, reporterId, contentId, reportType 등)
+    };
+    openModal(reportInfo);
+  };
+
+  //************************************
+  // 댓글의 신고 버튼 클릭 시 모달 열기
+  //************************************
+  const handleCommentReportButtonClick = (commentId, commentUserId) => {
+    setCategory("C"); //댓글
+    setReportedId(commentUserId) //신고 대상자
+    // setReporterId(userInfo.uid) //로그인 유저
+    setContentId(commentId) // 댓글 id
+
+
+    const reportInfo = {
+      isMainPost: false,
+      // commentId: commentId,
+      reportedId: reportedId,
+      reporterId: reporterId,
+      contentId: contentId,
+      category: category,
+      // 신고 정보 설정 (reportedId, reporterId, contentId, reportType 등)
+    };
+    openModal(reportInfo);
+  };
+
+
+
+  //*******************************
+  //지도보이기
+  //*******************************
+  // 추가한 상태 변수 showMap를 통해 MapComponent를 표시 여부를 제어
+  const [showMap, setShowMap] = useState(false); //지도 표시
+  // "지도 첨부" 버튼을 클릭하면 MapComponent를 보여주도록 설정
+
+
+  //********************************
+  //지도보이기 감추기 토글
+  //********************************
+  const toggleMap = () => {
+    setShowMap((prevShowMap) => !prevShowMap); // 상태를 반전시킵니다.
+  };
+
+  //********************************
+  // 주소 클릭 이벤트 핸들러
+  //********************************
+  const handleAddressClick = (address) => {
+    // 선택한 주소를 상태 변수에 저장
+    setLocalAddress(address);
+
+    // 주소 입력란에 선택한 주소를 설정
+    localAddressInputRef.current.value = address;
+  };
+
   
   return (
     <div className="body">
       <section className="post-content">
-        <div className="user-report-modal">
+        {/* ########################  게시판 모달 시작  ################################*/}
+        <div className={`user-report-modal ${mainPostReportInfo || Object.keys(commentReportInfo).length ? 'active' : ''}`}>
           <div className="user-report-modal-contents">
             <h2 className="user-report-title">신고하기</h2>
-            <i className="fa fa-times modal-close" aria-hidden="true"></i>
+            <i className="fa fa-times modal-close" aria-hidden="true" onClick={closeModal}></i>
             <fieldset className="user-report-modal-content-field">
               <label
                 htmlFor="doubling-the-post"
@@ -441,6 +547,7 @@ console.log("kind  ===>", kind);
             </div>
           </div>
         </div>
+        {/* ########################  게시판 모달 끝  ################################*/}
         <div className="board-kind">
           <Link to="/board/C" className={kind === "C" ? "active" : ""}>
             커피한잔할래요
@@ -455,17 +562,51 @@ console.log("kind  ===>", kind);
             술한잔할래요
           </Link>
         </div>
+
         <div className="post-content-inner">
+          {/*############################# 게시글 시작  ###################################*/}
           <div className="post-title">{data.title}</div>
           <div className="post-main-contents">
             <div className="post-main-content">
               {/* quill 에디터로 작성된 HTML 내용을 표시 */}
               <div dangerouslySetInnerHTML={{ __html: data.content }} />
+              {data.localAddress &&
+              <p>만남장소 : {data.localPlace}<br/>
+                만남주소 : {data.localAddress}</p>
+              }
               <p>{dayjs(data.creatAt).format("YYYY/MM/DD HH:mm:ss")}</p>
-
-
-
+              {imgData && <img src={`/boardImg/${imgData.imgName}`} style={{ width: '100px' }}  />}
             </div>
+            {/*############################# 게시글 끝  ###################################*/}
+
+            {/*############################# 지도보기 시작  ###################################*/}
+            <div className="write-post-content-btns">
+              {/* showMap 상태에 따라 MapComponent를 표시 또는 숨김 */}
+              <input
+                  type="button"
+                  className="map-attach-btn"
+                  onClick={toggleMap}
+                  value={showMap ? "지도 숨기기" : "지도 보기"}
+              >
+              </input>
+            </div>
+            <div className="write-title-box">
+              <input type="text"
+                     className="write-title"
+                     max={70}
+                     name="localAddress" id='localAddress'  ref={localAddressInputRef}
+                     value={data.localAddress}
+                     placeholder="만남 장소를 지도에서 검색해주세요" />
+            </div>
+            <div className="write-post-map-place">
+              <div className="write-post-map"></div>
+            </div>
+
+            <div>
+              {/* showMap 상태에 따라 MapComponent를 표시 또는 숨김 */}
+              {showMap && <MapComponentView onAddressClick={handleAddressClick} localAddress={data.localAddress} />}
+            </div>
+            {/*############################# 지도보기 끝  ###################################*/}
             <div className="post-main-content-btns">
               <input
                 type="button"
@@ -488,7 +629,7 @@ console.log("kind  ===>", kind);
             <div className="post-user-information">
               <div className="post-users-infos post-user-nick-name">
                 <p>닉네임</p>
-                <p>홍찰찰</p>
+                <p>{userInfo.nickname}</p>
               </div>
               <div className="post-users-infos post-user-gender">
                 <p>성별</p>
@@ -500,6 +641,7 @@ console.log("kind  ===>", kind);
               </div>
               <div className="post-users-infos post-user-introduce"></div>
             </div>
+            {/*###################### 게시글 신고 시작 #########################*/}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="siren icon icon-tabler icon-tabler-urgent"
@@ -511,12 +653,14 @@ console.log("kind  ===>", kind);
               fill="none"
               strokeLinecap="round"
               strokeLinejoin="round"
+              onClick={handleMainPostReportButtonClick}
             >
               <path stroke="none" d="M0 0h24v24H0z" fill="none" />
               <path d="M8 16v-4a4 4 0 0 1 8 0v4" />
               <path d="M3 12h1m8 -9v1m8 8h1m-15.4 -6.4l.7 .7m12.1 -.7l-.7 .7" />
               <path d="M6 16m0 1a1 1 0 0 1 1 -1h10a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1z" />
             </svg>
+            {/*###################### 게시글 신고 끝 #########################*/}
           </div>
           <div className="post-user-comment">
             <ul className="comment-place">
@@ -555,7 +699,7 @@ console.log("kind  ===>", kind);
                     </div>
                   ) : (
                     // 수정 폼이 아닌 경우
-                    <div>
+                    <div className="comment-modify-box">
                       <p>{commentInfo.content}</p>
                       <p>{commentInfo.id}</p>
                       <div className="comment-about-btns">
@@ -573,6 +717,26 @@ console.log("kind  ===>", kind);
                         >
                           삭제
                         </button>
+                      {/* ########################## 댓글 신고 버튼  ######################*/}
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="siren2 icon icon-tabler icon-tabler-urgent"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            strokeWidth="1.5"
+                            stroke="#dc143c"
+                            fill="none"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            onClick={() => handleCommentReportButtonClick(commentInfo.id, commentInfo.userId)}
+                        >
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                          <path d="M8 16v-4a4 4 0 0 1 8 0v4" />
+                          <path d="M3 12h1m8 -9v1m8 8h1m-15.4 -6.4l.7 .7m12.1 -.7l-.7 .7" />
+                          <path d="M6 16m0 1a1 1 0 0 1 1 -1h10a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1z" />
+                        </svg>
+
                       </div>
                     </div>
                   )}
