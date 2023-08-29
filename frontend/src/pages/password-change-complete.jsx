@@ -20,7 +20,7 @@ const PasswordChangeComplete = () => {
               <i className="bi bi-eye-slash toggle-eye"></i>
             </div>
             <p className="input-pw-text">
-              영어 대/소문자, 숫자, 특수문자(!@#$%^&*)가 모두 포함된 8자리 이상의 조합이어야 합니다!
+              영어 대/소문자, 숫자, 특수문자(!@#$%^&*)가 <br></br> 모두 포함된 8자리 이상의 조합이어야 합니다!
             </p>
             <div className="input-pw-check">
               <input type="password" placeholder="비밀번호 확인" className="input-pw-check-input"/>

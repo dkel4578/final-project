@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+
 public class BoardAdminDto {
     private Long id;
     private String title;

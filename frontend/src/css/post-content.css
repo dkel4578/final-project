@@ -37,6 +37,14 @@
   border-radius: 20px;
   transition: 0.4s;
 }
+.user-report-modal-content{
+  display: flex;
+  align-content: center;
+}
+.user-report-modal-content-radio{
+  margin-right: 5px;
+  transform: translateY(4px);
+}
 .post-main-content-btns .post-modify-btn{
   background-color: var(--remonblue);
 }
@@ -132,11 +140,7 @@
 .user-nick-name{
   /* font-weight: bold; */
 }
-.user-gender,.user-manner{
-}
-.user-manner{
 
-}
 /* comment-container-content-main-text */
 .comment-container-content-main-text{
   word-wrap: break-word;
@@ -368,6 +372,15 @@
   display: flex;
   gap: 5px;
 }
+
+/* comment-modify-box */
+.comment-modify-box{
+  border: 1px;
+  border-color: red;
+  /*background-color: #4f86ec;*/
+}
+
+
 .comment-about-btn,.board-view-recomment-about{
   padding: 5px 10px;
   border-radius: 10px;

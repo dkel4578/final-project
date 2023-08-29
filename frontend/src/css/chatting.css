@@ -1,14 +1,13 @@
 form {
   background: white;
-  position: fixed;
   bottom: 0;
-  /* width: 100%; */
-  border-top: 1px solid gray;
+  width: 100%;
   display : table;
+  margin-bottom: 10px;
 }
 
 #msgList {
-  height: 100%;
+  min-height: 70vh;
   margin-bottom: 52px;
   padding: 0;
   overflow: auto;
@@ -31,7 +30,7 @@ form {
   position: relative;
   max-width:70%;
   display: block;
-  float: right;
+  float: left;
   clear: both;
   word-wrap: break-word;
 }
@@ -40,7 +39,7 @@ form {
   position: relative;
   max-width: 70%;
   display: block;
-  float: left;
+  float: right;
   clear: both;
   word-wrap: break-word;
 }

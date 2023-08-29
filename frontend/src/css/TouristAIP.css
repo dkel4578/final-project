@@ -102,7 +102,11 @@
  text-shadow: 0 0 4px #000000;
  margin: 10px 0;
  
+<<<<<<< HEAD
 }
 .map_api_see_more a {
   transition: color 0.3s; /* 색상 변경에 애니메이션을 추가 */
 }
+=======
+}
+>>>>>>> 82d3972a023fd82f4d9e69b371d176f1e499ffa4

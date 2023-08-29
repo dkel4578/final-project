@@ -3,12 +3,14 @@ package com.example.gachi.model.dto.board;
 import com.example.gachi.model.Board;
 import com.example.gachi.model.User;
 import com.example.gachi.model.enums.Kind;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.apache.ibatis.javassist.NotFoundException;
 
 @Data
 @AllArgsConstructor
 @Builder
+@JsonIgnoreProperties({"user"})
 public class AddBoardRequestDto {
 
     private Kind kind;
@@ -16,6 +18,9 @@ public class AddBoardRequestDto {
     private String content;
     private User user;
     private Long userId;
+    private String localPlace;
+    private String localAddress;
+
 
     //게시글 입력
     public Board toEntity(User user) throws NotFoundException{
@@ -24,6 +29,8 @@ public class AddBoardRequestDto {
                 .title(title)
                 .content(content)
                 .user(user)
+                .localPlace(localPlace)
+                .localAddress(localAddress)
                 .build();
     }
 

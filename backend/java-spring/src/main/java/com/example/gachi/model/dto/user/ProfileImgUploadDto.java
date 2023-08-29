@@ -2,6 +2,7 @@ package com.example.gachi.model.dto.user;
 
 import com.example.gachi.model.ProfileImg;
 import com.example.gachi.model.User;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,6 +12,7 @@ import java.util.Optional;
 @Getter
 @Setter
 @Builder
+@JsonIgnoreProperties({"user"})
 public class ProfileImgUploadDto {
 
     private Long id;

@@ -1,49 +1,60 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import React, { useRef, useState, useEffect } from "react";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import * as StompJs from '@stomp/stompjs';
+import * as StompJs from "@stomp/stompjs";
 import * as SockJS from "sockjs-client";
-import styled from "styled-components"
+import styled from "styled-components";
 import { actionCreators as chattingActions } from "../store/modules/chatting";
+import Swal from "sweetalert2";
 
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
 // import Button from '@material-ui/core/Button';
 // import TextField from '@material-ui/core/TextField';
 
 import "../css/chatting.css";
 
-function ChatPage(props) {
-  console.log('ChatPage props:', props);
-
+function ChatPage(chatRoomProps) {
   const location = useLocation();
+  const props = location.state && location.state.chatRoomProps;
+  const roomId = location.state?.roomId;
+  const roomName = location.state?.roomName;
+  console.log("ChatPage props:", props);
+  console.log("ChatPage chatRoomProps:", chatRoomProps);
   const navigate = useNavigate();
-
+  const messageRef = useRef(null);
   const userInfo = useSelector((state) => state.user.user);
   // console.log('ChatPage userInfo:', userInfo);
   const dispatch = useDispatch();
-
+  const [messageList, setMessageList] = useState([]);
   const stompClient = useRef({});
-  let { channelId } = useParams();
-  const chatRoomNumber = Number(channelId);
+  // const chatRoomNumber = Number(channelId);
+  // const roomId = location.state.roomId;
+
+  console.log("roomId: ", roomId);
+  const chatRoomNumber = roomId;
+  const chatRoomName = roomName;
 
   const chatConnect = () => {
     if (chatRoomNumber === 0) {
-      const chatRoomName = prompt('채팅방 이름을 넣어주세요');
-      
+      const chatRoomName = prompt("채팅방 이름을 넣어주세요");
+
       // 채팅방 새로 생성
       if (chatRoomName) {
-        dispatch(chattingActions.createChatRoomAPI({ chatRoomName: chatRoomName, uid: userInfo.uid }));
+        dispatch(
+          chattingActions.createChatRoomAPI({
+            chatRoomName: chatRoomName,
+            uid: userInfo.uid,
+          })
+        );
         // navigate('/chat/room/list');
         // return;
-      }
-      else
-        return;
+      } else return;
     } else if (isNaN(chatRoomNumber)) {
-      alert('잘못된 경로로 대화방에 들어왔네요~~ ㅠㅠ');
+      alert("잘못된 경로로 대화방에 들어왔네요~~ ㅠㅠ");
       return;
     }
-    
+
     stompClient.current = new StompJs.Client({
       webSocketFactory: () => new SockJS("/ws-stomp/chat"), // proxy를 통한 접속
       // connectHeaders: {
@@ -54,16 +65,16 @@ function ChatPage(props) {
       heartbeatIncoming: 4000,
       heartbeatOutgoing: 4000,
       onConnect: () => {
-        console.log('stompSockjs connect success');
+        console.log("stompSockjs connect success");
 
         // 채팅방에 대한 구독
         chatSubscribe();
       },
       onStompError: (frame) => {
-        console.error('onStompError frame:', frame);
+        console.error("onStompError frame:", frame);
       },
       onDisconnect: () => {
-        console.log('stompSockjs disconnect success');
+        console.log("stompSockjs disconnect success");
         chatDisconnect();
       },
     });
@@ -75,38 +86,90 @@ function ChatPage(props) {
     if (!stompClient.current.connected) return;
 
     stompClient.current.publish({
-      destination: '/pub/chat',
+      destination: "/pub/chat",
       body: JSON.stringify({
-        channelId: _channelId,
-        writerId: userInfo.uid,
+        roomId: _channelId,
+        userId: userInfo.uid,
         chat: _chatting,
       }),
     });
   };
+  let [chattingMessageList, setChattingMesssageList] = useState([]);
+  //채팅메세지 불러오기
+  useEffect(() => {
+    const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
+    console.log(roomId);
+
+    fetch(`/api/messageHistory?roomId=${encodeURIComponent(roomId)}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": jsonContent,
+      },
+    })
+      .then((res) => {
+        console.log("ChatPage Res >>>>> ", res);
+        if (!res.ok) {
+          Swal.fire({
+            icon: "error",
+            title: "채팅",
+            text: "채팅 메세지 호출에 실패하였습니다.",
+            width: 360,
+          });
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log("ChatPage Data >>>>> ", data);
+        const updatedMessageList = [];
+
+        data.forEach((item) => {
+          if (item && item.message != null) {
+            updatedMessageList.push({
+              message: item.message,
+              userId: item.userId,
+              nickname: item.nickname,
+            });
+          }
+        });
+
+        setMessageList(updatedMessageList);
+        // window.scrollTo(0, document.body.scrollHeight);
+      });
+  }, [roomId, chattingMessageList]);
 
   const chatSubscribe = () => {
-    stompClient.current.subscribe('/sub/chat/' + channelId, (response) => {
+    stompClient.current.subscribe("/sub/chat/room/" + roomId, (response) => {
       // console.log('subscribe body', response.body);
-      if(!userInfo.uid) {
-        alert('비상적으로 접근하여 채팅 사용을 할 수 없습니다.');
+      if (!userInfo.uid) {
+        alert("비상적으로 접근하여 채팅 사용을 할 수 없습니다.");
         setChattingMesssageList([]);
         return;
       }
       const jsonBody = JSON.parse(response.body);
       chattingMessageList = chattingMessageList.map((msg, idx) => {
-        ++keyId;  
+        ++keyId;
         return msg;
       });
 
-      let myOther = '';
+      let myOther = "";
+      console.log("jsonBody. >>>>>> ", jsonBody)
       // if (Number(jsonBody.writerId) != Number(localStorage.getItem('uid'))) {
-      if (jsonBody.writerId != userInfo.uid) {
-        myOther = 'other-msg'
+      if (jsonBody.userId != userInfo.uid) {
+        myOther = "other-msg";
       } else {
-        myOther = 'my-msg'
+        myOther = "my-msg";
       }
+
       // chattingMessageList = chattingMessageList.concat(<li key={++keyId}>{jsonBody.chat}</li>)
-      chattingMessageList = chattingMessageList.concat(<li key={++keyId}><div className={myOther}><div className="msg"><pre>{jsonBody.chat}</pre></div></div></li>)
+      chattingMessageList = chattingMessageList.concat(
+        <li key={++keyId}>
+          <div className={myOther}>
+            <div className="msg">
+              <pre>{jsonBody.chat}</pre>
+            </div>
+          </div>
+        </li>
+      );
       setChattingMesssageList(chattingMessageList);
 
       window.scrollTo(0, document.body.scrollHeight);
@@ -114,8 +177,7 @@ function ChatPage(props) {
   };
 
   const chatDisconnect = () => {
-    if (stompClient && stompClient.current)
-      stompClient.current.unsubscribe();
+    if (stompClient && stompClient.current) stompClient.current.unsubscribe();
   };
 
   useEffect(() => {
@@ -127,13 +189,13 @@ function ChatPage(props) {
     };
   }, []);
 
-  let [chattingMessageList, setChattingMesssageList] = useState([]);
   let keyId = 0;
-  
-  const handleChatSend = (event) => { // 보내기 버튼 눌렀을 때 publish
+
+  const handleChatSend = (event) => {
+    // 보내기 버튼 눌렀을 때 publish
     event.preventDefault();
 
-    chatPublish(event.target.value, channelId);
+    chatPublish(event.target.value, roomId);
 
     chattingMessageList = chattingMessageList.map((msg, idx) => {
       ++keyId;
@@ -141,21 +203,30 @@ function ChatPage(props) {
       // return <li key={keyId}>{msg}</li>
       return msg;
     });
-    chattingMessageList = chattingMessageList.concat(<li key={++keyId}><div className='my-msg'><div className="msg"><pre>{event.target.value}</pre></div></div></li>)
+    chattingMessageList = chattingMessageList.concat(
+      <li key={++keyId}>
+        <div className="my-msg">
+          <div className="msg">
+            <pre>{event.target.value}</pre>
+          </div>
+        </div>
+      </li>
+    );
     // chattingMessageList = chattingMessageList.concat(<li key={++keyId}>{event.target.value}</li>)
     // setChattingMesssageList([...chattingMessageList, <li key={++keyId}>{event.target.value}</li>]);
+
     setChattingMesssageList(chattingMessageList);
 
-    input.current.value = '';
+    input.current.value = "";
     input.current.focus();
     setIsButtonEnabled(false);
-    window.scrollTo(0, document.body.scrollHeight);
+    // window.scrollTo(0, document.body.scrollHeight);
   };
 
   const input = useRef();
   const keyPress = (e) => {
-    if((e.target.value.search(/\S/) != -1) === true){
-      if (e.key === 'Enter') {
+    if ((e.target.value.search(/\S/) != -1) === true) {
+      if (e.key === "Enter") {
         handleChatSend(e);
       }
     }
@@ -181,9 +252,33 @@ function ChatPage(props) {
   return (
     <>
       <div id="msgList">
+        <p>{chatRoomName}</p>
         <ul>
-          {chattingMessageList}
+        {console.log(messageList)}
+          {messageList.map((messageObject, index) => (
+             
+            <li
+              key={index}
+              className={
+                messageObject.userId === userInfo.uid ? "my-msg" : "other-msg"
+              }
+            >
+              <div className="msg">
+                <pre>
+                  {messageObject.userId === userInfo.uid ? (
+                    messageObject.message
+                  ) : (
+                    <>
+                      <p>{messageObject.nickname}</p>
+                      <p>{messageObject.message}</p>
+                    </>
+                  )}
+                </pre>
+              </div>
+            </li>
+          ))}
         </ul>
+        {/* <ul>{chattingMessageList}</ul> */}
       </div>
       <form onSubmit={handleChatSend}>
         <div className="msg-send-part">
@@ -195,26 +290,30 @@ function ChatPage(props) {
               autoComplete="off"
               style={{ margin: 8, border: 0 }}
               placeholder="메세지를 입력해주세요"
-              onKeyPress={keyPress} 
+              onKeyPress={keyPress}
               fullWidth
-              onChange={changeTextField} 
+              onChange={changeTextField}
               inputRef={input}
               margin="normal"
+              ref={messageRef}
             />
           </div>
           <div id="send-btn">
-            <Button variant="contained" color="primary" onClick={handleChatSend} 
-              // disabled={!isEnabled} 
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleChatSend}
+              // disabled={!isEnabled}
               disabled={!isButtonEnabled}
               style={{ marginTop: "-38px" }}
             >
               <div className={{ fontSize: "20px" }}>전송</div>
             </Button>
           </div>
-        </div>  
+        </div>
       </form>
     </>
-  )
+  );
 }
 
 export default ChatPage;

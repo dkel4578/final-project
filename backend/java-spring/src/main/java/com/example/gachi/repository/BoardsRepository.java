@@ -1,6 +1,7 @@
 package com.example.gachi.repository;
 
 import com.example.gachi.model.Board;
+import com.example.gachi.model.User;
 import com.example.gachi.model.enums.Kind;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,9 +10,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-    //게시글 가져오기 (검색 포함)
+import java.util.Optional;
+
+//게시글 가져오기 (검색 포함)
     @Repository
     public interface BoardsRepository extends JpaRepository<Board, Long> {
+
 
     @Query(value = "SELECT p " +
                     "FROM Board p " +
@@ -35,6 +39,19 @@ import org.springframework.stereotype.Repository;
             @Param("kindValue") Kind kindValue,
             Pageable pageable
     );
+
+//    @Query("SELECT p, (SELECT COUNT(c) FROM Comment c WHERE c.board = p) AS commentCount " +
+//            "FROM Board p " +
+//            "WHERE p.kind = :kindValue " +
+//            "AND p.delYn = 'N' " +
+//            "AND (:searchWord IS NULL OR p.title LIKE %:searchWord% OR p.content LIKE %:searchWord%) " +
+//            "ORDER BY p.createAt DESC")
+//    Page<Object[]> findBoardsWithCommentCount(
+//            @Param("kindValue") Kind kindValue,
+//            @Param("searchWord") String searchWord,
+//            Pageable pageable
+//    );
+
     Page<Board> findByIdLessThan(Long boardId, Pageable pageable);
 
         default Page<Board> fetchBoardList(

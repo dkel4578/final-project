@@ -17,7 +17,7 @@ spring:
   datasource:
     url: jdbc:mariadb://${DB_SOURCE_URL}    # mariadb
 #    url: jdbc:mariadb://localhost:3306/finalProject
-#    driver-class-name: org.mariadb.jdbc.Driver
+    driver-class-name: org.mariadb.jdbc.Driver
     username: ${DB_SOURCE_ID}
     password: ${DB_SOURCE_PW}
 #    username: root
@@ -69,7 +69,9 @@ spring:
       enabled: true
       max-file-size: 10MB
       max-request-size: 50MB
-
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
 # mapper.xml
 mybatis:
   mapper-locations: mybatis-mapper/**/*.xml

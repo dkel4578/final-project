@@ -1,26 +1,20 @@
 package com.example.gachi.service.board;
 
 import com.example.gachi.model.Board;
+import com.example.gachi.model.BrdImg;
 import com.example.gachi.model.Comment;
 import com.example.gachi.model.User;
 import com.example.gachi.model.dto.board.*;
 import com.example.gachi.model.enums.Kind;
-import com.example.gachi.repository.BoardRepository;
-import com.example.gachi.repository.BoardsRepository;
-import com.example.gachi.repository.CommentRepository;
-import com.example.gachi.repository.UserRepository;
+import com.example.gachi.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.javassist.NotFoundException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,19 +25,34 @@ public class BoardService {
     private final BoardsRepository boardsRepository;
     private final UserRepository userRepository;
     private final CommentRepository commentRepository;
+    private final BrdImgRepository brdImgRepository;
 
     //게시판 저장
     @Transactional
-    public Board save(AddBoardRequestDto addBoardRequestDto) throws NotFoundException{
-        System.out.println("addBoardRequestDto: ---------------=>"  +  addBoardRequestDto);
+//    public Board save(AddBoardRequestDto addBoardRequestDto) throws NotFoundException{
+//        System.out.println("addBoardRequestDto: ---------------=>"  +  addBoardRequestDto);
+//        User userEntity = userRepository.findById(addBoardRequestDto.getUserId()).orElseThrow(() -> new NotFoundException("User not found444444"));
+//        Board board = addBoardRequestDto.toEntity(userEntity);
+//        return boardRepository.save(board);
+//   }
+    public Long save(AddBoardRequestDto addBoardRequestDto) throws NotFoundException {
         User userEntity = userRepository.findById(addBoardRequestDto.getUserId()).orElseThrow(() -> new NotFoundException("User not found444444"));
         Board board = addBoardRequestDto.toEntity(userEntity);
-        return boardRepository.save(board);
-   }
+        Board savedBoard = boardRepository.save(board);
+        return savedBoard.getId(); // 생성된 게시글 ID 반환
+    }
 
-    //글 상세 정보 가져오기
-    public Board getBoard(long boardId) {
-        return boardRepository.findById(boardId).orElseThrow(() -> new IllegalArgumentException("not found : " + boardId));
+    //게시글 상세 정보 가져오기
+    public BoardResponseDto getBoard(long id) {
+        Optional<Board> boardResponseDto = boardRepository.findById(id);
+//        return boardRepository.findById(boardId).orElseThrow(() -> new IllegalArgumentException("not found : " + boardId));
+        return BoardResponseDto.of(boardResponseDto.orElse(null));
+    }
+
+    //게시글  이미지 정보 가져오기
+    public BrdImgResponseDto getBrdImg(long brdId) {
+        Optional<BrdImg> brdImgResponseDto = brdImgRepository.findByBoardId(brdId);
+        return BrdImgResponseDto.of(brdImgResponseDto.orElse(null));
     }
 
 
@@ -79,6 +88,26 @@ public class BoardService {
                 .map(BoardResponseDto::of)
                 .collect(Collectors.toList());
     }
+
+
+//    public Page<Board> fetchBoardListWithCommentCount(
+//            Kind kindValue,
+//            String searchWord,
+//            Pageable pageable
+//    ) {
+//        Page<Object[]> boardData = boardsRepository.findBoardsWithCommentCount(kindValue, searchWord, pageable);
+//        List<Board> boards = new ArrayList<>();
+//
+//        for (Object[] row : boardData) {
+//            Board board = (Board) row[0];
+//            Long commentCount = (Long) row[1];
+//            board.setCommentCount(commentCount.intValue()); // 댓글 수 설정
+//            boards.add(board);
+//        }
+//
+//        return new PageImpl<>(boards, pageable, boardData.getTotalElements());
+//    }
+
 
     //    public List<BoardResponseDto> fetchBoardPagesBy(Long lastBoardId, int size){
 //        PageRequest pageRequest = PageRequest.of(0, size);

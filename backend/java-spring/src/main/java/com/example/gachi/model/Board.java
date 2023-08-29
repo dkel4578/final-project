@@ -1,9 +1,7 @@
 package com.example.gachi.model;
 
 import com.example.gachi.model.enums.Kind;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -38,20 +36,38 @@ public class Board extends BaseEntity{
     private String delYn="N";
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @JsonBackReference
     private User user;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name="board_id")
-    @JsonIgnore
+    @JsonManagedReference
     @ToString.Exclude
     private List<Comment> comments;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name="board_id")
-    @JsonIgnore
+    @JsonManagedReference
     @ToString.Exclude
     private List<BrdImg> brdImgs;
+
+    private int commentCount; // 댓글 수를 저장할 필드 추가
+
+    // 댓글 수 설정 메소드 추가
+    public void setCommentCount(int commentCount) {
+        this.commentCount = commentCount;
+    }
+
+    private String localPlace; // 만남장소 필드 추가
+    public void setLocalPlace(String localPlace) {
+        this.localPlace = localPlace;
+    }
+
+    private String localAddress; // 만남주소 필드 추가
+    public void setLocalAddress(String localAddress) {
+        this.localAddress = localAddress;
+    }
+
 
 
     public void setKind(Kind  kind) {

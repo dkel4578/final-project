@@ -3,18 +3,20 @@ package com.example.gachi.model.dto.user;
 import com.example.gachi.model.Manner;
 import com.example.gachi.model.User;
 import com.example.gachi.model.enums.Review;
-import lombok.Builder;
-import lombok.Getter;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 
 @Getter
+@JsonIgnoreProperties({"user", "reviewer"})
 public class MannerRequestDto {
     private Long id;
     private User user;
-    private final Long userId;
+    private Long userId;
     private User reviewer;
-    private final Long reviewerId;
-    private final Review review;
-    private final long score;
+    private Long reviewerId;
+    private Review review;
+    private long score;
     @Builder
     public Manner addMannerScore(User user, User reviewer){
         return Manner.builder()
@@ -30,4 +32,9 @@ public class MannerRequestDto {
         this.review = review;
         this.score = score;
     }
+
+    MannerRequestDto(){
+
+    }
+
 }

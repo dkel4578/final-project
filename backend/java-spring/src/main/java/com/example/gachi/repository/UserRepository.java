@@ -11,6 +11,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     boolean existsByLoginId(String loginId);
     boolean existsByNickname(String nickname);
     boolean existsByEmail(String email);
+    boolean existsByLoginIdAndPassword(String loginId, String password);
     Optional<User> findByLoginId(String loginId);
     Optional<User> findByLoginIdAndProvider(String loginId, String provider);
 
@@ -23,6 +24,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findByBannedYn(String bannedYn);
 
     String findPasswordByLoginId(String loginId);
+
 
     User findAllById(Long userId);
 

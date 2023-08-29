@@ -2,12 +2,19 @@ package com.example.gachi.service.board;
 
 import com.example.gachi.model.Report;
 import com.example.gachi.model.User;
+import com.example.gachi.model.dto.Report.AddReportDto;
 import com.example.gachi.model.dto.Report.ReportRequestDto;
-import com.example.gachi.model.dto.board.ReportResponseDto;
+import com.example.gachi.model.dto.Report.ReportResponseDto;
+
+import com.example.gachi.model.enums.BanReason;
+import com.example.gachi.model.enums.ReportCategory;
+import com.example.gachi.model.enums.ReportStatus;
 import com.example.gachi.repository.ReportRepository;
 import com.example.gachi.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,5 +31,20 @@ public class ReportService {
         reportRepository.save(report);
 
         return ReportResponseDto.of(report);
+    }
+
+    @Transactional
+    public Report save(AddReportDto addReportDto,
+                     ReportCategory category,
+                     Long contentId,
+                     Long reportedId,
+                     Long reporterId,
+                     BanReason reportType
+                     )throws NotFoundException{
+        User reportedUserEntity = userRepository.findById(reportedId).orElseThrow(() -> new NotFoundException("User not found"));
+        User reporterUserEntity = userRepository.findById(reporterId).orElseThrow(() -> new NotFoundException("User not found"));
+        Report report = addReportDto.toEntity(category, contentId, reportedUserEntity,reporterUserEntity, reportType);
+        Report savedReport = reportRepository.save(report);
+        return  savedReport;
     }
 }
