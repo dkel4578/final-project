@@ -21,9 +21,9 @@ function BoardListForm3() { // Receive the 'kind' prop
   //************************
   // enum 유형으로 설정
   //************************
-  BoardListForm3.propTypes = {
-    kind: PropTypes.oneOf(['N', 'Q', 'F', 'C', 'A', 'T']).isRequired,
-  };
+  // BoardListForm3.propTypes = {
+  //   kind: PropTypes.oneOf(['N', 'Q', 'F', 'C', 'A', 'T']).isRequired,
+  // };
 
   let [boardList, setBoardList] = useState([]);
   const { ref, inView } = useInView();
@@ -177,9 +177,9 @@ function BoardListForm3() { // Receive the 'kind' prop
 }
 
 
-BoardListForm3.propTypes = {
-  kind: PropTypes.oneOf(['N', 'Q', 'F', 'C', 'A', 'T']).isRequired,
-};
+// BoardListForm3.propTypes = {
+//   kind: PropTypes.oneOf(['N', 'Q', 'F', 'C', 'A', 'T']).isRequired,
+// };
 
 
 export default BoardListForm3;

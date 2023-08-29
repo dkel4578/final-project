@@ -39,6 +39,15 @@ public class ScheduleService {
                 .toList();
     }
 
+    //스케쥴 공유
+    public List<ScheduleResponseDto> shareScheduleList(String loginId){
+        Long userId = userRepository.findByLoginId(loginId).get().getId();
+        List<Schedule> scheduleList = scheduleRepository.findAllByUserIdAndDeleteYn(userId, "N");
+
+        return scheduleList.stream()
+                .map(ScheduleResponseDto::of)
+                .toList();
+    }
     //스케쥴 날짜 체크
     public boolean dateCheck(Long userId, LocalDate date){
         return scheduleRepository.existsByUserIdAndDateAndDeleteYn(userId, date, "N");

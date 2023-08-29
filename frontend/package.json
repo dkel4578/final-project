@@ -29,6 +29,7 @@
     "react-icons": "^4.10.1",
     "react-infinite-scroll-component": "^6.1.0",
     "react-intersection-observer": "^9.5.2",
+    "react-kakao-maps": "^0.0.13",
     "react-query": "^3.39.3",
     "react-quill": "^2.0.0",
     "react-redux": "^7.2.3",

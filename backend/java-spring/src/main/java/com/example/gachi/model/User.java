@@ -31,10 +31,6 @@ public class User extends BaseEntity{
 
     private Long accessTokenExpireIn;
 
-    private String refreshToken;
-
-    private Long refreshTokenExpireIn;
-
     private String password;
 
 //    @Column(nullable = false)
@@ -50,7 +46,8 @@ public class User extends BaseEntity{
     @Size(min=1, max=16)
     private String nickname;
 
-    private String profileMessage;
+    @Builder.Default
+    private String profileMessage = "자기소개를 입력해주세요.";
 
 //    @Column(nullable = false)
     private LocalDate birth;

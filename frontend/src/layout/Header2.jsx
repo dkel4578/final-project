@@ -13,7 +13,7 @@ function Header2() {
 		<div>
   <header className="header2">
     <div className="header2-container">
-      <a href="/" class="move-to-main">
+      <a href="/" className="move-to-main">
         <img src={require('../images/header2-logo.png')} alt=""></img>
       </a>
       <div className="logout-container">

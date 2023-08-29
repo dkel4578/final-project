@@ -37,7 +37,40 @@ function ChatPage(chatRoomProps) {
   console.log("roomId: ", roomId);
   const chatRoomNumber = roomId;
   const chatRoomName = roomName;
+
   scrollToBottom();
+
+  const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
+  useEffect(() =>{
+    fetch(`/api/chatRoomCheck?roomId=${encodeURIComponent(roomId)}&userId=${
+      userInfo.uid
+    }`, {
+      method: "GET",
+      headers: {
+        "Content-Type" : jsonContent
+      }
+    })
+    .then((res) => {
+      if(!res.ok) {
+        throw new Error("fetch Error")
+      }
+      return res.text();
+    })
+    .then((data) => {
+      console.log(data);
+      if(!data){
+        Swal.fire({
+          icon: "error",
+          title: "채팅방 참가", // Alert 제목
+          text: "입장할 수 없는 채팅방입니다.",
+          width: 360, // Alert 내용
+        });
+        navigate(-1);
+      }
+      
+    })
+  }, [])
+
 
   const chatConnect = () => {
     if (chatRoomNumber === 0) {
