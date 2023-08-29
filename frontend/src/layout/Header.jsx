@@ -73,6 +73,7 @@ function Header({ userInfo }) {
               data.loginId,
               data.status,
               data.name,
+              data.email,
               data.gender,
               data.phone,
               data.birth,
