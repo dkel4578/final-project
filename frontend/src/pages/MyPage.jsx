@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 function MyPage() {
   const userInfo = useSelector((state) => state.user.user);
   const [cookies] = useCookies(['token']);
-	let isLogin = false;
+	let isLogin = userInfo.isLogin
 	const navigate = useNavigate();  // eslint-disable-line no-unused-vars
   const passwordRef = useRef(null);
 
@@ -28,7 +28,7 @@ function MyPage() {
   //프로필 이미지 정보 가져오기
   useEffect(() => {
     if (isLogin) {
-      fetch(`/api/profile/me?userId=${encodeURIComponent(userInfo.id)}`, {
+      fetch(`/api/profile/me?userId=${encodeURIComponent(userInfo.uid)}`, {
         method: 'GET',
         headers: {
           "Content-Type": jsonContent,
@@ -44,12 +44,13 @@ function MyPage() {
         console.log(data);
         console.log(data.imgSrc);
         if (data.imgSrc != null) {
-          // 로컬 파일 시스템 경로에서 \public\ 이전의 경로 제거
-          const publicIndex = data.imgSrc.indexOf('\\public\\');
-          if (publicIndex !== -1) {
-            const webPath = data.imgSrc.substring(publicIndex + '\\public\\'.length).replace(/\\/g, '/');
-            setImgSrc('/' + webPath);
-          }
+          // // 로컬 파일 시스템 경로에서 \public\ 이전의 경로 제거
+          // const publicIndex = data.imgSrc.indexOf('\\public\\');
+          // if (publicIndex !== -1) {
+          //   const webPath = data.imgSrc.substring(publicIndex + '\\public\\'.length).replace(/\\/g, '/');
+          //   setImgSrc('/' + webPath);
+          // }
+          setImgSrc(data.imgSrc);
         }
       })
       .catch(error => {

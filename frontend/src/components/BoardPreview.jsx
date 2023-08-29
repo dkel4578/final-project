@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types'; // prop-types를 임포트
 import dayjs from 'dayjs';
+import { Link } from 'react-router-dom';
 
 const BoardPreview = ({ boardInfo,kind }) => {
 
@@ -18,7 +19,7 @@ const BoardPreview = ({ boardInfo,kind }) => {
                     {kind === 'A' &&  <span>술한잔할래요</span>} {/* 커피*/}
                     {kind === 'N' &&  <span>공지사항</span>} {/* 커피*/}
                     {kind === 'Q' &&  <span>FAQ</span>} {/* 커피*/}
-                    <a href={`/board/view?id=${boardInfo.id}&kind=${kind}`}>{boardInfo.title}</a>
+                    <Link to ={`/board/view?id=${boardInfo.id}&kind=${kind}`}>{boardInfo.title}</Link>
                 </div>
                 <div className="board-user-log">
                     <span>글쓴이 {boardInfo.id}</span>

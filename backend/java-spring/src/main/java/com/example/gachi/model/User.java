@@ -43,7 +43,6 @@ public class User extends BaseEntity{
     private String gender;
 
 //    @Column(nullable = false)
-    @Size(min=1, max=16)
     private String nickname;
 
     @Builder.Default

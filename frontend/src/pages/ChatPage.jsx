@@ -15,7 +15,9 @@ import "../css/variables.css";
 import "../css/total.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "font-awesome/css/font-awesome.min.css";
-import "../script/chat-page.js";
+// import "../script/chat-page.js";
+import $ from 'jquery';
+import axios from "axios";
 
 function ChatPage(chatRoomProps) {
   const location = useLocation();
@@ -33,12 +35,16 @@ function ChatPage(chatRoomProps) {
   const stompClient = useRef({});
   // const chatRoomNumber = Number(channelId);
   // const roomId = location.state.roomId;
+  const [reportType,setReportType] = useState("D"); 
+  const [reportedId,setReportedId] = useState(null); 
+  const [activeModal,setActiveModal] = useState(false);
 
   console.log("roomId: ", roomId);
   const chatRoomNumber = roomId;
   const chatRoomName = roomName;
 
-  scrollToBottom();
+
+  
 
   const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
   useEffect(() =>{
@@ -67,7 +73,7 @@ function ChatPage(chatRoomProps) {
         });
         navigate(-1);
       }
-      
+      scrollToBottom();
     })
   }, [])
 
@@ -307,40 +313,101 @@ function ChatPage(chatRoomProps) {
   //   // navigate(0);
   // }, [dispatch]);
 
+  // $(function(){
+  //   $('.chatting-msg').click(function(){
+      
+  //   });
+  // });
+  
+  /*  x버튼, 모달 취소 클릭시 모달 토글 */
+  $(function(){
+    $('.modal-close').click(function(){
+      // $('.user-report-modal').removeClass('active');
+      setActiveModal(false);
+    });
+  });
+  
+  $(function(){
+    $('#user-report-modal-cancel').click(function(){
+      // $('.user-report-modal').removeClass('active');
+      setActiveModal(false);
+    });
+  });
+
+  const handleMessageClick = (messageObject)=>{
+    // $('.user-report-modal').toggleClass('active');
+    setActiveModal(true);
+    setReportedId(messageObject);
+    console.log("repId: " + reportedId);
+  }
+
+  const closeModal = () => {
+    setActiveModal(false);
+  }
+
+  const handleReportButtonClick = async (event) => {
+    event.preventDefault();
+    let contentId = roomId;
+    let reporterId = userInfo.uid;
+    let category = 'M';
+    console.log("cat: " +category);
+    console.log("con: "+ contentId);
+    console.log("redId: "+ reportedId);
+    console.log("rerId: "+ reporterId);
+    console.log("repTy: "+ reportType);
+    const response = await axios.post(`/api/report/insert?category=${category}&contentId=${contentId}&reportedId=${reportedId}&reporterId=${reporterId}&reportType=${reportType}`)
+    .then((response)=>{
+      console.log(response);
+      console.log(response.data);
+      return response;
+    })
+    .catch((error)=>{
+      console.log(error);				//오류발생시 실행
+    });
+    if (response && response.status === 201) {
+      alert("신고가 완료되었습니다.");
+    } else {
+      alert("신고 등록이 실패되었습니다.");
+    }
+    closeModal();
+  }
+
   return (
     <div className="chatting-play-box">
+      { activeModal &&
       <div className="user-report-modal">
         <div className="user-report-modal-contents">
           <h2 className="user-report-title">신고하기</h2>
           <i className="fa fa-times modal-close" aria-hidden="true"></i>
           <fieldset>
             <label htmlFor="doubling-the-post">
-              <input type="radio" id="doubling-the-post" name="report" />
+              <input type="radio" id="doubling-the-post" name="report" value="D" onChange={(e)=>{setReportType(e.target.value)}}/>
               <span>도배성 채팅 작성</span>
             </label>
             <label htmlFor="obscene-posts">
-              <input type="radio" id="obscene-posts" name="report"></input>
+              <input type="radio" id="obscene-posts" name="report" value="P" onChange={(e)=>{setReportType(e.target.value)}}></input>
               <span>음란성 채팅 작성</span>
             </label>
             <label htmlFor="abusive-comments">
-              <input type="radio" id="abusive-comments" name="report"></input>
+              <input type="radio" id="abusive-comments" name="report" value="F" onChange={(e)=>{setReportType(e.target.value)}}></input>
               <span>욕설 / 혐오 발언 채팅 작성</span>
             </label>
             <label htmlFor="advertising-post">
-              <input type="radio" id="advertising-post" name="report"></input>
+              <input type="radio" id="advertising-post" name="report" value="A" onChange={(e)=>{setReportType(e.target.value)}}></input>
               <span>광고성 / 홍보성 채팅</span>
             </label>
             <label htmlFor="false-review">
-              <input type="radio" id="false-review" name="report"></input>
-              <span>허위 리뷰</span>
+              <input type="radio" id="false-review" name="report" value="E" onChange={(e)=>{setReportType(e.target.value)}}></input>
+              <span>기타 사유</span>
             </label>
           </fieldset>
           <div className="user-report-modal-btns">
-            <input type="button" value="신고" />
+            <input type="button" value="신고" onClick={handleReportButtonClick} />
             <input type="button" value="취소" id="user-report-modal-cancel" />
           </div>
         </div>
       </div>
+    }
       <div id="msgList">
         <div className="chatting-room-title">
           <Link to="/chat/room/list/:roomId">
@@ -366,7 +433,7 @@ function ChatPage(chatRoomProps) {
                   {messageObject.userId !== userInfo.uid && (
                     <p className="other-nickname">{messageObject.nickname}</p>
                   )}
-                  <div className="other-msg-block">
+                  <div className="other-msg-block" onClick={()=>{handleMessageClick(messageObject.userId)}}>
                     <p>{messageObject.message}</p>
                   </div>
                 </div>
