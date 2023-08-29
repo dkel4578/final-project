@@ -14,9 +14,9 @@ const BoardListPage = ({kind}) => {
 
 
 // kind 프로퍼티의 propTypes 설정
-BoardListPage.propTypes = {
-  kind: PropTypes.oneOf(['N', 'Q', 'F', 'C', 'A', 'T']).isRequired,
-};
+// BoardListPage.propTypes = {
+//   kind: PropTypes.oneOf(['N', 'Q', 'F', 'C', 'A', 'T']).isRequired,
+// };
 
 
 export default BoardListPage;

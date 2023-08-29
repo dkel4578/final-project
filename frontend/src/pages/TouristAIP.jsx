@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import "../css/TouristAIP.css";
+import { Link } from 'react-router-dom';
 
 function Map_Api() {
   const apiKey = 'cd70725d-65dc-455f-b196-057b81c3b35e';
@@ -85,6 +86,11 @@ function Map_Api() {
                 <button onClick={() => toggleExpand(index)} className='map_api_see_more'>
                   {expandedItems[index] ? '숨기기' : '내용 보기'}
                 </button>
+              <button className='map_api_see_more'>
+              <Link to="/kakaomap">지도</Link>
+              </button>
+
+                
               </div>
               {expandedItems[index] && (
                 <div className='map_api_description'>{item.description}</div>

@@ -60,8 +60,7 @@ public class WebSecurityConfig {
         MvcRequestMatcher.Builder mvcMatcherBuilder = new MvcRequestMatcher.Builder(introspector);
 
         http
-            .cors()
-            .and()
+            .cors().disable()
             .httpBasic().disable()
             .csrf().disable()
             .formLogin().disable()

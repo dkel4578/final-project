@@ -11,68 +11,24 @@ import "../script/my-page.js";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'font-awesome/css/font-awesome.min.css';
 import "../script/custom.js";
+import { useDispatch, useSelector } from "react-redux";
 
 function MyPage() {
-
+  const userInfo = useSelector((state) => state.user.user);
   const [cookies] = useCookies(['token']);
 	let isLogin = false;
 	const navigate = useNavigate();  // eslint-disable-line no-unused-vars
   const passwordRef = useRef(null);
 
-  const [id, setId] = useState('')
-	const [loginId, setLoginId] = useState(''); // eslint-disable-line no-unused-vars
-	const [nickname, setNickname] = useState(''); // eslint-disable-line no-unused-vars
-	const [name, setName] = useState(''); // eslint-disable-line no-unused-vars
-	const [gender, setGender] = useState(''); // eslint-disable-line no-unused-vars
-	const [phone, setPhone] = useState(''); // eslint-disable-line no-unused-vars
-	const [profileMessage, setProfileMessage] = useState(''); // eslint-disable-line no-unused-vars
-	const [birth, setBirth] = useState(''); // eslint-disable-line no-unused-vars
   const [imgSrc, setImgSrc] = useState('/profileImg/default-image.svg')
 
-  
-	if(cookies.token != 'undefined'){
-		isLogin = true;
-	} else {
-		isLogin = false;
-	}
 
 	const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
-  //유저 정보 가져오기
-	useEffect(() => {
-		if(isLogin){
-			fetch('/api/user/me', {
-				method: 'GET',
-				headers: {
-					"Content-Type" : jsonContent,
-					"Authorization" : "Bearer "+ cookies.token,
-				}
-			})
-			.then(res => {
-				if(res){
-					console.log(res);
-					return res.json();
-				}
-			})
-			.then(data => {
-        console.log(data);
-        if(data){
-          setNickname(data.nickname);
-          setName(data.name);
-          setGender(data.gender);
-          setPhone(data.phone);
-          setProfileMessage(data.profileMessage);
-          setLoginId(data.loginId);
-          setBirth(data.birth);
-          setId(data.id);
-        }
-      })
-		}
-	}, [isLogin]);
 
   //프로필 이미지 정보 가져오기
   useEffect(() => {
     if (isLogin) {
-      fetch(`/api/profile/me?userId=${encodeURIComponent(id)}`, {
+      fetch(`/api/profile/me?userId=${encodeURIComponent(userInfo.id)}`, {
         method: 'GET',
         headers: {
           "Content-Type": jsonContent,
@@ -100,7 +56,7 @@ function MyPage() {
         console.error('Error fetching data:', error);
       });
     }
-  }, [isLogin, id]);
+  }, [isLogin, userInfo.uid]);
 
   // 비밀번호 확인
   const passwordCheckHandler = async (e) =>{
@@ -116,7 +72,7 @@ function MyPage() {
       },
       body :JSON.stringify({
         password : password,
-        id : id
+        id : userInfo.uid
       })
     })
     .then(res => {
@@ -141,13 +97,18 @@ function MyPage() {
       // return res.json();
     })
   }
+  const [isValid, setIsValid] = useState(false);
+  const handleClassName = () => {
+    setIsValid(!isValid);
+  };
+
   return (
     <div>
       <section className='my-page-container'>
       <div className="my-page-inner">
-      <div className="my-page-modal">
+      <div className={`my-page-modal ${isValid ? "active" : ""}`}>
         <div className="modal-content">
-          <i className="fa fa-times modal-close" aria-hidden="true"></i>
+          <i className="fa fa-times modal-close" onClick={handleClassName}></i>
           <fieldset>   
             <legend>비밀번호 입력</legend>
             <div className="my-page-modal-pw-container">
@@ -167,8 +128,8 @@ function MyPage() {
             <img src={imgSrc} alt="유저 프로필사진" />
           </div>
           <div className="user-nick-names">
-            <p>{nickname}</p>
-            <p>{loginId}</p>
+            <p>{userInfo.nickname}</p>
+            <p>{userInfo.loginId}</p>
           </div>
         </div>
         <div className="user-info-place">
@@ -176,32 +137,32 @@ function MyPage() {
             <div className="user-basic-info">
               <div className="user-name-place user-place">
                 <p>이름</p>
-                <p>{name}</p>
+                <p>{userInfo.name}</p>
               </div>
               <div className="user-gender-place user-place">
                 <p>성별</p>
-                { gender === "M" && <p>남성</p>}
-                { gender === "F" && <p>여성</p>}
+                { userInfo.gender === "M" && <p>남성</p>}
+                { userInfo.gender === "F" && <p>여성</p>}
               </div>
               <div className="user-phone-place user-place">
                 <p>휴대폰 번호</p>
-                <p>{phone}</p>
+                <p>{userInfo.phone}</p>
               </div>
               <div className="user-birth-place user-place">
                 <p>생년월일</p>
-                <p>{birth}</p>
+                <p>{userInfo.birth}</p>
               </div>
             </div>
             <div className="user-introduce">
               <div className="user-introduce-title">자기소개</div>
               <div className="user-introduce-content">
                 <p>
-                 {profileMessage}
+                 {userInfo.profileMessage}
                 </p>
               </div>
             </div>
             <div className="info-change-btn">
-              <input type="button" value="비밀번호 입력하기" className="info-change-button" />
+              <input type="button" value="정보 수정" className="info-change-button" onClick={handleClassName} />
             </div>
           </div>
         </div>
