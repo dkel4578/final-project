@@ -403,7 +403,7 @@ function ChangeInfo() {
       const file = fileInputRef.current.files[0];
       if (file) {
         const formData = new FormData();
-        const userId = id;
+        const userId = userInfo.uid;
 
         formData.append("file", file);
         formData.append("userId", userId);
@@ -419,7 +419,7 @@ function ChangeInfo() {
           }
 
           // 파일 업로드가 성공하면 유저 정보 수정
-          const updateResponse = await fetch(`api/update/${id}`, {
+          const updateResponse = await fetch(`api/update/${userInfo.uid}`, {
             method: "PUT",
             headers: {
               "Content-Type": jsonContent,
@@ -691,8 +691,8 @@ function ChangeInfo() {
               <textarea
                 cols="20"
                 rows="5"
-                value={profileMessage}
-                ref={userInfo.profileMessageRef}
+                value={userInfo.profileMessage}
+                ref={profileMessageRef}
               ></textarea>
             </div>
             <div className="change-info-complete-btn">

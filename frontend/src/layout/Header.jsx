@@ -73,6 +73,7 @@ function Header({ userInfo }) {
               data.loginId,
               data.status,
               data.name,
+              data.email,
               data.gender,
               data.phone,
               data.birth,
@@ -108,7 +109,6 @@ function Header({ userInfo }) {
     });
 		navigate("/login")
   };
-
   return (
     <div>
       <header>
