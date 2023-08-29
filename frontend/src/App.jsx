@@ -33,6 +33,7 @@ import ChatingRoomListPage from './pages/ChatingRoomListPage'; //내가 만든�
 import ChatName from "./pages/chatting-room-name";
 import Header2 from "./layout/Header2";
 import TouristAIP from './pages/TouristAIP';
+import KakaoMap from './pages/KakaoMap'
 import ChatPage from "./pages/ChatPage";
 import AdminPage from './components/AdminPage';
 import AdminAuth from './components/AdminAuth';
@@ -97,6 +98,9 @@ function App(props) {
           <Route path="/header2" element={<Header2/>}/>
           <Route path="/chat/room/list/:roomId" element={<ChatPage/>}/>      
           <Route path="/chat/room/list/test" element={<ChatTest/>}/>
+          <Route path="/KakaoMap" element={<KakaoMap/>}/>
+
+          
 				</Routes>
 			{shouldHideFooter ? null : <Footer />} {/* footer를 숨김 */}
 
