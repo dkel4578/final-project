@@ -46,7 +46,7 @@ async function checkEmail(email, loginId) {
 
   return await axios
     .get(
-      "/api//user/checkLoginIdByEmail?loginId=" + loginId + "&email=" + email,
+      "/api/user/checkLoginIdByEmail?loginId=" + loginId + "&email=" + email,
       {
         email: email,
         loginId: loginId,

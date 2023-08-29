@@ -1,0 +1,52 @@
+.slide-area {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+  margin-top: 20px;
+}
+.slide-area .slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+.slide-area .slide.active {
+  opacity: 1;
+}
+.slide-area .bannerTitleBox {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  float: right;
+  top: 70%;
+  z-index: 50;
+  color: white;
+  text-shadow: 1px 1px 2px #343434;
+}
+.slide-area .bannerTitleBox .bannerTitle {
+  font-size: 5rem;
+  margin-right: 10px;
+  padding-right: 10px;
+  text-shadow: 1px 1px 5px #343434;
+}
+.slide-area .bannerTitleBox .bannerToVolunteer {
+  height: 50px;
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin: 10px 0px;
+  padding-right: 20px;
+}
+.slide-area .bannerTitleBox .bannerToVolunteer a {
+  display: flex;
+  align-items: center;
+  color: white;
+}/*# sourceMappingURL=slides.css.map */

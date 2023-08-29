@@ -16,6 +16,7 @@ import "../css/total.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "font-awesome/css/font-awesome.min.css";
 import "../script/chat-page.js";
+import axios from "axios";
 
 function ChatPage(chatRoomProps) {
   const location = useLocation();
@@ -33,6 +34,7 @@ function ChatPage(chatRoomProps) {
   const stompClient = useRef({});
   // const chatRoomNumber = Number(channelId);
   // const roomId = location.state.roomId;
+  const [reportType,setReportType] = useState("D"); 
 
   console.log("roomId: ", roomId);
   const chatRoomNumber = roomId;
@@ -315,24 +317,24 @@ function ChatPage(chatRoomProps) {
           <i className="fa fa-times modal-close" aria-hidden="true"></i>
           <fieldset>
             <label htmlFor="doubling-the-post">
-              <input type="radio" id="doubling-the-post" name="report" />
+              <input type="radio" id="doubling-the-post" name="report" value="D" onChange={(e)=>{setReportType(e.target.value)}}/>
               <span>도배성 채팅 작성</span>
             </label>
             <label htmlFor="obscene-posts">
-              <input type="radio" id="obscene-posts" name="report"></input>
+              <input type="radio" id="obscene-posts" name="report" value="P" onChange={(e)=>{setReportType(e.target.value)}}></input>
               <span>음란성 채팅 작성</span>
             </label>
             <label htmlFor="abusive-comments">
-              <input type="radio" id="abusive-comments" name="report"></input>
+              <input type="radio" id="abusive-comments" name="report" value="F" onChange={(e)=>{setReportType(e.target.value)}}></input>
               <span>욕설 / 혐오 발언 채팅 작성</span>
             </label>
             <label htmlFor="advertising-post">
-              <input type="radio" id="advertising-post" name="report"></input>
+              <input type="radio" id="advertising-post" name="report" value="A" onChange={(e)=>{setReportType(e.target.value)}}></input>
               <span>광고성 / 홍보성 채팅</span>
             </label>
             <label htmlFor="false-review">
-              <input type="radio" id="false-review" name="report"></input>
-              <span>허위 리뷰</span>
+              <input type="radio" id="false-review" name="report" value="E" onChange={(e)=>{setReportType(e.target.value)}}></input>
+              <span>기타 사유</span>
             </label>
           </fieldset>
           <div className="user-report-modal-btns">
