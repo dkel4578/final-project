@@ -78,17 +78,10 @@
 }
 .map_api_see_more{
   padding: 5px 15px;
-  border-radius: 10px;
+  border-radius: 20px;
   background-color: #2ACF7D;
   color: white;
-  transition: 0.6s ease; 
-  margin-right: 10px;
   font-size: 1.2em;
-}
-.map_api_see_more:hover{
-  background-color: #209b5d;
-  color: #000000;
-  
 }
 .map_api_description{
   line-height: 1.2em;
@@ -102,11 +95,4 @@
  text-shadow: 0 0 4px #000000;
  margin: 10px 0;
  
-<<<<<<< HEAD
 }
-.map_api_see_more a {
-  transition: color 0.3s; /* 색상 변경에 애니메이션을 추가 */
-}
-=======
-}
->>>>>>> 82d3972a023fd82f4d9e69b371d176f1e499ffa4
