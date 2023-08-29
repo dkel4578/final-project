@@ -36,6 +36,7 @@ import TouristAIP from './pages/TouristAIP';
 import ChatPage from "./pages/ChatPage";
 import AdminPage from './components/AdminPage';
 import AdminAuth from './components/AdminAuth';
+import CalendarShare from "./pages/CalendarShare";
 import {useLocation} from "react-router-dom";
 import ChatTest from "./pages/chat-list-room"
 function App(props) {
@@ -93,10 +94,11 @@ function App(props) {
 					<Route path="/postContentModify" element={<PostContentModify/>}/>
 					<Route path="/postContent" element={<PostContent/>}/>
 					<Route path="/writePost" element={<WritePost/>}/>
-					<Route path="/chatName" element={<ChatName/>}/>
+					<Route path="/chatName/:roomId" element={<ChatName/>}/>
           <Route path="/header2" element={<Header2/>}/>
           <Route path="/chat/room/list/:roomId" element={<ChatPage/>}/>      
           <Route path="/chat/room/list/test" element={<ChatTest/>}/>
+          <Route path="calendar/:loginId" element={<CalendarShare/>}/>
 				</Routes>
 			{shouldHideFooter ? null : <Footer />} {/* footer를 숨김 */}
 

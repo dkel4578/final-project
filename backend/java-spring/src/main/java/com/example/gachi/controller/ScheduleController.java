@@ -53,4 +53,9 @@ public class ScheduleController {
         scheduleService.delete(scheduleId);
     }
 
+    @GetMapping("/share")
+    public ResponseEntity<List<ScheduleResponseDto>> shareSchedule(@RequestParam String loginId) {
+        List<ScheduleResponseDto> scheduleResponseDto = scheduleService.shareScheduleList(loginId);
+        return ResponseEntity.ok(scheduleResponseDto);
+    }
 }

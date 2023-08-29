@@ -71,6 +71,8 @@ public class UserService {
             user.setAccessToken(jwtTokenDto.getAccessToken());
             user.setAccessTokenExpireIn(jwtTokenDto.getTokenExpiresIn());
             userRepository.save(user);
+
+            refreshTokenRepository.save(refreshTokenDto);
         }
         return jwtTokenDto;
     }
