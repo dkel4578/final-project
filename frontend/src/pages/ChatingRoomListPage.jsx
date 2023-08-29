@@ -9,7 +9,6 @@ import { useState, useEffect, useLayoutEffect, useCallback } from "react";
 import { customHistory } from "../store/configureStore.js";
 import { useDispatch, useSelector } from "react-redux";
 import $ from "jquery";
-
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "font-awesome/css/font-awesome.min.css";
 import "../script/custom.js";
@@ -19,7 +18,6 @@ import { actionCreators as userActions } from "../store/modules/user";
 
 function ChatingRoomListPage() {
   const navigate = useNavigate();
-
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.user.user);
@@ -33,13 +31,12 @@ function ChatingRoomListPage() {
   const [roomId, setRoomId] = useState("");
   const [imgSrcList, setImgSrcList] = useState([]);
   const [profileImgList, setProfileImgList] = useState([]);
-
   const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
 
   console.log("chatRoomList >>>>", chatRoomList);
   useEffect(() => {
     const fetchPromises = [];
-  
+
     roomIds.forEach((roomId) => {
       fetchPromises.push(
         fetch(`/api/chatUser?roomId=${encodeURIComponent(roomId)}`, {
@@ -62,28 +59,30 @@ function ChatingRoomListPage() {
             // 여기서 roomId를 추가하여 data를 가공하고 userDataList에 추가
             const userDataWithRoomId = data.map((userData) => ({
               ...userData,
-              roomId: roomId
+              roomId: roomId,
             }));
             return userDataWithRoomId;
           })
       );
     });
-  
+
     Promise.all(fetchPromises).then((results) => {
       const validData = results.flat();
-  
+
       setUserDataList((prevUserDataList) => {
-        const newDataList = validData.filter((data) =>
-          !prevUserDataList.some((prevData) => prevData.userId === data.userId)
+        const newDataList = validData.filter(
+          (data) =>
+            !prevUserDataList.some(
+              (prevData) => prevData.userId === data.userId
+            )
         );
-  
+
         const updatedUserDataList = [...prevUserDataList, ...newDataList];
         console.log("Updated userDataList >>>> ", updatedUserDataList);
         return updatedUserDataList;
       });
     });
   }, [chatRoomList, userInfo]);
-  
 
   useEffect(() => {
     console.log("userDataList >>>>>>>> ", userDataList);
@@ -168,7 +167,6 @@ function ChatingRoomListPage() {
           </div>
           <div className="chat-list-room-place">
             <ul className="chat-listes">
-
               {/* list : [1,2,3,4,] */}
               {/* {chatRoomList.map((p, idx) => {
                 console.log("chatRoomList element:", p);
@@ -182,7 +180,13 @@ function ChatingRoomListPage() {
                   />
                 );
               })} */}
-              {<ChatRoom userData={userDataList} imgSrc={imgSrcList} chatRoomList={chatRoomList}/>}
+              {
+                <ChatRoom
+                  userData={userDataList}
+                  imgSrc={imgSrcList}
+                  chatRoomList={chatRoomList}
+                />
+              }
             </ul>
           </div>
         </div>
