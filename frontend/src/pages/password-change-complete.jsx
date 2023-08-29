@@ -3,10 +3,10 @@ import "../css/total.css";
 import "../css/password-change-complete.css";
 import "../css/variables.css";
 import "../script/password-change-complete.js"
-import $ from 'jquery'; // eslint-disable-line no-unused-vars
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'font-awesome/css/font-awesome.min.css';
 import "../script/custom.js";
+import {Link } from "react-router-dom";
 
 const PasswordChangeComplete = () => {
   return (
@@ -29,12 +29,12 @@ const PasswordChangeComplete = () => {
             <p className="input-pw-check-text">비밀번호가 일치하지 않습니다!</p>
           </fieldset>
           <div className="password-change-complete-btn">
-            <a href="../index.html">비밀번호 변경</a>
+            <Link to = "/">비밀번호 변경</Link>
           </div>
         </form>
         <div className="password-change-complete-user-find">
-          <a href="../html/join-in.html">회원가입</a>
-          <a href="../html/find-id.html">아이디 찾기</a>
+          <Link to ="/signup">회원가입</Link>
+          <Link to ="/findId">아이디 찾기</Link>
         </div>
       </div>
     </section>
