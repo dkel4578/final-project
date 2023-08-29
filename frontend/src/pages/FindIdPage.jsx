@@ -1,5 +1,5 @@
 import React, { useState, useRef, useContext, useEffect } from 'react'; // eslint-disable-line no-unused-vars
-import { useNavigate } from 'react-router-dom';  
+import { useNavigate, Link } from 'react-router-dom';  
 import axios from 'axios';    // eslint-disable-line no-unused-vars
 import "../css/total.css";
 import "../css/find-id.css";
@@ -199,8 +199,8 @@ function FindIdPage() {
           </div>
         </form>
         <div className="find-id-user-find">
-          <a href="/signup">회원가입</a>
-          <a href="/passwordChange">비밀번호 변경</a>
+          <Link to ="/signup">회원가입</Link>
+          <Link to ="/passwordChange">비밀번호 변경</Link>
         </div>
       </div>
     </section>

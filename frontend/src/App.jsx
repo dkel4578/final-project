@@ -34,12 +34,12 @@ import ChatName from "./pages/chatting-room-name";
 import Header2 from "./layout/Header2";
 import TouristAIP from "./pages/TouristAIP";
 import ChatPage from "./pages/ChatPage";
-
 import AdminPage from './components/AdminPage';
 import AdminAuth from './components/AdminAuth';
 import CalendarShare from "./pages/CalendarShare";
 import {useLocation} from "react-router-dom";
 import ChatTest from "./pages/chat-list-room"
+import KakaoMap from "./pages/KakaoMap"
 function App(props) {
   const userInfo = useSelector((state) => state.user.user);
   const location = useLocation();
@@ -80,7 +80,7 @@ function App(props) {
           <Route path="/board/edit" element={<BoardEditPage/>}/>
           <Route path="/board/write" element={<BoardWritePage />}/>
           <Route path="/board/delete" element={<BoardDeletePage />}/>
-     	  <Route path="/board/notice" element={<BoardNotice/>}/>
+     	    <Route path="/board/notice" element={<BoardNotice/>}/>
           <Route path="/passwordChange" element={<PasswordChangePage/>}/>
           <Route path="/calendar" element={<Calendar/>}/>
           <Route path="/chat/room/list" element={<ChatRoomListPage />}/>
@@ -100,6 +100,7 @@ function App(props) {
           <Route path="/chat/room/list/:roomId" element={<ChatPage/>}/>      
           <Route path="/chat/room/list/test" element={<ChatTest/>}/>
           <Route path="calendar/:loginId" element={<CalendarShare/>}/>
+          <Route path="/kakaomap" element={<KakaoMap/>}/>
 				</Routes>
 			{shouldHideFooter ? null : <Footer />} {/* footer를 숨김 */}
 
