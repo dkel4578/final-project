@@ -1,5 +1,4 @@
 package com.example.gachi.controller;
-
 import com.example.gachi.model.dto.Report.AddReportDto;
 import com.example.gachi.model.dto.Report.ReportRequestDto;
 import com.example.gachi.model.dto.Report.ReportResponseDto;

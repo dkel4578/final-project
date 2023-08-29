@@ -1,6 +1,6 @@
-import React, { useState } from "react"; 
-import { Route, Routes } from "react-router-dom"; 
-import { Helmet } from 'react-helmet';
+import React, { useState } from "react";
+import { Route, Routes } from "react-router-dom";
+import { Helmet } from "react-helmet";
 import Header from "./layout/Header";
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
@@ -26,14 +26,15 @@ import PassWordChangeComplete from "./pages/password-change-complete";
 import PostContentModify from "./pages/post-content-modify";
 import PostContent from "./pages/post-content";
 import WritePost from "./pages/write-post";
-import Calendar from './pages/Calendar';
-import ChatRoomListPage from './pages/ChatRoomListPage'; //선생님거
-import ChatingRoomListPage from './pages/ChatingRoomListPage'; //내가 만든거
-// import Admin from "./components/AdminPage"; 
+import Calendar from "./pages/Calendar";
+import ChatRoomListPage from "./pages/ChatRoomListPage"; //선생님거
+import ChatingRoomListPage from "./pages/ChatingRoomListPage"; //내가 만든거
+// import Admin from "./components/AdminPage";
 import ChatName from "./pages/chatting-room-name";
 import Header2 from "./layout/Header2";
-import TouristAIP from './pages/TouristAIP';
+import TouristAIP from "./pages/TouristAIP";
 import ChatPage from "./pages/ChatPage";
+
 import AdminPage from './components/AdminPage';
 import AdminAuth from './components/AdminAuth';
 import CalendarShare from "./pages/CalendarShare";
@@ -41,24 +42,24 @@ import {useLocation} from "react-router-dom";
 import ChatTest from "./pages/chat-list-room"
 import KakaoMap from "./pages/KakaoMap";
 function App(props) {
-
-
   const userInfo = useSelector((state) => state.user.user);
   const location = useLocation();
-  const shouldHideFooter = location.pathname === '/admin2';
+  const shouldHideFooter = location.pathname === "/admin2" || location.pathname.startsWith("/chat/room/list/");
   const renderHeader = () => {
     // 'admin' 페이지에만 'Header2'를 표시
-    if (location.pathname === '/admin2') {
+    if (location.pathname === "/admin2") {
       return <Header2 />;
     }
     // 그 외 페이지에는 기본 'Header'를 표시
     return <Header userInfo={userInfo} />;
   };
+
        {renderHeader()}
+
   return (
     <>
       <Header userInfo={userInfo} />
-    			<Helmet>
+      <Helmet>
         <title>같이갈래?</title>
       </Helmet>
         <Routes>
@@ -107,6 +108,7 @@ function App(props) {
 
 		</>
 	);
+
 }
 
 export default App;
