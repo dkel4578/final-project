@@ -108,7 +108,6 @@ function Header({ userInfo }) {
     });
 		navigate("/login")
   };
-
   return (
     <div>
       <header>

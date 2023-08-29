@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import '../css/map-search.css';
 
-function MapComponent({ onAddressClick }) {
+function MapComponent({ onAddressClick, localAddress }) {
     // 상태 변수들
     const [keyword, setKeyword] = useState('');
     const [map, setMap] = useState(null);
     const [places, setPlaces] = useState([]);
     const [selectedMarkerIndex, setSelectedMarkerIndex] = useState(null);
-    const [markers, setMarkers] = useState([]);
+    const [markers, setMarkers] = useState(null);
     const [infowindows, setInfowindows] = useState([]);
     const [selectedAddress, setSelectedAddress] = useState(''); // 선택한 주소 상태 변수 추가
     const [selectedPlace, setSelectedPlace] = useState(''); // 선택한 장소 상태 변수 추가
 
     const mapAppKey = process.env.REACT_APP_API_MAP_KEY;
 
+    console.log("localAddress: =============> ", localAddress);
+    //33.259578890999784 126.40870964676267
 
     // Kakao 지도 초기화
     useEffect(() => {
@@ -25,9 +27,15 @@ function MapComponent({ onAddressClick }) {
         script.onload = () => {
             window.kakao.maps.load(() => {
                 const options = {
-                    center: new window.kakao.maps.LatLng(37.5665, 126.9780), // 서울의 위도, 경도
+                    center: new window.kakao.maps.LatLng(33.2595, 126.4087), // 서울의 위도, 경도
                     level: 3,
                 };
+                // 마커 생성
+                const marker = new window.kakao.maps.Marker({
+                    position: new window.kakao.maps.LatLng(33.2595, 126.4087),
+                    map: map,
+                });
+
                 const mapInstance = new window.kakao.maps.Map(document.getElementById('map'), options);
                 setMap(mapInstance);
 
@@ -36,7 +44,14 @@ function MapComponent({ onAddressClick }) {
                     const latlng = mouseEvent.latLng;
                     console.log("Clicked at", latlng.getLat(), latlng.getLng());
                 });
+
+                // newMarkers.push(marker);
+                // newInfowindows.push(infowindow);
             });
+
+            // 새로운 마커와 인포윈도우 배열로 업데이트
+            // setMarkers(marker);
+            // setInfowindows(newInfowindows);
         };
 
         document.head.appendChild(script);
@@ -45,7 +60,9 @@ function MapComponent({ onAddressClick }) {
             // 컴포넌트 언마운트 시 스크립트 제거
             document.head.removeChild(script);
         };
-    }, []);
+
+
+    }, [localAddress]);
 
     // 검색어 변경 핸들러
     const handleKeywordChange = (e) => {
@@ -53,23 +70,25 @@ function MapComponent({ onAddressClick }) {
     };
 
     // 검색 버튼 클릭 핸들러
-    const handleSearch = (e) => {
-        e.preventDefault(); // 폼 제출 방지
 
-        if (map && keyword) {
-            // 검색 API 호출 및 결과 처리
-            const ps = new window.kakao.maps.services.Places();
-            ps.keywordSearch(keyword, function (data, status) {
-                if (status === window.kakao.maps.services.Status.OK) {
-                    // 검색 결과 목록과 마커 표시
-                    setPlaces(data);
-                    displayPlaces(data);
-                } else {
-                    alert('검색 결과가 없습니다.');
-                }
-            });
-        }
-    };
+        const handleSearch = (e) => {
+            e.preventDefault(); // 폼 제출 방지
+
+            if (map && keyword) {
+                // 검색 API 호출 및 결과 처리
+                const ps = new window.kakao.maps.services.Places();
+                ps.keywordSearch(keyword, function (data, status) {
+                    if (status === window.kakao.maps.services.Status.OK) {
+                        // 검색 결과 목록과 마커 표시
+                        setPlaces(data);
+                        displayPlaces(data);
+                    } else {
+                        alert('검색 결과가 없습니다.');
+                    }
+                });
+            }
+        };
+
 
     // 검색 결과 목록과 마커 표시 함수
     const displayPlaces = (places) => {
@@ -77,12 +96,12 @@ function MapComponent({ onAddressClick }) {
             const bounds = new window.kakao.maps.LatLngBounds();
 
             // 이전 마커와 인포윈도우 제거
-            markers.forEach((marker) => {
-                marker.setMap(null);
-            });
-            infowindows.forEach((infowindow) => {
-                infowindow.close();
-            });
+            // markers.forEach((marker) => {
+            //     marker.setMap(null);
+            // });
+            // infowindows.forEach((infowindow) => {
+            //     infowindow.close();
+            // });
 
             // 새로운 마커와 인포윈도우 생성 및 배열에 추가
             const newMarkers = [];
@@ -91,7 +110,7 @@ function MapComponent({ onAddressClick }) {
             places.forEach((place, index) => {
                 // 마커 생성
                 const marker = new window.kakao.maps.Marker({
-                    position: new window.kakao.maps.LatLng(place.y, place.x),
+                    position: new window.kakao.maps.LatLng(33.2595, 126.4087),
                     map: map,
                 });
 
@@ -105,15 +124,15 @@ function MapComponent({ onAddressClick }) {
                     infowindow.open(map, marker);
                 });
 
-                bounds.extend(new window.kakao.maps.LatLng(place.y, place.x));
+                bounds.extend(new window.kakao.maps.LatLng(33.2595, 126.4087));
 
-                newMarkers.push(marker);
-                newInfowindows.push(infowindow);
+
+
             });
 
             // 새로운 마커와 인포윈도우 배열로 업데이트
-            setMarkers(newMarkers);
-            setInfowindows(newInfowindows);
+            // setMarkers(marker);
+
 
             // 검색된 장소 위치를 기준으로 지도 범위 재설정
             map.setBounds(bounds);
@@ -133,18 +152,18 @@ function MapComponent({ onAddressClick }) {
 
 
         // 선택한 마커만 표시하고 나머지는 숨김
-        markers.forEach((marker, i) => {
-            if (i === index) {
-                marker.setMap(map);
-                infowindows[i].open(map, marker);
-            } else {
-                marker.setMap(null);
-                infowindows[i].close();
-            }
-        });
+        // markers.forEach((marker, i) => {
+        //     if (i === index) {
+        //         marker.setMap(map);
+        //         infowindows[i].open(map, marker);
+        //     } else {
+        //         marker.setMap(null);
+        //         infowindows[i].close();
+        //     }
+        // });
 
         // 선택한 마커 인덱스 업데이트
-        setSelectedMarkerIndex(index);
+        // setSelectedMarkerIndex(index);
     };
 
     return (
