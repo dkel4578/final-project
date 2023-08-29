@@ -122,7 +122,7 @@ function Header({ userInfo }) {
             <div className="side-var">
               <div className="login-area">
                 <i className="fa fa-unlock-alt" aria-hidden="true"></i>
-                {!isLogin && <a href="/login">로그인</a>}
+                {!isLogin && <Link to="/login">로그인</Link>}
                 <i className="fa fa-angle-right" aria-hidden="true"></i>
                 {isLogin && (
                   <Link to="/myPage">
@@ -219,7 +219,7 @@ function Header({ userInfo }) {
           </div>
           <div className="logo-area">
             <Link to={"/"}>
-              <img src="../images/header-logo.png" alt="로고이미지" />
+              <img src={require("../images/header-logo.png")} alt="로고이미지" />
             </Link>
           </div>
         </div>

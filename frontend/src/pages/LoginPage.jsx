@@ -87,9 +87,9 @@ function LoginPage() {
         </fieldset>
       </div>
       <div className="login-inner">
-        <a href="../index.html" className="login-title-font">
+        <Link to = "/" className="login-title-font">
          같이갈래?
-        </a>
+        </Link>
         <form onSubmit={submitHandler}>
           <fieldset>
             <div className="input-login-id">
@@ -106,14 +106,14 @@ function LoginPage() {
           </div>
         </form>
         <div className="btn-area">
-          <img src="../images/google-logo.png" alt="구글로고" className="google-logo"/>
-          <a href={`${process.env.REACT_APP_API_GATEWAY_HOST}/oauth2/authorization/google`} className="google-login-btn">구글 이메일 로그인</a>
+          <img src={require("../images/google-logo.png")} alt="구글로고" className="google-logo"/>
+          <Link to = {`${process.env.REACT_APP_API_GATEWAY_HOST}/oauth2/authorization/google`} className="google-login-btn">구글 이메일 로그인</Link>
           <p className="forgot-password">비밀번호를 잊으셨나요?</p>
         </div>
         <div className="user-find">
           <Link to="/signup">회원가입</Link>
-          <a href="/findId">아이디 찾기</a>
-          <a href="/passwordChange">비밀번호 변경</a>
+          <Link to="/findId">아이디 찾기</Link>
+          <Link to="/passwordChange">비밀번호 변경</Link>
         </div>
       </div>
     </section>

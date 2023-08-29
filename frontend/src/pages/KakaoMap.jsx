@@ -8,6 +8,7 @@ import "../script/custom.js";
 import "../css/variables.css";
 import "../css/total.css";
 
+
 const { kakao } = window;
 
 const KakaoMap = () => {
