@@ -39,6 +39,7 @@ import AdminAuth from './components/AdminAuth';
 import CalendarShare from "./pages/CalendarShare";
 import {useLocation} from "react-router-dom";
 import ChatTest from "./pages/chat-list-room"
+import KakaoMap from "./pages/KakaoMap";
 function App(props) {
 
 
@@ -99,6 +100,8 @@ function App(props) {
           <Route path="/chat/room/list/:roomId" element={<ChatPage/>}/>      
           <Route path="/chat/room/list/test" element={<ChatTest/>}/>
           <Route path="calendar/:loginId" element={<CalendarShare/>}/>
+          <Route path="calendar/:loginId" element={<CalendarShare/>}/>
+          <Route path="KakaoMap" element={<KakaoMap/>}/>
 				</Routes>
 			{shouldHideFooter ? null : <Footer />} {/* footer를 숨김 */}
 
