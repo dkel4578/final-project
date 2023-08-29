@@ -372,6 +372,15 @@
   display: flex;
   gap: 5px;
 }
+
+/* comment-modify-box */
+.comment-modify-box{
+  border: 1px;
+  border-color: red;
+  /*background-color: #4f86ec;*/
+}
+
+
 .comment-about-btn,.board-view-recomment-about{
   padding: 5px 10px;
   border-radius: 10px;
