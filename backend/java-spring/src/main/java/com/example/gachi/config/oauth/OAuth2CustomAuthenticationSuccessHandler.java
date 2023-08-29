@@ -41,15 +41,11 @@ public class OAuth2CustomAuthenticationSuccessHandler implements AuthenticationS
                     .encode(StandardCharsets.UTF_8)
                     .toUriString();
 
-            System.out.println("response>>>>>>>>>>>>>>>>" + redirectUri);
         response.sendRedirect(redirectUri);
-            System.out.println("response>>>>>>>>>>>>>>>>");
         }else {
             response.sendRedirect(UriComponentsBuilder.fromUriString(REDIRECT_URI)
                     .queryParam("accessToken", user.getAccessToken())
                     .queryParam("accessTokenExpireIn", user.getAccessTokenExpireIn())
-                    .queryParam("refreshToken", user.getRefreshToken())
-                    .queryParam("refreshTokenExpireIn", user.getRefreshTokenExpireIn())
                     .build()
                     .encode(StandardCharsets.UTF_8)
                     .toUriString());

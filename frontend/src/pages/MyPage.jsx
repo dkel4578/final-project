@@ -162,7 +162,7 @@ function MyPage() {
               </div>
             </div>
             <div className="info-change-btn">
-              <input type="button" value="비밀번호 입력하기" className="info-change-button" onClick={handleClassName} />
+              <input type="button" value="정보 수정" className="info-change-button" onClick={handleClassName} />
             </div>
           </div>
         </div>

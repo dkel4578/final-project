@@ -117,4 +117,11 @@ public class ChatRoomController {
         ChatRoomJoinResponseDto chatRoomJoinResponseDto = chatRoomJoinService.signupRoom(roomId, userId);
         return ResponseEntity.ok(chatRoomJoinResponseDto);
     }
+
+    @GetMapping("/chatRoomCheck")
+    public boolean chatRoomCheck(@RequestParam Long roomId, @RequestParam Long userId){
+        boolean inviteCheck = chatRoomJoinRepository.existsByChatRoomIdAndUserId(roomId, userId);
+        boolean bannedCheck = chatRoomJoinRepository.existsByChatRoomIdAndUserIdAndBannedYn(roomId, userId, "Y");
+        return !inviteCheck && !bannedCheck;
+    }
 }

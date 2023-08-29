@@ -29,12 +29,10 @@ function Header({ userInfo }) {
       const accessToken = new URL(window.location.href).searchParams.get(
         "accessToken"
       );
-      console.log("accessToken >>>>> ", accessToken);
       if (accessToken) {
         const expireTime = new URL(window.location.href).searchParams.get(
           "accessTokenExpireIn"
         );
-        console.log("expireTime >>>>> ", expireTime);
         const expireTimeDate = new Date(Number(expireTime));
 
         setCookie("token", accessToken, { expires: expireTimeDate, path: "/" });
@@ -67,6 +65,7 @@ function Header({ userInfo }) {
           }
         })
         .then((data) => {
+          setNickname(data.nickname)
           dispatch(
             userActions.loginSaveAPI(
               data.id,
@@ -77,13 +76,12 @@ function Header({ userInfo }) {
               data.gender,
               data.phone,
               data.birth,
-              data.profileMessage
+              data.profileMessage,
+              isLogin
             )
           );
         });
-    } else {
-      setNickname(""); // 이 부분을 추가하여 nickname을 초기화합니다.
-    }
+    } 
   }, [isLogin, cookies]);
 
   const handleLogout = (e) => {
@@ -167,7 +165,7 @@ function Header({ userInfo }) {
                 <div className="category-title">
                   <div className="category-content">
                     <i className="fa fa-calendar-o" aria-hidden="true"></i>
-                    <a href="/calendar">일정</a>
+                    <Link to={"/calendar"}>일정</Link>
                   </div>
                 </div>
                 <div className="category-title category-comu">

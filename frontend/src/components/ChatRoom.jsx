@@ -132,6 +132,23 @@ function ChatRoom(props) {
     });
   };
 
+  const copyUrl = (roomId) => {
+    let url = '';
+    let textarea = document.createElement("textarea");
+    document.body.appendChild(textarea);
+    url =`localhost:3000/chat/room/list/${roomId}`;
+    textarea.value = url;
+    textarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textarea);
+    Swal.fire({
+      icon: "success",
+      title: "채팅", // Alert 제목
+      text: "채팅방 링크가 복사되었습니다.",
+      width: 360, // Alert 내용
+    });
+ };
+
   return (
     <section className="chat-list-room">
       {/* 유저평가 모달 */}
@@ -318,7 +335,7 @@ function ChatRoom(props) {
             </div>
 
             <div className="chat-list-icons">
-              <i className="bi bi-share-fill share">
+              <i className="bi bi-share-fill share" onClick={(e) => copyUrl(chatRoom.id)}>
                 <div className="share-box">공유하기</div>
               </i>
               <i

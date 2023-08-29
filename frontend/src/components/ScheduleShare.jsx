@@ -12,6 +12,7 @@ function ScheduleShare(props) {
   let { year, month, date } = props;
   let start_date = new Date(year, month, 1).getDay();
   let lastDate = new Date(year, month + 1, 0).getDate();
+	const [nickname, setNickname] = useState('');
 
   const loginId = (window.location.pathname).split('/').pop();
   console.log(loginId);
@@ -36,15 +37,17 @@ function ScheduleShare(props) {
 				.then((data) => {
 					console.log("data : ", data);
 					setScheduleList(data);
+					setNickname(data[0].nickname)
 				})
 				.catch((error) => {
 					console.error("Fetch error:", error);
 				});
 		}
-	, [loginId, scheduleList]);
+	, [loginId]);
   return (
     <div className="calendar">
 			<header className="calendar-header">
+				<p className="calnedarMaster">{nickname}님의 일정</p>
 				<span className="Month">{month + 1}월</span>
 			</header>
 

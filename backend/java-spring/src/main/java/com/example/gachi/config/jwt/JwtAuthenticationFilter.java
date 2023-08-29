@@ -1,9 +1,7 @@
 package com.example.gachi.config.jwt;
 
 import com.example.gachi.model.User;
-import com.example.gachi.model.dto.user.JwtTokenDto;
 import com.example.gachi.repository.UserRepository;
-import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -36,14 +34,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
+
+
         String accessToken = resolveAccessToken(request);
         String refreshToken = resolveRefreshToken(request);
 
-        if (accessToken != null) {
-            if(jwtTokenProvider.validateToken(accessToken)) {
+        if (accessToken != null && jwtTokenProvider.validateToken(accessToken)) {
             Authentication authentication = jwtTokenProvider.getAuthentication(accessToken);
-            SecurityContextHolder.getContext().setAuthentication(authentication);}
-        } else if(!jwtTokenProvider.validateToken(accessToken) && refreshToken != null){
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+        } else if (refreshToken != null && jwtTokenProvider.validateToken(refreshToken)) {
             //재발급 후 다시 넣기
             //리프레쉬 토큰 검증
             boolean validateRefreshToken = jwtTokenProvider.validateToken(refreshToken);
@@ -85,4 +84,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
         return null;
     }
+
+
 }

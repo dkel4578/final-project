@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 function Schedule(props) {
   // props에서 년-월-일 가져오기
   const userInfo = useSelector((state) => state.user.user);
+  let isLogin = userInfo.isLogin
   let { year, month, date } = props;
 
   // 말일 구하기(다음달 기준으로 조회해서 일값=0 하면 이번달 말임)
@@ -22,8 +23,6 @@ function Schedule(props) {
   const [events, setEvents] = useState([]); // eslint-disable-line no-unused-vars
   const [id, setId] = useState(""); // eslint-disable-line no-unused-vars
   const [scheduleList, setScheduleList] = useState([]); // eslint-disable-line no-unused-vars
-
-  let isLogin = false;
 
   const navigate = useNavigate(); // eslint-disable-line no-unused-vars
 
@@ -40,6 +39,7 @@ function Schedule(props) {
         },
       })
         .then((res) => {
+          console.log(res)
           if (res.ok) {
             return res.json(); // 응답이 성공인 경우에만 json 변환
           }
@@ -137,6 +137,8 @@ function Schedule(props) {
                       title: "스케쥴 수정", // Alert 제목
                       text: "스케쥴 수정에 성공하였습니다.",
                       width: 360, // Alert 내용
+                    }).then(() => {
+                      window.location.reload();
                     });
                   });
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
@@ -159,6 +161,8 @@ function Schedule(props) {
                       title: "스케쥴 삭제", // Alert 제목
                       text: "스케쥴 삭제에 성공하였습니다.",
                       width: 360, // Alert 내용
+                    }).then(() => {
+                      window.location.reload();
                     });
                   });
                 }
@@ -205,6 +209,9 @@ function Schedule(props) {
                       title: "스케쥴 추가",
                       text: "스케쥴 추가에 성공했습니다.",
                       width: 360,
+                    })
+                    .then(() => {
+                      window.location.reload(); // 일정 삭제 성공 후 페이지 새로고침
                     });
                     return res.json();
                   })
@@ -231,6 +238,23 @@ function Schedule(props) {
         });
       });
   };
+
+  const copyUrl = () => {
+    let url = '';
+    let textarea = document.createElement("textarea");
+    document.body.appendChild(textarea);
+    url =`localhost:3000/calendar/${userInfo.loginId}`;
+    textarea.value = url;
+    textarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textarea);
+    Swal.fire({
+      icon: "success",
+      title: "채팅", // Alert 제목
+      text: "채팅방 링크가 복사되었습니다.",
+      width: 360, // Alert 내용
+    });
+ };
   return (
     <div className="calendar">
       <header className="calendar-header">
@@ -309,6 +333,9 @@ function Schedule(props) {
         </div>
         <button className="schedule" onClick={() => handleDateClick(today)}>
           + 일정 추가
+        </button>
+        <button className="schedule" onClick={copyUrl}>
+          + 일정 공유
         </button>
       </div>
     </div>
