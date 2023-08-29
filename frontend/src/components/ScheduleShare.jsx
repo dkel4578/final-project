@@ -47,8 +47,8 @@ function ScheduleShare(props) {
   return (
     <div className="calendar">
 			<header className="calendar-header">
-				<p className="calnedarMaster">{nickname}님의 일정</p>
 				<span className="Month">{month + 1}월</span>
+				<p className="calnedarMaster">{nickname}생존전문가김병철님의 일정</p>
 			</header>
 
 			<main>
@@ -84,8 +84,8 @@ function ScheduleShare(props) {
 								<li
 									key={`day-${day}`}
 									style={{
-										color: selectedDate === day ? "#48a26b" : "black",
-										fontSize: selectedDate === day ? "1.3rem" : "1.3rem",
+										color: selectedDate === day ? "red" : "black",
+										fontSize: selectedDate === day ? "1.2rem" : "1.2rem",
 										fontWeight: selectedDate === day ? "bold" : "normal",
 										backgroundColor: scheduleInfo ? "#f7e385" : "transparent",
                     border: selectedDate === day ? "1px solid #2ACF7D" : "1px solid #2ACF7D",

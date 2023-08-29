@@ -296,7 +296,7 @@ function Schedule(props) {
                   onClick={() => handleDateClick(day)}
                   style={{
                     color: selectedDate === day ? "red" : "black",
-                    fontSize: selectedDate === day ? "1rem" : "1rem",
+                    fontSize: selectedDate === day ? "1.2em" : "1.2em",
                     fontWeight: selectedDate === day ? "bold" : "normal",
                     backgroundColor: scheduleInfo ? "#f7e385" : "transparent",
                     position: "relative", // 상대 위치 지정
@@ -331,12 +331,14 @@ function Schedule(props) {
               </div>
             ))}
         </div>
-        <button className="schedule" onClick={() => handleDateClick(today)}>
+        <div className="schedule-btns">
+        <button className="schedule-btn schedule-add-btn" onClick={() => handleDateClick(today)}>
           + 일정 추가
         </button>
-        <button className="schedule" onClick={copyUrl}>
+        <button className="schedule-btn schedule-share-btn" onClick={copyUrl}>
           + 일정 공유
         </button>
+        </div>
       </div>
     </div>
   );
