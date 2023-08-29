@@ -40,6 +40,17 @@
   transition: 0.4s;
   font-size: 16px;
 }
+/* 게시글 위,경도 */
+.write-map-location{
+  width: 50%;
+  border: 2px solid var(--maincolor);
+  border-radius: 5px;
+  padding: 10px;
+  letter-spacing: 2px;
+  transition: 0.4s;
+  font-size: 16px;
+  display: none;
+}
 .write-title::placeholder{
   transition: 0.5s;
 }

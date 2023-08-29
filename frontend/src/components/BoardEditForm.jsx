@@ -25,6 +25,10 @@ function BoardEditForm() {
     const [imageSrc, setImageSrc] = useState(""); //이미지 정보
     const [imgData, setImgData] = useState(''); // 게시글 이미지
     const fileInputRef = useRef(null);
+    const [localAddress, setLocalAddress] = useState(''); // 주소 상태 변수 추가
+    const localAddressInputRef = useRef(null);
+    const [localPlace, setLocalPlace] = useState(''); // 장소 상태 변수 추가
+    const localPlaceInputRef = useRef(null);
     const [data, setData] = useState({
         title: '',
         content: '',
@@ -76,8 +80,8 @@ function BoardEditForm() {
         }).then((data) => {
             if (data && data.status === 200) {
                 alert('게시글이 수정되었습니다.');
-                // navigate(`/board/view?id=${data.id}`);
-                window.location.href = `/board/view?id=${id}`;
+                // navigate(`/board/view?id=${data.id}&kind=${kind}`);
+                window.location.href = `/board/view?id=${id}&kind=${kind}`;
             } else {
                 alert('게시글 수정이 실패되었습니다.');
             }
@@ -166,27 +170,46 @@ function BoardEditForm() {
                                     />
                                 </div>
                             </div>
-                            <div className="post-main-modify-contents">
-                                <div className="post-main-modify-content">
+                            <div className="post-main-modify-content">
                                     <Editor
                                         value={desc}
                                         onChange={onEditorChange}
                                         ref={descInputRef}
                                     />
-                                </div>
                             </div>
-                            <div className="post-main-content-modify-btns">
-                                <input
-                                    type="button"
-                                    className="map-attach-btn"
-                                    value="지도 첨부"
-                                />
-                                <input
-                                    type="button"
-                                    className="image-attach-btn"
-                                    value="이미지 첨부"
-                                />
+                            <div><br/><br/><br/></div>
+                            {data.localPlace &&
+                            <div className="write-title-box">
+                                <input type="text"
+                                       className="write-title"
+                                       max={70}
+                                       value={data.localPlace}
+                                       name="localPlace" id='localPlace'  ref={localPlaceInputRef}
+                                        />
                             </div>
+                            }
+                            {data.localAddress &&
+                            <div className="write-title-box">
+                                <input type="text"
+                                       className="write-title"
+                                       max={70}
+                                       value={data.localAddress}
+                                       name="localAddress" id='localAddress'  ref={localAddressInputRef}
+                                        />
+                            </div>
+                            }
+                            {/*<div className="post-main-content-modify-btns">*/}
+                            {/*    <input*/}
+                            {/*        type="button"*/}
+                            {/*        className="map-attach-btn"*/}
+                            {/*        value="지도 첨부"*/}
+                            {/*    />*/}
+                            {/*    <input*/}
+                            {/*        type="button"*/}
+                            {/*        className="image-attach-btn"*/}
+                            {/*        value="이미지 첨부"*/}
+                            {/*    />*/}
+                            {/*</div>*/}
                             <div className="post-main-content-modify-btns">
                                 {imgData && <img src={`/boardImg/${imgData.imgName}`} style={{ width: '100px' }}  />}
                                 {imageSrc && <img src={imageSrc} alt="Uploaded" style={{ width: '100px' }} />}

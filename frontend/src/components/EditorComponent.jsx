@@ -56,13 +56,13 @@ class EditorComponent extends React.Component {
             this.quillRef.current.focus();
         }
     }
-
+    // ['link', 'image'],  에디터에 이미지 첨부 추가
     modules = {
         toolbar: [
             [{ 'header': [1, 2, false] }],
             ['bold', 'italic', 'underline', 'strike', 'blockquote'],
             [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
-            ['link', 'image', 'map-embed'],
+            ['link'],
             [{ 'align': [] }, { 'color': [] }, { 'background': [] }],
             ['clean']
         ],

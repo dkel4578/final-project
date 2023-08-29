@@ -66,19 +66,13 @@ function App(props) {
           <Route path="/signup" element={<SignupPage/>}/>
           <Route path="/myPage" element={<MyPage/>}/>
           <Route path="/changeInfo" element={<ChangeInfo/>}/>
-          <Route path="/board/view" element={<BoardViewPage/>}/>
           <Route path="/passwordChange" element={<PasswordChangePage />} />
           <Route path="/passwordChangeComplete" element={<PassWordChangeComplete />} />
           <Route path="/board/:kind" element={<BoardListPage />}/>
           <Route path="/board/view" element={<BoardViewPage/>}/>
           <Route path="/board/edit" element={<BoardEditPage/>}/>
           <Route path="/board/write" element={<BoardWritePage />}/>
-          <Route path="/board/:kind" element={<BoardListPage />}/>
-          <Route path="/board/view" element={<BoardViewPage/>}/>
-          <Route path="/board/edit" element={<BoardEditPage/>}/>
-          <Route path="/board/write" element={<BoardWritePage />}/>
           <Route path="/board/delete" element={<BoardDeletePage />}/>
-     	  <Route path="/board/notice" element={<BoardNotice/>}/>
           <Route path="/passwordChange" element={<PasswordChangePage/>}/>
           <Route path="/calendar" element={<Calendar/>}/>
           <Route path="/chat/room/list" element={<ChatRoomListPage />}/>
@@ -87,15 +81,14 @@ function App(props) {
           <Route path="/admin" element={<AdminAuth Component={AdminPage} userInfo={userInfo} />} />
           <Route path="/admin2" element={< AdminPage/>} />
           <Route path="/coffeeEventPage" element={<CoffeeEventPage/>}/>
-					<Route path="/criminalPage" element={<CriminalPage/>}/>
-					<Route path="/faq" element={<FAQ/>}/>
-					<Route path="/launching" element={<Launching/>}/>
-					<Route path="/postContentModify" element={<PostContentModify/>}/>
-					<Route path="/postContent" element={<PostContent/>}/>
-					<Route path="/writePost" element={<WritePost/>}/>
-					<Route path="/chatName" element={<ChatName/>}/>
+          <Route path="/criminalPage" element={<CriminalPage/>}/>
+          <Route path="/launching" element={<Launching/>}/>
+          <Route path="/postContentModify" element={<PostContentModify/>}/>
+          <Route path="/postContent" element={<PostContent/>}/>
+          <Route path="/writePost" element={<WritePost/>}/>
+          <Route path="/chatName" element={<ChatName/>}/>
           <Route path="/header2" element={<Header2/>}/>
-          <Route path="/chat/room/list/:roomId" element={<ChatPage/>}/>      
+          <Route path="/chat/room/list/:roomId" element={<ChatPage/>}/>
           <Route path="/chat/room/list/test" element={<ChatTest/>}/>
 				</Routes>
 			{shouldHideFooter ? null : <Footer />} {/* footer를 숨김 */}
