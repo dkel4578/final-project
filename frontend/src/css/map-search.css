@@ -1,0 +1,35 @@
+/* map-search-box */
+.map-search-box{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px 0;
+    gap: 15px;
+}
+.map-search-input{
+    padding: 10px;
+    border: 1px solid #2ACF7D;
+    border-radius: 10px;
+    font-size: 18px;
+    flex: 2;
+}
+.map-search-btn{
+    flex: 0.5;
+    font-size: 18px;
+    padding: 10px 0;
+    border-radius: 10px;
+    background-color: #2ACF7D;
+    color: white;
+}
+/* 일반 텍스트 스타일 */
+.map-search-list{
+    color: #000; /* 텍스트 기본 색상 */
+    text-decoration: none; /* 밑줄 제거 */
+    transition: color 0.3s; /* 색상 변경 시 부드럽게 변화하도록 설정 */
+}
+/* 마우스 오버 시 텍스트 스타일 변경 */
+.map-search-list:hover {
+    color: #FF0000; /* 마우스 오버 시 텍스트 색상 변경 */
+    cursor: pointer;
+    text-decoration: underline; /* 마우스 오버 시 밑줄 추가 */
+}

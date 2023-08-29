@@ -49,6 +49,7 @@
     width: 100%;
     display: flex;
     margin-bottom: 20px;
+    padding-left: 10px;
 }
 .search{
     flex: 3;
@@ -102,14 +103,14 @@
     /* border: 1px solid red; */
     flex-direction: column;
     gap: 15px;
-    
+    min-height: 70vh;    
 }
 .board-content{
     width: 100%;
     display: flex;
     align-items: center;
     border-bottom: 1px solid #ccc;
-    padding-bottom: 10px;
+    padding: 10px 0;
     gap: 10px;
 }
 .board-info{
@@ -153,14 +154,14 @@
     gap: 5px;
     flex-direction: column;
     flex: 1;
-    /* border: 1px solid blue; */
     border-radius: 10px;
     background-color: var(--maincolor);
     color:  white;
     justify-content: center;
     align-items: center;
-    padding: 5px;
+    padding: 5px 0;
     font-size: 1.1em;
+    width: 50px;
 }
 .board-comment span{
     color: white;
@@ -192,3 +193,21 @@
     font-size: 1.3em;
     transform: translateY(3.5px);
 }
+/* image-attach-label  */
+#image-attach-label{
+    width: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #4f86ec;
+    color: white;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 1.2em;
+}
+.image-attach-btn{
+    display: none;
+}
+
+

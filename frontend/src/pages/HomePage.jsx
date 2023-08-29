@@ -49,6 +49,11 @@ function HomePage() {
   // }
   // console.log('zzzzzzzzzzzzzzzzzzzzz');
 
+  const handleCategoryClick = (kind) => {
+    navigate(`/board/${kind}`);
+  };
+
+
   return (
     <div className="body">
       <section className="slide-area">
@@ -67,22 +72,22 @@ function HomePage() {
         <div className="category-inner">
           <div className="category-items">
             <div className="category-item">
-              <a href="/board/C">
+              <Link to={`/board/C`}>
                 <img src="./images/cofee-together.jpg" alt="커피한잔 할래요" />
-              </a>
+              </Link>
             </div>
             <div className="category-item">
-              <a href="/board/T">
+              <Link to={`/board/T`}>
                 <img src="./images/trip-together.jpg" alt="여행같이 할래요" />
-              </a>
+              </Link>
             </div>
             <div className="category-item">
-              <Link to={"/board/F"}>
+              <Link to={`/board/F`}>
                 <img src="./images/eat-together.jpg" alt="식사같이 할래요" />
               </Link>
             </div>
             <div className="category-item">
-              <Link to={"/board/A"}>
+              <Link to={`/board/A`}>
                 <img src="./images/drink-together.jpg" alt="술한잔 할래요" />
               </Link>
             </div>
@@ -90,13 +95,13 @@ function HomePage() {
         </div>
       </section>
       <section className="noticeAndfaq">
-        <a href="/board/notice" className="notice-link">
+        <Link to={`/board/N`}>
           공지사항
-        </a>
+        </Link>
 
-        <a href="/faq" className="faq-link">
+        <Link to={`/board/Q`}>
           FAQ
-        </a>
+        </Link>
       </section>
     </div>
   );

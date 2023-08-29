@@ -11,7 +11,13 @@ const BoardPreview = ({ boardInfo,kind }) => {
         <li className="board-content" key={boardInfo.id}>
             <div className="board-info">
                 <div className="board-title">
+
                     {kind === 'C' &&  <span>커피한잔할래요</span>} {/* 커피*/}
+                    {kind === 'T' &&  <span>같이여행할래요</span>} {/* 커피*/}
+                    {kind === 'F' &&  <span>같이식사할래요</span>} {/* 커피*/}
+                    {kind === 'A' &&  <span>술한잔할래요</span>} {/* 커피*/}
+                    {kind === 'N' &&  <span>공지사항</span>} {/* 커피*/}
+                    {kind === 'Q' &&  <span>FAQ</span>} {/* 커피*/}
                     <a href={`/board/view?id=${boardInfo.id}&kind=${kind}`}>{boardInfo.title}</a>
                 </div>
                 <div className="board-user-log">

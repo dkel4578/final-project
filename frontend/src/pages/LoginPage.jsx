@@ -45,6 +45,14 @@ function LoginPage() {
       // }
       const data = await response.json();
       if (data) {
+        if(data.error){
+          return  Swal.fire({
+            icon: "error",
+            title: "로그인",
+            text: data.error,
+            width: 360,
+          });
+        }
         removeCookie('token');
         const expireTimeDate = new Date(Number(data.accessTokenExpireIn));
         setCookie('token', data.accessToken, { expires: expireTimeDate });

@@ -31,10 +31,6 @@ public class User extends BaseEntity{
 
     private Long accessTokenExpireIn;
 
-    private String refreshToken;
-
-    private Long refreshTokenExpireIn;
-
     private String password;
 
 //    @Column(nullable = false)
@@ -50,7 +46,8 @@ public class User extends BaseEntity{
     @Size(min=1, max=16)
     private String nickname;
 
-    private String profileMessage;
+    @Builder.Default
+    private String profileMessage = "자기소개를 입력해주세요.";
 
 //    @Column(nullable = false)
     private LocalDate birth;
@@ -76,21 +73,25 @@ public class User extends BaseEntity{
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     @ToString.Exclude
+    @JsonManagedReference
     private List<Board> boards;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     @ToString.Exclude
+    @JsonManagedReference
     private List<Comment> comments;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     @ToString.Exclude
+    @JsonManagedReference
     private List<BrdImg> brdImgs;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     @ToString.Exclude
+    @JsonManagedReference
     private List<BanList> banLists;
 
 
@@ -104,16 +105,19 @@ public class User extends BaseEntity{
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     @ToString.Exclude
+    @JsonManagedReference
     private List<Manner> manners;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     @ToString.Exclude
+    @JsonManagedReference
     private List<Schedule> schedules;
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "reported_id")
     @ToString.Exclude
+    @JsonManagedReference
     private List<Report> reports;
 
 //    @OneToMany(fetch = FetchType.EAGER)

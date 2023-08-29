@@ -16,11 +16,16 @@ function BoardWriteForm() { // Receive the 'kind' prop
     let navigate = useNavigate();
     const { kind } = useParams(); // kind 값을 추출
     const titleInputRef = useRef(null);
+    const localPlaceInputRef = useRef(null); //만남장소
+    const [localPlace, setLocalPlace] = useState(''); // 만남장소 상태 변수 추가
+    const localAddressInputRef = useRef(null); // 만남주소
+    const [localAddress, setLocalAddress] = useState(''); // 만남주소 상태 변수 추가
+
     // const contentInputRef = useRef(null);
     const kindInputRef = useRef(null);
     const descInputRef = useRef(null);
     const [cookies] = useCookies(['token']);
-    const [userData, setUserData] = useState(null); // 쿠키에서 유저정보 가져오기
+    //const [userData, setUserData] = useState(null); // 쿠키에서 유저정보 가져오기
     const [imageSrc, setImageSrc] = useState(""); //이미지 정보
     const fileInputRef = useRef(null);
     const userInfo = useSelector((state) => state.user.user); //유저 정보
@@ -28,16 +33,33 @@ function BoardWriteForm() { // Receive the 'kind' prop
 
     console.log("userInfo: ======>",userInfo);
 
+    //*******************************
+    //지도보이기
+    //*******************************
     // 추가한 상태 변수 showMap를 통해 MapComponent를 표시 여부를 제어
     const [showMap, setShowMap] = useState(false); //지도 표시
     // "지도 첨부" 버튼을 클릭하면 MapComponent를 보여주도록 설정
 
 
+    //********************************
+    //지도보이기 감추기 토글
+    //********************************
     const toggleMap = () => {
         setShowMap((prevShowMap) => !prevShowMap); // 상태를 반전시킵니다.
     };
 
+    //********************************
+    // 주소 클릭 이벤트 핸들러
+    //********************************
+    const handleAddressClick = (address, place) => {
+        // 선택한 주소를 상태 변수에 저장
+        setLocalAddress(address);
+        setLocalPlace(place);
 
+        // 주소 입력란에 선택한 주소를 설정
+        localAddressInputRef.current.value = address;
+        localPlaceInputRef.current.value = place;
+    };
 
     //**********************
     //에디터 (quill)
@@ -51,9 +73,9 @@ function BoardWriteForm() { // Receive the 'kind' prop
     //************************
     // enum 유형으로 설정
     //************************
-    BoardWriteForm.propTypes = {
-        kind: PropTypes.oneOf(['N', 'Q', 'F', 'C', 'A', 'T']).isRequired,
-    };
+    // BoardWriteForm.propTypes = {
+    //     kind: PropTypes.oneOf(['N', 'Q', 'F', 'C', 'A', 'T']).isRequired,
+    // };
 
 
     //게시글 입력 및 파일 업로드
@@ -61,6 +83,9 @@ function BoardWriteForm() { // Receive the 'kind' prop
         event.preventDefault();
 
         const enteredTitle = titleInputRef.current.value;
+        const enteredLocalAddress = localAddressInputRef.current.value;
+        const enteredLocalPlace = localPlaceInputRef.current.value;
+
         // const enteredContent = contentInputRef.current.value;
         const enteredKind = kindInputRef.current.value;
         const enteredDesc = desc;
@@ -92,6 +117,8 @@ function BoardWriteForm() { // Receive the 'kind' prop
                 body: JSON.stringify({
                     kind: enteredKind,
                     title: enteredTitle,
+                    localAddress: enteredLocalAddress,
+                    localPlace: enteredLocalPlace,
                     content: enteredDesc,
                     userId: userInfo.uid,
                 }),
@@ -139,12 +166,12 @@ function BoardWriteForm() { // Receive the 'kind' prop
             const file = fileInputRef.current.files[0];
             if (file) {
                 const formData = new FormData();
-                const userId = userData;
+                // const userId = userData;
 
-                console.log("userId / brdId : ",userId, brdId);
+                console.log("userId / brdId : ",userInfo.uid, brdId);
 
                 formData.append("file", file);
-                formData.append("userId", userId);
+                formData.append("userId", userInfo.uid);
                 formData.append("brdId", brdId);
 
                 try {
@@ -181,10 +208,10 @@ function BoardWriteForm() { // Receive the 'kind' prop
             };
 
             const formData = new FormData();
-            const userId = userData;
+            // const userId = userData;
 
             formData.append("file", file);
-            formData.append("userId", userId);
+            formData.append("userId", userInfo.uid);
         }
     };
 
@@ -233,6 +260,8 @@ function BoardWriteForm() { // Receive the 'kind' prop
                                     <option value="T">같이여행할래요</option>
                                     <option value="F">식사같이할래요</option>
                                     <option value="A">술한잔할래요</option>
+                                    <option value="N">공지사항</option>
+                                    <option value="Q">FAQ</option>
                                 </select>
                             </div>
                             <div className="write-title-box">
@@ -244,6 +273,23 @@ function BoardWriteForm() { // Receive the 'kind' prop
                             <div className="write-post-text-place">
                                 <Editor value={desc} onChange={onEditorChange}  ref={descInputRef} required />
                             </div>
+                            <div>
+                                <br/><br/>
+                            </div>
+                            <div className="write-title-box">
+                                <input type="text"
+                                       className="write-title"
+                                       max={70}
+                                       name="localPlace" id='localPlace'  ref={localPlaceInputRef}
+                                       placeholder="만남 장소를 지도에서 검색해주세요" />
+                            </div>
+                            <div className="write-title-box">
+                                <input type="text"
+                                       className="write-title"
+                                       max={70}
+                                       name="localAddress" id='localAddress'  ref={localAddressInputRef}
+                                       placeholder="만남 주소를 지도에서 검색해주세요" />
+                            </div>
                             <div className="write-post-map-place">
                                 <div className="write-post-map"></div>
                             </div>
@@ -253,13 +299,18 @@ function BoardWriteForm() { // Receive the 'kind' prop
                             {imageSrc && <img src={imageSrc} alt="Uploaded" style={{ width: '100px' }} />}
                         </div>
                         <div className="user-profile">
+                            <label htmlFor="image-attach-name" id="image-attach-label">
+                                이미지 첨부
                             <input
                                 type="file"
                                 className="image-attach-btn"
+                                id="image-attach-name"
+                                name="image-attach-name"
                                 accept="image/*"
                                 onChange={onUpload}
                                 ref={fileInputRef}
                             ></input>
+                            </label>
                         </div>
                         <div className="write-post-content-btns">
                             {/* showMap 상태에 따라 MapComponent를 표시 또는 숨김 */}
@@ -267,16 +318,15 @@ function BoardWriteForm() { // Receive the 'kind' prop
                                 type="button"
                                 className="map-attach-btn"
                                 onClick={toggleMap}
-                                value={showMap ? "지도 숨기기" : "지도 첨부"}
+                                value={showMap ? "지도 숨기기" : "지도 검색"}
                             >
                             </input>
 
                         </div>
 
                         <div>
-
                             {/* showMap 상태에 따라 MapComponent를 표시 또는 숨김 */}
-                            {showMap && <MapComponent />}
+                            {showMap && <MapComponent onAddressClick={handleAddressClick} />}
                         </div>
                         <div className="write-post-btn-place">
                             {userInfo.uid &&
@@ -291,9 +341,9 @@ function BoardWriteForm() { // Receive the 'kind' prop
 }
 
 
-BoardWriteForm.propTypes = {
-    kind: PropTypes.oneOf(['N', 'Q', 'F', 'C', 'A', 'T']).isRequired,
-};
+// BoardWriteForm.propTypes = {
+//     kind: PropTypes.oneOf(['N', 'Q', 'F', 'C', 'A', 'T']).isRequired,
+// };
 
 
 export default BoardWriteForm;
