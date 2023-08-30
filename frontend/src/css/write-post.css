@@ -21,6 +21,15 @@
 .select-board-box,.write-title-box{
   margin-bottom: 15px;
 }
+.write-location-box,.write-address-box{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.write-location-name,.write-address-name{
+  margin-top: 20px;
+  margin-right: 10px;
+}
 /* 셀렉트 박스 */
 .select-board-box #kind{
   cursor: pointer;
@@ -39,6 +48,29 @@
   letter-spacing: 2px;
   transition: 0.4s;
   font-size: 16px;
+}
+
+/* 게시글 장소, 주소 */
+.write-place-address{
+  width: 80%;
+  border: 2px solid var(--maincolor);
+  border-radius: 5px;
+  padding: 10px;
+  letter-spacing: 2px;
+  transition: 0.4s;
+  font-size: 16px;
+}
+
+/* 게시글 위,경도 */
+.write-map-location{
+  width: 50%;
+  border: 2px solid var(--maincolor);
+  border-radius: 5px;
+  padding: 10px;
+  letter-spacing: 2px;
+  transition: 0.4s;
+  font-size: 16px;
+  display: ;
 }
 .write-title::placeholder{
   transition: 0.5s;

@@ -3,13 +3,11 @@ import axios from "axios";
 import { useInView } from 'react-intersection-observer';
 import BoardPreview from './BoardPreview';
 import { Link, useParams } from 'react-router-dom'; // useParams 추가
-import PropTypes from 'prop-types'; // prop-types 라이브러리 import
 import '../css/index.css';
 import '../css/total.css';
 import '../css/board.css';
 import '../css/variables.css';
 import {useSelector} from "react-redux";
-
 
 
 function BoardListForm3() { // Receive the 'kind' prop
@@ -18,20 +16,13 @@ function BoardListForm3() { // Receive the 'kind' prop
   console.log("userInfo:  =============> ",userInfo);
 
 
-  //************************
-  // enum 유형으로 설정
-  //************************
-  // BoardListForm3.propTypes = {
-  //   kind: PropTypes.oneOf(['N', 'Q', 'F', 'C', 'A', 'T']).isRequired,
-  // };
-
   let [boardList, setBoardList] = useState([]);
   const { ref, inView } = useInView();
   const [pageSize, setPageSize] = useState(2); // 페이지 크기
   const [noMoreData, setNoMoreData] = useState(false); // 새로운 상태 추가
   const [searchWord, setSearchWord] = useState(""); // 초기값을 설정
 
-  console.log("searchWord : ", searchWord);
+  // console.log("searchWord : ", searchWord);
 
   /*
   * 서버에 접속하여 게시글 정보 가져오기
@@ -114,9 +105,9 @@ function BoardListForm3() { // Receive the 'kind' prop
 
 
 
-  console.log("inView: ",inView);
-  console.log("boardList.length: ",boardList.length);
-  console.log("noMoreData: ",noMoreData);
+  // console.log("inView: ",inView);
+  // console.log("boardList.length: ",boardList.length);
+  // console.log("noMoreData: ",noMoreData);
 
 
   return (
@@ -175,11 +166,6 @@ function BoardListForm3() { // Receive the 'kind' prop
       </div>
   );
 }
-
-
-// BoardListForm3.propTypes = {
-//   kind: PropTypes.oneOf(['N', 'Q', 'F', 'C', 'A', 'T']).isRequired,
-// };
 
 
 export default BoardListForm3;

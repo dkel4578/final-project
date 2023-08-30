@@ -8,9 +8,6 @@
   font-size: 2em;
   font-weight: bold;
   letter-spacing: 2px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
 }
 /* post-main-contents */
 .post-main-contents{

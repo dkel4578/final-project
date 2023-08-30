@@ -9,7 +9,8 @@ import '../css/board.css';
 import '../css/variables.css';
 import '../css/post-content-modify.css';
 import Editor from './EditorComponent.jsx';
-import { navigate } from 'jsdom/lib/jsdom/living/window/navigation'; //에디터
+import { navigate } from 'jsdom/lib/jsdom/living/window/navigation';
+import MapComponent from "./MapComponent"; //에디터
 
 function BoardEditForm() {
     const location = useLocation();
@@ -25,6 +26,14 @@ function BoardEditForm() {
     const [imageSrc, setImageSrc] = useState(""); //이미지 정보
     const [imgData, setImgData] = useState(''); // 게시글 이미지
     const fileInputRef = useRef(null);
+    const [localAddress, setLocalAddress] = useState(''); // 주소 상태 변수 추가
+    const localAddressInputRef = useRef(null);
+    const [localPlace, setLocalPlace] = useState(''); // 장소 상태 변수 추가
+    const localPlaceInputRef = useRef(null);
+    const latitudeInputRef = useRef(null); // 위도
+    const [latitude, setLatitude] = useState(''); // 위도 상태 변수 추가
+    const longitudeInputRef = useRef(null); // 경도
+    const [longitude, setLongitude] = useState(''); // 경도 상태 변수 추가
     const [data, setData] = useState({
         title: '',
         content: '',
@@ -76,8 +85,8 @@ function BoardEditForm() {
         }).then((data) => {
             if (data && data.status === 200) {
                 alert('게시글이 수정되었습니다.');
-                // navigate(`/board/view?id=${data.id}`);
-                window.location.href = `/board/view?id=${id}`;
+                // navigate(`/board/view?id=${data.id}&kind=${kind}`);
+                window.location.href = `/board/view?id=${id}&kind=${kind}`;
             } else {
                 alert('게시글 수정이 실패되었습니다.');
             }
@@ -128,6 +137,40 @@ function BoardEditForm() {
         }
     };
 
+
+    //*******************************
+    //지도보이기
+    //*******************************
+    // 추가한 상태 변수 showMap를 통해 MapComponent를 표시 여부를 제어
+    const [showMap, setShowMap] = useState(false); //지도 표시
+    // "지도 첨부" 버튼을 클릭하면 MapComponent를 보여주도록 설정
+
+
+    //********************************
+    //지도보이기 감추기 토글
+    //********************************
+    const toggleMap = () => {
+        setShowMap((prevShowMap) => !prevShowMap); // 상태를 반전시킵니다.
+    };
+
+    //********************************
+    // 주소 클릭 이벤트 핸들러
+    //********************************
+    const handleAddressClick = (address, place, latitude, longitude) => {
+        // 선택한 주소를 상태 변수에 저장
+        setLocalAddress(address);
+        setLocalPlace(place);
+        setLatitude(latitude);
+        setLongitude(longitude);
+
+        // 주소 입력란에 선택한 주소를 설정
+        localAddressInputRef.current.value = address;
+        localPlaceInputRef.current.value = place;
+        latitudeInputRef.current.value = latitude;
+        longitudeInputRef.current.value = longitude;
+    };
+
+
     return (
         <div className="body">
             <form onSubmit={submitHandler}>
@@ -166,27 +209,61 @@ function BoardEditForm() {
                                     />
                                 </div>
                             </div>
-                            <div className="post-main-modify-contents">
-                                <div className="post-main-modify-content">
+                            <div className="post-main-modify-content">
                                     <Editor
                                         value={desc}
                                         onChange={onEditorChange}
                                         ref={descInputRef}
                                     />
-                                </div>
                             </div>
-                            <div className="post-main-content-modify-btns">
-                                <input
-                                    type="button"
-                                    className="map-attach-btn"
-                                    value="지도 첨부"
-                                />
-                                <input
-                                    type="button"
-                                    className="image-attach-btn"
-                                    value="이미지 첨부"
-                                />
+                            <div><br/><br/><br/></div>
+                            {data.localPlace &&
+                            <div className="write-location-box">
+                                <p className= "write-location-name">장소 :</p>
+                                <input type="text"
+                                       className="write-place-address"
+                                       max={70}
+                                       value={data.localPlace}
+                                       name="localPlace" id='localPlace'  ref={localPlaceInputRef}
+                                        />
                             </div>
+                            }
+                            {data.localAddress &&
+                            <div className="write-address-box">
+                                <p className= "write-address-name">주소 : </p>
+                                <input type="text"
+                                       className="write-place-address"
+                                       max={70}
+                                       value={data.localAddress}
+                                       name="localAddress" id='localAddress'  ref={localAddressInputRef}
+                                        />
+                            </div>
+                            }
+                            <div className="write-title-box" >
+                                <input type="text"
+                                       className="write-map-location"
+                                       max={10}
+                                       name="latitude" id='latitude'  ref={latitudeInputRef}
+                                       placeholder="위도" />
+                                <input type="text"
+                                       className="write-map-location"
+                                       max={10}
+                                       name="longitude" id='longitude'  ref={longitudeInputRef}
+                                       placeholder="경도" />
+                            </div>
+
+                            {/*<div className="post-main-content-modify-btns">*/}
+                            {/*    <input*/}
+                            {/*        type="button"*/}
+                            {/*        className="map-attach-btn"*/}
+                            {/*        value="지도 첨부"*/}
+                            {/*    />*/}
+                            {/*    <input*/}
+                            {/*        type="button"*/}
+                            {/*        className="image-attach-btn"*/}
+                            {/*        value="이미지 첨부"*/}
+                            {/*    />*/}
+                            {/*</div>*/}
                             <div className="post-main-content-modify-btns">
                                 {imgData && <img src={`/boardImg/${imgData.imgName}`} style={{ width: '100px' }}  />}
                                 {imageSrc && <img src={imageSrc} alt="Uploaded" style={{ width: '100px' }} />}
@@ -199,7 +276,22 @@ function BoardEditForm() {
                                     onChange={onUpload}
                                     ref={fileInputRef}
                                 ></input>
+                            </div>
+                            <div className="write-post-content-btns">
+                                {/* showMap 상태에 따라 MapComponent를 표시 또는 숨김 */}
+                                <input
+                                    type="button"
+                                    className="map-attach-btn"
+                                    onClick={toggleMap}
+                                    value={showMap ? "지도 숨기기" : "지도 검색"}
+                                >
+                                </input>
 
+                            </div>
+
+                            <div>
+                                {/* showMap 상태에 따라 MapComponent를 표시 또는 숨김 */}
+                                {showMap && <MapComponent onAddressClick={handleAddressClick} />}
                             </div>
                             <div className="modify-complete-btn-place">
                                 <input
