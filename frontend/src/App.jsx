@@ -69,7 +69,6 @@ function App(props) {
           <Route path="/signup" element={<SignupPage/>}/>
           <Route path="/myPage" element={<MyPage/>}/>
           <Route path="/changeInfo" element={<ChangeInfo/>}/>
-          <Route path="/board/view" element={<BoardViewPage/>}/>
           <Route path="/passwordChange" element={<PasswordChangePage />} />
           <Route path="/passwordChangeComplete" element={<PassWordChangeComplete />} />
           <Route path="/board/:kind" element={<BoardListPage />}/>
@@ -78,6 +77,7 @@ function App(props) {
           <Route path="/board/write" element={<BoardWritePage />}/>
           <Route path="/board/delete" element={<BoardDeletePage />}/>
      	    <Route path="/board/notice" element={<BoardNotice/>}/>
+
           <Route path="/calendar" element={<Calendar/>}/>
           <Route path="/chat/room/list" element={<ChatRoomListPage />}/>
           <Route path="/TouristAIP" element={<TouristAIP />}/>
@@ -93,7 +93,7 @@ function App(props) {
 					<Route path="/writePost" element={<WritePost/>}/>
 					<Route path="/chatName/:roomId" element={<ChatName/>}/>
           <Route path="/header2" element={<Header2/>}/>
-          <Route path="/chat/room/list/:roomId" element={<ChatPage/>}/>      
+          <Route path="/chat/room/list/:roomId" element={<ChatPage/>}/>
           <Route path="/chat/room/list/test" element={<ChatTest/>}/>
           <Route path="calendar/:loginId" element={<CalendarShare/>}/>
           <Route path="/kakaomap" element={<KakaoMap/>}/>

@@ -9,6 +9,7 @@ import org.apache.ibatis.javassist.NotFoundException;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @JsonIgnoreProperties({"user"})
 public class AddBoardRequestDto {
@@ -20,6 +21,8 @@ public class AddBoardRequestDto {
     private Long userId;
     private String localPlace;
     private String localAddress;
+    private double latitude;
+    private double longitude;
 
 
     //게시글 입력
@@ -31,6 +34,8 @@ public class AddBoardRequestDto {
                 .user(user)
                 .localPlace(localPlace)
                 .localAddress(localAddress)
+                .latitude(latitude)
+                .longitude(longitude)
                 .build();
     }
 
