@@ -30,7 +30,7 @@ function LoginPage() {
     const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
   
     try {
-      const response = await fetch('api/login', {
+      const response = await fetch('/api/login', {
         method: 'POST',
         headers: {
           "Content-Type": jsonContent,
