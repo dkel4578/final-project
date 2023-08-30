@@ -12,6 +12,12 @@ $(function(){
   });
 });
 
+$(function(){
+  $('#user-report-modal-report').click(function(){
+    $('.user-report-modal').removeClass('active');
+  });
+});
+
 // 댓글 사이렌 작성
 // $(document).ready(function() {
 //   // 사이렌 이미지, "x" 버튼 및 모달 취소 버튼에 대한 클릭 이벤트 핸들러 추가
@@ -20,3 +26,4 @@ $(function(){
 //     $('.user-report-modal').toggleClass('active');
 //   });
 // });
+

@@ -10,11 +10,17 @@ import com.example.gachi.util.BadRequestException;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import net.minidev.json.JSONObject;
-import org.springframework.http.ResponseEntity;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.file.Files;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Optional;
@@ -22,6 +28,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000", exposedHeaders = "Authorization")
 public class UserController {
     private final UserService userService;
     private final UserRepository userRepository;
@@ -140,8 +147,8 @@ public class UserController {
         }else if(userInfoUpdateDto.getPhone().length()<10 || !userInfoUpdateDto.getPhone().startsWith("01")){
             String errorMessage = "전화번호의 형식이 올바르지 않습니다.";
             return ResponseEntity.badRequest().body(Collections.singletonMap("error", errorMessage));
-        }else if(userInfoUpdateDto.getNickname().getBytes(charset).length > 16){
-            String errorMessage = "닉네임은 8글자를 넘을 수 없습니다.";
+        }else if(userInfoUpdateDto.getNickname().getBytes(charset).length > 12){
+            String errorMessage = "닉네임은 6글자를 넘을 수 없습니다.";
             return ResponseEntity.badRequest().body(Collections.singletonMap("error", errorMessage));
         }
         userService.update(id, userInfoUpdateDto);
@@ -157,23 +164,76 @@ public class UserController {
     //유저 정보 조회
     @GetMapping("/user/me")
     public ResponseEntity<UserResponseDto> getMyUserInfo() {
-        System.out.println(">>>>>>>>>>>>>user/me");
-        UserResponseDto myInfoBySecurity = userService.getMyInfoBySecurity();
 
+        UserResponseDto myInfoBySecurity = userService.getMyInfoBySecurity();
+        System.out.println(">>>>>>>>>>>>>user/me"+myInfoBySecurity);
         return ResponseEntity.ok(myInfoBySecurity);
     }
 
     //유저 프로필 사진 조회
-    @GetMapping("/profile/me")
-    public ResponseEntity<ProfileImgResponseDto> getMyUserProfileImg(@RequestParam Long userId) {
-        System.out.println(">>>>>>>>>>>>>>profile/me");
-        ProfileImgResponseDto myUserProfileImg = userService.getMyUserProfileImg(userId);
-        if(myUserProfileImg == null){
-            return ResponseEntity.ok(userService.getMyUserProfileImg(0L));
-        }
+    @GetMapping(value = "/profile/me/{userId}")
+    public ResponseEntity<?> getMyUserProfileImg(@PathVariable Long userId) {
 
-        return ResponseEntity.ok(myUserProfileImg);
+        String imgName = profileImgRepository.findFirstByUserIdOrderByCreateAtDesc(userId).get().getImgName();
+        String path = System.getProperty("user.dir");
+        String path2 = "\\src\\main\\resources\\image\\profileImg\\"+imgName;
+
+
+        File file = new File("");
+        File file1 = new File(path+path2);
+        File file2= new File(path + "\\src\\main\\resources\\image\\profileImg\\default-image.svg");
+        if(file1.exists()){
+            file = file1;
+        } else{
+            file = file2;
+        }
+        byte[] result = null;
+        ResponseEntity<byte[]> entity = null;
+        try{
+            result = FileCopyUtils.copyToByteArray(file);
+
+            HttpHeaders header = new HttpHeaders();
+            header.add("Content-Type", Files.probeContentType(file.toPath()));
+
+            entity = new ResponseEntity<>(result, header, HttpStatus.OK);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+//        ProfileImgResponseDto myUserProfileImg = userService.getMyUserProfileImg(userId);
+//        if(myUserProfileImg == null){
+//            return ResponseEntity.ok(userService.getMyUserProfileImg(0L));
+//        }
+        return entity;
     }
+
+//    @GetMapping("/profile/me")
+//    public ResponseEntity<?> getMyUserProfileImg(@RequestParam Long userId) throws IOException {
+//        System.out.println(">>>>>>>>>>>>>>profile/me");
+//        ProfileImgResponseDto myUserProfileImg = userService.getMyUserProfileImg(userId);
+//        if (myUserProfileImg == null) {
+//            myUserProfileImg = userService.getMyUserProfileImg(0L);
+//        }
+//
+//        if (myUserProfileImg != null && myUserProfileImg.getImgSrc() != null) {
+//            String imgsrc = myUserProfileImg.getImgSrc();
+////            String imgsrc = "D:/test1/test1.png";
+//            ClassPathResource imgFile = new ClassPathResource(imgsrc);
+//
+//            if (imgFile.exists()) {
+//                byte[] bytes = StreamUtils.copyToByteArray(imgFile.getInputStream());
+//                MediaType mediaType = MediaTypeFactory.getMediaType(imgFile).orElse(MediaType.APPLICATION_OCTET_STREAM);
+//
+//                HttpHeaders headers = new HttpHeaders();
+//                headers.setContentType(mediaType);
+//
+//                return new ResponseEntity<>(bytes, headers, HttpStatus.OK);
+//            } else {
+//                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//            }
+//        } else {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//    }
 
 
     @GetMapping("/user/email")

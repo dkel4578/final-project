@@ -12,6 +12,7 @@ import "../script/change-info.js";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "font-awesome/css/font-awesome.min.css";
 import "../script/custom.js";
+import { useDispatch, useSelector } from "react-redux";
 
 async function getCode(email) {
   await axios
@@ -27,14 +28,12 @@ async function getCode(email) {
 }
 
 async function checkCode(email, code) {
-
   return await axios
     .get("/api/checkCode?email=" + email + "&code=" + code, {
       email: email,
       code: code,
     })
     .then((response) => {
-
       return response.data;
     })
     .catch((error) => {
@@ -52,6 +51,7 @@ function formatDateToYYYYMMDD(inputDate) {
 }
 
 function ChangeInfo() {
+  const userInfo = useSelector((state) => state.user.user);
   const [cookies] = useCookies(["token"]);
   let isLogin = false;
   const navigate = useNavigate(); // eslint-disable-line no-unused-vars
@@ -86,12 +86,7 @@ function ChangeInfo() {
   const [authenticationFlg, setAuthenticationFlg] = useState(true);
   const [emailFlg, setEmailFlg] = useState(true);
   const [nameFlg, setNameFlg] = useState(false);
-  //로그인 확인
-  if (cookies.token != "undefined") {
-    isLogin = true;
-  } else {
-    isLogin = false;
-  }
+
 
   //이름 유효성 검사
   const nameCheckHandler = () => {
@@ -103,45 +98,15 @@ function ChangeInfo() {
     }
   };
   const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
-  //유저 정보 가져오기
-  useEffect(() => {
-    if (isLogin) {
-      fetch("/api/user/me", {
-        method: "GET",
-        headers: {
-          "Content-Type": jsonContent,
-          Authorization: "Bearer " + cookies.token,
-        },
-      })
-        .then((res) => {
-          if (res) {
-            return res.json();
-          }
-        })
-        .then((data) => {
-          if (data.phone) {
-            setNickname(data.nickname);
-            setName(data.name);
-            setGender(data.gender);
-            setPhone(data.phone);
-            setProfileMessage(data.profileMessage);
-            setLoginId(data.loginId);
-            const convertedDate = formatDateToYYYYMMDD(data.birth);
-            setBirth(convertedDate);
-            setId(data.id);
-            setEmail(data.email);
-          } else if (data.loginId) {
-            setName(data.name);
-            setLoginId(data.loginId);
-          }
-        });
-    }
-  }, [isLogin]);
+
+  const setGenderHandler = (gender) => {
+    setGender(gender);
+  };
 
   //프로필 이미지 정보 가져오기
   useEffect(() => {
     if (isLogin) {
-      fetch(`/api/profile/me?userId=${encodeURIComponent(id)}`, {
+      fetch(`/api/profile/me?userId=${encodeURIComponent(userInfo.uid)}`, {
         method: "GET",
         headers: {
           "Content-Type": jsonContent,
@@ -194,7 +159,6 @@ function ChangeInfo() {
 
   //이메일 발송
   const handleSendEmail = async () => {
-
     getCode(emailRef.current.value);
   };
 
@@ -439,7 +403,7 @@ function ChangeInfo() {
       const file = fileInputRef.current.files[0];
       if (file) {
         const formData = new FormData();
-        const userId = id;
+        const userId = userInfo.uid;
 
         formData.append("file", file);
         formData.append("userId", userId);
@@ -455,7 +419,7 @@ function ChangeInfo() {
           }
 
           // 파일 업로드가 성공하면 유저 정보 수정
-          const updateResponse = await fetch(`api/update/${id}`, {
+          const updateResponse = await fetch(`api/update/${userInfo.uid}`, {
             method: "PUT",
             headers: {
               "Content-Type": jsonContent,
@@ -498,7 +462,7 @@ function ChangeInfo() {
   return (
     <div>
       <section className="change-info">
-        <h1>정보수정</h1>
+        {userInfo.phone ? <h1>정보수정</h1> : <h1>정보 추가 입력</h1>}
         <div className="change-info-inner">
           <form className="change-info-place" onSubmit={submitHandler}>
             <div className="id-place place">
@@ -509,7 +473,7 @@ function ChangeInfo() {
                 <input
                   type="text"
                   className="input-kinds id-input"
-                  value={loginId}
+                  value={userInfo.loginId}
                   disabled
                 />
                 <i className="bi bi-person-fill-check"></i>
@@ -529,7 +493,7 @@ function ChangeInfo() {
                   type="email"
                   className="input-kinds email-input"
                   placeholder="해당메일로 인증번호를 보냅니다."
-                  value={email}
+                  value={userInfo.email|| ''}
                   ref={emailRef}
                   onChange={handleEmailInputChange}
                 />
@@ -566,7 +530,7 @@ function ChangeInfo() {
                   placeholder="메일로 보낸 인증번호를 입력하세요."
                   ref={authenticationRef}
                   onChange={handleCfNumberInput}
-                  value={cfNumber}
+                  value={cfNumber|| ''}
                 />
                 <i className="bi bi-send-fill"></i>
               </div>
@@ -586,7 +550,7 @@ function ChangeInfo() {
                   type="text"
                   className="input-kinds nick-input"
                   placeholder="사용하실 닉네임을 입력해주세요."
-                  value={nickname}
+                  value={userInfo.nickname|| ''}
                   ref={nicknameRef}
                   onChange={handleNicknameInputChange}
                 />
@@ -602,7 +566,7 @@ function ChangeInfo() {
                   type="text"
                   className="input-kinds name-input"
                   placeholder="실명을 입력해주세요."
-                  value={name}
+                  value={userInfo.name}
                   ref={nameRef}
                   onChange={(e) => {
                     handleNameInputChange(e);
@@ -622,7 +586,7 @@ function ChangeInfo() {
                   className="input-kinds phone-input"
                   placeholder="휴대폰 번호를 입력해주세요."
                   onChange={handleNumberInput}
-                  value={phone}
+                  value={userInfo.phone|| ''}
                   ref={phoneRef}
                 />
                 <i className="bi bi-phone-vibrate-fill"></i>
@@ -638,7 +602,7 @@ function ChangeInfo() {
                   className="input-kinds birth-input"
                   placeholder="생년월일 8자리 ( - 제외 )"
                   onChange={handleBirthInput}
-                  value={birth}
+                  value={userInfo.birth|| ''}
                   ref={birthRef}
                 />
                 <i className="bi bi-calendar-heart-fill"></i>
@@ -658,7 +622,7 @@ function ChangeInfo() {
                       className="gender-input"
                       value="M"
                       checked={gender === "M"}
-                      onChange={() => setGender("M")}
+                      onChange={() => setGenderHandler("M")}
                     />
                     <p>남성</p>
                   </label>
@@ -672,7 +636,7 @@ function ChangeInfo() {
                       className="gender-input"
                       value="F"
                       checked={gender === "F"}
-                      onChange={() => setGender("F")}
+                      onChange={() => setGenderHandler("F")}
                     />
                     <p>여성</p>
                   </label>
@@ -709,7 +673,7 @@ function ChangeInfo() {
               </div>
               <div className="upload-profile-img">
                 <label className="upload-profile-custom-file-input">
-                  <i class="bi bi-image"></i>
+                  <i className="bi bi-image"></i>
                   <input
                     type="file"
                     accept="image/*"
@@ -727,7 +691,7 @@ function ChangeInfo() {
               <textarea
                 cols="20"
                 rows="5"
-                value={profileMessage}
+                value={userInfo.profileMessage}
                 ref={profileMessageRef}
               ></textarea>
             </div>

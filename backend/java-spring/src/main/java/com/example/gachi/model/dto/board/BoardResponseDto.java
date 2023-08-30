@@ -28,6 +28,8 @@ public class BoardResponseDto {
     private Long userId;
     private String localPlace;
     private String localAddress;
+    private Double latitude;
+    private Double longitude;
 
 
     public static BoardResponseDto of(Board board){
@@ -41,6 +43,8 @@ public class BoardResponseDto {
                 .userId(board.getUser().getId())
                 .localPlace(board.getLocalPlace())
                 .localAddress(board.getLocalAddress())
+                .latitude(board.getLatitude())
+                .longitude(board.getLongitude())
                 .build();
     }
 }

@@ -137,6 +137,14 @@ public class BoardService {
         Board board = boardRepository.findById(boardId).orElseThrow(() -> new IllegalArgumentException("not found: "));
         board.deleteBoard("Y");
     }
+
+    //게시글 조회수 카운트
+    @Transactional
+    public void updateCnt(Long boardId){
+        Board board = boardRepository.findById(boardId).orElseThrow(() -> new IllegalArgumentException("not found: "));
+        board.updateCnt(boardId);
+    }
+
     @Transactional
     public void recovery(Long boardId){
         Board board = boardRepository.findById(boardId).orElseThrow(() -> new IllegalArgumentException("not found: "));

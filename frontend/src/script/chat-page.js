@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import $ from 'jquery';
 
 /* other-msg-block 클릭시 신고모달 나오기 */
@@ -19,3 +20,7 @@ $(function(){
     $('.user-report-modal').removeClass('active');
   });
 });
+=======
+
+/* other-msg-block 클릭시 신고모달 나오기 */
+>>>>>>> a48354f258932a61ec1b8283f54f970ab6be7329

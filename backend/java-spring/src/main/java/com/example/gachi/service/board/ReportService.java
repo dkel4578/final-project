@@ -34,8 +34,7 @@ public class ReportService {
     }
 
     @Transactional
-    public Report save(AddReportDto addReportDto,
-                     ReportCategory category,
+    public Report save(ReportCategory category,
                      Long contentId,
                      Long reportedId,
                      Long reporterId,
@@ -43,7 +42,14 @@ public class ReportService {
                      )throws NotFoundException{
         User reportedUserEntity = userRepository.findById(reportedId).orElseThrow(() -> new NotFoundException("User not found"));
         User reporterUserEntity = userRepository.findById(reporterId).orElseThrow(() -> new NotFoundException("User not found"));
-        Report report = addReportDto.toEntity(category, contentId, reportedUserEntity,reporterUserEntity, reportType);
+        Report report = Report.builder()
+                .contentId(contentId)
+                .reporter(reporterUserEntity)
+                .reportedUser(reportedUserEntity)
+                .reportType(reportType)
+                .category(category)
+                .reportStatus(ReportStatus.B)
+                .build();
         Report savedReport = reportRepository.save(report);
         return  savedReport;
     }

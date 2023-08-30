@@ -269,7 +269,7 @@ function SignupPage() {
       });
       return;
     } else {
-      fetch(`api/idCheck?loginId=${encodeURIComponent(loginId)}`, {
+      fetch(`/api/idCheck?loginId=${encodeURIComponent(loginId)}`, {
         method: "GET",
         headers: {
           "Content-Type": jsonContent,
@@ -318,7 +318,7 @@ function SignupPage() {
       });
       return;
     } else {
-      fetch(`api/nicknameCheck?nickname=${encodeURIComponent(nickname)}`, {
+      fetch(`/api/nicknameCheck?nickname=${encodeURIComponent(nickname)}`, {
         method: "GET",
         headers: {
           "Content-Type": jsonContent,
@@ -367,7 +367,7 @@ function SignupPage() {
       });
       return;
     } else {
-      fetch(`api/emailCheck?email=${encodeURIComponent(email)}`, {
+      fetch(`/api/emailCheck?email=${encodeURIComponent(email)}`, {
         method: "GET",
         headers: {
           "Content-Type": jsonContent,
@@ -480,7 +480,7 @@ function SignupPage() {
       const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
 
       console.log(birth);
-      fetch("api/signup", {
+      fetch("/api/signup", {
         method: "POST",
         headers: {
           "Content-Type": jsonContent,

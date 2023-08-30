@@ -80,7 +80,7 @@
   margin-top: 10px;
 }
 .master-list-item {
-  flex: 5px;
+  flex: 1;
 }
 
 .ReportedUser {
@@ -114,7 +114,7 @@
 .UserBoard:hover {
   background-color: #199b5a; /* 변경된 배경색 */
   color: #000000;
-}n
+}
 /* 마우스 커서가 버튼 위로 올라갔을 때 스타일 변경 */
 .ReportedUser:hover {
   background-color: #199b5a; /* 변경된 배경색 */

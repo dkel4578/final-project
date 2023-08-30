@@ -3,6 +3,8 @@ package com.example.gachi.service.chat;
 import com.example.gachi.model.ChatRoom;
 import com.example.gachi.model.ChatRoomJoin;
 import com.example.gachi.model.User;
+import com.example.gachi.model.dto.chat.ChatRoomJoinRequestDto;
+import com.example.gachi.model.dto.chat.ChatRoomJoinResponseDto;
 import com.example.gachi.repository.ChatRoomJoinRepository;
 import com.example.gachi.repository.ChatRoomRepository;
 import com.example.gachi.repository.UserRepository;
@@ -51,6 +53,21 @@ public class ChatRoomJoinService {
         ChatRoom chatRoom = chatRoomRepository.findById(roomId).orElse(null);
         ChatRoomJoin chatRoomJoin = chatRoomJoinRepository.findChatRoomJoinByUserAndChatRoom(user, chatRoom);
         chatRoomJoin.setBannedYn("Y");
+    }
+
+    public ChatRoomJoinResponseDto signupRoom(Long roomId, Long userId){
+        User user = userRepository.findById(userId).orElse(null);
+        ChatRoom chatRoom = chatRoomRepository.findById(roomId).orElse(null);
+        ChatRoomJoin chatRoomJoin = ChatRoomJoin.builder()
+                .chatRoom(chatRoom)
+                .user(user)
+                .build();
+
+        return ChatRoomJoinResponseDto.of(chatRoomJoinRepository.save(chatRoomJoin));
+    }
+
+    public boolean chatRoomJoinCheck(Long roomId, Long userId){
+        return chatRoomJoinRepository.existsByChatRoomIdAndUserId(roomId, userId);
     }
 
 

@@ -39,6 +39,7 @@ import KakaoMap from './pages/KakaoMap'
 import TouristAIP from "./pages/TouristAIP";
 >>>>>>> bb0f85f (듯.이.어 채팅 어느정도 완성된거같습니다 무.적.권 프로젝트 성공)
 import ChatPage from "./pages/ChatPage";
+<<<<<<< HEAD
 import AdminPage from "./components/AdminPage";
 import AdminAuth from "./components/AdminAuth";
 import { useLocation } from "react-router-dom";
@@ -62,6 +63,19 @@ function App(props) {
     renderHeader();
   }
 >>>>>>> bb0f85f (듯.이.어 채팅 어느정도 완성된거같습니다 무.적.권 프로젝트 성공)
+=======
+import AdminPage from './components/AdminPage';
+import AdminAuth from './components/AdminAuth';
+import CalendarShare from "./pages/CalendarShare";
+import {useLocation} from "react-router-dom";
+import KakaoMap from "./pages/KakaoMap";
+
+function App(props) {
+  const userInfo = useSelector((state) => state.user.user);
+  const location = useLocation();
+  const shouldHideFooter = location.pathname === "/admin" || location.pathname.startsWith("/chat/room/list/");
+  // const shouldUseHeader2 = location.pathname === "/admin";
+>>>>>>> a48354f258932a61ec1b8283f54f970ab6be7329
   return (
     <>
       <Header userInfo={userInfo} />
@@ -76,45 +90,39 @@ function App(props) {
           <Route path="/signup" element={<SignupPage/>}/>
           <Route path="/myPage" element={<MyPage/>}/>
           <Route path="/changeInfo" element={<ChangeInfo/>}/>
-          <Route path="/board/view" element={<BoardViewPage/>}/>
           <Route path="/passwordChange" element={<PasswordChangePage />} />
           <Route path="/passwordChangeComplete" element={<PassWordChangeComplete />} />
           <Route path="/board/:kind" element={<BoardListPage />}/>
           <Route path="/board/view" element={<BoardViewPage/>}/>
           <Route path="/board/edit" element={<BoardEditPage/>}/>
           <Route path="/board/write" element={<BoardWritePage />}/>
-          <Route path="/board/:kind" element={<BoardListPage />}/>
-          <Route path="/board/view" element={<BoardViewPage/>}/>
-          <Route path="/board/edit" element={<BoardEditPage/>}/>
-          <Route path="/board/write" element={<BoardWritePage />}/>
           <Route path="/board/delete" element={<BoardDeletePage />}/>
-     	  <Route path="/board/notice" element={<BoardNotice/>}/>
-          <Route path="/passwordChange" element={<PasswordChangePage/>}/>
+     	    <Route path="/board/notice" element={<BoardNotice/>}/>
+
           <Route path="/calendar" element={<Calendar/>}/>
           <Route path="/chat/room/list" element={<ChatRoomListPage />}/>
           <Route path="/TouristAIP" element={<TouristAIP />}/>
           <Route path="/chat/room/list2" element={<ChatingRoomListPage />}/>
           <Route path="/admin" element={<AdminAuth Component={AdminPage} userInfo={userInfo} />} />
-          <Route path="/admin2" element={< AdminPage/>} />
           <Route path="/coffeeEventPage" element={<CoffeeEventPage/>}/>
 					<Route path="/criminalPage" element={<CriminalPage/>}/>
 					<Route path="/faq" element={<FAQ/>}/>
 					<Route path="/launching" element={<Launching/>}/>
-					<Route path="/postContentModify" element={<PostContentModify/>}/>
-					<Route path="/postContent" element={<PostContent/>}/>
-					<Route path="/writePost" element={<WritePost/>}/>
-					<Route path="/chatName" element={<ChatName/>}/>
+					{/* <Route path="/postContentModify" element={<PostContentModify/>}/> */}
+					{/* <Route path="/postContent" element={<PostContent/>}/> */}
+					{/* <Route path="/writePost" element={<WritePost/>}/> */}
+					<Route path="/chatName/:roomId" element={<ChatName/>}/>
           <Route path="/header2" element={<Header2/>}/>
-          <Route path="/chat/room/list/:roomId" element={<ChatPage/>}/>      
+          <Route path="/chat/room/list/:roomId" element={<ChatPage/>}/>
           <Route path="/chat/room/list/test" element={<ChatTest/>}/>
           <Route path="/KakaoMap" element={<KakaoMap/>}/>
+          <Route path="calendar/:loginId" element={<CalendarShare/>}/>
 
-          
 				</Routes>
 			{shouldHideFooter ? null : <Footer />} {/* footer를 숨김 */}
-
 		</>
 	);
+<<<<<<< HEAD
 =======
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -165,6 +173,9 @@ function App(props) {
     </>
   );
 >>>>>>> bb0f85f (듯.이.어 채팅 어느정도 완성된거같습니다 무.적.권 프로젝트 성공)
+=======
+
+>>>>>>> a48354f258932a61ec1b8283f54f970ab6be7329
 }
 
 export default App;
