@@ -13,16 +13,16 @@ const SLIDE_INTERVAL = 5000;
 function HomePage() {
   const slides = [
     {
-      image: "./images/slide-banner1.png",
-      link: "/coffeeEventPage", 
+      image: require("../images/slide-banner1.png"),
+      link: "/coffeeEventPage",
     },
     {
-      image: "./images/slide-banner2.png",
-      link: "/criminalPage", 
+      image: require("../images/slide-banner2.png"),
+      link: "/criminalPage",
     },
     {
-      image: "./images/slide-banner3.png",
-      link: "/launching", 
+      image: require("../images/slide-banner3.png"),
+      link: "/launching",
     },
   ];
 
@@ -73,22 +73,22 @@ function HomePage() {
           <div className="category-items">
             <div className="category-item">
               <Link to={`/board/C`}>
-                <img src="./images/cofee-together.jpg" alt="커피한잔 할래요" />
+                <img src={require("../images/cofee-together.jpg")} alt="커피한잔 할래요" />
               </Link>
             </div>
             <div className="category-item">
               <Link to={`/board/T`}>
-                <img src="./images/trip-together.jpg" alt="여행같이 할래요" />
+                <img src={require("../images/trip-together.jpg")} alt="여행같이 할래요" />
               </Link>
             </div>
             <div className="category-item">
               <Link to={`/board/F`}>
-                <img src="./images/eat-together.jpg" alt="식사같이 할래요" />
+                <img src={require("../images/eat-together.jpg")} alt="식사같이 할래요" />
               </Link>
             </div>
             <div className="category-item">
               <Link to={`/board/A`}>
-                <img src="./images/drink-together.jpg" alt="술한잔 할래요" />
+                <img src={require("../images/drink-together.jpg")} alt="술한잔 할래요" />
               </Link>
             </div>
           </div>
@@ -98,7 +98,6 @@ function HomePage() {
         <Link to={`/board/N`}>
           공지사항
         </Link>
-
         <Link to={`/board/Q`}>
           FAQ
         </Link>

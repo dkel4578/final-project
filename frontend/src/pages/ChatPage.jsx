@@ -1,26 +1,31 @@
 import React, { useRef, useState, useEffect } from "react";
-import { useParams, useLocation, useNavigate } from "react-router-dom";
+import { useParams, useLocation, useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import * as StompJs from "@stomp/stompjs";
 import * as SockJS from "sockjs-client";
 import styled from "styled-components";
 import { actionCreators as chattingActions } from "../store/modules/chatting";
 import Swal from "sweetalert2";
-
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 // import Button from '@material-ui/core/Button';
 // import TextField from '@material-ui/core/TextField';
-
 import "../css/chatting.css";
+import "../css/variables.css";
+import "../css/total.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
+import "font-awesome/css/font-awesome.min.css";
+// import "../script/chat-page.js";
+import $ from 'jquery';
+import axios from "axios";
 
 function ChatPage(chatRoomProps) {
   const location = useLocation();
   const props = location.state && location.state.chatRoomProps;
   const roomId = location.state?.roomId;
   const roomName = location.state?.roomName;
-  console.log("ChatPage props:", props);
-  console.log("ChatPage chatRoomProps:", chatRoomProps);
+  // console.log("ChatPage props:", props);
+  // console.log("ChatPage chatRoomProps:", chatRoomProps);
   const navigate = useNavigate();
   const messageRef = useRef(null);
   const userInfo = useSelector((state) => state.user.user);
@@ -30,10 +35,48 @@ function ChatPage(chatRoomProps) {
   const stompClient = useRef({});
   // const chatRoomNumber = Number(channelId);
   // const roomId = location.state.roomId;
+  const [reportType,setReportType] = useState("D"); 
+  const [reportedId,setReportedId] = useState(null); 
+  const [activeModal,setActiveModal] = useState(false);
 
   console.log("roomId: ", roomId);
   const chatRoomNumber = roomId;
   const chatRoomName = roomName;
+
+
+  
+
+  const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
+  useEffect(() =>{
+    fetch(`/api/chatRoomCheck?roomId=${encodeURIComponent(roomId)}&userId=${
+      userInfo.uid
+    }`, {
+      method: "GET",
+      headers: {
+        "Content-Type" : jsonContent
+      }
+    })
+    .then((res) => {
+      if(!res.ok) {
+        throw new Error("fetch Error")
+      }
+      return res.text();
+    })
+    .then((data) => {
+      console.log(data);
+      if(!data){
+        Swal.fire({
+          icon: "error",
+          title: "채팅방 참가", // Alert 제목
+          text: "입장할 수 없는 채팅방입니다.",
+          width: 360, // Alert 내용
+        });
+        navigate(-1);
+      }
+      scrollToBottom();
+    })
+  }, [])
+
 
   const chatConnect = () => {
     if (chatRoomNumber === 0) {
@@ -94,47 +137,50 @@ function ChatPage(chatRoomProps) {
       }),
     });
   };
+
   let [chattingMessageList, setChattingMesssageList] = useState([]);
   //채팅메세지 불러오기
   useEffect(() => {
     const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
-    console.log(roomId);
+    // console.log(roomId);
 
-    fetch(`/api/messageHistory?roomId=${encodeURIComponent(roomId)}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": jsonContent,
-      },
-    })
-      .then((res) => {
-        console.log("ChatPage Res >>>>> ", res);
-        if (!res.ok) {
-          Swal.fire({
-            icon: "error",
-            title: "채팅",
-            text: "채팅 메세지 호출에 실패하였습니다.",
-            width: 360,
-          });
-        }
-        return res.json();
+    setTimeout(function () {
+      fetch(`/api/messageHistory?roomId=${encodeURIComponent(roomId)}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": jsonContent,
+        },
       })
-      .then((data) => {
-        console.log("ChatPage Data >>>>> ", data);
-        const updatedMessageList = [];
-
-        data.forEach((item) => {
-          if (item && item.message != null) {
-            updatedMessageList.push({
-              message: item.message,
-              userId: item.userId,
-              nickname: item.nickname,
+        .then((res) => {
+          console.log("ChatPage Res >>>>> ", res);
+          if (!res.ok) {
+            Swal.fire({
+              icon: "error",
+              title: "채팅",
+              text: "채팅 메세지 호출에 실패하였습니다.",
+              width: 360,
             });
           }
-        });
+          return res.json();
+        })
+        .then((data) => {
+          console.log("ChatPage Data >>>>> ", data);
+          const updatedMessageList = [];
 
-        setMessageList(updatedMessageList);
-        // window.scrollTo(0, document.body.scrollHeight);
-      });
+          data.forEach((item) => {
+            if (item && item.message != null) {
+              updatedMessageList.push({
+                message: item.message,
+                userId: item.userId,
+                nickname: item.nickname,
+              });
+            }
+          });
+
+          setMessageList(updatedMessageList);
+          // window.scrollTo(0, document.body.scrollHeight);
+        });
+    }, 300);
   }, [roomId, chattingMessageList]);
 
   const chatSubscribe = () => {
@@ -150,9 +196,19 @@ function ChatPage(chatRoomProps) {
         ++keyId;
         return msg;
       });
+      const newMessageList = [
+        ...messageList,
+        {
+          message: jsonBody.chat,
+          userId: userInfo.uid,
+          nickname: jsonBody.nickname,
+        },
+      ];
+
+      setMessageList(newMessageList);
 
       let myOther = "";
-      console.log("jsonBody. >>>>>> ", jsonBody)
+      console.log("jsonBody. >>>>>> ", jsonBody);
       // if (Number(jsonBody.writerId) != Number(localStorage.getItem('uid'))) {
       if (jsonBody.userId != userInfo.uid) {
         myOther = "other-msg";
@@ -179,27 +235,27 @@ function ChatPage(chatRoomProps) {
   const chatDisconnect = () => {
     if (stompClient && stompClient.current) stompClient.current.unsubscribe();
   };
-
   useEffect(() => {
     chatConnect(userInfo.uid);
     input.current.focus();
+    
 
     return () => {
       chatDisconnect();
     };
   }, []);
 
+
+
   let keyId = 0;
 
   const handleChatSend = (event) => {
     // 보내기 버튼 눌렀을 때 publish
     event.preventDefault();
-
-    chatPublish(event.target.value, roomId);
-
+    // alert('1111' + input.current.value);
+    chatPublish(input.current.value, roomId);
     chattingMessageList = chattingMessageList.map((msg, idx) => {
       ++keyId;
-
       // return <li key={keyId}>{msg}</li>
       return msg;
     });
@@ -207,25 +263,33 @@ function ChatPage(chatRoomProps) {
       <li key={++keyId}>
         <div className="my-msg">
           <div className="msg">
-            <pre>{event.target.value}</pre>
+            <pre>{input.current.value}</pre>
           </div>
         </div>
       </li>
     );
     // chattingMessageList = chattingMessageList.concat(<li key={++keyId}>{event.target.value}</li>)
     // setChattingMesssageList([...chattingMessageList, <li key={++keyId}>{event.target.value}</li>]);
-
     setChattingMesssageList(chattingMessageList);
-
     input.current.value = "";
     input.current.focus();
     setIsButtonEnabled(false);
-    // window.scrollTo(0, document.body.scrollHeight);
+    window.scrollTo(0, document.body.scrollHeight + 20);
+    console.log("스크롤 길이는 " + document.body.scrollHeight);
+    scrollToBottom();
   };
+  function scrollToBottom() {
+    setTimeout(() => {
+    var chatList = document.getElementById("msgList");
+    chatList.scrollTop = chatList.scrollHeight;
+    console.log(chatList);
+    },600);
+  }
 
+  // 메시지가 추가될 때마다 스크롤 아래로 이동
   const input = useRef();
   const keyPress = (e) => {
-    if ((e.target.value.search(/\S/) != -1) === true) {
+    if ((e.target.value.search(/\S/) !== -1) === true) {
       if (e.key === "Enter") {
         handleChatSend(e);
       }
@@ -249,38 +313,137 @@ function ChatPage(chatRoomProps) {
   //   // navigate(0);
   // }, [dispatch]);
 
+  // $(function(){
+  //   $('.chatting-msg').click(function(){
+      
+  //   });
+  // });
+  
+  /*  x버튼, 모달 취소 클릭시 모달 토글 */
+  $(function(){
+    $('.modal-close').click(function(){
+      // $('.user-report-modal').removeClass('active');
+      setActiveModal(false);
+    });
+  });
+  
+  $(function(){
+    $('#user-report-modal-cancel').click(function(){
+      // $('.user-report-modal').removeClass('active');
+      setActiveModal(false);
+    });
+  });
+
+  const handleMessageClick = (messageObject)=>{
+    // $('.user-report-modal').toggleClass('active');
+    setActiveModal(true);
+    setReportedId(messageObject);
+    console.log("repId: " + reportedId);
+  }
+
+  const closeModal = () => {
+    setActiveModal(false);
+  }
+
+  const handleReportButtonClick = async (event) => {
+    event.preventDefault();
+    let contentId = roomId;
+    let reporterId = userInfo.uid;
+    let category = 'M';
+    console.log("cat: " +category);
+    console.log("con: "+ contentId);
+    console.log("redId: "+ reportedId);
+    console.log("rerId: "+ reporterId);
+    console.log("repTy: "+ reportType);
+    const response = await axios.post(`/api/report/insert?category=${category}&contentId=${contentId}&reportedId=${reportedId}&reporterId=${reporterId}&reportType=${reportType}`)
+    .then((response)=>{
+      console.log(response);
+      console.log(response.data);
+      return response;
+    })
+    .catch((error)=>{
+      console.log(error);				//오류발생시 실행
+    });
+    if (response && response.status === 201) {
+      alert("신고가 완료되었습니다.");
+    } else {
+      alert("신고 등록이 실패되었습니다.");
+    }
+    closeModal();
+  }
+
   return (
-    <>
+    <div className="chatting-play-box">
+      { activeModal &&
+      <div className="user-report-modal">
+        <div className="user-report-modal-contents">
+          <h2 className="user-report-title">신고하기</h2>
+          <i className="fa fa-times modal-close" aria-hidden="true"></i>
+          <fieldset>
+            <label htmlFor="doubling-the-post">
+              <input type="radio" id="doubling-the-post" name="report" value="D" onChange={(e)=>{setReportType(e.target.value)}}/>
+              <span>도배성 채팅 작성</span>
+            </label>
+            <label htmlFor="obscene-posts">
+              <input type="radio" id="obscene-posts" name="report" value="P" onChange={(e)=>{setReportType(e.target.value)}}></input>
+              <span>음란성 채팅 작성</span>
+            </label>
+            <label htmlFor="abusive-comments">
+              <input type="radio" id="abusive-comments" name="report" value="F" onChange={(e)=>{setReportType(e.target.value)}}></input>
+              <span>욕설 / 혐오 발언 채팅 작성</span>
+            </label>
+            <label htmlFor="advertising-post">
+              <input type="radio" id="advertising-post" name="report" value="A" onChange={(e)=>{setReportType(e.target.value)}}></input>
+              <span>광고성 / 홍보성 채팅</span>
+            </label>
+            <label htmlFor="false-review">
+              <input type="radio" id="false-review" name="report" value="E" onChange={(e)=>{setReportType(e.target.value)}}></input>
+              <span>기타 사유</span>
+            </label>
+          </fieldset>
+          <div className="user-report-modal-btns">
+            <input type="button" value="신고" onClick={handleReportButtonClick} />
+            <input type="button" value="취소" id="user-report-modal-cancel" />
+          </div>
+        </div>
+      </div>
+    }
       <div id="msgList">
-        <p>{chatRoomName}</p>
-        <ul>
-        {console.log(messageList)}
+        <div className="chatting-room-title">
+          <Link to="/chat/room/list/:roomId">
+            <i class="bi bi-arrow-left"></i>
+          </Link>
+          <p>{chatRoomName}</p>
+        </div>
+        <ul className="chatting-msg">
+          {console.log(messageList)}
           {messageList.map((messageObject, index) => (
-             
             <li
               key={index}
               className={
                 messageObject.userId === userInfo.uid ? "my-msg" : "other-msg"
               }
             >
-              <div className="msg">
-                <pre>
-                  {messageObject.userId === userInfo.uid ? (
-                    messageObject.message
-                  ) : (
-                    <>
-                      <p>{messageObject.nickname}</p>
-                      <p>{messageObject.message}</p>
-                    </>
+              {messageObject.userId === userInfo.uid ? (
+                <div className="my-msg-block">
+                  <p>{messageObject.message}</p>
+                </div>
+              ) : (
+                <div className="message-content">
+                  {messageObject.userId !== userInfo.uid && (
+                    <p className="other-nickname">{messageObject.nickname}</p>
                   )}
-                </pre>
-              </div>
+                  <div className="other-msg-block" onClick={()=>{handleMessageClick(messageObject.userId)}}>
+                    <p>{messageObject.message}</p>
+                  </div>
+                </div>
+              )}
             </li>
           ))}
         </ul>
         {/* <ul>{chattingMessageList}</ul> */}
       </div>
-      <form onSubmit={handleChatSend}>
+      <form className="chatting-form" onSubmit={handleChatSend}>
         <div className="msg-send-part">
           <div id="contents">
             <TextField
@@ -288,7 +451,6 @@ function ChatPage(chatRoomProps) {
               multiline
               maxRows="4"
               autoComplete="off"
-              style={{ margin: 8, border: 0 }}
               placeholder="메세지를 입력해주세요"
               onKeyPress={keyPress}
               fullWidth
@@ -305,14 +467,13 @@ function ChatPage(chatRoomProps) {
               onClick={handleChatSend}
               // disabled={!isEnabled}
               disabled={!isButtonEnabled}
-              style={{ marginTop: "-38px" }}
             >
-              <div className={{ fontSize: "20px" }}>전송</div>
+              <i class="chatting-send-mark bi bi-send-fill"></i>
             </Button>
           </div>
         </div>
       </form>
-    </>
+    </div>
   );
 }
 

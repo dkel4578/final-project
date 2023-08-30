@@ -5,8 +5,8 @@ import lombok.Getter;
 @Getter
 public enum ReportCategory {
     B("게시판"),
-    D("댓글"),
-    C("채팅");
+    C("댓글"),
+    M("채팅");
 
     private final String value;
 

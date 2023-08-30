@@ -1,6 +1,6 @@
 import React, { useState, useRef, useContext, useEffect } from "react"; // eslint-disable-line no-unused-vars
 import axios from "axios"; // eslint-disable-line no-unused-vars
-import { useNavigate } from "react-router-dom"; // eslint-disable-line no-unused-vars
+import { useNavigate, Link } from "react-router-dom"; // eslint-disable-line no-unused-vars
 import "../css/password-change.css";
 import $ from "jquery"; // eslint-disable-line no-unused-vars
 import Swal from "sweetalert2";
@@ -46,7 +46,7 @@ async function checkEmail(email, loginId) {
 
   return await axios
     .get(
-      "/api//user/checkLoginIdByEmail?loginId=" + loginId + "&email=" + email,
+      "/api/user/checkLoginIdByEmail?loginId=" + loginId + "&email=" + email,
       {
         email: email,
         loginId: loginId,
@@ -223,14 +223,14 @@ function PasswordChangePage() {
               </p>
             </fieldset>
             <div className="password-change-btn">
-              <a href="#none" onClick={handleCheckCode}>
+              <Link to ="/passwordChangeComplete" onClick={handleCheckCode}>
                 비밀번호 변경
-              </a>
+              </Link>
             </div>
           </form>
           <div className="password-change-user-find">
-            <a href="#none">회원가입</a>
-            <a href="findId">아이디 찾기</a>
+            <Link to ="/signup">회원가입</Link>
+            <Link to ="/findId">아이디 찾기</Link>
           </div>
         </div>
       </section>

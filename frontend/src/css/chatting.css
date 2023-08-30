@@ -1,22 +1,42 @@
-form {
+.chatting-play-box{
+
+}
+.chatting-form {
   background: white;
   bottom: 0;
   width: 100%;
   display : table;
   margin-bottom: 10px;
 }
-
-#msgList {
-  min-height: 70vh;
-  margin-bottom: 52px;
-  padding: 0;
-  overflow: auto;
-  padding: 1rem;
+.chatting-room-title{
+  display: flex;
+  font-size: 25px;
+  margin-bottom: 15px;
+  gap: 10px;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
 }
 
-.msg {
-  background-color: #bdf;
-  /* border:2px solid #1bf; */
+
+#msgList {
+  margin-top: 20px;
+  border-radius: 15px;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 8px #ccc;
+  min-height: 75vh;
+  padding: 0;
+  overflow: auto;
+  padding: 1.1rem;
+  background-color: var(--mintcolor);
+  max-width: 360px;
+  max-height: 75vh;
+}
+.message-content{
+  cursor: pointer;
+}
+.my-msg-block, .other-msg-block {
+  background-color: var(--yellow);
   padding:0.5em;
   line-height: 1.5em;
   border-radius:0.2em;
@@ -24,9 +44,13 @@ form {
   -webkit-border-radius: 0.2em;
   margin-top:0px;
   margin-bottom: 10px;
+  position: relative;
+}
+.my-msg-block{
+  background-color: var(--chatcolor);
 }
 
-#msgList .other-msg {
+.other-msg {
   position: relative;
   max-width:70%;
   display: block;
@@ -34,14 +58,42 @@ form {
   clear: both;
   word-wrap: break-word;
 }
+.other-msg::before {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 50%;
+	width: 0;
+	height: 0;
+	border: 9px solid transparent;
+	border-right-color: var(--yellow);
+	border-left: 0;
+	border-bottom: 0;
+	margin-top: -4.5px;
+	margin-left: -9px;
+}
 
-#msgList .my-msg {
+.my-msg {
   position: relative;
   max-width: 70%;
   display: block;
   float: right;
   clear: both;
   word-wrap: break-word;
+}
+.my-msg::after {
+  content: '';
+	position: absolute;
+	right: 0;
+	top: 50%;
+	width: 0;
+	height: 0;
+	border: 9px solid transparent;
+	border-left-color: #bdf;
+	border-right: 0;
+	border-bottom: 0;
+	margin-top: -4.5px;
+	margin-right: -9px;
 }
 
 #user-entrace {
@@ -95,21 +147,33 @@ form {
   font-size: 12px;
   text-align: left;
 }
-
+.MuiButtonBase-root.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary.MuiButton-sizeMedium.MuiButton-containedSizeMedium.Mui-disabled.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary.MuiButton-sizeMedium.MuiButton-containedSizeMedium.css-sghohy-MuiButtonBase-root-MuiButton-root{
+  height: 58px;
+  cursor: pointer;
+  background-color: rgb(147, 201, 255);
+}
+.MuiButtonBase-root.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary.MuiButton-sizeMedium.MuiButton-containedSizeMedium.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary.MuiButton-sizeMedium.MuiButton-containedSizeMedium.css-sghohy-MuiButtonBase-root-MuiButton-root{
+  height: 58px;
+  transition: 0.4s;
+  background-color: var(--remonblue);
+  cursor: pointer;
+}
+.chatting-send-mark{
+  color: white;
+  font-size: 2em;
+}
 #send-btn {
   display : table-cell;
-  vertical-align: bottom;
   padding-left:10px;
+}
+.chat-send-btn{
+  height: 150px;
 }
 
 #contents {
   width: 100%;
   display : table-cell;
   vertical-align: middle;
-}
-
-#msg-send-part {
-  display: table-row;
 }
 
 .today-date {
@@ -142,11 +206,40 @@ form {
 
 pre {
   margin : 0 0;
-  font-family: 'Nanum Gothic', sans-serif;
   white-space: pre-wrap;
 }
 
-ul {
+.chatting-ul {
   list-style-type : none;
   padding-inline-start : 0;
+}
+.msg-send-part{
+  display: flex;
+  align-items: center;
+}
+#contents{
+
+}
+#standard-multiline-flexible{
+  font-family: 'omyu_pretty';
+  font-size: 1.3em;
+}
+
+#standard-multiline-flexible::placeholder{
+  transition: 0.4s;
+}
+#standard-multiline-flexible:focus::placeholder{
+  opacity: 0;
+}
+
+.MuiInputBase-root.MuiOutlinedInput-root.MuiInputBase-colorPrimary.MuiInputBase-fullWidth.MuiInputBase-formControl.MuiInputBase-multiline.css-8ewcdo-MuiInputBase-root-MuiOutlinedInput-root{
+  
+}
+.css-8ewcdo-MuiInputBase-root-MuiOutlinedInput-root{
+  border: 1px solid var(--pink);
+  margin-bottom: 9px;
+  transition: 0.4s;
+}
+.chatting-send-btn .MuiButtonBase-root{
+  cursor: pointer;
 }

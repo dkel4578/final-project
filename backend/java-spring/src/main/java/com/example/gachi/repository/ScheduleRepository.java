@@ -10,7 +10,6 @@ import java.util.Optional;
 public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
 
     List<Schedule> findAllByUserIdAndDeleteYn(Long userId, String deleteYn);
-
     boolean existsByUserIdAndDateAndDeleteYn(Long userId, LocalDate date, String deleteYn);
 
     Optional<Schedule> findByUserIdAndDateAndDeleteYn(Long userId, LocalDate date, String deleteYn);

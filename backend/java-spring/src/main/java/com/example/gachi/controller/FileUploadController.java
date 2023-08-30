@@ -37,8 +37,11 @@ public class FileUploadController {
             String orgName = file.getOriginalFilename();
             UUID uuid = UUID.randomUUID();
             String imgName = uuid+"_"+orgName;
-
-            String imgSrc = "D:\\project\\finalproject\\final-project\\frontend\\public\\profileImg\\"+imgName;
+            String path = "c:\\img";
+            String uploadpath = path;
+            String path2 = System.getProperty("user.dir");
+            String path3 = "\\src\\main\\resources\\image\\profileImg\\";
+            String imgSrc = path2+path3+imgName;
 
             Optional<User> user =  userRepository.findById(id);
 
