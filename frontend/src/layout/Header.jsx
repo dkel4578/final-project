@@ -90,9 +90,9 @@ function Header({ userInfo }) {
 		console.log("로그아웃")
     Swal.fire({
       icon: "success",
-      title: "로그아웃", // Alert 제목
+      title: "로그아웃",
       text: "로그아웃 완료",
-      width: 360, // Alert 내용
+      width: 360,
     });
     removeCookie("token");
     setIsLogin(false);
@@ -103,9 +103,9 @@ function Header({ userInfo }) {
     e.preventDefault();
     Swal.fire({
       icon: "error",
-      title: "로그인", // Alert 제목
+      title: "로그인",
       text: "로그인이 필요한 서비스입니다!",
-      width: 360, // Alert 내용
+      width: 360, 
     });
 		navigate("/login")
   };
@@ -135,7 +135,7 @@ function Header({ userInfo }) {
                 <div className="category-title">
                   <div className="category-content">
                     <i className="bi bi-megaphone-fill"></i>
-                    <Link to ="/board/notice">공지사항</Link>
+                    <Link to ="/board/N">공지사항</Link>
                   </div>
                 </div>
                 <div className="category-title">
@@ -144,9 +144,9 @@ function Header({ userInfo }) {
                     {isLogin ? (
                       <Link to={"/chat/room/list2"}>채팅하기</Link>
                     ) : (
-                      <a href="#" onClick={handleNotLogin}>
+                      <Link to ="/chat/room/list/:roomId" onClick={handleNotLogin}>
                         채팅하기
-                      </a>
+                      </Link>
                     )}
                   </div>
                 </div>
@@ -159,46 +159,46 @@ function Header({ userInfo }) {
                 <div className="category-title category-comu">
                   <div className="category-content">
                     <i className="fa fa-users" aria-hidden="true"></i>
-                   <Link to={"/#"}>커뮤니티</Link>
+                   <Link to="/board/C">커뮤니티</Link>
                   </div>
                 </div>
                 <div className="category-sub">
                   <div className="category-content">
                     <i className="fa fa-coffee" aria-hidden="true"></i>
-                    <Link to="/board/C">커피한잔할래요</Link>
+                    <Link to="/board/C">커피한잔할래요?</Link>
                   </div>
                 </div>
                 <div className="category-sub">
                   <div className="category-content">
                     <i className="fa fa-plane" aria-hidden="true"></i>
-                    <Link to="/board/T">여행같이 할래요</Link>
+                    <Link to="/board/T">여행같이갈래요?</Link>
                   </div>
                 </div>
                 <div className="category-sub">
                   <div className="category-content">
                     <i className="fa fa-cutlery" aria-hidden="true"></i>
-                    <Link to="/board/F">식사같이 할래요</Link>
+                    <Link to="/board/F">식사같이할래요?</Link>
                   </div>
                 </div>
                 <div className="category-sub">
                   <div className="category-content">
                     <i className="fa fa-glass" aria-hidden="true"></i>
-                    <Link to="/board/A">술한잔 할래요</Link>
+                    <Link to="/board/A">술한잔할래요?</Link>
                   </div>
                 </div>
                 <div className="category-title">
                   <div className="category-content">
                     <i className="bi bi-compass-fill"></i>
-                    <Link to="/board/N">공지사항</Link>
+                    <Link to="/kakaomap">여행지 추천</Link>
                   </div>
                 </div>
                 {isLogin && (
                   <div className="category-title">
                     <div className="category-content">
                       <i className="fa fa-user-circle-o" aria-hidden="true"></i>
-                      <a href="#" onClick={handleLogout}>
+                      <Link to="#" onClick={handleLogout}>
                         로그아웃
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 )}

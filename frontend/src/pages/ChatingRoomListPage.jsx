@@ -146,6 +146,7 @@ function ChatingRoomListPage() {
           uid: userInfo.uid,
         })
       );
+      window.location.reload();
     }
   };
 

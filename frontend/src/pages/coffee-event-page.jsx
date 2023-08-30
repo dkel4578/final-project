@@ -15,7 +15,7 @@ function CoffeeEvent() {
         <div className="slide-page-title">공지) 스타벅스 커피이벤트</div>
         <div className="slide-page-main-contents">
           <div className="slide-page-main-content">
-            <img src="../images/slide-banner1.png" alt="" />
+          <img src={require("../images/slide-banner1.png")} alt="커피이벤트배너" />
             <p>
               안녕하세요. 가치있는여행 같이갈래? 입니다. 이번 같이갈래?
               런칭이벤트로 회원가입 한 인원 중

@@ -104,6 +104,7 @@
   text-overflow: ellipsis;
   font-size: 1.3em;
   font-weight: bold;
+  cursor: pointer;
 }
 .chat-quit{
   cursor: pointer;
