@@ -6,13 +6,17 @@ import com.example.gachi.model.User;
 import com.example.gachi.model.enums.BanReason;
 import com.example.gachi.model.enums.ReportCategory;
 import com.example.gachi.model.enums.ReportStatus;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.apache.ibatis.javassist.NotFoundException;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class AddReportDto {
     private Long id;

@@ -1,5 +1,4 @@
 package com.example.gachi.controller;
-
 import com.example.gachi.model.dto.Report.AddReportDto;
 import com.example.gachi.model.dto.Report.ReportRequestDto;
 import com.example.gachi.model.dto.Report.ReportResponseDto;
@@ -10,10 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,14 +26,13 @@ public class ReportController {
 
 
     @PostMapping("/insert")
-    public ResponseEntity<?> reportInsert(@RequestBody AddReportDto addReportDto,
-                                          ReportCategory category,
-                                          Long contentId,
-                                          Long reportedId,
-                                          Long reporterId,
-                                          BanReason reportType
+    public ResponseEntity<?> reportInsert(@RequestParam ReportCategory category,
+                                          @RequestParam Long contentId,
+                                          @RequestParam Long reportedId,
+                                          @RequestParam Long reporterId,
+                                          @RequestParam BanReason reportType
     )throws NotFoundException {
-        reportService.save(addReportDto,category,contentId,reportedId,reporterId,reportType);
+        reportService.save(category,contentId,reportedId,reporterId,reportType);
         return ResponseEntity.status(HttpStatus.CREATED).body("신고 등록 성공");
     }
 

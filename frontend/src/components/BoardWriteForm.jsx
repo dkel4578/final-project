@@ -20,6 +20,12 @@ function BoardWriteForm() { // Receive the 'kind' prop
     const [localPlace, setLocalPlace] = useState(''); // 만남장소 상태 변수 추가
     const localAddressInputRef = useRef(null); // 만남주소
     const [localAddress, setLocalAddress] = useState(''); // 만남주소 상태 변수 추가
+    const latitudeInputRef = useRef(null); // 위도
+    const [latitude, setLatitude] = useState(''); // 위도 상태 변수 추가
+    const longitudeInputRef = useRef(null); // 경도
+    const [longitude, setLongitude] = useState(''); // 경도 상태 변수 추가
+
+
 
     // const contentInputRef = useRef(null);
     const kindInputRef = useRef(null);
@@ -51,14 +57,18 @@ function BoardWriteForm() { // Receive the 'kind' prop
     //********************************
     // 주소 클릭 이벤트 핸들러
     //********************************
-    const handleAddressClick = (address, place) => {
+    const handleAddressClick = (address, place, latitude, longitude) => {
         // 선택한 주소를 상태 변수에 저장
         setLocalAddress(address);
         setLocalPlace(place);
+        setLatitude(latitude);
+        setLongitude(longitude);
 
         // 주소 입력란에 선택한 주소를 설정
         localAddressInputRef.current.value = address;
         localPlaceInputRef.current.value = place;
+        latitudeInputRef.current.value = latitude;
+        longitudeInputRef.current.value = longitude;
     };
 
     //**********************
@@ -85,6 +95,8 @@ function BoardWriteForm() { // Receive the 'kind' prop
         const enteredTitle = titleInputRef.current.value;
         const enteredLocalAddress = localAddressInputRef.current.value;
         const enteredLocalPlace = localPlaceInputRef.current.value;
+        const enteredLatitude = latitudeInputRef.current.value;
+        const enteredLongitude = longitudeInputRef.current.value;
 
         // const enteredContent = contentInputRef.current.value;
         const enteredKind = kindInputRef.current.value;
@@ -119,6 +131,8 @@ function BoardWriteForm() { // Receive the 'kind' prop
                     title: enteredTitle,
                     localAddress: enteredLocalAddress,
                     localPlace: enteredLocalPlace,
+                    latitude: enteredLatitude,
+                    longitude: enteredLongitude,
                     content: enteredDesc,
                     userId: userInfo.uid,
                 }),
@@ -253,6 +267,7 @@ function BoardWriteForm() { // Receive the 'kind' prop
                     <div className="write-post-inner">
                         <div className="write-post-title">게시글 작성</div>
                         <div className="write-post-contents">
+
                             <div className="select-board-box">
                                 <select id="kind" defaultValue={kind} ref={kindInputRef} required >
                                     <option>게시판을 선택해주세요</option>
@@ -260,10 +275,16 @@ function BoardWriteForm() { // Receive the 'kind' prop
                                     <option value="T">같이여행할래요</option>
                                     <option value="F">식사같이할래요</option>
                                     <option value="A">술한잔할래요</option>
+                                    {userInfo.status === "S" &&
                                     <option value="N">공지사항</option>
+                                    }
+                                    {userInfo.status === "S" &&
                                     <option value="Q">FAQ</option>
+                                    }
+
                                 </select>
                             </div>
+
                             <div className="write-title-box">
                                 <input type="text"
                                        className="write-title"
@@ -289,6 +310,18 @@ function BoardWriteForm() { // Receive the 'kind' prop
                                        max={70}
                                        name="localAddress" id='localAddress'  ref={localAddressInputRef}
                                        placeholder="만남 주소를 지도에서 검색해주세요" />
+                            </div>
+                            <div className="write-title-box" >
+                                <input type="text"
+                                       className="write-map-location"
+                                       max={10}
+                                       name="latitude" id='latitude'  ref={latitudeInputRef}
+                                       placeholder="위도" />
+                                <input type="text"
+                                       className="write-map-location"
+                                       max={10}
+                                       name="longitude" id='longitude'  ref={longitudeInputRef}
+                                       placeholder="경도" />
                             </div>
                             <div className="write-post-map-place">
                                 <div className="write-post-map"></div>

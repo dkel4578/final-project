@@ -52,21 +52,11 @@ public class Board extends BaseEntity{
     private List<BrdImg> brdImgs;
 
     private int commentCount; // 댓글 수를 저장할 필드 추가
-
-    // 댓글 수 설정 메소드 추가
-    public void setCommentCount(int commentCount) {
-        this.commentCount = commentCount;
-    }
-
     private String localPlace; // 만남장소 필드 추가
-    public void setLocalPlace(String localPlace) {
-        this.localPlace = localPlace;
-    }
-
     private String localAddress; // 만남주소 필드 추가
-    public void setLocalAddress(String localAddress) {
-        this.localAddress = localAddress;
-    }
+    private double latitude; //위도
+    private double longitude; //경도
+
 
 
 
@@ -88,6 +78,18 @@ public class Board extends BaseEntity{
     public void setUser(User user) {
         this.user = user;
     }
+    public void setLocalAddress(String localAddress) {
+        this.localAddress = localAddress;
+    }
+    public void setCommentCount(int commentCount) {
+        this.commentCount = commentCount;
+    }
+    public void setLocalPlace(String localPlace) {
+        this.localPlace = localPlace;
+    }
+    public void setLatitude(double latitude) {this.latitude = latitude;}
+    public void setLongitude(double longitude) {this.longitude = longitude;}
+
 
 
 
@@ -97,6 +99,11 @@ public class Board extends BaseEntity{
         return this;
     }
 
+    //게시글 조회수 카운트
+    public void updateCnt(Long id){
+        this.cnt = cnt + 1;
+    }
+
     @Builder
     public Board(String title, String content) {
         this.title = title;
@@ -104,20 +111,41 @@ public class Board extends BaseEntity{
     }
 
     @Builder
-    public Board(Kind kind, String title, String content, String delYn, User user) {
+    public Board(Kind kind,
+                 String title,
+                 String content,
+                 String delYn,
+                 User user,
+                 String localPlace,
+                 String localAddress,
+                 Double latitude,
+                 Double longitude) {
         this.kind = kind;
         this.title = title;
         this.content = content;
         this.delYn = delYn;
         this.user = user;
         this.cnt = 0;
+        this.localPlace = localPlace;
+        this.localAddress = localAddress;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
 
     public void updateBoard(String title,
-                           String content){
+                           String content,
+                            String localPlace,
+                            String localAddress,
+                            Double latitude,
+                            Double longitude
+                            ){
         this.title = title;
         this.content = content;
+        this.localPlace = localPlace;
+        this.localAddress = localAddress;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public void deleteBoard(String delYn){

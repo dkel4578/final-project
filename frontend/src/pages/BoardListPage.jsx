@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'; // prop-types 라이브러리 import
 
 const BoardListPage = ({kind}) => {
 
-  console.log("BoardListForm3 > kind ========> ",kind)
+  // console.log("BoardListForm3 > kind ========> ",kind)
 
 
   return (

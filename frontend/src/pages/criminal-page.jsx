@@ -18,7 +18,7 @@ function CriminalPage() {
           </div>
           <div className="slide-page-main-contents">
             <div className="slide-page-main-content">
-              <img src="../images/slide-banner2.png" alt="" />
+            <img src={require("../images/slide-banner2.png")} alt="범죄배너" />
               <p>
                 안녕하세요. 가치있는여행 같이갈래? 입니다. 여행도중 성희롱
                 성폭행 등 성범죄 행위는

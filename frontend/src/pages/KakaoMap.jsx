@@ -7,6 +7,8 @@ import 'font-awesome/css/font-awesome.min.css';
 import "../script/custom.js";
 import "../css/variables.css";
 import "../css/total.css";
+import Swal from "sweetalert2";
+
 
 const { kakao } = window;
 
@@ -93,14 +95,22 @@ const KakaoMap = () => {
 
   const searchPlaces = () => {
     if (!keyword.trim()) {
-      alert('장소를 입력해주세요');
+    
+      Swal.fire({
+        icon: "error",
+        title: "장소입력",
+        text: "장소를 입력해주세요.",
+        width: 340, 
+      });
       return;
     }
 
     const ps = new kakao.maps.services.Places();
     ps.keywordSearch(keyword, placesSearchCB);
+    
   };
 
+  
   const placesSearchCB = (data, status) => {
     if (status === kakao.maps.services.Status.OK) {
       setPlaces(data);
@@ -156,9 +166,20 @@ const KakaoMap = () => {
         }
       }
     } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
-      alert('검색 결과가 존재하지 않습니다.');
+      Swal.fire({
+        icon: "error",
+        title: "검색결과",
+        text: "검색 결과가 존재하지 않습니다.",
+        width: 340,
+      });
     } else if (status === kakao.maps.services.Status.ERROR) {
-      alert('검색 결과 중 오류가 발생했습니다.');
+  
+      Swal.fire({
+        icon: "error",
+        title: "검색결과",
+        text: "검색 결과 중 오류가 발생했습니다.",
+        width: 340,
+      });
     }
   };
 
@@ -188,6 +209,7 @@ const KakaoMap = () => {
             </button>
           </div>
           <div className="map_wrap">
+           
             <ul id="placesList">
               {places.map((place, index) => (
                 <li className='mapList-item' key={index}>
@@ -204,8 +226,6 @@ const KakaoMap = () => {
         <div id="roadview" style={{ width: '360px', height: '350px', position: 'relative' }}>
           로드뷰 열람중...
         </div>
-
-
       </div>
     </div>
   );

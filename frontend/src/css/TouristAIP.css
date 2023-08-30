@@ -74,14 +74,29 @@
   font-size: 1.2em;
 }
 .enter-search:focus{
-  box-shadow: 0 0 3px #2ACF7D;
+  box-shadow: 0 0 5px #2ACF7D;
+}
+.map_api_see_more-btns{
+  display: flex;
+  gap: 7px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 .map_api_see_more{
-  padding: 5px 15px;
+  padding: 5px;
+  width: 90px;
   border-radius: 20px;
   background-color: #2ACF7D;
   color: white;
   font-size: 1.2em;
+  transition: 0.4s;
+}
+.map_api_see_more:hover{
+  box-shadow: 0 0 10px var(--maincolor);
+}
+.map_api_see_more a{
+  color: white;
 }
 .map_api_description{
   line-height: 1.2em;

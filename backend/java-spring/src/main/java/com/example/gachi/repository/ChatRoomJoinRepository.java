@@ -19,4 +19,8 @@ public interface ChatRoomJoinRepository extends JpaRepository<ChatRoomJoin, Long
     ChatRoomJoin findChatRoomJoinByUserAndChatRoom(User user, ChatRoom chatRoom);
 
     List<Long> findRoomIdByChatRoomIdAndBannedYn(Long userId, String bannedYn);
+
+    boolean existsByChatRoomIdAndUserId(Long roomId, Long userId);
+
+    boolean existsByChatRoomIdAndUserIdAndBannedYn(Long roomId, Long userId, String bannedYn);
 }
