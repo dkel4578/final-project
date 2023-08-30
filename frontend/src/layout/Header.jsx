@@ -130,24 +130,12 @@ function Header({ userInfo }) {
                     {nickname ? `${nickname} 님` : "(임시닉네임)"}
                   </Link>
                 )}
-                <div className="side-var-alram-box">
-                  <div className="side-var-alram-box-none-alram">
-                    <a href="">
-                      <i className="bi bi-bell-fill"></i>
-                    </a>
-                  </div>
-                  <div className="side-var-alram-box-new-alram">
-                    <a href="">
-                      <i className="bi bi-bell-fill"></i>
-                    </a>
-                  </div>
-                </div>
               </div>
               <div className="categorys">
                 <div className="category-title">
                   <div className="category-content">
                     <i className="bi bi-megaphone-fill"></i>
-                    <a href="/board/notice">공지사항</a>
+                    <Link to ="/board/notice">공지사항</Link>
                   </div>
                 </div>
                 <div className="category-title">
@@ -171,37 +159,37 @@ function Header({ userInfo }) {
                 <div className="category-title category-comu">
                   <div className="category-content">
                     <i className="fa fa-users" aria-hidden="true"></i>
-                    <a href="#">커뮤니티</a>
+                   <Link to={"/#"}>커뮤니티</Link>
                   </div>
                 </div>
                 <div className="category-sub">
                   <div className="category-content">
                     <i className="fa fa-coffee" aria-hidden="true"></i>
-                    <a href="/board/coffee">커피한잔할래요?</a>
+                    <Link to="/board/C">커피한잔할래요</Link>
                   </div>
                 </div>
                 <div className="category-sub">
                   <div className="category-content">
                     <i className="fa fa-plane" aria-hidden="true"></i>
-                    <a href="/board/trip">여행같이갈래요?</a>
+                    <Link to="/board/T">여행같이 할래요</Link>
                   </div>
                 </div>
                 <div className="category-sub">
                   <div className="category-content">
                     <i className="fa fa-cutlery" aria-hidden="true"></i>
-                    <a href="/board/meal">식사같이할래요?</a>
+                    <Link to="/board/F">식사같이 할래요</Link>
                   </div>
                 </div>
                 <div className="category-sub">
                   <div className="category-content">
                     <i className="fa fa-glass" aria-hidden="true"></i>
-                    <a href="/board/drink">술한잔할래요?</a>
+                    <Link to="/board/A">술한잔 할래요</Link>
                   </div>
                 </div>
                 <div className="category-title">
                   <div className="category-content">
                     <i className="bi bi-compass-fill"></i>
-                    <a href="#none">여행지 추천</a>
+                    <Link to="/board/N">공지사항</Link>
                   </div>
                 </div>
                 {isLogin && (

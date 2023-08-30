@@ -13,7 +13,7 @@
  list-style: none; 
  text-align: left; 
  max-height: 200px; /* 최대 높이를 설정 */
- overflow: auto; /* 내용이 높이를 초과할 경우 스크롤이 나타남 */
+ overflow-y: auto; /* 내용이 높이를 초과할 경우 스크롤이 나타남 */
  text-align: center; 
 
  } 
@@ -27,10 +27,11 @@
  padding:5px; 
  overflow-y: auto; 
  background:rgba(255, 255, 255, 0.7); 
- width: 350px; 
+ width: 360px; 
  z-index: 3; 
  font-size:11px; 
  border-radius: 17px; 
+ height: 250px;
  } 
 #myMap { 
  position: relative; 
@@ -61,7 +62,7 @@
  margin-bottom: 5px; 
  } 
  .map_title{
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
   margin: 0;
   padding: 0;
@@ -75,7 +76,7 @@
  font-size: 5px; 
  } 
  #place_address_name, #place_phone{
-  font-size: 16px;
+  font-size: 14px;
  }
 #place_address_name { 
  color: blue; 
