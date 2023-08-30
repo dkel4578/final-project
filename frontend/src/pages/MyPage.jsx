@@ -12,6 +12,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'font-awesome/css/font-awesome.min.css';
 import "../script/custom.js";
 import { useDispatch, useSelector } from "react-redux";
+import axios from 'axios';
 
 function MyPage() {
   const userInfo = useSelector((state) => state.user.user);
@@ -26,38 +27,51 @@ function MyPage() {
 	const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
 
   //프로필 이미지 정보 가져오기
+  // useEffect(() => {
+  //   if (isLogin) {
+  //     fetch(`/api/profile/me?userId=${encodeURIComponent(userInfo.uid)}`, {
+  //       method: 'GET',
+  //       headers: {
+  //         "Content-Type": jsonContent,
+  //       },
+  //     })
+  //     .then(res => {
+  //       console.log(res)
+  //       if (!res.ok) {
+  //         throw new Error('Response was not OK');
+  //       } else {
+  //         return res.blob();
+  //       }
+  //     })
+  //     .then(data => {
+  //       if (data) {
+  //         console.log(data)
+  //         const imageUrl = URL.createObjectURL(data);
+  //         console.log(imageUrl)
+  //         setImgSrc(imageUrl);
+  //       }
+  //     })
+  //     .catch(error => {
+  //       console.error('Error fetching data:', error);
+  //     });
+  //   }
+  // }, [isLogin, userInfo.uid]);
+
   useEffect(() => {
-    if (isLogin) {
-      fetch(`/api/profile/me?userId=${encodeURIComponent(userInfo.uid)}`, {
-        method: 'GET',
-        headers: {
-          "Content-Type": jsonContent,
-        },
-      })
-      .then(res => {
-        if (!res.ok) {
-          throw new Error('Response was not OK');
-        }
-        return res.json();
-      })
-      .then(data => {
-        console.log(data);
-        console.log(data.imgSrc);
-        if (data.imgSrc != null) {
-          // // 로컬 파일 시스템 경로에서 \public\ 이전의 경로 제거
-          // const publicIndex = data.imgSrc.indexOf('\\public\\');
-          // if (publicIndex !== -1) {
-          //   const webPath = data.imgSrc.substring(publicIndex + '\\public\\'.length).replace(/\\/g, '/');
-          //   setImgSrc('/' + webPath);
-          // }
-          setImgSrc(data.imgSrc);
-        }
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      });
+    const fetchImage = async () =>{
+      try{
+        const res = await axios.get(`/api/profile/me/${userInfo.uid}`, {
+          responseType : "blob", 
+        })
+        const imageUrl = URL.createObjectURL(res.data);
+        console.log(imageUrl)
+        setImgSrc(imageUrl);
+      } catch (error){
+        console.log(error);
+      }
     }
-  }, [isLogin, userInfo.uid]);
+    fetchImage();
+  }, [userInfo.uid])
 
   // 비밀번호 확인
   const passwordCheckHandler = async (e) =>{

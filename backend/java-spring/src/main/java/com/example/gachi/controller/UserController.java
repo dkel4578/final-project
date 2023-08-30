@@ -10,11 +10,17 @@ import com.example.gachi.util.BadRequestException;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import net.minidev.json.JSONObject;
-import org.springframework.http.ResponseEntity;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.file.Files;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Optional;
@@ -165,16 +171,69 @@ public class UserController {
     }
 
     //유저 프로필 사진 조회
-    @GetMapping("/profile/me")
-    public ResponseEntity<ProfileImgResponseDto> getMyUserProfileImg(@RequestParam Long userId) {
-        System.out.println(">>>>>>>>>>>>>>profile/me");
-        ProfileImgResponseDto myUserProfileImg = userService.getMyUserProfileImg(userId);
-        if(myUserProfileImg == null){
-            return ResponseEntity.ok(userService.getMyUserProfileImg(0L));
-        }
+    @GetMapping(value = "/profile/me/{userId}")
+    public ResponseEntity<?> getMyUserProfileImg(@PathVariable Long userId) {
 
-        return ResponseEntity.ok(myUserProfileImg);
+        String imgName = profileImgRepository.findFirstByUserIdOrderByCreateAtDesc(userId).get().getImgName();
+        String path = System.getProperty("user.dir");
+        String path2 = "\\src\\main\\resources\\image\\profileImg\\"+imgName;
+
+
+        File file = new File("");
+        File file1 = new File(path+path2);
+        File file2= new File(path + "\\src\\main\\resources\\image\\profileImg\\default-image.svg");
+        if(file1.exists()){
+            file = file1;
+        } else{
+            file = file2;
+        }
+        byte[] result = null;
+        ResponseEntity<byte[]> entity = null;
+        try{
+            result = FileCopyUtils.copyToByteArray(file);
+
+            HttpHeaders header = new HttpHeaders();
+            header.add("Content-Type", Files.probeContentType(file.toPath()));
+
+            entity = new ResponseEntity<>(result, header, HttpStatus.OK);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+//        ProfileImgResponseDto myUserProfileImg = userService.getMyUserProfileImg(userId);
+//        if(myUserProfileImg == null){
+//            return ResponseEntity.ok(userService.getMyUserProfileImg(0L));
+//        }
+        return entity;
     }
+
+//    @GetMapping("/profile/me")
+//    public ResponseEntity<?> getMyUserProfileImg(@RequestParam Long userId) throws IOException {
+//        System.out.println(">>>>>>>>>>>>>>profile/me");
+//        ProfileImgResponseDto myUserProfileImg = userService.getMyUserProfileImg(userId);
+//        if (myUserProfileImg == null) {
+//            myUserProfileImg = userService.getMyUserProfileImg(0L);
+//        }
+//
+//        if (myUserProfileImg != null && myUserProfileImg.getImgSrc() != null) {
+//            String imgsrc = myUserProfileImg.getImgSrc();
+////            String imgsrc = "D:/test1/test1.png";
+//            ClassPathResource imgFile = new ClassPathResource(imgsrc);
+//
+//            if (imgFile.exists()) {
+//                byte[] bytes = StreamUtils.copyToByteArray(imgFile.getInputStream());
+//                MediaType mediaType = MediaTypeFactory.getMediaType(imgFile).orElse(MediaType.APPLICATION_OCTET_STREAM);
+//
+//                HttpHeaders headers = new HttpHeaders();
+//                headers.setContentType(mediaType);
+//
+//                return new ResponseEntity<>(bytes, headers, HttpStatus.OK);
+//            } else {
+//                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//            }
+//        } else {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//    }
 
 
     @GetMapping("/user/email")
