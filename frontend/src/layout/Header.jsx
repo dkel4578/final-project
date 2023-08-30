@@ -135,11 +135,7 @@ function Header({ userInfo }) {
                 <div className="category-title">
                   <div className="category-content">
                     <i className="bi bi-megaphone-fill"></i>
-<<<<<<< HEAD
                     <Link to ="/board/notice">공지사항</Link>
-=======
-                    <Link to="/board/N">공지사항</Link>
->>>>>>> b89fd1fb2c3506fb0f49b7a97d4351422e9cc191
                   </div>
                 </div>
                 <div className="category-title">
