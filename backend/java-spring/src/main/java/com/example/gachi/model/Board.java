@@ -134,9 +134,18 @@ public class Board extends BaseEntity{
 
 
     public void updateBoard(String title,
-                           String content){
+                           String content,
+                            String localPlace,
+                            String localAddress,
+                            Double latitude,
+                            Double longitude
+                            ){
         this.title = title;
         this.content = content;
+        this.localPlace = localPlace;
+        this.localAddress = localAddress;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public void deleteBoard(String delYn){

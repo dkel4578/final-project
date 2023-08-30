@@ -50,6 +50,8 @@ function BoardEditForm() {
             .then((data) => {
                 setData(data);
                 setDesc(data.content);
+                setLocalPlace(data.localPlace);
+                setLocalAddress(data.localAddress);
             });
     };
 
@@ -65,6 +67,12 @@ function BoardEditForm() {
 
         const enteredTitle = titleInputRef.current.value;
         const enteredDesc = desc;
+        const enteredLocalPlace = localPlaceInputRef.current.value;
+        const enteredLocalAddress = localAddressInputRef.current.value;
+        const enteredLatitude = latitudeInputRef.current.value;
+        const enteredLongitude = longitudeInputRef.current.value;
+
+        console.log("장소 변경값들: ======> ",enteredLocalPlace, enteredLocalAddress, enteredLatitude, enteredLongitude);
 
         if (enteredDesc.trim() === '') {
             alert('게시글 내용을 입력해주세요.');
@@ -81,12 +89,16 @@ function BoardEditForm() {
             body: JSON.stringify({
                 title: enteredTitle,
                 content: enteredDesc,
+                localPlace: enteredLocalPlace,
+                localAddress: enteredLocalAddress,
+                latitude: enteredLatitude,
+                longitude: enteredLongitude,
             }),
         }).then((data) => {
             if (data && data.status === 200) {
                 alert('게시글이 수정되었습니다.');
                 // navigate(`/board/view?id=${data.id}&kind=${kind}`);
-                window.location.href = `/board/view?id=${id}&kind=${kind}`;
+                window.location.href = `/final-project/board/view?id=${id}&kind=${kind}`;
             } else {
                 alert('게시글 수정이 실패되었습니다.');
             }
@@ -163,12 +175,15 @@ function BoardEditForm() {
         setLatitude(latitude);
         setLongitude(longitude);
 
+
+
         // 주소 입력란에 선택한 주소를 설정
         localAddressInputRef.current.value = address;
         localPlaceInputRef.current.value = place;
         latitudeInputRef.current.value = latitude;
         longitudeInputRef.current.value = longitude;
     };
+
 
 
     return (
@@ -217,24 +232,24 @@ function BoardEditForm() {
                                     />
                             </div>
                             <div><br/><br/><br/></div>
-                            {data.localPlace &&
+                            {localPlace &&
                             <div className="write-location-box">
                                 <p className= "write-location-name">장소 :</p>
                                 <input type="text"
                                        className="write-place-address"
                                        max={70}
-                                       value={data.localPlace}
+                                       value={localPlace}
                                        name="localPlace" id='localPlace'  ref={localPlaceInputRef}
                                         />
                             </div>
                             }
-                            {data.localAddress &&
+                            {localAddress &&
                             <div className="write-address-box">
                                 <p className= "write-address-name">주소 : </p>
                                 <input type="text"
                                        className="write-place-address"
                                        max={70}
-                                       value={data.localAddress}
+                                       value={localAddress}
                                        name="localAddress" id='localAddress'  ref={localAddressInputRef}
                                         />
                             </div>
