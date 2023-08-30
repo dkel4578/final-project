@@ -17,11 +17,11 @@ $(function(){
 })
 
 /* 헤더 사이드바 커뮤니티 슬라이드 업다운 */
-$(function(){
-  $('.category-comu').click(function(){
-    $(this).nextAll('.category-sub').stop().slideToggle(1000);
-  })
-})
+// $(function(){
+//   $('.category-comu').click(function(){
+//     $(this).nextAll('.category-sub').stop().slideToggle(1000);
+//   })
+// })
 
 /* 푸터 인클루드 */
 $(function(){

@@ -20,17 +20,18 @@
 
  
 .map_wrap { 
- position:absolute; 
- bottom: 0; 
- left:-10px; 
- margin:10px 0 30px 10px; 
- padding:5px; 
- overflow-y: auto; 
- background:rgba(255, 255, 255, 0.7); 
- width: 350px; 
- z-index: 3; 
- font-size:11px; 
- border-radius: 17px; 
+  position: absolute;
+  bottom: -5%;
+  left: -5px;
+  margin: 10px 0 30px 10px;
+  padding: 5px;
+  overflow-y: auto;
+  background: rgba(255, 255, 255, 0.7);
+  width: 350px;
+  z-index: 3;
+  font-size: 11px;
+  border-radius: 17px;
+  max-height: 40%;
  } 
 #myMap { 
  position: relative; 

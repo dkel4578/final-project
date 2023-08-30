@@ -48,7 +48,7 @@ function ScheduleShare(props) {
     <div className="calendar">
 			<header className="calendar-header">
 				<span className="Month">{month + 1}월</span>
-				<p className="calnedarMaster">{nickname}생존전문가김병철님의 일정</p>
+				<p className="calnedarMaster">{nickname}님의 일정</p>
 			</header>
 
 			<main>

@@ -16,6 +16,7 @@ import axios from "axios";
 import PropTypes from "prop-types";
 import {useSelector} from "react-redux";
 import MapComponentView from "./MapComponentView";
+import Swal from "sweetalert2";
 
 
 function BoardViewForm() {
@@ -172,7 +173,13 @@ function BoardViewForm() {
     console.log("boardid: ====> ", `${id}`);
     // 유효성 체크
     if (enteredComment === "") {
-      alert("댓글 내용을 입력하세요");
+      
+      Swal.fire({
+        icon: "error",
+        title: "댓글",
+        text: "댓글 내용을 입력하세요.",
+        width: 340,
+      });
       return; // 유효성 검사 실패 시 제출 중단
     }
     const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
@@ -189,49 +196,22 @@ function BoardViewForm() {
       console.log("response.data ============>>>>>>>>>> ", response.status);
 
       if (response && response.status === 201) {
-        alert("댓글이 입력되었습니다..");
+       
+        Swal.fire({
+          icon: "success",
+          title: "댓글", 
+          text:  "댓글이 입력되었습니다.",
+          width: 340,
+        });
         // navigate(`/board/view?id=${id}`);
         window.location.href = `/board/view?id=${id}`;
       } else {
-        alert("댓글 등록이 실패되었습니다.");
-      }
-    } catch (error) {
-      console.error("Error fetching board list:", error);
-    }
-  };
-
-  //****************************
-  //대댓글 입력하기
-  //****************************
-  const submitHandler2 = async (event) => {
-    event.preventDefault();
-    const enteredComment2 = commentInputRef2.current.value;
-    console.log("boardid: ====> ", `${id}`);
-    // 유효성 체크
-    if (enteredComment2 === "") {
-      alert("대댓글 내용을 입력하세요");
-      return; // 유효성 검사 실패 시 제출 중단
-    }
-    const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
-    console.log("대댓글 내용체크 : ", enteredComment2, `${id}`);
-    try {
-      // if (noMoreData) {
-      //   return; // 더 이상 데이터가 없을 때 요청하지 않도록 중지
-      // }
-      const response2 = await axios.post(`/api/comment2/insert`, {
-        content: enteredComment2,
-        userId: userInfo.uid,
-        boardId: `${id}`,
-        parentId: parentId,
-      });
-      console.log("response.data ============>>>>>>>>>> ", response2.status);
-
-      if (response2 && response2.status === 201) {
-        alert("대댓글이 입력되었습니다..");
-        // navigate(`/board/view?id=${id}`);
-        window.location.href = `/board/view?id=${id}`;
-      } else {
-        alert("대댓글 등록이 실패되었습니다.");
+        Swal.fire({
+          icon: "error",
+          title: "댓글",
+          text: "댓글 등록에 실패하였습니다.",
+          width: 340,
+        });
       }
     } catch (error) {
       console.error("Error fetching board list:", error);

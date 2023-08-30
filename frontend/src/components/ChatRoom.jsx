@@ -25,8 +25,9 @@ function ChatRoom(props) {
   };
 
   const goChatRoomClick = (roomId, roomName) => {
-    
-    navigate(`/chat/room/list/${roomId}`, { state: { chatRoomProps: props, roomId : roomId, roomName : roomName} });
+    navigate(`/chat/room/list/${roomId}`, {
+      state: { chatRoomProps: props, roomId: roomId, roomName: roomName },
+    });
   };
 
   const [isValid, setIsValid] = useState(false);
@@ -86,14 +87,14 @@ function ChatRoom(props) {
           icon: "error",
           title: "리뷰", // Alert 제목
           text: "리뷰 등록에 실패하였습니다.",
-          width: 360, // Alert 내용
+          width: 340, // Alert 내용
         });
       }
       Swal.fire({
         icon: "success",
         title: "리뷰", // Alert 제목
         text: "리뷰 등록에 성공하였습니다.",
-        width: 360, // Alert 내용
+        width: 340, // Alert 내용
       });
       navigate("/chat/room/list2");
       return res.json();
@@ -119,24 +120,24 @@ function ChatRoom(props) {
           icon: "error",
           title: "채팅", // Alert 제목
           text: "채팅방 나가기에 실패했습니다.",
-          width: 360, // Alert 내용
+          width: 340, // Alert 내용
         });
       }
       Swal.fire({
         icon: "success",
         title: "채팅", // Alert 제목
         text: "채팅방 종료에 성공했습니다.",
-        width: 360, // Alert 내용
+        width: 340, // Alert 내용
       });
       navigate("/chat/room/list2");
     });
   };
 
   const copyUrl = (roomId) => {
-    let url = '';
+    let url = "";
     let textarea = document.createElement("textarea");
     document.body.appendChild(textarea);
-    url =`localhost:3000/chat/room/list/${roomId}`;
+    url = `localhost:3000/chat/room/list/${roomId}`;
     textarea.value = url;
     textarea.select();
     document.execCommand("copy");
@@ -145,9 +146,9 @@ function ChatRoom(props) {
       icon: "success",
       title: "채팅", // Alert 제목
       text: "채팅방 링크가 복사되었습니다.",
-      width: 360, // Alert 내용
+      width: 340, // Alert 내용
     });
- };
+  };
 
   return (
     <section className="chat-list-room">
@@ -309,25 +310,29 @@ function ChatRoom(props) {
       </div>
 
       {props.chatRoomList.map((chatRoom, idx) => (
-        <li className="chat-list-single" key={idx}>
-          <div className="chat-sub">{chatRoom.roomName}</div>
+        <li
+          className="chat-list-single"
+          key={idx}
+        >
+          <div className="chat-sub" onClick={() => {
+            goChatRoomClick(chatRoom.id, chatRoom.roomName);
+          }} >
+            {chatRoom.roomName}
+            </div>
           <div className="chat-user-detail-informations">
             <div className="chat-user-profile">
               <img src={props.imgSrc[idx]} alt="Profile" />
             </div>
-            <div
-              className="chat-user-opponent"
-              onClick={() => {
-                goChatRoomClick(chatRoom.id, chatRoom.roomName);
-              }}
-            >
+            <div className="chat-user-opponent">
               {props.userData ? (
                 <div className="chat-user-opponent-user-id">
-                  {props.userData.map((user, idx) => (
-                    user.roomId==chatRoom.id ?
-                    <span key={idx}>{user.nickname} </span>
-                    : <span></span>
-                  ))}
+                  {props.userData.map((user, idx) =>
+                    user.roomId == chatRoom.id ? (
+                      <span key={idx}>{user.nickname} </span>
+                    ) : (
+                      <span></span>
+                    )
+                  )}
                 </div>
               ) : (
                 <p>데이터 없음</p>
@@ -335,7 +340,10 @@ function ChatRoom(props) {
             </div>
 
             <div className="chat-list-icons">
-              <i className="bi bi-share-fill share" onClick={(e) => copyUrl(chatRoom.id)}>
+              <i
+                className="bi bi-share-fill share"
+                onClick={(e) => copyUrl(chatRoom.id)}
+              >
                 <div className="share-box">공유하기</div>
               </i>
               <i
