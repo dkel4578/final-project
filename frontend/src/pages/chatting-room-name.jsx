@@ -66,7 +66,7 @@ const ChatName = () => {
         icon: "error",
         title: "채팅방 참가", // Alert 제목
         text: "로그인을 해주세요",
-        width: 360, // Alert 내용
+        width: 340, // Alert 내용
       });
       return;
     }
@@ -87,7 +87,7 @@ const ChatName = () => {
             icon: "error",
             title: "채팅방 참여",
             text: "이미 참여한 채팅방입니다",
-            width: 360,
+            width: 340,
           });
         }
         return res.json();
@@ -98,14 +98,14 @@ const ChatName = () => {
             icon: "error",
             title: "채팅방 참여",
             text: data.error,
-            width: 360,
+            width: 340,
           });
         } else {
           Swal.fire({
             icon: "success",
             title: "채팅방 참가",
             text: "채팅방 참가에 성공하였습니다.",
-            width: 360,
+            width: 340,
           });
           navigate("/chat/room/list2",true)
         }

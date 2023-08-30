@@ -202,11 +202,11 @@ const AdminPage = () => {
       console.log(response.data);
       setUserList(response.data);
     });
-    axios.get("api/admin/reportedUserList").then((response) => {
+    axios.get("/api/admin/reportedUserList").then((response) => {
       console.log(response.data);
       setReportedUserList(response.data);
     });
-    axios.get("api/admin/bannedUserList").then((response) => {
+    axios.get("/api/admin/bannedUserList").then((response) => {
       console.log(response.data);
       setBannedUserList(response.data);
     });

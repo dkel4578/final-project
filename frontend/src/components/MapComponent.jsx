@@ -11,6 +11,10 @@ function MapComponent({ onAddressClick }) {
     const [infowindows, setInfowindows] = useState([]);
     const [selectedAddress, setSelectedAddress] = useState(''); // 선택한 주소 상태 변수 추가
     const [selectedPlace, setSelectedPlace] = useState(''); // 선택한 장소 상태 변수 추가
+    const [selectedLatitude, setSelectedLatitude] = useState(''); // 선택한 위도 상태 변수 추가
+    const [selectedLongitude, setSelectedLongitude] = useState(''); // 선택한 경도 상태 변수 추가
+
+
 
     const mapAppKey = process.env.REACT_APP_API_MAP_KEY;
 
@@ -125,11 +129,16 @@ function MapComponent({ onAddressClick }) {
         const selectedPlace = places[index];
         const roadAddress = selectedPlace.road_address_name; //만남 주소
         const localPlace = selectedPlace.place_name; //만남 장소
+        const latitude = selectedPlace.y; //위도
+        const longitude = selectedPlace.x; //경도
         setSelectedAddress(roadAddress); // 선택한 주소를 상태 변수에 저장
         setSelectedPlace(localPlace); // 선택한 장소를 상태 변수에 저장
+        setSelectedLatitude(latitude); // 선택한 위도 상태 변수에 저장
+        setSelectedLongitude(longitude); // 선택한 경도 상태 변수에 저장
+
 
         // 호출한 콜백 함수를 사용하여 선택한 주소를 부모 컴포넌트로 전달
-        onAddressClick(roadAddress, localPlace);
+        onAddressClick(roadAddress, localPlace, latitude, longitude);
 
 
         // 선택한 마커만 표시하고 나머지는 숨김

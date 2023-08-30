@@ -274,7 +274,7 @@ function ChatPage(chatRoomProps) {
     input.current.value = "";
     input.current.focus();
     setIsButtonEnabled(false);
-    window.scrollTo(0, document.body.scrollHeight + 20);
+    window.scrollTo(0, document.body.scrollHeight);
     console.log("스크롤 길이는 " + document.body.scrollHeight);
     scrollToBottom();
   };

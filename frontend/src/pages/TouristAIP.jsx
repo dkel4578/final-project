@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import "../css/TouristAIP.css";
 import { Link } from 'react-router-dom';
 
-function Map_Api() {
+function TouristAIP() {
   const apiKey = 'cd70725d-65dc-455f-b196-057b81c3b35e';
   const apiUrl = 'http://api.kcisa.kr/openapi/service/rest/convergence2019/getConver01';
   const [items, setItems] = useState([]);
@@ -82,7 +82,7 @@ function Map_Api() {
               <div className='map_api_address'>주소: {item.spatial}</div>
               {item.source && <li>싸이트: <a href={item.source} target="_blank" rel="noopener noreferrer">{item.source}</a></li>}
 
-              <div>
+              <div className='map_api_see_more-btns'>
                 <button onClick={() => toggleExpand(index)} className='map_api_see_more'>
                   {expandedItems[index] ? '숨기기' : '내용 보기'}
                 </button>
@@ -103,4 +103,4 @@ function Map_Api() {
   );
 }
 
-export default Map_Api;
+export default TouristAIP;

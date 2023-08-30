@@ -154,14 +154,14 @@ function ChatRoom(props) {
           icon: "error",
           title: "리뷰", // Alert 제목
           text: "리뷰 등록에 실패하였습니다.",
-          width: 360, // Alert 내용
+          width: 340, // Alert 내용
         });
       }
       Swal.fire({
         icon: "success",
         title: "리뷰", // Alert 제목
         text: "리뷰 등록에 성공하였습니다.",
-        width: 360, // Alert 내용
+        width: 340, // Alert 내용
       });
       navigate("/chat/room/list2");
       return res.json();
@@ -186,14 +186,14 @@ function ChatRoom(props) {
           icon: "error",
           title: "채팅", // Alert 제목
           text: "채팅방 나가기에 실패했습니다.",
-          width: 360, // Alert 내용
+          width: 340, // Alert 내용
         });
       }
       Swal.fire({
         icon: "success",
         title: "채팅", // Alert 제목
         text: "채팅방 종료에 성공했습니다.",
-        width: 360, // Alert 내용
+        width: 340, // Alert 내용
       });
       window.location.reload();
     });
@@ -204,6 +204,7 @@ function ChatRoom(props) {
     let textarea = document.createElement("textarea");
     document.body.appendChild(textarea);
     url = `localhost:3000/final-project/chatName/${roomId}`;
+
     textarea.value = url;
     textarea.select();
     document.execCommand("copy");
@@ -212,7 +213,7 @@ function ChatRoom(props) {
       icon: "success",
       title: "채팅", // Alert 제목
       text: "채팅방 링크가 복사되었습니다.",
-      width: 360, // Alert 내용
+      width: 340, // Alert 내용
     });
   };
 
@@ -353,18 +354,20 @@ function ChatRoom(props) {
       </div>
 
       {props.chatRoomList.map((chatRoom, idx) => (
-        <li className="chat-list-single" key={idx}>
-          <div className="chat-sub">{chatRoom.roomName}</div>
+        <li
+          className="chat-list-single"
+          key={idx}
+        >
+          <div className="chat-sub" onClick={() => {
+            goChatRoomClick(chatRoom.id, chatRoom.roomName);
+          }} >
+            {chatRoom.roomName}
+            </div>
           <div className="chat-user-detail-informations">
             <div className="chat-user-profile">
               <img src={imgSrcList[idx]} alt="Profile" />
             </div>
-            <div
-              className="chat-user-opponent"
-              onClick={() => {
-                goChatRoomClick(chatRoom.id, chatRoom.roomName);
-              }}
-            >
+            <div className="chat-user-opponent">
               {props.userData ? (
                 <div className="chat-user-opponent-user-id">
                   {props.userData.map((user, idx) =>
