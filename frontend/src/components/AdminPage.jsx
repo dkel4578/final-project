@@ -3,6 +3,12 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Select from "react-select";
 import "../css/masterPage.css";
+import "../script/custom.js";
+import "../css/chatting-room-name.css";
+import "../css/total.css";
+import "../css/variables.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
+import "font-awesome/css/font-awesome.min.css";
 
 const addBan = async (banDays, userId, reportId, banReason) => {
   return await axios
