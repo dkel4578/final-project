@@ -8,6 +8,7 @@ import "../css/chatting-room-name.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import ChatProfile from "../components/ChatProfile";
 
 const ChatName = () => {
   const userInfo = useSelector((state) => state.user.user);
@@ -106,7 +107,7 @@ const ChatName = () => {
             text: "채팅방 참가에 성공하였습니다.",
             width: 340,
           });
-          navigate("/chat/room/lsit2",true)
+          navigate("/chat/room/list2",true)
         }
       })
       .catch((error) => {
@@ -127,21 +128,10 @@ const ChatName = () => {
             <div className="chatting-room-name-title">{roomName}</div>
             {userData ? (
               userData.map((data, index) => (
-                <div
-                  className="chatting-room-name-user-profile-infos"
-                  key={index}
-                >
-                  <div className="chatting-room-name-user-profile">
-                    <img
-                      src={data.imgSrc.replace("/public", "")}
-                      alt="유저프로필"
-                    />
-                  </div>
-
-                  <div className="chatting-room-name-user-nickname">
-                    <span>{data.nickname}</span>
-                  </div>
-                </div>
+                <ChatProfile
+                key={index}
+                userId={data.userId}
+                nickname={data.nickname}/>
               ))
             ) : (
               <p></p>

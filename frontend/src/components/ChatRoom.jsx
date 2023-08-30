@@ -5,17 +5,22 @@ import { Link, useHistory, useNavigate, useParams } from "react-router-dom";
 import { customHistory } from "../store/configureStore.js";
 // import { actionCreators as chattingActions } from "../store/modules/chatting";
 import { actionCreators as userActions } from "../store/modules/user";
+import UserProfile from "./UserProfile.jsx";
 import "../script/custom.js";
 import "../script/manner-score.js";
 import "../script/chat-list-room.js";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 function ChatRoom(props) {
   const userInfo = useSelector((state) => state.user.user);
   console.log("chatroom props:", props);
   console.log("chatroom props.userData:", props.userData);
   const [imgSrcList, setImgSrcList] = useState([]);
+  const [userImgList, setUserImgList] = useState([]);
   const [selectedReview, setSelectedReview] = useState("");
+
+  console.log(imgSrcList);
 
   const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
   const navigate = useNavigate();
@@ -23,7 +28,7 @@ function ChatRoom(props) {
   const handleStarClick = (starIndex) => {
     setSelectedStars(starIndex + 1);
   };
-
+  const [roomId, setRoomId] = useState("");
   const goChatRoomClick = (roomId, roomName) => {
     navigate(`/chat/room/list/${roomId}`, {
       state: { chatRoomProps: props, roomId: roomId, roomName: roomName },
@@ -32,9 +37,11 @@ function ChatRoom(props) {
 
   const [isValid, setIsValid] = useState(false);
   const [isValid2, setIsValid2] = useState(false);
+  const [imageUrl, setImageUrl] = useState("");
 
-  const handleClassName = () => {
+  const handleClassName = (roomId) => {
     setIsValid(!isValid);
+    setRoomId(roomId);
   };
 
   const handleClassName2 = () => {
@@ -53,18 +60,78 @@ function ChatRoom(props) {
     setReviewUserId(reviewUser);
   };
 
-  useEffect(() => {
-    if (props.userData && props.userData.imgSrc) {
-      const publicIndex = props.userData.imgSrc.indexOf("/public/");
-      if (publicIndex !== -1) {
-        const updatedSrc = props.userData.imgSrc.substring(
-          publicIndex + "/public/".length
-        );
-        setUpdatedImgSrc(updatedSrc);
-      }
-      console.log("updatedImgSrc >>>>>>>>>>", updatedImgSrc);
+  // useEffect(() => {
+  //   if (props.userData && props.userData.imgSrc) {
+  //     const publicIndex = props.userData.imgSrc.indexOf("/public/");
+  //     if (publicIndex !== -1) {
+  //       const updatedSrc = props.userData.imgSrc.substring(
+  //         publicIndex + "/public/".length
+  //       );
+  //       setUpdatedImgSrc(updatedSrc);
+  //     }
+  //     console.log("updatedImgSrc >>>>>>>>>>", updatedImgSrc);
+  //   }
+  // }, [props.userData, setIsValid]);
+  // 채팅방 프로필 사진 가져오기
+  const fetchImageByRoomId = async (roomId) => {
+    try {
+      const res = await axios.get(`/api/chatProfile/${roomId}`, {
+        responseType: "blob",
+      });
+      const imageUrl = URL.createObjectURL(res.data);
+      return imageUrl; // 이미지 URL 반환
+    } catch (error) {
+      console.log(error);
+      return "/profileImg/default-image.svg";
     }
-  }, [props.userData, setIsValid]);
+  };
+
+  useEffect(() => {
+    // props.chatRoomList를 순회하며 이미지 URL을 가져와 imgSrcList에 추가
+    const fetchImages = async () => {
+      const imageUrls = await Promise.all(
+        props.chatRoomList.map(async (chatRoom) => {
+          const imageUrl = await fetchImageByRoomId(chatRoom.id);
+          return imageUrl;
+        })
+      );
+      setImgSrcList(imageUrls);
+    };
+
+    fetchImages();
+  }, [props.chatRoomList]);
+
+  //채팅방 유저 프로필 사진 가져오기
+  // const fetchImageByUserId = async (userId) => {
+  //   try {
+  //     const res = await axios.get(`/api/profile/me/${userId}`, {
+  //       responseType: "blob",
+  //     });
+  //     const imageUrl = URL.createObjectURL(res.data);
+  //     console.log(imageUrl)
+  //     return imageUrl; // 이미지 URL 반환
+  //   } catch (error) {
+  //     console.log(error);
+  //     return "/profileImg/default-image.svg";
+  //   }
+  // };
+
+
+  // useEffect(() => {
+  //   const fetchImages = async () => {
+  //     const imageUrls = await Promise.all(
+  //       props.userData.map (async (data, index) => {
+  //         if (data.userId !== userInfo.uid && roomId === data.roomId) {
+  //         const imageUrl = await fetchImageByUserId(data.userId);
+  //         return imageUrl;
+  //         }
+  //       })
+  //     );
+  //     setUserImgList(imageUrls);
+  //   };
+
+  //   fetchImages();
+  // }, [props.chatRoomList]);
 
   const reviewhandler = (userId, e) => {
     e.preventDefault();
@@ -103,11 +170,10 @@ function ChatRoom(props) {
 
   const quitChat = (e) => {
     e.preventDefault();
-
     fetch(
       `/api/quitChatRoom?userId=${encodeURIComponent(
         userInfo.uid
-      )}&roomId=${encodeURIComponent(props.id)}`,
+      )}&roomId=${encodeURIComponent(roomId)}`,
       {
         method: "PUT",
         headers: {
@@ -129,7 +195,7 @@ function ChatRoom(props) {
         text: "채팅방 종료에 성공했습니다.",
         width: 340, // Alert 내용
       });
-      navigate("/chat/room/list2");
+      window.location.reload();
     });
   };
 
@@ -137,7 +203,8 @@ function ChatRoom(props) {
     let url = "";
     let textarea = document.createElement("textarea");
     document.body.appendChild(textarea);
-    url = `localhost:3000/chat/room/list/${roomId}`;
+    url = `localhost:3000/final-project/chatName/${roomId}`;
+
     textarea.value = url;
     textarea.select();
     document.execCommand("copy");
@@ -162,39 +229,16 @@ function ChatRoom(props) {
           <div className="chat-user-evaluation-modal-content-user-list">
             {props.userData ? (
               props.userData.map((data, index) => {
-                if (data.userId === userInfo.uid) {
-                  return null; // 해당 사용자는 랜더링하지 않음
+                if (data.userId !== userInfo.uid && roomId === data.roomId) {
+                  return (
+                    <UserProfile
+                      key={index}
+                      userId={data.userId}
+                      nickname={data.nickname}
+                    />
+                  ); // 해당 사용자는 랜더링하지 않음
                 }
-                return (
-                  <div
-                    key={index}
-                    className="chat-user-evaluation-modal-content-user-info"
-                  >
-                    <div className="chat-user-evaluation-modal-content-user-profile">
-                      {updatedImgSrc ? (
-                        <img src={updatedImgSrc} alt="" />
-                      ) : (
-                        <img
-                          src="/profileImg/default-image.svg"
-                          alt="Default"
-                        />
-                      )}
-                    </div>
-                    <div className="chat-user-evaluation-modal-content-user-nickname">
-                      <span>{data.nickname}</span>
-                    </div>
-                    <div className="chat-user-evaluation-modal-content-give-star">
-                      <input
-                        type="button"
-                        value="별점주기"
-                        onClick={() => {
-                          handleClassName2();
-                          reviewUserHandler(data.userId);
-                        }}
-                      />
-                    </div>
-                  </div>
-                );
+                return null;
               })
             ) : (
               <p>사용자 정보가 없습니다.</p>
@@ -321,7 +365,7 @@ function ChatRoom(props) {
             </div>
           <div className="chat-user-detail-informations">
             <div className="chat-user-profile">
-              <img src={props.imgSrc[idx]} alt="Profile" />
+              <img src={imgSrcList[idx]} alt="Profile" />
             </div>
             <div className="chat-user-opponent">
               {props.userData ? (
@@ -348,7 +392,7 @@ function ChatRoom(props) {
               </i>
               <i
                 className="bi bi-box-arrow-right chat-leave"
-                onClick={handleClassName}
+                onClick={(e) => handleClassName(chatRoom.id)}
               ></i>
             </div>
           </div>

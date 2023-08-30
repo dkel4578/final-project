@@ -280,11 +280,15 @@
   justify-content: space-between;
   margin-bottom: 10px;
 }
-.chat-user-evaluation-modal-content-user-profile{
+.chat-user-evaluation-modal-content-user-profile,
+.chat-user-evaluation-modal-content-user-profile-img{
   width: 40px;
   height: 40px;
   background-color: #ccc;
   border-radius: 50%;
+}
+.chat-user-evaluation-modal-content-user-profile-img{
+  object-fit: cover;;
 }
 .chat-user-evaluation-modal-content-user-nickname{
   font-size: 1.2em;
