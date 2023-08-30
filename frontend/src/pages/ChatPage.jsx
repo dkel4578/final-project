@@ -15,13 +15,9 @@ import "../css/variables.css";
 import "../css/total.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "font-awesome/css/font-awesome.min.css";
-<<<<<<< HEAD
-import "../script/chat-page.js";
-=======
 // import "../script/chat-page.js";
 import $ from 'jquery';
 import axios from "axios";
->>>>>>> a48354f258932a61ec1b8283f54f970ab6be7329
 
 function ChatPage(chatRoomProps) {
   const location = useLocation();
@@ -46,7 +42,6 @@ function ChatPage(chatRoomProps) {
   console.log("roomId: ", roomId);
   const chatRoomNumber = roomId;
   const chatRoomName = roomName;
-  scrollToBottom();
 
 
   
@@ -279,11 +274,7 @@ function ChatPage(chatRoomProps) {
     input.current.value = "";
     input.current.focus();
     setIsButtonEnabled(false);
-<<<<<<< HEAD
-    window.scrollTo(0, document.body.scrollHeight + 20);
-=======
     window.scrollTo(0, document.body.scrollHeight);
->>>>>>> a48354f258932a61ec1b8283f54f970ab6be7329
     console.log("스크롤 길이는 " + document.body.scrollHeight);
     scrollToBottom();
   };
@@ -383,40 +374,13 @@ function ChatPage(chatRoomProps) {
 
   return (
     <div className="chatting-play-box">
-<<<<<<< HEAD
-=======
       { activeModal &&
->>>>>>> a48354f258932a61ec1b8283f54f970ab6be7329
       <div className="user-report-modal">
         <div className="user-report-modal-contents">
           <h2 className="user-report-title">신고하기</h2>
           <i className="fa fa-times modal-close" aria-hidden="true"></i>
           <fieldset>
             <label htmlFor="doubling-the-post">
-<<<<<<< HEAD
-              <input type="radio" id="doubling-the-post" name="report" />
-              <span>도배성 채팅 작성</span>
-            </label>
-            <label htmlFor="obscene-posts">
-              <input type="radio" id="obscene-posts" name="report"></input>
-              <span>음란성 채팅 작성</span>
-            </label>
-            <label htmlFor="abusive-comments">
-              <input type="radio" id="abusive-comments" name="report"></input>
-              <span>욕설 / 혐오 발언 채팅 작성</span>
-            </label>
-            <label htmlFor="advertising-post">
-              <input type="radio" id="advertising-post" name="report"></input>
-              <span>광고성 / 홍보성 채팅</span>
-            </label>
-            <label htmlFor="false-review">
-              <input type="radio" id="false-review" name="report"></input>
-              <span>허위 리뷰</span>
-            </label>
-          </fieldset>
-          <div className="user-report-modal-btns">
-            <input type="button" value="신고" />
-=======
               <input type="radio" id="doubling-the-post" name="report" value="D" onChange={(e)=>{setReportType(e.target.value)}}/>
               <span>도배성 채팅 작성</span>
             </label>
@@ -439,15 +403,11 @@ function ChatPage(chatRoomProps) {
           </fieldset>
           <div className="user-report-modal-btns">
             <input type="button" value="신고" onClick={handleReportButtonClick} />
->>>>>>> a48354f258932a61ec1b8283f54f970ab6be7329
             <input type="button" value="취소" id="user-report-modal-cancel" />
           </div>
         </div>
       </div>
-<<<<<<< HEAD
-=======
     }
->>>>>>> a48354f258932a61ec1b8283f54f970ab6be7329
       <div id="msgList">
         <div className="chatting-room-title">
           <Link to="/chat/room/list/:roomId">
@@ -473,11 +433,7 @@ function ChatPage(chatRoomProps) {
                   {messageObject.userId !== userInfo.uid && (
                     <p className="other-nickname">{messageObject.nickname}</p>
                   )}
-<<<<<<< HEAD
-                  <div className="other-msg-block">
-=======
                   <div className="other-msg-block" onClick={()=>{handleMessageClick(messageObject.userId)}}>
->>>>>>> a48354f258932a61ec1b8283f54f970ab6be7329
                     <p>{messageObject.message}</p>
                   </div>
                 </div>

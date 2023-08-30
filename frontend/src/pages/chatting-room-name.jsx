@@ -1,9 +1,9 @@
-<<<<<<< HEAD
 
-import React from "react"; // eslint-disable-line no-unused-vars
-=======
+
+
+
 import React, { useState, useEffect } from "react";
->>>>>>> a48354f258932a61ec1b8283f54f970ab6be7329
+
 import "../css/total.css";
 import "../css/variables.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
