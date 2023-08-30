@@ -119,6 +119,13 @@ public class BoardApiController {
         boardService.update(id, updateBoardRequestDto); //글 수정
     }
 
+    //게시글 조회수 카운트
+    @PutMapping("/board/updateCnt/{id}")
+    public void updateCnt(@PathVariable Long id){
+        System.out.println("===================="+id);
+        boardService.updateCnt(id);
+    }
+
     //게시글 삭제
     @PutMapping("/board/delete/{id}")
     public void delete(@PathVariable Long id){

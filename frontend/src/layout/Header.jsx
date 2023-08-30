@@ -159,7 +159,7 @@ function Header({ userInfo }) {
                 <div className="category-title category-comu">
                   <div className="category-content">
                     <i className="fa fa-users" aria-hidden="true"></i>
-                    <Link to ="#">커뮤니티</Link>
+                   <Link to="/board/C">커뮤니티</Link>
                   </div>
                 </div>
                 <div className="category-sub">

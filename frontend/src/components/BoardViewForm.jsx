@@ -13,7 +13,7 @@ import "../script/post-content.js";
 import "../script/custom.js";
 import { useCookies } from "react-cookie";
 import axios from "axios";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 import {useSelector} from "react-redux";
 import MapComponentView from "./MapComponentView";
 import Swal from "sweetalert2";
@@ -37,6 +37,13 @@ function BoardViewForm() {
 
   const [localAddress, setLocalAddress] = useState(''); // 주소 상태 변수 추가
   const localAddressInputRef = useRef(null);
+  const latitudeInputRef = useRef(null); // 위도
+  const [latitude, setLatitude] = useState(''); // 위도 상태 변수 추가
+  const longitudeInputRef = useRef(null); // 경도
+  const [longitude, setLongitude] = useState(''); // 경도 상태 변수 추가
+  const [gender, setGender] = useState(null); // 유저 성별
+  const [mannerScore, setMannerScore] = useState(null); // 유저 매너점수
+  const [imgSrc, setImgSrc] = useState(""); //유저 프로필
 
 
   const userInfo = useSelector((state) => state.user.user); //유저 정보
@@ -53,11 +60,10 @@ function BoardViewForm() {
   const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
 
 
-  console.log("userInfo: ", userInfo);
-
-  console.log(window.location.href);
-  console.log("kind  ===>", kind);
-  console.log("토큰: ", cookies.token);
+  // console.log("userInfo: ", userInfo);
+  // console.log(window.location.href);
+  // console.log("kind  ===>", kind);
+  // console.log("토큰: ", cookies.token);
 
   //************************
   // enum 유형으로 설정
@@ -67,6 +73,99 @@ function BoardViewForm() {
   // };
 
 
+  //******************************
+  //유저 정보 가져오기
+  //******************************
+  useEffect(() => {
+    if (userInfo.uid) {
+      fetch("/api/user/me", {
+        method: "GET",
+        headers: {
+          "Content-Type": jsonContent,
+          Authorization: "Bearer " + cookies.token,
+        },
+      })
+          .then((res) => {
+            if (res) {
+              return res.json();
+            }
+          })
+          .then((userData) => {
+            if (userData.loginId) {
+              setGender(userData.gender);
+            }
+          });
+    }
+  }, [userInfo.uid]);
+
+console.log("");
+
+
+
+//******************************
+  //유저 매너정보 가져오기
+  //******************************
+  useEffect(() => {
+    if (userInfo.uid) {
+      fetch(`/api/manner/me?id=${userInfo.uid}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": jsonContent,
+        },
+      })
+          .then((res) => {
+            if (res) {
+              return res.json();
+            }
+          })
+          .then((userManner) => {
+            if (userManner) {
+              setMannerScore(userManner);
+              console.log("매너점수: ===========> ",userManner);
+            }
+          })
+          .catch((error) => {
+            console.error("Error fetching data:", error);
+          });;
+    }
+  }, [userInfo.uid]);
+
+
+  //프로필 이미지 정보 가져오기
+  useEffect(() => {
+    console.log("프로필이미지: ",`/api/profile/me?userId=${encodeURIComponent(userInfo.uid)}`);
+    if (userInfo.uid) {
+      fetch(`/api/profile/me?userId=${encodeURIComponent(userInfo.uid)}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": jsonContent,
+        },
+      })
+          .then((res) => {
+            if (!res.ok) {
+              throw new Error("Response was not OK");
+            }
+            return res.json();
+          })
+          .then((dataProfile) => {
+            if (dataProfile.imgSrc != null) {
+              // 로컬 파일 시스템 경로에서 \public\ 이전의 경로 제거
+              const publicIndex = dataProfile.imgSrc.indexOf("\\public\\");
+              if (publicIndex !== -1) {
+                const webPath = dataProfile.imgSrc
+                    .substring(publicIndex + "\\public\\".length)
+                    .replace(/\\/g, "/");
+                setImgSrc("/" + webPath);
+              }
+            }
+          })
+          .catch((error) => {
+            console.error("Error fetching data:", error);
+          });
+    }
+  }, [userInfo.uid]);
+
+  console.log("imgSrc: =========> ",imgSrc);
 
 
   //*************************************
@@ -89,31 +188,33 @@ function BoardViewForm() {
   //*************************************
   //게시글 이미지 정보 가져오기
   //*************************************
-  const fetchImgData = () => {
-    let brdId = `${id}`;
-    fetch(`/api/brdImg/${brdId}`)
-        .then(res => {
-          if (!res.ok) {
-            throw new Error('네트워크 응답이 올바르지 않습니다.');
-          }
-          // console.log("이미지: ==============> ",res);
-          return res.json()
-        })
-        .then(imgInfo => {
-          // console.log("imgInfo  ===========================================> ",imgInfo)
-          setImgData(imgInfo);
-        })
-        .catch(error => {
-          console.error('이미지를 가져오는 중 오류 발생:', error);
-          // 여기에서 오류를 처리하십시오. 예: 사용자에게 메시지 표시
-        });
-  }
+
+    const fetchImgData = () => {
+      let brdId = `${id}`;
+      fetch(`/api/brdImg/${brdId}`)
+          .then(res => {
+            if (!res.ok) {
+              throw new Error('네트워크 응답이 올바르지 않습니다.');
+            }
+            // console.log("이미지: ==============> ",res);
+            return res.json()
+          })
+          .then(imgInfo => {
+            // console.log("imgInfo  ===========================================> ",imgInfo)
+            setImgData(imgInfo);
+          })
+          .catch(error => {
+            console.error('이미지를 가져오는 중 오류 발생:', error);
+            // 여기에서 오류를 처리하십시오. 예: 사용자에게 메시지 표시
+          });
+    }
+
 
   // console.log("========================",imgData.imgSrc);
 
   useEffect(() => {
     fetchData(); //게시글
-    fetchImgData(); //이미지
+    fetchImgData(); //게시글 이미지
   },[id]);
 
     useEffect(() =>{
@@ -158,7 +259,7 @@ function BoardViewForm() {
       });
   };
 
-  console.log("commentList +++++++++++> : ",commentList);
+  // console.log("commentList +++++++++++> : ",commentList);
 
   useEffect(() => {
     fetchCommentData();
@@ -196,7 +297,7 @@ function BoardViewForm() {
       console.log("response.data ============>>>>>>>>>> ", response.status);
 
       if (response && response.status === 201) {
-       
+
         Swal.fire({
           icon: "success",
           title: "댓글", 
@@ -212,11 +313,43 @@ function BoardViewForm() {
           text: "댓글 등록에 실패하였습니다.",
           width: 340,
         });
-      }
+
     } catch (error) {
       console.error("Error fetching board list:", error);
     }
   };
+
+
+
+  //******************************
+  //게시글 카운트 하기
+  //******************************
+  useEffect(() => {
+    console.log("카운트하기");
+    boardCnt();
+  }, [userInfo.uid]);
+
+  const boardCnt = async (event) => {
+    console.log("카운트 호출하기: ====> ", `${id}`, userInfo.uid);
+    // 유효성 체크
+    if (`${id}` == "" || userInfo.uid =="") {
+      console.log("카운팅 실패");
+      return; // 유효성 검사 실패 시 제출 중단
+    }
+    const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
+    try {
+      const resCnt = await axios.put(`/api/board/updateCnt/${id}`, {
+      });
+      console.log("조회수 카운트 ============>", resCnt);
+      if (resCnt && resCnt.status === 201) {
+        alert("게시글 카운트");
+
+      }
+    } catch (error) {
+      console.error("Error 게시글 카운트:", error);
+    }
+  };
+
 
 
   // 댓글 수정모드를 관리할 상태
@@ -429,6 +562,7 @@ console.log("kind  ===>", kind);
   //********************************
   const toggleMap = () => {
     setShowMap((prevShowMap) => !prevShowMap); // 상태를 반전시킵니다.
+    // displayMarker(data.latitude, data.longitude);
   };
 
   //********************************
@@ -442,7 +576,18 @@ console.log("kind  ===>", kind);
     localAddressInputRef.current.value = address;
   };
 
-  
+  // const [showMap, setShowMap] = useState(false);
+  // const [latitude, setLatitude] = useState(0); // 초기값은 0으로 설정하세요
+  // const [longitude, setLongitude] = useState(0); // 초기값은 0으로 설정하세요
+
+  const displayMarker = (lat, lng) => {
+    setLatitude(lat);
+    setLongitude(lng);
+    setShowMap(true);
+  };
+
+
+
   return (
     <div className="body">
       <section className="post-content">
@@ -541,7 +686,6 @@ console.log("kind  ===>", kind);
             술한잔할래요
           </Link>
         </div>
-
         <div className="post-content-inner">
           {/*############################# 게시글 시작  ###################################*/}
           <div className="post-title">{data.title}</div>
@@ -559,6 +703,7 @@ console.log("kind  ===>", kind);
             {/*############################# 게시글 끝  ###################################*/}
 
             {/*############################# 지도보기 시작  ###################################*/}
+            {data.latitude > 0 &&
             <div className="write-post-content-btns">
               {/* showMap 상태에 따라 MapComponent를 표시 또는 숨김 */}
               <input
@@ -569,13 +714,20 @@ console.log("kind  ===>", kind);
               >
               </input>
             </div>
+            }
             <div className="write-title-box">
               <input type="text"
-                     className="write-title"
-                     max={70}
-                     name="localAddress" id='localAddress'  ref={localAddressInputRef}
-                     value={data.localAddress}
-                     placeholder="만남 장소를 지도에서 검색해주세요" />
+                     className="write-map-location"
+                     max={10}
+                     name="latitude" id='latitude'  ref={latitudeInputRef}
+                     value={data.latitude}
+                     placeholder="위도" />
+              <input type="text"
+                     className="write-map-location"
+                     max={10}
+                     name="longitude" id='longitude'  ref={longitudeInputRef}
+                     value={data.longitude}
+                     placeholder="경도" />
             </div>
             <div className="write-post-map-place">
               <div className="write-post-map"></div>
@@ -583,9 +735,10 @@ console.log("kind  ===>", kind);
 
             <div>
               {/* showMap 상태에 따라 MapComponent를 표시 또는 숨김 */}
-              {showMap && <MapComponentView onAddressClick={handleAddressClick} localAddress={data.localAddress} />}
+              {showMap && <MapComponentView  latitude={data.latitude} longitude={data.longitude} />}
             </div>
             {/*############################# 지도보기 끝  ###################################*/}
+            {(data.userId === userInfo.uid || userInfo.status === "S") &&
             <div className="post-main-content-btns">
               <input
                 type="button"
@@ -593,6 +746,7 @@ console.log("kind  ===>", kind);
                 onClick={handleEditClick}
                 value="수정"
               ></input>
+
               <input
                 type="button"
                 className="post-delete-btn"
@@ -600,6 +754,7 @@ console.log("kind  ===>", kind);
                 value="삭제"
               ></input>
             </div>
+            }
           </div>
           <div className="post-user-info">
             <div className="post-user-img">
@@ -612,11 +767,11 @@ console.log("kind  ===>", kind);
               </div>
               <div className="post-users-infos post-user-gender">
                 <p>성별</p>
-                <p>남성</p>
+                <p>{gender === "F" ? "여성" : "남성"}</p>
               </div>
               <div className="post-users-infos post-user-manner">
                 <p>매너지수</p>
-                <p>4.3</p>
+                <p>{mannerScore && mannerScore}</p>
               </div>
               <div className="post-users-infos post-user-introduce"></div>
             </div>

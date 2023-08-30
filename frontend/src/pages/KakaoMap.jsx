@@ -107,8 +107,10 @@ const KakaoMap = () => {
 
     const ps = new kakao.maps.services.Places();
     ps.keywordSearch(keyword, placesSearchCB);
+    
   };
 
+  
   const placesSearchCB = (data, status) => {
     if (status === kakao.maps.services.Status.OK) {
       setPlaces(data);
@@ -207,6 +209,7 @@ const KakaoMap = () => {
             </button>
           </div>
           <div className="map_wrap">
+           
             <ul id="placesList">
               {places.map((place, index) => (
                 <li className='mapList-item' key={index}>
