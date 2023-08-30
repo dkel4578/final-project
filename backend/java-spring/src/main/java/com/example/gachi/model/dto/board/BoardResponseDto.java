@@ -30,6 +30,7 @@ public class BoardResponseDto {
     private String localAddress;
     private Double latitude;
     private Double longitude;
+    private String nickname;
 
 
     public static BoardResponseDto of(Board board){
@@ -45,6 +46,7 @@ public class BoardResponseDto {
                 .localAddress(board.getLocalAddress())
                 .latitude(board.getLatitude())
                 .longitude(board.getLongitude())
+                .nickname(board.getUser().getNickname())
                 .build();
     }
 }
