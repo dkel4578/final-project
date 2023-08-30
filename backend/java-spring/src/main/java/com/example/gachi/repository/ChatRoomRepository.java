@@ -11,4 +11,6 @@ public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
     //해당 유저가 속해 있는 채팅방들 중 마스터 조회
     String findRoomNameById(Long roomId);
 
+    Long findUserIdById(Long roomId);
+
 }
