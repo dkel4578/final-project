@@ -147,7 +147,7 @@ function Header({ userInfo }) {
                 <div className="category-title">
                   <div className="category-content">
                     <i className="bi bi-megaphone-fill"></i>
-                    <a href="/board/notice">공지사항</a>
+                    <Link to="/board/N">공지사항</Link>
                   </div>
                 </div>
                 <div className="category-title">

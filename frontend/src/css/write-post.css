@@ -70,7 +70,7 @@
   letter-spacing: 2px;
   transition: 0.4s;
   font-size: 16px;
-  display: ;
+  display: none;
 }
 .write-title::placeholder{
   transition: 0.5s;
