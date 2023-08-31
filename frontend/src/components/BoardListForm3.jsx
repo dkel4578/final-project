@@ -105,6 +105,8 @@ function BoardListForm3() { // Receive the 'kind' prop
 
 
 
+
+
   // console.log("inView: ",inView);
   // console.log("boardList.length: ",boardList.length);
   // console.log("noMoreData: ",noMoreData);
