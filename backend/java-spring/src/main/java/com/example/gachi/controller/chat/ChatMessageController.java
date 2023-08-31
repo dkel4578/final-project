@@ -37,7 +37,7 @@ public class ChatMessageController {
 
         ChatResponseDto chatResponseDto = chatMessageService.signupMessage(chatDto);
         ResponseEntity.ok(chatResponseDto);
-        simpMessagingTemplate.convertAndSend("/sub/chat/room" + chatDto.getRoomId(), chatDto);
+        simpMessagingTemplate.convertAndSend("/sub/chat/room/" + chatDto.getRoomId(), chatDto);
     }
 
     @EventListener(SessionConnectEvent.class)
