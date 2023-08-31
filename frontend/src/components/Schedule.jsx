@@ -115,7 +115,7 @@ function Schedule(props) {
               }).then((result) => {
                 if (result.isConfirmed) {
                   const content = result.value;
-                  fetch(`api/schedule/update/${scheduleId}`, {
+                  fetch(`/api/schedule/update/${scheduleId}`, {
                     method: "PUT",
                     headers: {
                       "Content-Type": jsonContent,
@@ -127,22 +127,22 @@ function Schedule(props) {
                     if (res.status !== 200) {
                       return Swal.fire({
                         icon: "error",
-                        title: "스케쥴 수정", // Alert 제목
+                        title: "스케쥴 수정", 
                         text: "스케쥴 수정에 실패하였습니다.",
-                        width: 360, // Alert 내용
+                        width: 360,
                       });
                     }
                     Swal.fire({
                       icon: "success",
-                      title: "스케쥴 수정", // Alert 제목
+                      title: "스케쥴 수정", 
                       text: "스케쥴 수정에 성공하였습니다.",
-                      width: 360, // Alert 내용
+                      width: 360,
                     }).then(() => {
                       window.location.reload();
                     });
                   });
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
-                  fetch(`api/schedule/delete/${scheduleId}`, {
+                  fetch(`/api/schedule/delete/${scheduleId}`, {
                     method: "PUT",
                     headers: {
                       "Content-Type": jsonContent,
@@ -151,16 +151,16 @@ function Schedule(props) {
                     if (res.status !== 200) {
                       return Swal.fire({
                         icon: "error",
-                        title: "스케쥴 삭제", // Alert 제목
+                        title: "스케쥴 삭제",
                         text: "스케쥴 삭제에 실패하였습니다.",
-                        width: 360, // Alert 내용
+                        width: 360,
                       });
                     }
                     Swal.fire({
                       icon: "success",
-                      title: "스케쥴 삭제", // Alert 제목
+                      title: "스케쥴 삭제", 
                       text: "스케쥴 삭제에 성공하였습니다.",
-                      width: 360, // Alert 내용
+                      width: 360, 
                     }).then(() => {
                       window.location.reload();
                     });
@@ -228,8 +228,10 @@ function Schedule(props) {
           });
         }
       })
+    
       .catch((error) => {
         console.error("Error fetching schedule:", error);
+        
         Swal.fire({
           icon: "error",
           title: "일정 조회 오류",
@@ -250,9 +252,9 @@ function Schedule(props) {
     document.body.removeChild(textarea);
     Swal.fire({
       icon: "success",
-      title: "채팅", // Alert 제목
+      title: "채팅", 
       text: "채팅방 링크가 복사되었습니다.",
-      width: 360, // Alert 내용
+      width: 360, 
     });
  };
   return (

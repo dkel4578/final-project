@@ -14,7 +14,6 @@ function JoinIn() {
   <h1>회원가입</h1>
   <div className="sign-up-inner">
     <form className="sign-up-place">
-      {/* 아이디 입력 */}
       <div className="id-place place">
         <div className="id-subject subject">
           <p>아이디</p>
@@ -28,7 +27,6 @@ function JoinIn() {
           />
           <i className="bi bi-person-fill-check"></i>
         </div>
-        {/* 중복 여부 메시지 */}
         <span>
           사용가능한 아이디입니다! / 이미 사용하고있는 아이디입니다.
         </span>

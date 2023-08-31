@@ -195,8 +195,6 @@ function BoardEditForm() {
         setLatitude(latitude);
         setLongitude(longitude);
 
-
-
         // 주소 입력란에 선택한 주소를 설정
         localAddressInputRef.current.value = address;
         localPlaceInputRef.current.value = place;
@@ -212,7 +210,7 @@ function BoardEditForm() {
                 <div className="header-inner">
                     {/* ... */}
                     <section className="post-content-modify">
-                        <div className="board-kind">
+                        {/* <div className="board-kind">
                             <Link to={`/board/${kind}`} className={kind === 'C' ? 'active' : ''}>
                             카페가치
                             </Link>
@@ -225,7 +223,7 @@ function BoardEditForm() {
                             <Link to={`/board/${kind}`} className={kind === 'A' ? 'active' : ''}>
                             한잔가치
                             </Link>
-                        </div>
+                        </div> */}
                         {/* ########################  보드 카테고리 메뉴 시작  ################################*/}
                         <BoardCategoryMenu kind={kind} />
                         {/* ########################  보드 카테고리 메뉴 끝  ################################*/}
@@ -324,9 +322,7 @@ function BoardEditForm() {
                                     value={showMap ? "지도 숨기기" : "지도 검색"}
                                 >
                                 </input>
-
                             </div>
-
                             <div>
                                 {/* showMap 상태에 따라 MapComponent를 표시 또는 숨김 */}
                                 {showMap && <MapComponent onAddressClick={handleAddressClick} />}

@@ -14,12 +14,13 @@ const initialState = {
     uid: "",
     status: "",
     name : "",
-      phone : "",
-      gender : "",
-      birth : "",
-      profileMessage : "",
-      loginId:"",
-      isLogin:""
+    phone : "",
+    gender : "",
+    birth : "",
+    profileMessage : "",
+    loginId:"",
+    isLogin:"",
+    emial:""
     
   },
   isLogin: false,
