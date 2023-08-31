@@ -6,6 +6,8 @@ import {useSelector} from "react-redux";
 import { Link } from 'react-router-dom';
 
 
+
+
 const BoardPreview = ({ boardInfo,kind }) => {
 
     //console.log("BoardPreview > boardInfo =====> ", boardInfo)

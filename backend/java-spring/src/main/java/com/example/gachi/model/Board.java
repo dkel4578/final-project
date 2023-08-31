@@ -113,6 +113,8 @@ public class Board extends BaseEntity{
         this.content = content;
     }
 
+
+
     @Builder
     public Board(Kind kind,
                  String title,

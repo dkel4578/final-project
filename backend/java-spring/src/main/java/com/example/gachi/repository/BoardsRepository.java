@@ -17,6 +17,8 @@ import java.util.Optional;
     public interface BoardsRepository extends JpaRepository<Board, Long> {
 
 
+
+
     @Query(value = "SELECT p " +
                     "FROM Board p " +
                     "WHERE p.kind = :kindValue " +

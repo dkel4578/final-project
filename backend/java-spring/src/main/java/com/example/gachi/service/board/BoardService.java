@@ -192,7 +192,7 @@ public class BoardService {
 //    }
 
 
-    //글 수정하기
+    //글 수정하기 적용하기
     @Transactional
     public Board update(Long boardId, UpdateBoardRequestDto updateBoardRequestDto){
         Board board = boardRepository.findById(boardId).orElseThrow(() -> new IllegalArgumentException("not found: "));

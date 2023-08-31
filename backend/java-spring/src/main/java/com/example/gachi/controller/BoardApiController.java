@@ -35,6 +35,8 @@ public class BoardApiController {
 //    private CommentRepository commentRepository;
 
 
+
+
     //커뮤니티 가져오기 (검색 포함)
     @PostMapping("/boardss")
     public List<BoardResponseDto> getBoardLowerThanId(
