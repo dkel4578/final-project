@@ -158,10 +158,10 @@ const AdminPage = () => {
     { value: "", label: "선택해 주세요" },
     { value: "N", label: "공지사항" },
     { value: "Q", label: "FAQ" },
-    { value: "F", label: "같이 한 끼" },
-    { value: "C", label: "같이 커피" },
-    { value: "A", label: "같이 한 잔" },
-    { value: "T", label: "같이 여행" },
+    { value: "F", label: "한끼가치" },
+    { value: "C", label: "카페가치" },
+    { value: "A", label: "한잔가치" },
+    { value: "T", label: "놀러가치" },
   ];
   const boardSearchOption = [
     { value: "", label: "선택해 주세요" },

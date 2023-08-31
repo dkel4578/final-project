@@ -10,6 +10,7 @@ import '../css/variables.css';
 import '../css/post-content-modify.css';
 import Editor from './EditorComponent.jsx';
 import { navigate } from 'jsdom/lib/jsdom/living/window/navigation'; //에디터
+import Swal from "sweetalert2";
 
 function BoardEditForm() {
     const location = useLocation();
@@ -32,10 +33,20 @@ function BoardEditForm() {
             body: JSON.stringify({}),
         }).then((data) => {
             if (data && data.status === 200) {
-                alert('게시글이 삭제되었습니다.');
+                Swal.fire({
+                    icon: "success",
+                    title: "삭제완료",
+                    text: "게시글이 삭제되었습니다.",
+                    width: 360,
+                  });
                 window.location.href = `/`;
-            } else {
-                alert('게시글 삭제가 실패되었습니다.');
+            } else {            
+                Swal.fire({
+                    icon: "error",
+                    title: "삭제실패",
+                    text: "게시글 삭제가 실패되었습니다.",
+                    width: 360, 
+                  });
                 window.location.href = `/board/view?id=${id}`;
             }
         });
