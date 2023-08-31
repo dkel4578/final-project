@@ -29,7 +29,7 @@ const BoardFaq = ({ boardInfo,kind  }) => {
                                 <p>
                                     <div dangerouslySetInnerHTML={{ __html: boardInfo.content }} />
                                 </p>
-                                {userInfo.status === "S" &&
+                                {userInfo.status === "S" && 
                                 <div className="faq-modify-btns ">
                                     <a href="/postContentModify">
                                         <input
