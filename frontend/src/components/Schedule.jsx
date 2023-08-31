@@ -184,7 +184,7 @@ function Schedule(props) {
             if (result.isConfirmed) {
               const content = result.value;
               if (typeof content !== "undefined") {
-                fetch(`api/schedule/add`, {
+                fetch(`/api/schedule/add`, {
                   method: "POST",
                   headers: {
                     "Content-Type": jsonContent,
@@ -243,7 +243,7 @@ function Schedule(props) {
     let url = '';
     let textarea = document.createElement("textarea");
     document.body.appendChild(textarea);
-    url =`localhost:3000/calendar/${userInfo.loginId}`;
+    url =`localhost:3000/final-project/calendar/${userInfo.loginId}`;
     textarea.value = url;
     textarea.select();
     document.execCommand("copy");
