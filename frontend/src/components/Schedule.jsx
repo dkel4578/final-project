@@ -127,16 +127,16 @@ function Schedule(props) {
                     if (res.status !== 200) {
                       return Swal.fire({
                         icon: "error",
-                        title: "스케쥴 수정", // Alert 제목
+                        title: "스케쥴 수정", 
                         text: "스케쥴 수정에 실패하였습니다.",
-                        width: 360, // Alert 내용
+                        width: 360,
                       });
                     }
                     Swal.fire({
                       icon: "success",
-                      title: "스케쥴 수정", // Alert 제목
+                      title: "스케쥴 수정", 
                       text: "스케쥴 수정에 성공하였습니다.",
-                      width: 360, // Alert 내용
+                      width: 360,
                     }).then(() => {
                       window.location.reload();
                     });
@@ -151,16 +151,16 @@ function Schedule(props) {
                     if (res.status !== 200) {
                       return Swal.fire({
                         icon: "error",
-                        title: "스케쥴 삭제", // Alert 제목
+                        title: "스케쥴 삭제",
                         text: "스케쥴 삭제에 실패하였습니다.",
-                        width: 360, // Alert 내용
+                        width: 360,
                       });
                     }
                     Swal.fire({
                       icon: "success",
-                      title: "스케쥴 삭제", // Alert 제목
+                      title: "스케쥴 삭제", 
                       text: "스케쥴 삭제에 성공하였습니다.",
-                      width: 360, // Alert 내용
+                      width: 360, 
                     }).then(() => {
                       window.location.reload();
                     });
@@ -184,7 +184,7 @@ function Schedule(props) {
             if (result.isConfirmed) {
               const content = result.value;
               if (typeof content !== "undefined") {
-                fetch(`api/schedule/add`, {
+                fetch(`/api/schedule/add`, {
                   method: "POST",
                   headers: {
                     "Content-Type": jsonContent,
@@ -243,16 +243,16 @@ function Schedule(props) {
     let url = '';
     let textarea = document.createElement("textarea");
     document.body.appendChild(textarea);
-    url =`localhost:3000/calendar/${userInfo.loginId}`;
+    url =`localhost:3000/final-project/calendar/${userInfo.loginId}`;
     textarea.value = url;
     textarea.select();
     document.execCommand("copy");
     document.body.removeChild(textarea);
     Swal.fire({
       icon: "success",
-      title: "채팅", // Alert 제목
+      title: "채팅", 
       text: "채팅방 링크가 복사되었습니다.",
-      width: 360, // Alert 내용
+      width: 360, 
     });
  };
   return (

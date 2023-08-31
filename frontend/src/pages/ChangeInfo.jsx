@@ -247,10 +247,10 @@ function ChangeInfo() {
     const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
     if (!nickname) {
       Swal.fire({
-        icon: "success",
-        title: "중복 검사", // Alert 제목
+        icon: "warning",
+        title: "중복 검사",
         text: "닉네임을 입력해주세요",
-        width: 300,
+        width: 360,
       });
       return;
     } else {
@@ -271,18 +271,18 @@ function ChangeInfo() {
           nicknameRef.current.disabled = true;
           setNicknameFlg(true);
           Swal.fire({
-            icon: "success",
-            title: "중복 검사", // Alert 제목
+            icon: "warning",
+            title: "중복 검사",
             text: message,
-            width: 300, // Alert 내용
+            width: 360, 
           });
         })
         .catch((error) => {
           Swal.fire({
             icon: "error",
-            title: "중복 검사", // Alert 제목
+            title: "중복 검사",
             text: error,
-            width: 300, // Alert 내용
+            width: 360,
           });
         });
     }
@@ -296,10 +296,10 @@ function ChangeInfo() {
     const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
     if (!email) {
       Swal.fire({
-        icon: "success",
-        title: "중복 검사", // Alert 제목
+        icon: "warning",
+        title: "중복 검사",
         text: "이메일을 입력해주세요",
-        width: 300,
+        width: 360,
       });
       return;
     } else {
@@ -321,17 +321,17 @@ function ChangeInfo() {
           setEmailFlg(true);
           Swal.fire({
             icon: "success",
-            title: "중복 검사", // Alert 제목
+            title: "중복 검사", 
             text: message,
-            width: 300, // Alert 내용
+            width: 360,
           });
         })
         .catch((error) => {
           Swal.fire({
             icon: "error",
-            title: "중복 검사", // Alert 제목
+            title: "중복 검사",
             text: error,
-            width: 300, // Alert 내용
+            width: 360,
           });
         });
     }
@@ -360,9 +360,9 @@ function ChangeInfo() {
     if (nameFlg) {
       Swal.fire({
         icon: "warning",
-        title: "이름", // Alert 제목
+        title: "이름",
         text: "이름이 올바르지 않습니다",
-        width: 300,
+        width: 360,
       });
       return;
     } else if (!nicknameFlg) {
@@ -370,23 +370,23 @@ function ChangeInfo() {
         icon: "warning",
         title: "중복 검사",
         text: "닉네임 중복 검사를 완료하십시오.",
-        width: 300,
+        width: 360,
       });
       return;
     } else if (!emailFlg) {
       Swal.fire({
         icon: "warning",
-        title: "중복 검사", // Alert 제목
+        title: "중복 검사",
         text: "이메일 중복 검사를 완료해주세요.",
-        width: 300,
+        width: 360,
       });
       return;
     } else if (!authenticationFlg) {
       Swal.fire({
         icon: "warning",
-        title: "인증", // Alert 제목
+        title: "인증",
         text: "이메일 인증을 완료해주세요.",
-        width: 300,
+        width: 360,
       });
       return;
     } else {
@@ -444,7 +444,7 @@ function ChangeInfo() {
             icon: "success",
             title: "유저 정보 수정",
             text: "유저 정보 수정에 성공하였습니다.",
-            width: 300,
+            width: 360,
           });
           navigate("/mypage", true);
         } catch (error) {
@@ -453,7 +453,7 @@ function ChangeInfo() {
             icon: "error",
             title: "유저 정보 수정",
             text: "유저 정보 수정에 실패하였습니다.",
-            width: 300,
+            width: 360,
           });
         }
       }

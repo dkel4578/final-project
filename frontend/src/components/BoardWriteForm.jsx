@@ -10,8 +10,9 @@ import '../css/variables.css';
 import '../css/write-post.css';
 import Editor from "./EditorComponent.jsx";
 import {useSelector} from "react-redux"; //에디터
- import MapComponent from './MapComponent';
+import MapComponent from './MapComponent';
 import BoardCategoryMenu from "./BoardCategoryMenu";
+import Swal from "sweetalert2";
 
 function BoardWriteForm() { // Receive the 'kind' prop
     let navigate = useNavigate();
@@ -107,12 +108,24 @@ function BoardWriteForm() { // Receive the 'kind' prop
 
         // 유효성 체크
         if (enteredKind === "" || enteredKind ==="게시판을 선택해주세요") {
-            alert("게시판 종류를 선택해주세요.");
+       
+            Swal.fire({
+                icon: "warning",
+                title: "게시판 선택",
+                text: "게시판 종류를 선택해주세요.",
+                width: 360, 
+              });
             return; // 유효성 검사 실패 시 제출 중단
         }
 
         if (enteredDesc.trim() === "") {
-            alert("게시글 내용을 입력해주세요.");
+            
+            Swal.fire({
+                icon: "warning",
+                title: "내용입력",
+                text: "게시글 내용을 입력해주세요.",
+                width: 360, 
+              });
             descInputRef.current.focusEditor();
             return; // 유효성 검사 실패 시 제출 중단
         }
@@ -148,17 +161,38 @@ function BoardWriteForm() { // Receive the 'kind' prop
                 if(imageSrc){
                     const uploadResponse = await submitHandler2();
                     if (uploadResponse.status === 200) {
-                        alert('게시글이 입력되었습니다.');
+                       
+                        Swal.fire({
+                            icon: "success",
+                            title: "입력완료",
+                            text: " 게시글이 입력되었습니다.",
+                            width: 360, 
+                          });
                         navigate('/');
-                    } else {
-                        alert('게시글 등록이 실패되었습니다. 2');
+                    } else {                      
+                        Swal.fire({
+                            icon: "error",
+                            title: "입력실패",
+                            text: "게시글 등록이 실패되었습니다.",
+                            width: 360, 
+                          });
                     }
                 }else{
-                    if(data){
-                        alert('게시글이 입력되었습니다.');
+                    if(data){                      
+                        Swal.fire({
+                            icon: "success",
+                            title: "입력완료",
+                            text: '게시글이 입력되었습니다.',
+                            width: 360, 
+                          });
                         navigate('/');
-                    }else{
-                        alert('게시글 등록이 실패되었습니다. 3');
+                    }else{                     
+                        Swal.fire({
+                            icon: "error",
+                            title: "등록실패",
+                            text: '게시글 등록이 실패되었습니다.',
+                            width: 360, 
+                          });
                     }
                 }
 
@@ -166,7 +200,12 @@ function BoardWriteForm() { // Receive the 'kind' prop
 
 
             } else {
-                alert('게시글 등록이 실패되었습니다.');
+                Swal.fire({
+                    icon: "error",
+                    title: "등록실패",
+                    text: '게시글 등록이 실패되었습니다.',
+                    width: 360, 
+                  });
                 return;
             }
         }catch (error){
@@ -255,10 +294,10 @@ function BoardWriteForm() { // Receive the 'kind' prop
                             <div className="select-board-box">
                                 <select id="kind" defaultValue={kind} ref={kindInputRef} required >
                                     <option>게시판을 선택해주세요</option>
-                                    <option value="C">커피한잔할래요</option>
-                                    <option value="T">같이여행할래요</option>
-                                    <option value="F">식사같이할래요</option>
-                                    <option value="A">술한잔할래요</option>
+                                    <option value="C">카페가치</option>
+                                    <option value="T">놀러가치</option>
+                                    <option value="F">한끼가치</option>
+                                    <option value="A">한잔가치</option>
                                     {userInfo.status === "S" &&
                                     <option value="N">공지사항</option>
                                     }

@@ -67,9 +67,9 @@ function ChatPage(chatRoomProps) {
       if(!data){
         Swal.fire({
           icon: "error",
-          title: "채팅방 참가", // Alert 제목
+          title: "채팅방 참가",
           text: "입장할 수 없는 채팅방입니다.",
-          width: 360, // Alert 내용
+          width: 360, 
         });
         navigate(-1);
       }
@@ -94,7 +94,13 @@ function ChatPage(chatRoomProps) {
         // return;
       } else return;
     } else if (isNaN(chatRoomNumber)) {
-      alert("잘못된 경로로 대화방에 들어왔네요~~ ㅠㅠ");
+      
+      Swal.fire({
+        icon: "error",
+        title: "채팅방",
+        text: "잘못된 경로로 대화방에 들어왔습니다.",
+        width: 360, 
+      });
       return;
     }
 
@@ -187,7 +193,13 @@ function ChatPage(chatRoomProps) {
     stompClient.current.subscribe("/sub/chat/room/" + roomId, (response) => {
       // console.log('subscribe body', response.body);
       if (!userInfo.uid) {
-        alert("비상적으로 접근하여 채팅 사용을 할 수 없습니다.");
+        
+        Swal.fire({
+          icon: "error",
+          title: "채팅",
+          text: "비상적으로 접근하여 채팅 사용을 할 수 없습니다.",
+          width: 360,
+        });
         setChattingMesssageList([]);
         return;
       }
@@ -365,9 +377,21 @@ function ChatPage(chatRoomProps) {
       console.log(error);				//오류발생시 실행
     });
     if (response && response.status === 201) {
-      alert("신고가 완료되었습니다.");
+     
+      Swal.fire({
+        icon: "success",
+        title: "신고",
+        text: "신고가 완료되었습니다.",
+        width: 360, 
+      });
     } else {
-      alert("신고 등록이 실패되었습니다.");
+      
+      Swal.fire({
+        icon: "error",
+        title: "신고",
+        text: "신고 등록이 실패되었습니다.",
+        width: 360, 
+      });
     }
     closeModal();
   }
