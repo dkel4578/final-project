@@ -115,7 +115,7 @@ function Schedule(props) {
               }).then((result) => {
                 if (result.isConfirmed) {
                   const content = result.value;
-                  fetch(`api/schedule/update/${scheduleId}`, {
+                  fetch(`/api/schedule/update/${scheduleId}`, {
                     method: "PUT",
                     headers: {
                       "Content-Type": jsonContent,
@@ -142,7 +142,7 @@ function Schedule(props) {
                     });
                   });
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
-                  fetch(`api/schedule/delete/${scheduleId}`, {
+                  fetch(`/api/schedule/delete/${scheduleId}`, {
                     method: "PUT",
                     headers: {
                       "Content-Type": jsonContent,

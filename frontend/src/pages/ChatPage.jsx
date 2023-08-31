@@ -181,55 +181,61 @@ function ChatPage(chatRoomProps) {
           // window.scrollTo(0, document.body.scrollHeight);
         });
     }, 300);
+
   }, [roomId, chattingMessageList]);
 
   const chatSubscribe = () => {
-    stompClient.current.subscribe("/sub/chat/room/" + roomId, (response) => {
-      // console.log('subscribe body', response.body);
-      if (!userInfo.uid) {
-        alert("비상적으로 접근하여 채팅 사용을 할 수 없습니다.");
-        setChattingMesssageList([]);
-        return;
-      }
-      const jsonBody = JSON.parse(response.body);
-      chattingMessageList = chattingMessageList.map((msg, idx) => {
-        ++keyId;
-        return msg;
-      });
-      const newMessageList = [
-        ...messageList,
-        {
-          message: jsonBody.chat,
-          userId: userInfo.uid,
-          nickname: jsonBody.nickname,
-        },
-      ];
+    // setTimeout( function () {
+      stompClient.current.subscribe("/sub/chat/room/" + roomId, (response) => {
+        // console.log('subscribe body', response.body);
+        // console.log('@@@@@@@@@@@@@@@@@@@', response);
+        console.log('@@@@@@@@@@@@@@@@@@@');
 
-      setMessageList(newMessageList);
+        if (!userInfo.uid) {
+          alert("비상적으로 접근하여 채팅 사용을 할 수 없습니다.");
+          setChattingMesssageList([]);
+          return;
+        }
+        const jsonBody = JSON.parse(response.body);
+        chattingMessageList = chattingMessageList.map((msg, idx) => {
+          ++keyId;
+          return msg;
+        });
+        const newMessageList = [
+          ...messageList,
+          {
+            message: jsonBody.chat,
+            userId: userInfo.uid,
+            nickname: jsonBody.nickname,
+          },
+        ];
 
-      let myOther = "";
-      console.log("jsonBody. >>>>>> ", jsonBody);
-      // if (Number(jsonBody.writerId) != Number(localStorage.getItem('uid'))) {
-      if (jsonBody.userId != userInfo.uid) {
-        myOther = "other-msg";
-      } else {
-        myOther = "my-msg";
-      }
+        setMessageList(newMessageList);
 
-      // chattingMessageList = chattingMessageList.concat(<li key={++keyId}>{jsonBody.chat}</li>)
-      chattingMessageList = chattingMessageList.concat(
-        <li key={++keyId}>
-          <div className={myOther}>
-            <div className="msg">
-              <pre>{jsonBody.chat}</pre>
+        let myOther = "";
+        console.log("jsonBody. >>>>>> ", jsonBody);
+        // if (Number(jsonBody.writerId) != Number(localStorage.getItem('uid'))) {
+        if (jsonBody.userId != userInfo.uid) {
+          myOther = "other-msg";
+        } else {
+          myOther = "my-msg";
+        }
+
+        // chattingMessageList = chattingMessageList.concat(<li key={++keyId}>{jsonBody.chat}</li>)
+        chattingMessageList = chattingMessageList.concat(
+          <li key={++keyId}>
+            <div className={myOther}>
+              <div className="msg">
+                <pre>{jsonBody.chat}</pre>
+              </div>
             </div>
-          </div>
-        </li>
-      );
-      setChattingMesssageList(chattingMessageList);
+          </li>
+        );
+        setChattingMesssageList(chattingMessageList);
 
-      window.scrollTo(0, document.body.scrollHeight);
-    });
+        scrollToBottom();
+      });
+    // }, 500);
   };
 
   const chatDisconnect = () => {

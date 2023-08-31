@@ -235,6 +235,8 @@ function ChatRoom(props) {
                       key={index}
                       userId={data.userId}
                       nickname={data.nickname}
+                      handleClassName2={handleClassName2}
+                      reviewUserHandler={() => reviewUserHandler(data.userId)}
                     />
                   ); // 해당 사용자는 랜더링하지 않음
                 }
