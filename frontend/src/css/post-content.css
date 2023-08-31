@@ -39,6 +39,7 @@
   align-content: center;
 }
 .user-report-modal-content-radio{
+  margin: 0;
   margin-right: 5px;
   transform: translateY(4px);
 }
@@ -70,7 +71,7 @@
 .post-user-img img{
   width: 120px;
   height: 120px;
-  background-color: #ccc;
+  background-color: var(--mintcolor);
   border-radius: 50%;
   object-fit: cover;
 }

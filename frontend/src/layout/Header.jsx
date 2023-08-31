@@ -165,25 +165,25 @@ function Header({ userInfo }) {
                 <div className="category-sub">
                   <div className="category-content">
                     <i className="fa fa-coffee" aria-hidden="true"></i>
-                    <Link to="/board/C">커피한잔할래요?</Link>
+                    <Link to="/board/C">카페가치</Link>
                   </div>
                 </div>
                 <div className="category-sub">
                   <div className="category-content">
                     <i className="fa fa-plane" aria-hidden="true"></i>
-                    <Link to="/board/T">여행같이갈래요?</Link>
+                    <Link to="/board/T">놀러가치</Link>
                   </div>
                 </div>
                 <div className="category-sub">
                   <div className="category-content">
                     <i className="fa fa-cutlery" aria-hidden="true"></i>
-                    <Link to="/board/F">식사같이할래요?</Link>
+                    <Link to="/board/F">한끼가치</Link>
                   </div>
                 </div>
                 <div className="category-sub">
                   <div className="category-content">
                     <i className="fa fa-glass" aria-hidden="true"></i>
-                    <Link to="/board/A">술한잔할래요?</Link>
+                    <Link to="/board/A">한잔가치</Link>
                   </div>
                 </div>
                 <div className="category-title">

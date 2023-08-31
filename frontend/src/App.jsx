@@ -39,7 +39,7 @@ import AdminPage from './components/AdminPage';
 import AdminAuth from './components/AdminAuth';
 import CalendarShare from "./pages/CalendarShare";
 import {useLocation} from "react-router-dom";
-import KakaoMap from "./pages/KakaoMap";
+
 
 function App(props) {
   const userInfo = useSelector((state) => state.user.user);

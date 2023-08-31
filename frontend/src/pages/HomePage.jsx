@@ -73,22 +73,22 @@ function HomePage() {
           <div className="category-items">
             <div className="category-item">
               <Link to={`/board/C`}>
-                <img src={require("../images/cofee-together.jpg")} alt="커피한잔 할래요" />
+                <img src={require("../images/cofee-together.jpg")} alt="카페가치" />
               </Link>
             </div>
             <div className="category-item">
               <Link to={`/board/T`}>
-                <img src={require("../images/trip-together.jpg")} alt="여행같이 할래요" />
+                <img src={require("../images/trip-together.jpg")} alt="놀러가치" />
               </Link>
             </div>
             <div className="category-item">
               <Link to={`/board/F`}>
-                <img src={require("../images/eat-together.jpg")} alt="식사같이 할래요" />
+                <img src={require("../images/eat-together.jpg")} alt="한끼가치" />
               </Link>
             </div>
             <div className="category-item">
               <Link to={`/board/A`}>
-                <img src={require("../images/drink-together.jpg")} alt="술한잔 할래요" />
+                <img src={require("../images/drink-together.jpg")} alt="한잔가치" />
               </Link>
             </div>
           </div>

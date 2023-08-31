@@ -11,9 +11,7 @@ import '../css/post-content-modify.css';
 import Editor from './EditorComponent.jsx';
 import { navigate } from 'jsdom/lib/jsdom/living/window/navigation';
 import MapComponent from "./MapComponent"; //에디터
-
-
-
+import Swal from "sweetalert2";
 
 function BoardEditForm() {
     const location = useLocation();
@@ -78,7 +76,13 @@ function BoardEditForm() {
         console.log("장소 변경값들: ======> ",enteredLocalPlace, enteredLocalAddress, enteredLatitude, enteredLongitude);
 
         if (enteredDesc.trim() === '') {
-            alert('게시글 내용을 입력해주세요.');
+            
+            Swal.fire({
+                icon: "warning",
+                title: "내용입력",
+                text: "게시글 내용을 입력해주세요.",
+                width: 360, 
+              });
             return;
         }
 
@@ -98,12 +102,22 @@ function BoardEditForm() {
                 longitude: enteredLongitude,
             }),
         }).then((data) => {
-            if (data && data.status === 200) {
-                alert('게시글이 수정되었습니다.');
+            if (data && data.status === 200) {              
+                Swal.fire({
+                    icon: "success",
+                    title: "수정완료",
+                    text: "게시글이 수정되었습니다.",
+                    width: 360,
+                  });
                 // navigate(`/board/view?id=${data.id}&kind=${kind}`);
                 window.location.href = `/final-project/board/view?id=${id}&kind=${kind}`;
-            } else {
-                alert('게시글 수정이 실패되었습니다.');
+            } else {             
+                Swal.fire({
+                    icon: "error",
+                    title: "수정실패",
+                    text: "게시글 수정이 실패되었습니다.",
+                    width: 360, 
+                  });
             }
         });
     };
@@ -197,16 +211,16 @@ function BoardEditForm() {
                     <section className="post-content-modify">
                         <div className="board-kind">
                             <Link to={`/board/${kind}`} className={kind === 'C' ? 'active' : ''}>
-                                커피한잔할래요
+                            카페가치
                             </Link>
                             <Link to={`/board/${kind}`} className={kind === 'T' ? 'active' : ''}>
-                                같이여행갈래요
+                            놀러가치
                             </Link>
                             <Link to={`/board/${kind}`} className={kind === 'F' ? 'active' : ''}>
-                                같이식사할래요
+                            한끼가치
                             </Link>
                             <Link to={`/board/${kind}`} className={kind === 'A' ? 'active' : ''}>
-                                술한잔할래요
+                            한잔가치
                             </Link>
                         </div>
                         <div className="post-content-modify-inner">
@@ -283,8 +297,8 @@ function BoardEditForm() {
                             {/*    />*/}
                             {/*</div>*/}
                             <div className="post-main-content-modify-btns">
-                                {imgData && <img src={`/boardImg/${imgData.imgName}`} style={{ width: '100px' }}  />}
-                                {imageSrc && <img src={imageSrc} alt="Uploaded" style={{ width: '100px' }} />}
+                                {imgData && <img src={`/boardImg/${imgData.imgName}`} style={{ width: '150px' }}  />}
+                                {imageSrc && <img src={imageSrc} alt="Uploaded" style={{ width: '150px' }} />}
                             </div>
                             <div className="post-main-content-modify-btns">
                                 <input
