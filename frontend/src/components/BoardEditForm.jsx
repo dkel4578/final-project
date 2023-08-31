@@ -12,6 +12,9 @@ import Editor from './EditorComponent.jsx';
 import { navigate } from 'jsdom/lib/jsdom/living/window/navigation';
 import MapComponent from "./MapComponent"; //에디터
 
+
+
+
 function BoardEditForm() {
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);

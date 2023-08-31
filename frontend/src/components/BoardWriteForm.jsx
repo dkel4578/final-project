@@ -231,10 +231,6 @@ function BoardWriteForm() { // Receive the 'kind' prop
 
 
 
-
-
-
-
     return (
         <div className="body">
             <header>
@@ -329,7 +325,7 @@ function BoardWriteForm() { // Receive the 'kind' prop
                         </div>
                         {/*파일 업로드*/}
                         <div className="user-profile">
-                            {imageSrc && <img src={imageSrc} alt="Uploaded" style={{ width: '100px' }} />}
+                            {imageSrc && <img src={imageSrc} alt="Uploaded" style={{ width: '150px' }} />}
                         </div>
                         <div className="user-profile">
                             <label htmlFor="image-attach-name" id="image-attach-label">

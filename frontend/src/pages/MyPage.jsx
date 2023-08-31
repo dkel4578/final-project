@@ -80,7 +80,7 @@ function MyPage() {
 
     const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
 
-    fetch('api/checkPwd', {
+    fetch('/api/checkPwd', {
       method: 'POST',
       headers : {
         "Content-Type" : jsonContent,

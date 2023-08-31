@@ -30,9 +30,12 @@ import java.util.stream.Collectors;
 public class BoardApiController {
     @Autowired
     private final BoardService boardService;
-    @Autowired
-    private final UserRepository userRepository;
-    private CommentRepository commentRepository;
+//    @Autowired
+//    private final UserRepository userRepository;
+//    private CommentRepository commentRepository;
+
+
+
 
     //커뮤니티 가져오기 (검색 포함)
     @PostMapping("/boardss")
@@ -53,6 +56,29 @@ public class BoardApiController {
                 searchWord
         );
         return listBoardResponseDto;
+    }
+
+    //*******************************************
+    //커뮤니티 가져오기 - View table (검색 포함)
+    //*******************************************
+    @PostMapping("/viewBoard")
+    public List<ViewBoardResponseDto> getViewBoardLowerThanId(
+            @RequestBody Map<String, Object> requestPayload
+    ) {
+        Long lastBoardId = Long.parseLong(requestPayload.get("lastBoardId").toString());
+        int size = Integer.parseInt(requestPayload.get("size").toString());
+        int page = Integer.parseInt(requestPayload.get("page").toString());
+        Kind kind = Kind.valueOf((String) requestPayload.get("kind"));
+        String searchWord = (String) requestPayload.get("searchWord");
+
+        List<ViewBoardResponseDto> listViewBoardResponseDto = boardService.fetchViewBoardPagesBy(
+                lastBoardId,
+                size,
+                page,
+                kind,
+                searchWord
+        );
+        return listViewBoardResponseDto;
     }
 
 

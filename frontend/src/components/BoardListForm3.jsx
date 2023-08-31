@@ -49,7 +49,7 @@ function BoardListForm3() { // Receive the 'kind' prop
           searchWord: searchWord
       });
       const newBoardList = response.data;
-      console.log("newBoardList ============>>>>>>>>>> ",response);
+      console.log("viewBoardList ============> ",response);
 
       if (newBoardList.length === 0) {
         setNoMoreData(true);
@@ -102,6 +102,8 @@ function BoardListForm3() { // Receive the 'kind' prop
       handleSearchButtonClick();
     }
   };
+
+
 
 
 

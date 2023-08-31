@@ -31,7 +31,9 @@ import ChatRoomListPage from "./pages/ChatRoomListPage"; //선생님거
 import ChatingRoomListPage from "./pages/ChatingRoomListPage"; //내가 만든거
 // import Admin from "./components/AdminPage";
 import ChatName from "./pages/chatting-room-name";
-import TouristAIP from "./pages/TouristAIP";
+import Header2 from "./layout/Header2";
+import TouristAIP from './pages/TouristAIP';
+import KakaoMap from './pages/KakaoMap'
 import ChatPage from "./pages/ChatPage";
 import AdminPage from './components/AdminPage';
 import AdminAuth from './components/AdminAuth';
@@ -80,9 +82,8 @@ function App(props) {
 					<Route path="/chatName/:roomId" element={<ChatName/>}/>
           {/* <Route path="/header2" element={<Header2/>}/> */}
           <Route path="/chat/room/list/:roomId" element={<ChatPage/>}/>
-          {/* <Route path="/chat/room/list/test" element={<ChatTest/>}/> */}
+          <Route path="/KakaoMap" element={<KakaoMap/>}/>
           <Route path="calendar/:loginId" element={<CalendarShare/>}/>
-          <Route path="/kakaomap" element={<KakaoMap/>}/>
 				</Routes>
 			{shouldHideFooter ? null : <Footer />} {/* footer를 숨김 */}
 		</>

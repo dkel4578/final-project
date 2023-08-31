@@ -56,6 +56,7 @@ public class Board extends BaseEntity{
     private String localAddress; // 만남주소 필드 추가
     private double latitude; //위도
     private double longitude; //경도
+    private String nickname; //닉네임
 
 
 
@@ -89,7 +90,9 @@ public class Board extends BaseEntity{
     }
     public void setLatitude(double latitude) {this.latitude = latitude;}
     public void setLongitude(double longitude) {this.longitude = longitude;}
-
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
 
 
 
@@ -110,6 +113,8 @@ public class Board extends BaseEntity{
         this.content = content;
     }
 
+
+
     @Builder
     public Board(Kind kind,
                  String title,
@@ -119,7 +124,8 @@ public class Board extends BaseEntity{
                  String localPlace,
                  String localAddress,
                  Double latitude,
-                 Double longitude) {
+                 Double longitude,
+                 String nickname) {
         this.kind = kind;
         this.title = title;
         this.content = content;
@@ -130,6 +136,7 @@ public class Board extends BaseEntity{
         this.localAddress = localAddress;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.nickname = nickname;
     }
 
 
