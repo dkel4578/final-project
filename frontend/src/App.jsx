@@ -65,7 +65,6 @@ function App(props) {
           <Route path="/board/write" element={<BoardWritePage />}/>
           <Route path="/board/delete" element={<BoardDeletePage />}/>
      	    <Route path="/board/notice" element={<BoardNotice/>}/>
-
           <Route path="/calendar" element={<Calendar/>}/>
           <Route path="/chat/room/list" element={<ChatRoomListPage />}/>
           <Route path="/TouristAIP" element={<TouristAIP />}/>
@@ -79,9 +78,9 @@ function App(props) {
 					{/* <Route path="/postContent" element={<PostContent/>}/> */}
 					{/* <Route path="/writePost" element={<WritePost/>}/> */}
 					<Route path="/chatName/:roomId" element={<ChatName/>}/>
-          <Route path="/header2" element={<Header2/>}/>
+          {/* <Route path="/header2" element={<Header2/>}/> */}
           <Route path="/chat/room/list/:roomId" element={<ChatPage/>}/>
-          <Route path="/chat/room/list/test" element={<ChatTest/>}/>
+          {/* <Route path="/chat/room/list/test" element={<ChatTest/>}/> */}
           <Route path="calendar/:loginId" element={<CalendarShare/>}/>
           <Route path="/kakaomap" element={<KakaoMap/>}/>
 				</Routes>
