@@ -16,9 +16,12 @@ import axios from "axios";
 // import PropTypes from "prop-types";
 import {useSelector} from "react-redux";
 import MapComponentView from "./MapComponentView";
+import BoardPreview from "./BoardPreview";
+import BoardCategoryMenu from "./BoardCategoryMenu"; //에디터
 
 
-// console.log("유저정보: ========> ",userInfo.uid);
+
+// console.log("유저정보: ========> ",userInfo.uid);  유저정보 아이디
 
 function BoardViewForm() {
   const navigate = useNavigate();
@@ -544,6 +547,9 @@ console.log("kind  ===>", kind);
     fetchImage();
   }, [userInfo.uid])
 
+
+  console.log("로그인 유저 정보 확인: ",userInfo.uid);
+
   return (
     <div className="body">
       <section className="post-content">
@@ -639,20 +645,11 @@ console.log("kind  ===>", kind);
           </div>
         </div>}
         {/* ########################  게시판 모달 끝  ################################*/}
-        <div className="board-kind">
-          <Link to="/board/C" className={kind === "C" ? "active" : ""}>
-            커피한잔할래요
-          </Link>
-          <Link to="/board/T" className={kind === "T" ? "active" : ""}>
-            같이여행갈래요
-          </Link>
-          <Link to="/board/F" className={kind === "F" ? "active" : ""}>
-            같이식사할래요
-          </Link>
-          <Link to="/board/A" className={kind === "A" ? "active" : ""}>
-            술한잔할래요
-          </Link>
-        </div>
+
+        {/* ########################  보드 카테고리 메뉴 시작  ################################*/}
+        <BoardCategoryMenu kind={kind} />
+        {/* ########################  보드 카테고리 메뉴 끝  ################################*/}
+
         <div className="post-content-inner">
           {/*############################# 게시글 시작  ###################################*/}
           <div className="post-title">{data.title}</div>
@@ -734,7 +731,12 @@ console.log("kind  ===>", kind);
               </div>
               <div className="post-users-infos post-user-gender">
                 <p>성별</p>
+                {userInfo.uid !=="" ?(
                 <p>{gender === "F" ? "여성" : "남성"}</p>
+                ):(
+                    <p></p>
+                )
+                }
               </div>
               <div className="post-users-infos post-user-manner">
                 <p>매너지수</p>
@@ -743,6 +745,7 @@ console.log("kind  ===>", kind);
               <div className="post-users-infos post-user-introduce"></div>
             </div>
             {/*###################### 게시글 신고 시작 #########################*/}
+            {(userInfo.uid!=="" ) &&
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="siren icon icon-tabler icon-tabler-urgent"
@@ -761,6 +764,7 @@ console.log("kind  ===>", kind);
               <path d="M3 12h1m8 -9v1m8 8h1m-15.4 -6.4l.7 .7m12.1 -.7l-.7 .7" />
               <path d="M6 16m0 1a1 1 0 0 1 1 -1h10a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1z" />
             </svg>
+            }
             {/*###################### 게시글 신고 끝 #########################*/}
           </div>
           <div className="post-user-comment">
@@ -800,48 +804,50 @@ console.log("kind  ===>", kind);
                     </div>
                   ) : (
                     // 수정 폼이 아닌 경우
-                    <div className="comment-modify-box">
-                      <p>{commentInfo.content}</p>
-                      <p>{commentInfo.id}</p>
-                      <div className="comment-about-btns">
-                        <button
-                          className="comment-modify-btn comment-about-btn"
-                          onClick={() =>
-                            handleToggleEditComment(commentInfo.id)
-                          }
-                        >
-                          수정
-                        </button>
-                        <button
-                          className="comment-delete-btn comment-about-btn"
-                          onClick={() => handleDeleteComment(commentInfo.id)}
-                        >
-                          삭제
-                        </button>
-                      {/* ########################## 댓글 신고 버튼  ######################*/}
-                        {(commentInfo.userId !== userInfo.uid) &&
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="siren2 icon icon-tabler icon-tabler-urgent"
-                            width="20"
-                            height="20"
-                            viewBox="0 0 24 24"
-                            strokeWidth="1.5"
-                            stroke="#dc143c"
-                            fill="none"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            onClick={() => handleCommentReportButtonClick(commentInfo.id, commentInfo.userId)}
-                        >
-                          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                          <path d="M8 16v-4a4 4 0 0 1 8 0v4" />
-                          <path d="M3 12h1m8 -9v1m8 8h1m-15.4 -6.4l.7 .7m12.1 -.7l-.7 .7" />
-                          <path d="M6 16m0 1a1 1 0 0 1 1 -1h10a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1z" />
-                        </svg>
-                        }
+                    (commentInfo.userId !== userInfo.uid && userInfo.uid!=="" ) &&
+                      <div className="comment-modify-box">
+                        <p>{commentInfo.content}</p>
+                        <p>{commentInfo.id}</p>
+                        <div className="comment-about-btns">
+                          <button
+                            className="comment-modify-btn comment-about-btn"
+                            onClick={() =>
+                              handleToggleEditComment(commentInfo.id)
+                            }
+                          >
+                            수정
+                          </button>
+                          <button
+                            className="comment-delete-btn comment-about-btn"
+                            onClick={() => handleDeleteComment(commentInfo.id)}
+                          >
+                            삭제
+                          </button>
 
+                        {/* ########################## 댓글 신고 버튼  ######################*/}
+
+                          <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="siren2 icon icon-tabler icon-tabler-urgent"
+                              width="20"
+                              height="20"
+                              viewBox="0 0 24 24"
+                              strokeWidth="1.5"
+                              stroke="#dc143c"
+                              fill="none"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              onClick={() => handleCommentReportButtonClick(commentInfo.id, commentInfo.userId)}
+                          >
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M8 16v-4a4 4 0 0 1 8 0v4" />
+                            <path d="M3 12h1m8 -9v1m8 8h1m-15.4 -6.4l.7 .7m12.1 -.7l-.7 .7" />
+                            <path d="M6 16m0 1a1 1 0 0 1 1 -1h10a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1z" />
+                          </svg>
+
+                        </div>
                       </div>
-                    </div>
+
                   )}
                 </li>
               ))}
