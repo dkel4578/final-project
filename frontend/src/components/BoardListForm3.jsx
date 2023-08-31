@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useInView } from 'react-intersection-observer';
 import BoardPreview from './BoardPreview';
+import BoardFaq from './BoardFaq';
 import { Link, useParams } from 'react-router-dom'; // useParams 추가
 import '../css/index.css';
 import '../css/total.css';
@@ -106,10 +107,16 @@ function BoardListForm3() { // Receive the 'kind' prop
 
 
 
+  const [showFaq, setShowFaq] = useState(false); // 게시글 표시
+
+  const toggleFaq = () => {
+    setShowFaq((prevShowFaq) => !prevShowFaq); // 상태를 반전시킵니다.
+  };
 
   // console.log("inView: ",inView);
   // console.log("boardList.length: ",boardList.length);
   // console.log("noMoreData: ",noMoreData);
+
 
 
   return (
@@ -147,9 +154,12 @@ function BoardListForm3() { // Receive the 'kind' prop
                     <div key={index}>
                       {/* kind 값에 따라 다른 게시판 뷰를 렌더링 */}
                       {kind === "Q" ? (
-                        <BoardPreview boardInfo={boardInfo} kind={kind} />
+                          <BoardFaq
+                              boardInfo={boardInfo}
+                              kind={kind}
+                              />
                       ):(
-                        <BoardPreview boardInfo={boardInfo} kind={kind} />
+                          <BoardPreview boardInfo={boardInfo} kind={kind} />
                       )
                       }
                     </div>
