@@ -11,6 +11,7 @@ import '../css/write-post.css';
 import Editor from "./EditorComponent.jsx";
 import {useSelector} from "react-redux"; //에디터
  import MapComponent from './MapComponent';
+import BoardCategoryMenu from "./BoardCategoryMenu";
 
 function BoardWriteForm() { // Receive the 'kind' prop
     let navigate = useNavigate();
@@ -230,26 +231,13 @@ function BoardWriteForm() { // Receive the 'kind' prop
     };
 
 
-
     return (
         <div className="body">
             <header>
                 <div className="header-inner">
-                    {/*카테고리*/}
-                    <div className="board-kind">
-                        <Link to="/board/coffee" className={kind === 'C' ? 'active' : ''}>
-                            커피한잔할래요
-                        </Link>
-                        <Link to="/board/trip" className={kind === 'T' ? 'active' : ''}>
-                            같이여행갈래요
-                        </Link>
-                        <Link to="/board/meal" className={kind === 'F' ? 'active' : ''}>
-                            같이식사할래요
-                        </Link>
-                        <Link to="/board/drink" className={kind === 'A' ? 'active' : ''}>
-                            술한잔할래요
-                        </Link>
-                    </div>
+                    {/* ########################  보드 카테고리 메뉴 시작  ################################*/}
+                    <BoardCategoryMenu kind={kind} />
+                    {/* ########################  보드 카테고리 메뉴 끝  ################################*/}
                 </div>
             </header>
             

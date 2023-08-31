@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useInView } from 'react-intersection-observer';
 import BoardPreview from './BoardPreview';
@@ -8,7 +8,7 @@ import '../css/total.css';
 import '../css/board.css';
 import '../css/variables.css';
 import {useSelector} from "react-redux";
-
+import BoardCategoryMenu from "./BoardCategoryMenu"; //에디터
 
 function BoardListForm3() { // Receive the 'kind' prop
   const { kind } = useParams(); // kind 값을 추출
@@ -116,20 +116,9 @@ function BoardListForm3() { // Receive the 'kind' prop
       <div className="body">
         <div className="board-inner">
           <section className="coffee-board">
-            <div className="board-kind">
-              <Link to="/board/C" className={kind === 'C' ? 'active' : ''}>
-                커피한잔할래요
-              </Link>
-              <Link to="/board/T" className={kind === 'T' ? 'active' : ''}>
-                같이여행갈래요
-              </Link>
-              <Link to="/board/F" className={kind === 'F' ? 'active' : ''}>
-                같이식사할래요
-              </Link>
-              <Link to="/board/A" className={kind === 'A' ? 'active' : ''}>
-                술한잔할래요
-              </Link>
-            </div>
+            {/* ########################  보드 카테고리 메뉴 시작  ################################*/}
+            <BoardCategoryMenu kind={kind} />
+            {/* ########################  보드 카테고리 메뉴 끝  ################################*/}
             <div className="search-area">
               <div className="search">
                 <input
@@ -157,7 +146,12 @@ function BoardListForm3() { // Receive the 'kind' prop
                 {boardList.map((boardInfo, index) => (
                     <div key={index}>
                       {/* kind 값에 따라 다른 게시판 뷰를 렌더링 */}
-                      <BoardPreview boardInfo={boardInfo} kind={kind} />
+                      {kind === "Q" ? (
+                        <BoardPreview boardInfo={boardInfo} kind={kind} />
+                      ):(
+                        <BoardPreview boardInfo={boardInfo} kind={kind} />
+                      )
+                      }
                     </div>
                 ))}
               </div>
