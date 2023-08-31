@@ -15,6 +15,7 @@ import "../script/custom.js";
 import { useDispatch, useSelector } from "react-redux";
 
 async function getCode(email) {
+  
   await axios
     .post("/api/email-cert?email=" + email, {
       email: email,
