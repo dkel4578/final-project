@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const ChatProfile = ({ userId, nickname }) => {
+const ChatProfile = ({ userId, nickname  }) => {
   const [imageUrl, setImageUrl] = useState('');
 
   useEffect(() => {
@@ -19,6 +19,8 @@ const ChatProfile = ({ userId, nickname }) => {
 
     fetchImage();
   }, [userId]);
+
+
 
   return (
     <>
