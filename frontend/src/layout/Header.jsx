@@ -65,7 +65,7 @@ function Header({ userInfo }) {
           }
         })
         .then((data) => {
-          setNickname(data.nickname)
+          setNickname(data.nickname);
           dispatch(
             userActions.loginSaveAPI(
               data.id,
@@ -82,12 +82,12 @@ function Header({ userInfo }) {
             )
           );
         });
-    } 
+    }
   }, [isLogin, cookies]);
 
   const handleLogout = (e) => {
     e.preventDefault();
-		console.log("로그아웃")
+    console.log("로그아웃");
     Swal.fire({
       icon: "success",
       title: "로그아웃",
@@ -105,9 +105,9 @@ function Header({ userInfo }) {
       icon: "error",
       title: "로그인",
       text: "로그인이 필요한 서비스입니다!",
-      width: 360, 
+      width: 360,
     });
-		navigate("/login")
+    navigate("/login");
   };
   return (
     <div>
@@ -132,75 +132,82 @@ function Header({ userInfo }) {
                 )}
               </div>
               <div className="categorys">
-                <div className="category-title">
+                <Link to="/board/N" className="category-title">
                   <div className="category-content">
                     <i className="bi bi-megaphone-fill"></i>
-                    <Link to ="/board/N">공지사항</Link>
+                    <Link to="/board/N">공지사항</Link>
                   </div>
-                </div>
+                </Link>
                 <div className="category-title">
                   <div className="category-content">
                     <i className="fa fa-comment" aria-hidden="true"></i>
                     {isLogin ? (
                       <Link to={"/chat/room/list2"}>채팅하기</Link>
                     ) : (
-                      <Link to ="/chat/room/list/:roomId" onClick={handleNotLogin}>
+                      <Link
+                        to="/chat/room/list/:roomId"
+                        onClick={handleNotLogin}
+                      >
                         채팅하기
                       </Link>
                     )}
                   </div>
                 </div>
-                <div className="category-title">
+                <Link to={"/calendar"} className="category-title">
                   <div className="category-content">
                     <i className="fa fa-calendar-o" aria-hidden="true"></i>
                     <Link to={"/calendar"}>일정</Link>
                   </div>
-                </div>
-                <div className="category-title category-comu">
+                </Link>
+                <Link to="/board/C" className="category-title category-comu">
                   <div className="category-content">
                     <i className="fa fa-users" aria-hidden="true"></i>
-                   <Link to="/board/C">커뮤니티</Link>
+                    <Link to="/board/C">커뮤니티</Link>
                   </div>
-                </div>
-                <div className="category-sub">
+                </Link>
+                <Link to="/board/C" className="category-sub">
                   <div className="category-content">
                     <i className="fa fa-coffee" aria-hidden="true"></i>
                     <Link to="/board/C">카페가치</Link>
                   </div>
-                </div>
-                <div className="category-sub">
+                </Link>
+                <Link to="/board/T" className="category-sub">
                   <div className="category-content">
                     <i className="fa fa-plane" aria-hidden="true"></i>
                     <Link to="/board/T">놀러가치</Link>
                   </div>
-                </div>
-                <div className="category-sub">
+                </Link>
+                <Link to="/board/F" className="category-sub">
                   <div className="category-content">
                     <i className="fa fa-cutlery" aria-hidden="true"></i>
                     <Link to="/board/F">한끼가치</Link>
                   </div>
-                </div>
-                <div className="category-sub">
+                </Link>
+                <Link to="/board/A" className="category-sub">
                   <div className="category-content">
                     <i className="fa fa-glass" aria-hidden="true"></i>
                     <Link to="/board/A">한잔가치</Link>
                   </div>
-                </div>
-                <div className="category-title">
+                </Link>
+                <Link to="/kakaomap" className="category-title">
                   <div className="category-content">
                     <i className="bi bi-compass-fill"></i>
                     <Link to="/kakaomap">여행지 추천</Link>
                   </div>
-                </div>
+                </Link>
                 {isLogin && (
-                  <div className="category-title">
+                  <Link
+                    to="#"
+                    onClick={handleLogout}
+                    className="category-title"
+                  >
                     <div className="category-content">
                       <i className="fa fa-user-circle-o" aria-hidden="true"></i>
                       <Link to="#" onClick={handleLogout}>
                         로그아웃
                       </Link>
                     </div>
-                  </div>
+                  </Link>
                 )}
               </div>
               <div className="header-white-space"></div>
@@ -208,7 +215,10 @@ function Header({ userInfo }) {
           </div>
           <div className="logo-area">
             <Link to={"/"}>
-              <img src={require("../images/header-logo.png")} alt="로고이미지" />
+              <img
+                src={require("../images/header-logo.png")}
+                alt="로고이미지"
+              />
             </Link>
           </div>
         </div>
