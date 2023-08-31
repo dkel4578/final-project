@@ -1,17 +1,18 @@
 package com.example.gachi.service.board;
 
-import com.example.gachi.model.Board;
-import com.example.gachi.model.BrdImg;
-import com.example.gachi.model.Comment;
-import com.example.gachi.model.User;
+import com.example.gachi.model.*;
 import com.example.gachi.model.dto.board.*;
 import com.example.gachi.model.enums.Kind;
 import com.example.gachi.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.javassist.NotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
 public class BoardService {
     private final BoardRepository boardRepository;
     private final BoardsRepository boardsRepository;
+    private final ViewBoardRepository viewBoardRepository;
     private final UserRepository userRepository;
     private final CommentRepository commentRepository;
     private final BrdImgRepository brdImgRepository;
@@ -86,6 +88,40 @@ public class BoardService {
 
         return entityList.stream()
                 .map(BoardResponseDto::of)
+                .collect(Collectors.toList());
+    }
+
+
+    //ViewTable에 있는 board 정보 가져오기
+    public List<ViewBoardResponseDto> fetchViewBoardPagesBy(
+            Long lastBoardId,
+            int size,
+            int page,
+            Kind kindValue,
+            String searchWord) {
+
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by("id").descending());
+        Page<ViewBoard> entityPage;
+
+        //검색어가 있다면
+        if (searchWord != null && !searchWord.isEmpty()) {
+            entityPage = viewBoardRepository.findByKindAndTitleContainingOrderByCreateAtDesc(
+                    kindValue,
+                    searchWord,
+                    pageRequest
+            );
+        } else {//검색어가 없다면
+            entityPage = viewBoardRepository.findByKindOrderByCreateAtDesc(
+                    lastBoardId,
+                    kindValue,
+                    pageRequest
+            );
+        }
+
+        List<ViewBoard> entityList = entityPage.getContent();
+
+        return entityList.stream()
+                .map(ViewBoardResponseDto::of)
                 .collect(Collectors.toList());
     }
 
@@ -160,7 +196,13 @@ public class BoardService {
     @Transactional
     public Board update(Long boardId, UpdateBoardRequestDto updateBoardRequestDto){
         Board board = boardRepository.findById(boardId).orElseThrow(() -> new IllegalArgumentException("not found: "));
-        board.updateBoard(updateBoardRequestDto.getTitle(), updateBoardRequestDto.getContent());
+        board.updateBoard(updateBoardRequestDto.getTitle(),
+                          updateBoardRequestDto.getContent(),
+                          updateBoardRequestDto.getLocalPlace(),
+                          updateBoardRequestDto.getLocalAddress(),
+                          updateBoardRequestDto.getLatitude(),
+                          updateBoardRequestDto.getLongitude()
+                );
         return board;
     }
 
