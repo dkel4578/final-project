@@ -14,13 +14,17 @@ import com.example.gachi.service.chat.ChatRoomService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -90,12 +94,53 @@ public class ChatRoomController {
     }
 
     //채팅방 대표 이미지 가져오기
-    @GetMapping("/chatProfile")
-    public ResponseEntity<List<ProfileImgResponseDto>> getRoomProfileImg(@RequestParam(required = false) Long userId) {
-        List<ProfileImgResponseDto> profileImgResponseDtos = chatRoomService.getRoomMasterProfileImg(userId);
+//    @GetMapping("/chatProfile/{userId}")
+//    public ResponseEntity<List<ProfileImgResponseDto>> getRoomProfileImg(@PathVariable Long userId) {
+//        List<ProfileImgResponseDto> profileImgResponseDtos = chatRoomService.getRoomMasterProfileImg(userId);
+//
+//        return ResponseEntity.ok(profileImgResponseDtos);
+//    }
 
-        return ResponseEntity.ok(profileImgResponseDtos);
+    @GetMapping(value = "/chatProfile/{roomId}")
+    public  ResponseEntity<byte[]> getMyUserProfileImg(@PathVariable Long roomId) {
+        Long userId = chatRoomRepository.findById(roomId).get().getUser().getId();
+
+        Optional<String> optionalImgName = profileImgRepository.findFirstByUserIdOrderByCreateAtDesc(userId)
+                .map(ProfileImg::getImgName);
+
+        String imgName = optionalImgName.orElse("default-image.svg");
+        String path = System.getProperty("user.dir");
+        String path2 = "\\src\\main\\resources\\image\\profileImg\\"+imgName;
+
+
+        File file = new File("");
+        File file1 = new File(path+path2);
+        File file2= new File(path + "\\src\\main\\resources\\image\\profileImg\\default-image.svg");
+        if(file1.exists()){
+            file = file1;
+        } else{
+            file = file2;
+        }
+        byte[] result = null;
+        ResponseEntity<byte[]> entity = null;
+        try{
+            result = FileCopyUtils.copyToByteArray(file);
+
+            HttpHeaders header = new HttpHeaders();
+            header.add("Content-Type", Files.probeContentType(file.toPath()));
+
+            entity = new ResponseEntity<>(result, header, HttpStatus.OK);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+//        ProfileImgResponseDto myUserProfileImg = userService.getMyUserProfileImg(userId);
+//        if(myUserProfileImg == null){
+//            return ResponseEntity.ok(userService.getMyUserProfileImg(0L));
+//        }
+        return entity;
     }
+
+
 
     @PutMapping("/quitChatRoom")
     public void quitChatRoom(@RequestParam Long userId, @RequestParam Long roomId) {

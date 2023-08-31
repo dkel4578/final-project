@@ -32,30 +32,20 @@ import ChatingRoomListPage from "./pages/ChatingRoomListPage"; //내가 만든�
 // import Admin from "./components/AdminPage";
 import ChatName from "./pages/chatting-room-name";
 import Header2 from "./layout/Header2";
-import TouristAIP from "./pages/TouristAIP";
+import TouristAIP from './pages/TouristAIP';
+import KakaoMap from './pages/KakaoMap'
 import ChatPage from "./pages/ChatPage";
 import AdminPage from './components/AdminPage';
 import AdminAuth from './components/AdminAuth';
 import CalendarShare from "./pages/CalendarShare";
 import {useLocation} from "react-router-dom";
-import ChatTest from "./pages/chat-list-room"
 import KakaoMap from "./pages/KakaoMap";
 
 function App(props) {
   const userInfo = useSelector((state) => state.user.user);
   const location = useLocation();
-  const shouldHideFooter = location.pathname === "/admin2" || location.pathname.startsWith("/chat/room/list/");
-  const renderHeader = () => {
-    // 'admin' 페이지에만 'Header2'를 표시
-    if (location.pathname === "/admin2") {
-      return <Header2 />;
-    }
-    // 그 외 페이지에는 기본 'Header'를 표시
-    return <Header userInfo={userInfo} />;
-  };
-
-       {renderHeader()}
-
+  const shouldHideFooter = location.pathname === "/admin" || location.pathname.startsWith("/chat/room/list/");
+  // const shouldUseHeader2 = location.pathname === "/admin";
   return (
     <>
       <Header userInfo={userInfo} />
@@ -77,29 +67,25 @@ function App(props) {
           <Route path="/board/write" element={<BoardWritePage />}/>
           <Route path="/board/delete" element={<BoardDeletePage />}/>
      	    <Route path="/board/notice" element={<BoardNotice/>}/>
-
           <Route path="/calendar" element={<Calendar/>}/>
           <Route path="/chat/room/list" element={<ChatRoomListPage />}/>
           <Route path="/TouristAIP" element={<TouristAIP />}/>
           <Route path="/chat/room/list2" element={<ChatingRoomListPage />}/>
           <Route path="/admin" element={<AdminAuth Component={AdminPage} userInfo={userInfo} />} />
-          <Route path="/admin2" element={< AdminPage/>} />
           <Route path="/coffeeEventPage" element={<CoffeeEventPage/>}/>
 					<Route path="/criminalPage" element={<CriminalPage/>}/>
 					<Route path="/faq" element={<FAQ/>}/>
 					<Route path="/launching" element={<Launching/>}/>
-					<Route path="/postContentModify" element={<PostContentModify/>}/>
-					<Route path="/postContent" element={<PostContent/>}/>
-					<Route path="/writePost" element={<WritePost/>}/>
+					{/* <Route path="/postContentModify" element={<PostContentModify/>}/> */}
+					{/* <Route path="/postContent" element={<PostContent/>}/> */}
+					{/* <Route path="/writePost" element={<WritePost/>}/> */}
 					<Route path="/chatName/:roomId" element={<ChatName/>}/>
-          <Route path="/header2" element={<Header2/>}/>
+          {/* <Route path="/header2" element={<Header2/>}/> */}
           <Route path="/chat/room/list/:roomId" element={<ChatPage/>}/>
-          <Route path="/chat/room/list/test" element={<ChatTest/>}/>
+          <Route path="/KakaoMap" element={<KakaoMap/>}/>
           <Route path="calendar/:loginId" element={<CalendarShare/>}/>
-          <Route path="/kakaomap" element={<KakaoMap/>}/>
 				</Routes>
 			{shouldHideFooter ? null : <Footer />} {/* footer를 숨김 */}
-
 		</>
 	);
 

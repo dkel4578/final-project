@@ -18,6 +18,8 @@ import {useSelector} from "react-redux";
 import MapComponentView from "./MapComponentView";
 import BoardPreview from "./BoardPreview";
 import BoardCategoryMenu from "./BoardCategoryMenu"; //에디터
+import Swal from "sweetalert2";
+
 
 
 // console.log("유저정보: ========> ",userInfo.uid);  유저정보 아이디
@@ -232,7 +234,13 @@ console.log("");
     console.log("boardid: ====> ", `${id}`);
     // 유효성 체크
     if (enteredComment === "") {
-      alert("댓글 내용을 입력하세요");
+      
+      Swal.fire({
+        icon: "error",
+        title: "댓글",
+        text: "댓글 내용을 입력하세요.",
+        width: 340,
+      });
       return; // 유효성 검사 실패 시 제출 중단
     }
     const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
@@ -249,13 +257,25 @@ console.log("");
       console.log("response.data ============>>>>>>>>>> ", response.status);
 
       if (response && response.status === 201) {
-        alert("댓글이 입력되었습니다..");
+
+        Swal.fire({
+          icon: "success",
+          title: "댓글", 
+          text:  "댓글이 입력되었습니다.",
+          width: 340,
+        });
         // navigate(`/board/view?id=${id}`);
         window.location.href = `/final-project/board/view?id=${id}`;
       } else {
-        alert("댓글 등록이 실패되었습니다.");
-      }
-    } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "댓글",
+          text: "댓글 등록에 실패하였습니다.",
+          width: 340,
+        });
+
+    }
+  } catch (error) {
       console.error("Error fetching board list:", error);
     }
   };
@@ -284,6 +304,7 @@ console.log("");
       console.log("조회수 카운트 ============>", resCnt);
       if (resCnt && resCnt.status === 201) {
         alert("게시글 카운트");
+
       }
     } catch (error) {
       console.error("Error 게시글 카운트:", error);

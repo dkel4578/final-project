@@ -17,7 +17,7 @@ const Launching = () => {
         <div className="slide-page-title">공지) 같이갈래? 드디어 런칭</div>
         <div className="slide-page-main-contents">
           <div className="slide-page-main-content">
-            <img src="../images/slide-banner3.png" alt="" />
+            <img src={require("../images/slide-banner3.png")} alt="런칭배너" />
             <p>
 								안녕하세요. 가치있는여행 같이갈래? 입니다. 저희 같이갈래?는 함께
 								즐거운 여행을 즐길 트립메이트를 찾는 웹서비스로 해당 사이트를

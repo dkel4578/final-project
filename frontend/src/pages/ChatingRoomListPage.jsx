@@ -15,6 +15,7 @@ import "../script/custom.js";
 import Swal from "sweetalert2";
 import { useCookies } from "react-cookie";
 import { actionCreators as userActions } from "../store/modules/user";
+import axios from 'axios';
 
 function ChatingRoomListPage() {
   const navigate = useNavigate();
@@ -32,6 +33,9 @@ function ChatingRoomListPage() {
   const [imgSrcList, setImgSrcList] = useState([]);
   const [profileImgList, setProfileImgList] = useState([]);
   const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
+  const [imgSrc, setImgSrc] = useState('/profileImg/default-image.svg')
+
+  console.log("imgSrcList >>>>>> ", imgSrcList)
 
   console.log("chatRoomList >>>>", chatRoomList);
   useEffect(() => {
@@ -89,40 +93,59 @@ function ChatingRoomListPage() {
   }, [userDataList]);
 
   //프로필 이미지 정보 가져오기
-  useEffect(() => {
-    fetch(`/api/chatProfile?userId=${encodeURIComponent(userInfo.uid)}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": jsonContent,
-      },
-    })
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Response was not OK");
-        }
-        return res.json();
-      })
-      .then((data) => {
-        if (data.length > 0) {
-          const updatedImgSrcList = [...imgSrcList]; // Create a copy of the existing imgSrcList
-          data.forEach((item) => {
-            if (item.imgSrc != null) {
-              const publicIndex = item.imgSrc.indexOf("\\public\\");
-              if (publicIndex !== -1) {
-                const webPath = item.imgSrc
-                  .substring(publicIndex + "\\public\\".length)
-                  .replace(/\\/g, "/");
-                updatedImgSrcList.push("/" + webPath); // Push the new imgSrc to the list
-              }
-            }
-          });
-          setImgSrcList(updatedImgSrcList); // Update the state with the new imgSrcList
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, [userInfo.uid]);
+  // useEffect(() => {
+  //   fetch(`/api/chatProfile?userId=${encodeURIComponent(userInfo.uid)}`, {
+  //     method: "GET",
+  //     headers: {
+  //       "Content-Type": jsonContent,
+  //     },
+  //   })
+  //     .then((res) => {
+  //       if (!res.ok) {
+  //         throw new Error("Response was not OK");
+  //       }
+  //       return res.json();
+  //     })
+  //     .then((data) => {
+  //       if (data.length > 0) {
+  //         const updatedImgSrcList = [...imgSrcList]; // Create a copy of the existing imgSrcList
+  //         data.forEach((item) => {
+  //           if (item.imgSrc != null) {
+  //             const publicIndex = item.imgSrc.indexOf("\\public\\");
+  //             if (publicIndex !== -1) {
+  //               const webPath = item.imgSrc
+  //                 .substring(publicIndex + "\\public\\".length)
+  //                 .replace(/\\/g, "/");
+  //               updatedImgSrcList.push("/" + webPath); // Push the new imgSrc to the list
+  //             }
+  //           }
+  //         });
+  //         setImgSrcList(updatedImgSrcList); // Update the state with the new imgSrcList
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching data:", error);
+  //     });
+  // }, [userInfo.uid]);
+
+  // useEffect(() => {
+  //   const fetchImage = async () => {
+  //     try {
+  //       const res = await axios.get(`/api/chatProfile/${userInfo.uid}`, {
+  //         responseType: 'blob',
+  //       });
+  //       const imageUrl = URL.createObjectURL(res.data);
+  //       console.log(imageUrl);
+  //       setImgSrc(imageUrl);
+
+  //       // Add the new imageUrl to imgSrcList
+  //       setImgSrcList(prevImgSrcList => [...prevImgSrcList, imageUrl]);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   fetchImage();
+  // }, [userInfo.uid, chatRoomList]);
 
   const goChatRoomCreate = async (e) => {
     const result = await Swal.fire({
@@ -146,6 +169,7 @@ function ChatingRoomListPage() {
           uid: userInfo.uid,
         })
       );
+      window.location.reload();
     }
   };
 
@@ -183,9 +207,10 @@ function ChatingRoomListPage() {
               {
                 <ChatRoom
                   userData={userDataList}
-                  imgSrc={imgSrcList}
+                  // imgSrc={imgSrcList}
                   chatRoomList={chatRoomList}
                 />
+                
               }
             </ul>
           </div>

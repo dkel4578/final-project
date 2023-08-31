@@ -254,7 +254,7 @@ function ChangeInfo() {
       });
       return;
     } else {
-      fetch(`api/nicknameCheck?nickname=${encodeURIComponent(nickname)}`, {
+      fetch(`/api/nicknameCheck?nickname=${encodeURIComponent(nickname)}`, {
         method: "GET",
         headers: {
           "Content-Type": jsonContent,
@@ -303,7 +303,7 @@ function ChangeInfo() {
       });
       return;
     } else {
-      fetch(`api/emailCheck?email=${encodeURIComponent(email)}`, {
+      fetch(`/api/emailCheck?email=${encodeURIComponent(email)}`, {
         method: "GET",
         headers: {
           "Content-Type": jsonContent,
@@ -419,7 +419,7 @@ function ChangeInfo() {
           }
 
           // 파일 업로드가 성공하면 유저 정보 수정
-          const updateResponse = await fetch(`api/update/${userInfo.uid}`, {
+          const updateResponse = await fetch(`/api/update/${userInfo.uid}`, {
             method: "PUT",
             headers: {
               "Content-Type": jsonContent,

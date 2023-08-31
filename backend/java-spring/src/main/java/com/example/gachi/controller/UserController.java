@@ -174,7 +174,10 @@ public class UserController {
     @GetMapping(value = "/profile/me/{userId}")
     public ResponseEntity<?> getMyUserProfileImg(@PathVariable Long userId) {
 
-        String imgName = profileImgRepository.findFirstByUserIdOrderByCreateAtDesc(userId).get().getImgName();
+        Optional<String> optionalImgName = profileImgRepository.findFirstByUserIdOrderByCreateAtDesc(userId)
+                .map(ProfileImg::getImgName);
+
+        String imgName = optionalImgName.orElse("default-image.svg");
         String path = System.getProperty("user.dir");
         String path2 = "\\src\\main\\resources\\image\\profileImg\\"+imgName;
 
