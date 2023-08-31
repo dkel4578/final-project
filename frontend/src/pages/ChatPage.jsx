@@ -196,9 +196,13 @@ function ChatPage(chatRoomProps) {
         // console.log('subscribe body', response.body);
         // console.log('@@@@@@@@@@@@@@@@@@@', response);
         console.log('@@@@@@@@@@@@@@@@@@@');
-
         if (!userInfo.uid) {
-          alert("비상적으로 접근하여 채팅 사용을 할 수 없습니다.");
+          Swal.fire({
+            icon: "error",
+            title: "접근권한",
+            text: "비상적으로 접근하여 채팅 사용을 할 수 없습니다.",
+            width: 360,
+          });
           setChattingMesssageList([]);
           return;
         }
@@ -434,9 +438,6 @@ function ChatPage(chatRoomProps) {
     }
       <div id="msgList">
         <div className="chatting-room-title">
-          <Link to="/chat/room/list/:roomId">
-            <i class="bi bi-arrow-left"></i>
-          </Link>
           <p>{chatRoomName}</p>
         </div>
         <ul className="chatting-msg">

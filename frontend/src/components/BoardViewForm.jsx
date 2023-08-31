@@ -307,8 +307,11 @@ console.log("");
       });
       console.log("조회수 카운트 ============>", resCnt);
       if (resCnt && resCnt.status === 201) {
-        alert("게시글 카운트");
-
+        Swal.fire({
+            title: "로그인",
+            text: "게시글 카운트",
+            width: 360,
+          });
       }
     } catch (error) {
       console.error("Error 게시글 카운트:", error);
@@ -355,13 +358,23 @@ console.log("");
       });
 
       if (response && response.status === 200) {
-        alert("댓글이 수정되었습니다.");
+        Swal.fire({
+          icon: "success",
+          title: "댓글수정완료",
+          text: "댓글이 수정되었습니다.",
+          width: 360,
+        });
         // 수정 완료 후 수정 상태 비활성화
         handleToggleEditComment(commentId);
         // 댓글 데이터 다시 불러오기 (선택 사항)
         fetchCommentData();
       } else {
-        alert("댓글 수정에 실패했습니다.");
+        Swal.fire({
+          icon: "error",
+          title: "댓글수정 실패",
+          text: "댓글 수정에 실패했습니다.",
+          width: 360,
+        });
       }
     } catch (error) {
       console.error("댓글 수정 오류:", error);
@@ -379,11 +392,21 @@ console.log("");
         const response = await axios.put(`/api/comment/delete/${comId}`);
 
         if (response && response.status === 200) {
-          alert("댓글이 삭제되었습니다.");
+          Swal.fire({
+            icon: "success",
+            title: "댓글삭제",
+            text: "댓글이 삭제되었습니다.",
+            width: 360,
+          });
           // 댓글 삭제 후 댓글 데이터 다시 불러오기 (선택 사항)
           fetchCommentData();
         } else {
-          alert("댓글 삭제에 실패했습니다.");
+          Swal.fire({
+            icon: "error",
+            title: "댓글삭제실패",
+            text: "댓글 삭제에 실패했습니다.",
+            width: 360,
+          });
         }
       } catch (error) {
         console.error("댓글 삭제 오류:", error);
@@ -432,9 +455,19 @@ console.log("kind  ===>", kind);
       console.log(error);				//오류발생시 실행
     });
     if (response && response.status === 201) {
-      alert("신고가 완료되었습니다.");
+      Swal.fire({
+        icon: "success",
+        title: "신고완료",
+        text: "신고가 완료되었습니다.",
+        width: 360,
+      });
     } else {
-      alert("신고 등록이 실패되었습니다.");
+      Swal.fire({
+        icon: "error",
+        title: "신고실패",
+        text: "신고 등록 실패.",
+        width: 360,
+      });
     }
     setModalStatus(false);
   }
