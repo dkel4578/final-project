@@ -228,8 +228,10 @@ function Schedule(props) {
           });
         }
       })
+    
       .catch((error) => {
         console.error("Error fetching schedule:", error);
+        
         Swal.fire({
           icon: "error",
           title: "일정 조회 오류",
