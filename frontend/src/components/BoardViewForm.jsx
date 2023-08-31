@@ -682,7 +682,7 @@ console.log("kind  ===>", kind);
                 만남주소 : {data.localAddress}</p>
               }
               <p>{dayjs(data.creatAt).format("YYYY/MM/DD HH:mm:ss")}</p>
-              {imgData && <img src={`/boardImg/${imgData.imgName}`} style={{ width: '100px' }}  />}
+              {imgData && <img src={`/boardImg/${imgData.imgName}`} style={{ width: '150px' }}  />}
             </div>
             {/*############################# 게시글 끝  ###################################*/}
 
