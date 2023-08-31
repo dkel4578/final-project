@@ -16,7 +16,10 @@ import axios from "axios";
 // import PropTypes from "prop-types";
 import {useSelector} from "react-redux";
 import MapComponentView from "./MapComponentView";
+import Swal from "sweetalert2";
 
+
+// console.log("유저정보: ========> ",userInfo.uid);
 
 function BoardViewForm() {
   const navigate = useNavigate();
@@ -30,10 +33,6 @@ function BoardViewForm() {
   //const { kind } = searchParams.get('kind'); // kind 값을 추출
   const kind: string = searchParams.get('kind');
   const [cookies] = useCookies(['token']);
-  // const [userData, setUserData] = useState(null); // 쿠키에서 유저정보 가져오기
-  // const [userNickname, setUserNickname] = useState(null); // 쿠키에서 유저정보 가져오기 / 닉네임
-  // const [userGender, setUserGender] = useState(null); // 쿠키에서 유저정보 가져오기 / 성별
-
   const [localAddress, setLocalAddress] = useState(''); // 주소 상태 변수 추가
   const localAddressInputRef = useRef(null);
   const latitudeInputRef = useRef(null); // 위도
@@ -41,6 +40,7 @@ function BoardViewForm() {
   const longitudeInputRef = useRef(null); // 경도
   const [longitude, setLongitude] = useState(''); // 경도 상태 변수 추가
   const [gender, setGender] = useState(null); // 유저 성별
+  const [modalStatus, setModalStatus] = useState(false); // 모달 여부
   const [mannerScore, setMannerScore] = useState(null); // 유저 매너점수
   const [imgSrc, setImgSrc] = useState(""); //유저 프로필
 
@@ -57,19 +57,6 @@ function BoardViewForm() {
   const commentInputRef2 = useRef(null);
   const parentId = useRef(null); //대댓글 id
   const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
-
-
-  // console.log("userInfo: ", userInfo);
-  // console.log(window.location.href);
-  // console.log("kind  ===>", kind);
-  // console.log("토큰: ", cookies.token);
-
-  //************************
-  // enum 유형으로 설정
-  //************************
-  // BoardViewForm.propTypes = {
-  //   kind: PropTypes.oneOf(['N', 'Q', 'F', 'C', 'A', 'T']).isRequired,
-  // };
 
 
   //******************************
@@ -130,42 +117,13 @@ console.log("");
   }, [userInfo.uid]);
 
 
-  //프로필 이미지 정보 가져오기
-  useEffect(() => {
-    console.log("프로필이미지: ",`/api/profile/me?userId=${encodeURIComponent(userInfo.uid)}`);
-    if (userInfo.uid) {
-      fetch(`/api/profile/me?userId=${encodeURIComponent(userInfo.uid)}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": jsonContent,
-        },
-      })
-          .then((res) => {
-            if (!res.ok) {
-              throw new Error("Response was not OK");
-            }
-            return res.json();
-          })
-          .then((dataProfile) => {
-            if (dataProfile.imgSrc != null) {
-              // 로컬 파일 시스템 경로에서 \public\ 이전의 경로 제거
-              const publicIndex = dataProfile.imgSrc.indexOf("\\public\\");
-              if (publicIndex !== -1) {
-                const webPath = dataProfile.imgSrc
-                    .substring(publicIndex + "\\public\\".length)
-                    .replace(/\\/g, "/");
-                setImgSrc("/" + webPath);
-              }
-            }
-          })
-          .catch((error) => {
-            console.error("Error fetching data:", error);
-          });
-    }
-  }, [userInfo.uid]);
-
-  console.log("imgSrc: =========> ",imgSrc);
-
+  //**************************************
+  //매너점수가 없으면 기본값으로 0점 처리
+  //**************************************
+  if(mannerScore == null){
+    console.log("매너점수 0점 처리");
+    setMannerScore(0);
+  }
 
   //*************************************
   //게시글 정보 가져오기
@@ -273,7 +231,13 @@ console.log("");
     console.log("boardid: ====> ", `${id}`);
     // 유효성 체크
     if (enteredComment === "") {
-      alert("댓글 내용을 입력하세요");
+      
+      Swal.fire({
+        icon: "error",
+        title: "댓글",
+        text: "댓글 내용을 입력하세요.",
+        width: 340,
+      });
       return; // 유효성 검사 실패 시 제출 중단
     }
     const jsonContent = process.env.REACT_APP_API_JSON_CONTENT;
@@ -290,12 +254,23 @@ console.log("");
       console.log("response.data ============>>>>>>>>>> ", response.status);
 
       if (response && response.status === 201) {
-        alert("댓글이 입력되었습니다..");
+
+        Swal.fire({
+          icon: "success",
+          title: "댓글", 
+          text:  "댓글이 입력되었습니다.",
+          width: 340,
+        });
         // navigate(`/board/view?id=${id}`);
-        window.location.href = `/board/view?id=${id}`;
+        window.location.href = `/final-project/board/view?id=${id}`;
       } else {
-        alert("댓글 등록이 실패되었습니다.");
-      }
+        Swal.fire({
+          icon: "error",
+          title: "댓글",
+          text: "댓글 등록에 실패하였습니다.",
+          width: 340,
+        });
+
     } catch (error) {
       console.error("Error fetching board list:", error);
     }
@@ -325,6 +300,7 @@ console.log("");
       console.log("조회수 카운트 ============>", resCnt);
       if (resCnt && resCnt.status === 201) {
         alert("게시글 카운트");
+
       }
     } catch (error) {
       console.error("Error 게시글 카운트:", error);
@@ -423,6 +399,7 @@ console.log("kind  ===>", kind);
 
   const handleReportButtonClick = async (event) => {
     event.preventDefault();
+    setModalStatus(true)
     console.log("data.userId: "+data.userId);
     console.log("JSON.stringify(userInfo.uid): "+JSON.stringify(userInfo.uid));
     console.log("data.id: "+data.id);
@@ -451,6 +428,7 @@ console.log("kind  ===>", kind);
     } else {
       alert("신고 등록이 실패되었습니다.");
     }
+    setModalStatus(false);
   }
 
 
@@ -504,6 +482,7 @@ console.log("kind  ===>", kind);
       // 신고 정보 설정 (reportedId, reporterId, contentId, reportType 등)
     };
     openModal(reportInfo);
+    setModalStatus(true);
   };
 
   //************************************
@@ -526,6 +505,7 @@ console.log("kind  ===>", kind);
       // 신고 정보 설정 (reportedId, reporterId, contentId, reportType 등)
     };
     openModal(reportInfo);
+    setModalStatus(true);
   };
 
 
@@ -557,10 +537,6 @@ console.log("kind  ===>", kind);
     localAddressInputRef.current.value = address;
   };
 
-  // const [showMap, setShowMap] = useState(false);
-  // const [latitude, setLatitude] = useState(0); // 초기값은 0으로 설정하세요
-  // const [longitude, setLongitude] = useState(0); // 초기값은 0으로 설정하세요
-
   const displayMarker = (lat, lng) => {
     setLatitude(lat);
     setLongitude(lng);
@@ -568,90 +544,119 @@ console.log("kind  ===>", kind);
   };
 
 
+  //*******************************
+  //프로필 사진
+  //*******************************
+  useEffect(() => {
+    const fetchImage = async () =>{
+      try{
+        const res = await axios.get(`/api/profile/me/${userInfo.uid}`, {
+          responseType : "blob",
+        })
+        const imageUrl = URL.createObjectURL(res.data);
+        console.log(imageUrl)
+        setImgSrc(imageUrl);
+      } catch (error){
+        console.log(error);
+      }
+    }
+    fetchImage();
+  }, [userInfo.uid])
 
   return (
     <div className="body">
       <section className="post-content">
         {/* ########################  게시판 모달 시작  ################################*/}
-        <div className={`user-report-modal ${mainPostReportInfo || Object.keys(commentReportInfo).length ? 'active' : ''}`}>
+        {modalStatus &&
+        <div className={`user-report-modal `}>
           <div className="user-report-modal-contents">
             <h2 className="user-report-title">신고하기</h2>
-            <i className="fa fa-times modal-close" aria-hidden="true" onClick={closeModal}></i>
+            <i className="fa fa-times modal-close" aria-hidden="true" onClick={()=>{setModalStatus(false);}}></i>
             <fieldset className="user-report-modal-content-field">
               <label
-                htmlFor="doubling-the-post"
-                className="user-report-modal-content"
+                  htmlFor="doubling-the-post"
+                  className="user-report-modal-content"
               >
                 <input
-                  type="radio"
-                  id="doubling-the-post"
-                  name="report"
-                  value="D"
-                  onChange={(e)=>{setReportType(e.target.value)}}
-                  className="user-report-modal-content-radio"
+                    type="radio"
+                    id="doubling-the-post"
+                    name="report"
+                    value="D"
+                    onChange={(e) => {
+                      setReportType(e.target.value)
+                    }}
+                    className="user-report-modal-content-radio"
                 />
                 <span>게시글 / 댓글 도배</span>
               </label>
               <label
-                htmlFor="obscene-posts"
-                className="user-report-modal-content"
+                  htmlFor="obscene-posts"
+                  className="user-report-modal-content"
               >
                 <input
-                  type="radio"
-                  id="obscene-posts"
-                  name="report"
-                  value="P"
-                  onChange={(e)=>{setReportType(e.target.value)}}
-                  className="user-report-modal-content-radio"
+                    type="radio"
+                    id="obscene-posts"
+                    name="report"
+                    value="P"
+                    onChange={(e) => {
+                      setReportType(e.target.value)
+                    }}
+                    className="user-report-modal-content-radio"
                 ></input>
                 <span>음란성 게시글 / 댓글 작성</span>
               </label>
               <label
-                htmlFor="abusive-comments"
-                className="user-report-modal-content"
+                  htmlFor="abusive-comments"
+                  className="user-report-modal-content"
               >
                 <input
-                  type="radio"
-                  id="abusive-comments"
-                  name="report"
-                  value="F"
-                  onChange={(e)=>{setReportType(e.target.value)}}
-                  className="user-report-modal-content-radio"
+                    type="radio"
+                    id="abusive-comments"
+                    name="report"
+                    value="F"
+                    onChange={(e) => {
+                      setReportType(e.target.value)
+                    }}
+                    className="user-report-modal-content-radio"
                 ></input>
                 <span>욕설 / 혐오 발언 게시글 / 댓글 작성</span>
               </label>
               <label
-                htmlFor="advertising-post"
-                className="user-report-modal-content"
+                  htmlFor="advertising-post"
+                  className="user-report-modal-content"
               >
                 <input
-                  type="radio"
-                  id="advertising-post"
-                  name="report"
-                  value="A"
-                  onChange={(e)=>{setReportType(e.target.value)}}
-                  className="user-report-modal-content-radio"
+                    type="radio"
+                    id="advertising-post"
+                    name="report"
+                    value="A"
+                    onChange={(e) => {
+                      setReportType(e.target.value)
+                    }}
+                    className="user-report-modal-content-radio"
                 ></input>
                 <span>광고성 게시글 / 댓글 작성</span>
               </label>
               <label htmlFor="false-review">
                 <input
-                  type="radio"
-                  id="false-review"
-                  name="report"
-                  value="R"
-                  onChange={(e)=>{setReportType(e.target.value)}}
-                  className="user-report-modal-content-radio"
+                    type="radio"
+                    id="false-review"
+                    name="report"
+                    value="R"
+                    onChange={(e) => {
+                      setReportType(e.target.value)
+                    }}
+                    className="user-report-modal-content-radio"
                 ></input>
                 <span>허위 리뷰</span>
               </label>
             </fieldset>
             <div className="user-report-modal-btns">
-              <input type="button" value="신고" id = "user-report-modal-report" onClick={handleReportButtonClick}/>
-              <input type="button" value="취소" id="user-report-modal-cancel" />
+              <input type="button" value="신고" id="user-report-modal-report" onClick={handleReportButtonClick}/>
+              <input type="button" value="취소" id="user-report-modal-cancel" onClick={()=>{setModalStatus(false);}}/>
             </div>
           </div>
-        </div>
+        </div>}
         {/* ########################  게시판 모달 끝  ################################*/}
         <div className="board-kind">
           <Link to="/board/C" className={kind === "C" ? "active" : ""}>
@@ -739,7 +744,7 @@ console.log("kind  ===>", kind);
           </div>
           <div className="post-user-info">
             <div className="post-user-img">
-              <img src="" alt="" />
+              <img src={imgSrc} alt="" />
             </div>
             <div className="post-user-information">
               <div className="post-users-infos post-user-nick-name">
@@ -833,6 +838,7 @@ console.log("kind  ===>", kind);
                           삭제
                         </button>
                       {/* ########################## 댓글 신고 버튼  ######################*/}
+                        {(commentInfo.userId !== userInfo.uid) &&
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             className="siren2 icon icon-tabler icon-tabler-urgent"
@@ -851,6 +857,7 @@ console.log("kind  ===>", kind);
                           <path d="M3 12h1m8 -9v1m8 8h1m-15.4 -6.4l.7 .7m12.1 -.7l-.7 .7" />
                           <path d="M6 16m0 1a1 1 0 0 1 1 -1h10a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1z" />
                         </svg>
+                        }
 
                       </div>
                     </div>
