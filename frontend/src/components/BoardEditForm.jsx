@@ -10,8 +10,15 @@ import '../css/variables.css';
 import '../css/post-content-modify.css';
 import Editor from './EditorComponent.jsx';
 import { navigate } from 'jsdom/lib/jsdom/living/window/navigation';
+<<<<<<< HEAD
 import MapComponent from "./MapComponent"; //에디터
 import Swal from "sweetalert2";
+=======
+import MapComponent from "./MapComponent";
+import BoardCategoryMenu from "./BoardCategoryMenu"; //에디터
+
+
+>>>>>>> 2b40e0fc94054248da533ccd90a1ebd06fdeaddc
 
 function BoardEditForm() {
     const location = useLocation();
@@ -209,6 +216,7 @@ function BoardEditForm() {
                 <div className="header-inner">
                     {/* ... */}
                     <section className="post-content-modify">
+<<<<<<< HEAD
                         <div className="board-kind">
                             <Link to={`/board/${kind}`} className={kind === 'C' ? 'active' : ''}>
                             카페가치
@@ -223,6 +231,11 @@ function BoardEditForm() {
                             한잔가치
                             </Link>
                         </div>
+=======
+                        {/* ########################  보드 카테고리 메뉴 시작  ################################*/}
+                        <BoardCategoryMenu kind={kind} />
+                        {/* ########################  보드 카테고리 메뉴 끝  ################################*/}
+>>>>>>> 2b40e0fc94054248da533ccd90a1ebd06fdeaddc
                         <div className="post-content-modify-inner">
                             <div className="post-modify-title">
                                 <div className="write-title-box">
