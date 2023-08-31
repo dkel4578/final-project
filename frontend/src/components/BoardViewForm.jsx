@@ -96,7 +96,7 @@ console.log("");
   //******************************
   useEffect(() => {
     if (userInfo.uid) {
-      fetch(`/api/manner/me?id=${userInfo.uid}`, {
+      fetch(`/api/manner/me?id=${data.userId}`, {
         method: "GET",
         headers: {
           "Content-Type": jsonContent,
@@ -117,7 +117,10 @@ console.log("");
             console.error("Error fetching data:", error);
           });;
     }
-  }, [userInfo.uid]);
+  }, [data.userId]);
+
+
+  console.log("게시글 유저정보: ========> ", data.userId);
 
 
   //**************************************
@@ -160,7 +163,8 @@ console.log("");
             return res.json()
           })
           .then(imgInfo => {
-            console.log("imgInfo  ===========================================> ",imgInfo)
+
+             // console.log("imgInfo  ===========================================> ",imgInfo)
             setImgData(imgInfo);
           })
           .catch(error => {
@@ -682,7 +686,7 @@ console.log("kind  ===>", kind);
                 만남주소 : {data.localAddress}</p>
               }
               <p>{dayjs(data.creatAt).format("YYYY/MM/DD HH:mm:ss")}</p>
-              {imgData && <img src={`/boardImg/${imgData.imgName}`} style={{ width: '150px' }}  />}
+              {imgData && <img src={`/final-project/boardImg/${imgData.imgName}`} style={{ width: '100px' }}  />}
             </div>
             {/*############################# 게시글 끝  ###################################*/}
 
@@ -747,11 +751,11 @@ console.log("kind  ===>", kind);
             <div className="post-user-information">
               <div className="post-users-infos post-user-nick-name">
                 <p>닉네임</p>
-                <p>{userInfo.nickname}</p>
+                <p>{data.nickname}</p>
               </div>
               <div className="post-users-infos post-user-gender">
                 <p>성별</p>
-                {userInfo.uid !=="" ?(
+                {data.uid !=="" ?(
                 <p>{gender === "F" ? "여성" : "남성"}</p>
                 ):(
                     <p></p>

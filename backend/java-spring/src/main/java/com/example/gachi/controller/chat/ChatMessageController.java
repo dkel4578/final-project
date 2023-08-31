@@ -33,11 +33,11 @@ public class ChatMessageController {
 
     @MessageMapping("/chat")
     public void sendMessage(ChatDto chatDto, SimpMessageHeaderAccessor accessor) {
-        System.out.println("chatDto: " + chatDto);
+     
 
         ChatResponseDto chatResponseDto = chatMessageService.signupMessage(chatDto);
         ResponseEntity.ok(chatResponseDto);
-        simpMessagingTemplate.convertAndSend("/sub/chat/room" + chatDto.getRoomId(), chatDto);
+        simpMessagingTemplate.convertAndSend("/sub/chat/room/" + chatDto.getRoomId(), chatDto);
     }
 
     @EventListener(SessionConnectEvent.class)

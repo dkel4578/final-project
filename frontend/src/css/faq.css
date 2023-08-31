@@ -24,7 +24,7 @@
 }
 .faq-items{
   cursor: pointer;
-  width: 85%;
+  width: 340px;
   background-color: white;
   border-radius: 35px;
   text-align: center;
@@ -66,7 +66,7 @@
 .faq-content{
   padding-top: 15px;
   border-top: 1px solid black;
-  display: none;
+  /*display: none;*/
 }
 /* faq-modify-btns */
 .faq-modify-btns{

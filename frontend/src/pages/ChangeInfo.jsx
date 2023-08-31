@@ -15,6 +15,7 @@ import "../script/custom.js";
 import { useDispatch, useSelector } from "react-redux";
 
 async function getCode(email) {
+  
   await axios
     .post("/api/email-cert?email=" + email, {
       email: email,
@@ -268,7 +269,6 @@ function ChangeInfo() {
           }
         })
         .then((message) => {
-          nicknameRef.current.disabled = true;
           setNicknameFlg(true);
           Swal.fire({
             icon: "warning",
@@ -317,7 +317,6 @@ function ChangeInfo() {
           }
         })
         .then((message) => {
-          emailRef.current.disabled = true;
           setEmailFlg(true);
           Swal.fire({
             icon: "success",
@@ -493,7 +492,7 @@ function ChangeInfo() {
                   type="email"
                   className="input-kinds email-input"
                   placeholder="해당메일로 인증번호를 보냅니다."
-                  value={userInfo.email|| ''}
+                  defaultValue={userInfo.email|| ''}
                   ref={emailRef}
                   onChange={handleEmailInputChange}
                 />
@@ -550,7 +549,7 @@ function ChangeInfo() {
                   type="text"
                   className="input-kinds nick-input"
                   placeholder="사용하실 닉네임을 입력해주세요."
-                  value={userInfo.nickname|| ''}
+                  defaultValue={userInfo.nickname|| ''}
                   ref={nicknameRef}
                   onChange={handleNicknameInputChange}
                 />
@@ -566,7 +565,7 @@ function ChangeInfo() {
                   type="text"
                   className="input-kinds name-input"
                   placeholder="실명을 입력해주세요."
-                  value={userInfo.name}
+                  defaultValue={userInfo.name}
                   ref={nameRef}
                   onChange={(e) => {
                     handleNameInputChange(e);
@@ -586,7 +585,7 @@ function ChangeInfo() {
                   className="input-kinds phone-input"
                   placeholder="휴대폰 번호를 입력해주세요."
                   onChange={handleNumberInput}
-                  value={userInfo.phone|| ''}
+                  defaultValue={userInfo.phone}
                   ref={phoneRef}
                 />
                 <i className="bi bi-phone-vibrate-fill"></i>
@@ -602,7 +601,7 @@ function ChangeInfo() {
                   className="input-kinds birth-input"
                   placeholder="생년월일 8자리 ( - 제외 )"
                   onChange={handleBirthInput}
-                  value={userInfo.birth|| ''}
+                  defaultValue={userInfo.birth|| ''}
                   ref={birthRef}
                 />
                 <i className="bi bi-calendar-heart-fill"></i>
@@ -691,7 +690,7 @@ function ChangeInfo() {
               <textarea
                 cols="20"
                 rows="5"
-                value={userInfo.profileMessage}
+                defaultValue={userInfo.profileMessage}
                 ref={profileMessageRef}
               ></textarea>
             </div>

@@ -15,6 +15,7 @@ const UserProfile = ({ userId, nickname, reviewUserHandler, handleClassName2  })
       } catch (error) {
         console.log('Error fetching image:', error);
       }
+      
     };
 
     fetchImage();
