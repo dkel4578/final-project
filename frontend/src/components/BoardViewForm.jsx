@@ -271,7 +271,8 @@ console.log("");
           width: 340,
         });
 
-    } catch (error) {
+    }
+  } catch (error) {
       console.error("Error fetching board list:", error);
     }
   };
