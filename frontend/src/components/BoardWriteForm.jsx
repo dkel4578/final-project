@@ -231,7 +231,6 @@ function BoardWriteForm() { // Receive the 'kind' prop
     };
 
 
-
     return (
         <div className="body">
             <header>

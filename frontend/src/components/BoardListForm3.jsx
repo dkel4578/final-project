@@ -10,7 +10,6 @@ import '../css/variables.css';
 import {useSelector} from "react-redux";
 import BoardCategoryMenu from "./BoardCategoryMenu"; //에디터
 
-
 function BoardListForm3() { // Receive the 'kind' prop
   const { kind } = useParams(); // kind 값을 추출
   const userInfo = useSelector((state) => state.user.user); //유저 정보

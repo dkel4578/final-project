@@ -20,7 +20,6 @@ import BoardPreview from "./BoardPreview";
 import BoardCategoryMenu from "./BoardCategoryMenu"; //에디터
 
 
-
 // console.log("유저정보: ========> ",userInfo.uid);  유저정보 아이디
 
 function BoardViewForm() {

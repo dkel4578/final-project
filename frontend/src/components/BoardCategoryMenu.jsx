@@ -2,7 +2,6 @@ import {Link} from "react-router-dom";
 import React from "react";
 
 const BoardCategoryMenu = ({ kind }) => {
-
     return (
         <div className="board-kind">
             <Link to="/board/C" className={kind === "C" ? "active" : ""}>
