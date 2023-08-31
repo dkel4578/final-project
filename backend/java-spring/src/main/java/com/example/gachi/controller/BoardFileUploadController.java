@@ -46,8 +46,10 @@ public class BoardFileUploadController {
             String orgName = file.getOriginalFilename();
             UUID uuid = UUID.randomUUID();
             String imgName = uuid+"_"+orgName;
-
-            String imgSrc = "D:\\cloud-course\\final-project\\frontend\\public\\boardImg\\"+imgName;
+//            String imgSrc = "D:\\cloud-course\\final-project\\frontend\\public\\boardImg\\"+imgName;
+            String path2 = System.getProperty("user.dir");
+            String path3 = "\\src\\main\\resources\\image\\boardImg\\";
+            String imgSrc = path2+path3+imgName;
             Optional<User> user =  userRepository.findById(id);
             Optional<Board> board =  boardsRepository.findById(brdid);
 

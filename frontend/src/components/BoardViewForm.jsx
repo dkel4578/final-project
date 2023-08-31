@@ -557,7 +557,7 @@ console.log("kind  ===>", kind);
   useEffect(() => {
     const fetchImage = async () =>{
       try{
-        const res = await axios.get(`/api/profile/me/${userInfo.uid}`, {
+        const res = await axios.get(`/api/profile/me/${data.userId}`, {
           responseType : "blob",
         })
         const imageUrl = URL.createObjectURL(res.data);
@@ -568,7 +568,7 @@ console.log("kind  ===>", kind);
       }
     }
     fetchImage();
-  }, [userInfo.uid])
+  }, [data.userId])
 
 
   console.log("로그인 유저 정보 확인: ",userInfo.uid);

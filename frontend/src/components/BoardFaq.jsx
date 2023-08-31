@@ -29,6 +29,7 @@ const BoardFaq = ({ boardInfo,kind  }) => {
                                 <p>
                                     <div dangerouslySetInnerHTML={{ __html: boardInfo.content }} />
                                 </p>
+                                {userInfo.status === "S" &&
                                 <div className="faq-modify-btns ">
                                     <a href="/postContentModify">
                                         <input
@@ -43,6 +44,7 @@ const BoardFaq = ({ boardInfo,kind  }) => {
                                         className="faq-delte-btn faq-btn"
                                     />
                                 </div>
+                                }
                             </div>
                             }
                         </div>
