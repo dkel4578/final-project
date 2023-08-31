@@ -3,7 +3,7 @@
     width: 360px;
     margin: auto; 
     display: flex;
-    height:100vh;
+    height:70vh;
     justify-content: center;
     align-items: center;
     flex-direction: column;
@@ -38,7 +38,7 @@
     align-items: center;
 }
 .email-find-id-cf-send{
-    width: 84%;
+    width: 90%;
 }
 .input-find-id-cf-email, .input-find-id-cf-number,.email-find-id-cf-send{
     position: relative;

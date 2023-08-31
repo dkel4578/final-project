@@ -163,6 +163,7 @@ console.log("");
             return res.json()
           })
           .then(imgInfo => {
+
              // console.log("imgInfo  ===========================================> ",imgInfo)
             setImgData(imgInfo);
           })

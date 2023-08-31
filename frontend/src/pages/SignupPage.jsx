@@ -10,6 +10,21 @@ import Swal from 'sweetalert2';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'font-awesome/css/font-awesome.min.css';
 import "../script/custom.js";
+import $ from 'jquery';
+
+$(function(){
+  $('.toggle-eye').click(function(){
+    /* toggle 아이콘 모양 */
+    $(this).toggleClass('bi-eye')
+    /* toggle 인풋타입 */
+    let inputType = $(this).parent().children('input').attr('type');
+    if(inputType === 'password'){
+      $(this).parent().children('input').attr('type', 'text');
+    }else{
+      $(this).parent().children('input').attr('type', 'password');
+    };
+  });
+});
 
 async function getCode(email) {
   await axios

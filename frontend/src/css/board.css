@@ -9,6 +9,7 @@
     align-items: center;
     margin: 20px 0;
     gap: 10px;
+    font-size: 22px;
 }
 .board-notice{
     display: flex;

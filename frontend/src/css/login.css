@@ -3,7 +3,7 @@
   position: relative;
   margin: auto; 
   display: flex;
-  height:100vh;
+  height:70vh;
   justify-content: center;
   align-items: center;
   flex-direction: column;
@@ -230,6 +230,7 @@
   display: flex;
   justify-content: center;
   gap: 15px;
+  margin-top: 15px;
 }
 .user-find a{
   font-size: 1.2em;

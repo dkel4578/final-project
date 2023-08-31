@@ -75,7 +75,7 @@ function LoginPage() {
     <>
     <title>로그인</title>
     <section className="login-place">
-      <div className="find-password-modal">
+      {/* <div className="find-password-modal">
         <fieldset>
           <i className="fa fa-times modal-close" aria-hidden="true"></i>
           <legend>비밀번호 찾기</legend>
@@ -85,7 +85,7 @@ function LoginPage() {
           </div>
           <button className="send-pw">비밀번호 발송</button>
         </fieldset>
-      </div>
+      </div> */}
       <div className="login-inner">
         <Link to = "/" className="login-title-font">
          같이갈래?
@@ -108,7 +108,7 @@ function LoginPage() {
         <div className="btn-area">
           <img src={require("../images/google-logo.png")} alt="구글로고" className="google-logo"/>
           <Link to = {`${process.env.REACT_APP_API_GATEWAY_HOST}/oauth2/authorization/google`} className="google-login-btn">구글 이메일 로그인</Link>
-          <p className="forgot-password">비밀번호를 잊으셨나요?</p>
+          {/* <p className="forgot-password">비밀번호를 잊으셨나요?</p> */}
         </div>
         <div className="user-find">
           <Link to="/signup">회원가입</Link>

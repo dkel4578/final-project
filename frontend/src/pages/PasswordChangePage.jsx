@@ -152,23 +152,22 @@ function PasswordChangePage() {
         var cfNumberInput = $(".cf-number-input-text").val().trim();
         // 인증번호가 빈 값인 경우
         if (cfNumberInput === "") {
-          // SweetAlert 팝업 창 띄우기
           Swal.fire({
             title: "알림",
             text: "인증을 완료해주십시오",
-            width: 360, // 폭을 원하는 값으로 조정 (단위: px)
+            width: 360,
           });
         } else if (check == true) {
           Swal.fire({
             title: "알림",
             text: "인증 완료!",
-            width: 360, // 폭을 원하는 값으로 조정 (단위: px)
+            width: 360,
           });
         } else if (cfNumberInput !== $(".cf-number-input-text").value) {
           Swal.fire({
             title: "알림",
             text: "인증 번호를 다시 확인해주세요",
-            width: 360, // 폭을 원하는 값으로 조정 (단위: px)
+            width: 360,
           });
         }
       });
