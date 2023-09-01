@@ -98,14 +98,14 @@ const ChatName = () => {
             icon: "error",
             title: "채팅방 참여",
             text: data.error,
-            width: 340,
+            width: 360,
           });
         } else {
           Swal.fire({
             icon: "success",
             title: "채팅방 참가",
             text: "채팅방 참가에 성공하였습니다.",
-            width: 340,
+            width: 360,
           });
           navigate("/chat/room/list2",true)
         }
@@ -125,6 +125,7 @@ const ChatName = () => {
         <div className="chatting-room-name-details">
           <h1>채팅방 참가</h1>
           <div className="chatting-room-name-item">
+
             <div className="chatting-room-name-title">{roomName}</div>
             {userData ? (
               userData.map((data, index) => (

@@ -38,7 +38,6 @@ import AdminAuth from './components/AdminAuth';
 import CalendarShare from "./pages/CalendarShare";
 import {useLocation} from "react-router-dom";
 
-
 function App(props) {
   const userInfo = useSelector((state) => state.user.user);
   const location = useLocation();
