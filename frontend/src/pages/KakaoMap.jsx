@@ -187,7 +187,11 @@ const KakaoMap = () => {
       <div className="map">
         <div className='please-wanna-search'>
           <Link to="/TouristAIP" className='map-back'>
-          * 관광지보기 *
+
+         
+
+            관광지 보기 
+
           </Link>
         </div>
         <div id="myMap" style={{ width: '360px', height: '600px', borderRadius: '10px' }}>

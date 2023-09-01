@@ -96,7 +96,7 @@ console.log("");
   //******************************
   useEffect(() => {
     if (userInfo.uid) {
-      fetch(`/api/manner/me?id=${userInfo.uid}`, {
+      fetch(`/api/manner/me?id=${data.userId}`, {
         method: "GET",
         headers: {
           "Content-Type": jsonContent,
@@ -117,7 +117,10 @@ console.log("");
             console.error("Error fetching data:", error);
           });;
     }
-  }, [userInfo.uid]);
+  }, [data.userId]);
+
+
+  console.log("게시글 유저정보: ========> ", data.userId);
 
 
   //**************************************
@@ -160,7 +163,8 @@ console.log("");
             return res.json()
           })
           .then(imgInfo => {
-            // console.log("imgInfo  ===========================================> ",imgInfo)
+
+             // console.log("imgInfo  ===========================================> ",imgInfo)
             setImgData(imgInfo);
           })
           .catch(error => {
@@ -303,8 +307,11 @@ console.log("");
       });
       console.log("조회수 카운트 ============>", resCnt);
       if (resCnt && resCnt.status === 201) {
-        alert("게시글 카운트");
-
+        Swal.fire({
+            title: "로그인",
+            text: "게시글 카운트",
+            width: 360,
+          });
       }
     } catch (error) {
       console.error("Error 게시글 카운트:", error);
@@ -351,13 +358,23 @@ console.log("");
       });
 
       if (response && response.status === 200) {
-        alert("댓글이 수정되었습니다.");
+        Swal.fire({
+          icon: "success",
+          title: "댓글수정완료",
+          text: "댓글이 수정되었습니다.",
+          width: 360,
+        });
         // 수정 완료 후 수정 상태 비활성화
         handleToggleEditComment(commentId);
         // 댓글 데이터 다시 불러오기 (선택 사항)
         fetchCommentData();
       } else {
-        alert("댓글 수정에 실패했습니다.");
+        Swal.fire({
+          icon: "error",
+          title: "댓글수정 실패",
+          text: "댓글 수정에 실패했습니다.",
+          width: 360,
+        });
       }
     } catch (error) {
       console.error("댓글 수정 오류:", error);
@@ -375,11 +392,21 @@ console.log("");
         const response = await axios.put(`/api/comment/delete/${comId}`);
 
         if (response && response.status === 200) {
-          alert("댓글이 삭제되었습니다.");
+          Swal.fire({
+            icon: "success",
+            title: "댓글삭제",
+            text: "댓글이 삭제되었습니다.",
+            width: 360,
+          });
           // 댓글 삭제 후 댓글 데이터 다시 불러오기 (선택 사항)
           fetchCommentData();
         } else {
-          alert("댓글 삭제에 실패했습니다.");
+          Swal.fire({
+            icon: "error",
+            title: "댓글삭제실패",
+            text: "댓글 삭제에 실패했습니다.",
+            width: 360,
+          });
         }
       } catch (error) {
         console.error("댓글 삭제 오류:", error);
@@ -428,9 +455,19 @@ console.log("kind  ===>", kind);
       console.log(error);				//오류발생시 실행
     });
     if (response && response.status === 201) {
-      alert("신고가 완료되었습니다.");
+      Swal.fire({
+        icon: "success",
+        title: "신고완료",
+        text: "신고가 완료되었습니다.",
+        width: 360,
+      });
     } else {
-      alert("신고 등록이 실패되었습니다.");
+      Swal.fire({
+        icon: "error",
+        title: "신고실패",
+        text: "신고 등록 실패.",
+        width: 360,
+      });
     }
     setModalStatus(false);
   }
@@ -554,7 +591,7 @@ console.log("kind  ===>", kind);
   useEffect(() => {
     const fetchImage = async () =>{
       try{
-        const res = await axios.get(`/api/profile/me/${userInfo.uid}`, {
+        const res = await axios.get(`/api/profile/me/${data.userId}`, {
           responseType : "blob",
         })
         const imageUrl = URL.createObjectURL(res.data);
@@ -565,7 +602,7 @@ console.log("kind  ===>", kind);
       }
     }
     fetchImage();
-  }, [userInfo.uid])
+  }, [data.userId])
 
 
   console.log("로그인 유저 정보 확인: ",userInfo.uid);
@@ -682,7 +719,7 @@ console.log("kind  ===>", kind);
                 만남주소 : {data.localAddress}</p>
               }
               <p>{dayjs(data.creatAt).format("YYYY/MM/DD HH:mm:ss")}</p>
-              {imgData && <img src={`/boardImg/${imgData.imgName}`} style={{ width: '150px' }}  />}
+              {imgData && <img src={`/final-project/boardImg/${imgData.imgName}`} style={{ width: '100px' }}  />}
             </div>
             {/*############################# 게시글 끝  ###################################*/}
 
@@ -747,11 +784,11 @@ console.log("kind  ===>", kind);
             <div className="post-user-information">
               <div className="post-users-infos post-user-nick-name">
                 <p>닉네임</p>
-                <p>{userInfo.nickname}</p>
+                <p>{data.nickname}</p>
               </div>
               <div className="post-users-infos post-user-gender">
                 <p>성별</p>
-                {userInfo.uid !=="" ?(
+                {data.uid !=="" ?(
                 <p>{gender === "F" ? "여성" : "남성"}</p>
                 ):(
                     <p></p>

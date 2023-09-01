@@ -15,9 +15,7 @@ import BoardEditPage from "./pages/BoardEditPage";
 import BoardDeletePage from "./pages/BoardDeletePage";
 import PasswordChangePage from "./pages/PasswordChangePage";
 import Footer from "./layout/Footer";
-import BoardNotice from "./pages/board-notice";
 import BoardWritePage from "./pages/BoardWritePage";
-// import ChatListRoom from "./pages/chat-list-room";
 import CoffeeEventPage from "./pages/coffee-event-page";
 import CriminalPage from "./pages/criminal-page";
 import FAQ from "./pages/faq";
@@ -66,7 +64,6 @@ function App(props) {
           <Route path="/board/edit" element={<BoardEditPage/>}/>
           <Route path="/board/write" element={<BoardWritePage />}/>
           <Route path="/board/delete" element={<BoardDeletePage />}/>
-     	    <Route path="/board/notice" element={<BoardNotice/>}/>
           <Route path="/calendar" element={<Calendar/>}/>
           <Route path="/chat/room/list" element={<ChatRoomListPage />}/>
           <Route path="/TouristAIP" element={<TouristAIP />}/>

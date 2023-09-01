@@ -67,9 +67,9 @@ function ChatPage(chatRoomProps) {
       if(!data){
         Swal.fire({
           icon: "error",
-          title: "채팅방 참가", // Alert 제목
+          title: "채팅방 참가",
           text: "입장할 수 없는 채팅방입니다.",
-          width: 360, // Alert 내용
+          width: 360, 
         });
         navigate(-1);
       }
@@ -94,7 +94,13 @@ function ChatPage(chatRoomProps) {
         // return;
       } else return;
     } else if (isNaN(chatRoomNumber)) {
-      alert("잘못된 경로로 대화방에 들어왔네요~~ ㅠㅠ");
+      
+      Swal.fire({
+        icon: "error",
+        title: "채팅방",
+        text: "잘못된 경로로 대화방에 들어왔습니다.",
+        width: 360, 
+      });
       return;
     }
 
@@ -181,55 +187,65 @@ function ChatPage(chatRoomProps) {
           // window.scrollTo(0, document.body.scrollHeight);
         });
     }, 300);
+
   }, [roomId, chattingMessageList]);
 
   const chatSubscribe = () => {
-    stompClient.current.subscribe("/sub/chat/room/" + roomId, (response) => {
-      // console.log('subscribe body', response.body);
-      if (!userInfo.uid) {
-        alert("비상적으로 접근하여 채팅 사용을 할 수 없습니다.");
-        setChattingMesssageList([]);
-        return;
-      }
-      const jsonBody = JSON.parse(response.body);
-      chattingMessageList = chattingMessageList.map((msg, idx) => {
-        ++keyId;
-        return msg;
-      });
-      const newMessageList = [
-        ...messageList,
-        {
-          message: jsonBody.chat,
-          userId: userInfo.uid,
-          nickname: jsonBody.nickname,
-        },
-      ];
+    // setTimeout( function () {
+      stompClient.current.subscribe("/sub/chat/room/" + roomId, (response) => {
+        // console.log('subscribe body', response.body);
+        // console.log('@@@@@@@@@@@@@@@@@@@', response);
+        console.log('@@@@@@@@@@@@@@@@@@@');
+        if (!userInfo.uid) {
+          Swal.fire({
+            icon: "error",
+            title: "접근권한",
+            text: "비상적으로 접근하여 채팅 사용을 할 수 없습니다.",
+            width: 360,
+          });
+          setChattingMesssageList([]);
+          return;
+        }
+        const jsonBody = JSON.parse(response.body);
+        chattingMessageList = chattingMessageList.map((msg, idx) => {
+          ++keyId;
+          return msg;
+        });
+        const newMessageList = [
+          ...messageList,
+          {
+            message: jsonBody.chat,
+            userId: userInfo.uid,
+            nickname: jsonBody.nickname,
+          },
+        ];
 
-      setMessageList(newMessageList);
+        setMessageList(newMessageList);
 
-      let myOther = "";
-      console.log("jsonBody. >>>>>> ", jsonBody);
-      // if (Number(jsonBody.writerId) != Number(localStorage.getItem('uid'))) {
-      if (jsonBody.userId != userInfo.uid) {
-        myOther = "other-msg";
-      } else {
-        myOther = "my-msg";
-      }
+        let myOther = "";
+        console.log("jsonBody. >>>>>> ", jsonBody);
+        // if (Number(jsonBody.writerId) != Number(localStorage.getItem('uid'))) {
+        if (jsonBody.userId != userInfo.uid) {
+          myOther = "other-msg";
+        } else {
+          myOther = "my-msg";
+        }
 
-      // chattingMessageList = chattingMessageList.concat(<li key={++keyId}>{jsonBody.chat}</li>)
-      chattingMessageList = chattingMessageList.concat(
-        <li key={++keyId}>
-          <div className={myOther}>
-            <div className="msg">
-              <pre>{jsonBody.chat}</pre>
+        // chattingMessageList = chattingMessageList.concat(<li key={++keyId}>{jsonBody.chat}</li>)
+        chattingMessageList = chattingMessageList.concat(
+          <li key={++keyId}>
+            <div className={myOther}>
+              <div className="msg">
+                <pre>{jsonBody.chat}</pre>
+              </div>
             </div>
-          </div>
-        </li>
-      );
-      setChattingMesssageList(chattingMessageList);
+          </li>
+        );
+        setChattingMesssageList(chattingMessageList);
 
-      window.scrollTo(0, document.body.scrollHeight);
-    });
+        scrollToBottom();
+      });
+    // }, 500);
   };
 
   const chatDisconnect = () => {
@@ -365,9 +381,21 @@ function ChatPage(chatRoomProps) {
       console.log(error);				//오류발생시 실행
     });
     if (response && response.status === 201) {
-      alert("신고가 완료되었습니다.");
+     
+      Swal.fire({
+        icon: "success",
+        title: "신고",
+        text: "신고가 완료되었습니다.",
+        width: 360, 
+      });
     } else {
-      alert("신고 등록이 실패되었습니다.");
+      
+      Swal.fire({
+        icon: "error",
+        title: "신고",
+        text: "신고 등록이 실패되었습니다.",
+        width: 360, 
+      });
     }
     closeModal();
   }
@@ -410,9 +438,6 @@ function ChatPage(chatRoomProps) {
     }
       <div id="msgList">
         <div className="chatting-room-title">
-          <Link to="/chat/room/list/:roomId">
-            <i class="bi bi-arrow-left"></i>
-          </Link>
           <p>{chatRoomName}</p>
         </div>
         <ul className="chatting-msg">
