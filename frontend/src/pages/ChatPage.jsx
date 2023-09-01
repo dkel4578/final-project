@@ -426,7 +426,7 @@ function ChatPage(chatRoomProps) {
             </label>
             <label htmlFor="false-review">
               <input type="radio" id="false-review" name="report" value="E" onChange={(e)=>{setReportType(e.target.value)}}></input>
-              <span>기타 사유</span>
+              <span>별로에요</span>
             </label>
           </fieldset>
           <div className="user-report-modal-btns">

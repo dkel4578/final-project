@@ -252,8 +252,8 @@ function Schedule(props) {
     document.body.removeChild(textarea);
     Swal.fire({
       icon: "success",
-      title: "채팅", 
-      text: "채팅방 링크가 복사되었습니다.",
+      title: "일정",
+      text: "일정 링크가 복사되었습니다.",
       width: 360, 
     });
  };
