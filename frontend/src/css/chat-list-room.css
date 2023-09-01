@@ -55,7 +55,7 @@
   width: 340px;
   height: 90px;
   display: flex;
-  background-color: var(--orange);
+  background-color: var(--yellow);
   border-radius: 10px;
   justify-content: center;
   align-items: center;
