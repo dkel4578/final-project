@@ -16,12 +16,12 @@
   justify-content: center;
   border-radius: 5px;
   gap: 10px;
-  background-color: var(--maincolor);
-  border: 5px solid white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.55);
+  /* border: 1px solid #ccc; */
+  box-shadow: 0 0 4px #ccc;
   border-radius: 20px;
   margin: 10px 0;
   padding: 15px 0;
+  background-color: var(--mintcolor);
 }
 .chatting-room-name-details h1{
   font-size: 2em;
@@ -34,14 +34,18 @@
   justify-content: center;
   flex-direction: column;
   border-radius: 15px;
-  padding: 15px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
-  background-color: var(--mintcolor);
+  box-shadow: 0 0 4px #ccc;
+  min-height: 200px;
+  overflow: hidden;
+  background-color: #fbf4b77c;
 }
 .chatting-room-name-title{
+  text-align: center;
+  width: 100%;
   font-size: 1.5em;
   font-weight: bold;
   margin-bottom: 20px;
+
 }
 .chatting-room-name-user-profile-infos{
   width: 250px;
@@ -56,7 +60,7 @@
   border-radius: 50%;
   background-color: #ccc;
   object-fit: cover;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.644);
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
 }
 .chatting-room-name-user-nickname{
   font-size: 1.2em;
@@ -70,19 +74,18 @@
   border-radius: 10px;
   font-size: 1.2em;
   transition: 0.4s;
-  color: white;
 }
 .chatting-room-name-attend-btn{
-  background-color: var(--remonblue);
+  background-color: #CDF0EA;
 }
 .chatting-room-name-attend-btn:hover{
-  background-color: var(--royalblue);
-  box-shadow: 0 0 8px var(--royalblue);
+  background-color: #86cfc3;
+  box-shadow: 0 0 3px #86cfc3;
 }
 .chatting-room-name-exit-btn{
-  background-color: red;
+  background-color: #ECC5FB;
 }
 .chatting-room-name-exit-btn:hover{
-  background-color: var(--crimson);
-  box-shadow: 0 0 8px var(--crimson);
+  background-color: #e1b3f3;
+  box-shadow: 0 0 3px #e1b3f3;
 }

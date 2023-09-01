@@ -148,7 +148,7 @@ function BoardListForm3() { // Receive the 'kind' prop
                 </a>
               </div>
             </div>
-            <ul className="borad-main">
+            <ul className="borad-main board-faq-main">
               <div>
                 {boardList.map((boardInfo, index) => (
                     <div key={index}>
