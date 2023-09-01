@@ -301,7 +301,7 @@ function BoardEditForm() {
                             {/*    />*/}
                             {/*</div>*/}
                             <div className="post-main-content-modify-btns">
-                                {imgData && <img src={`/boardImg/${imgData.imgName}`} style={{ width: '150px' }}  />}
+                                {imgData && <img src={`/final-project/boardImg/${imgData.imgName}`} style={{ width: '150px' }}  />}
                                 {imageSrc && <img src={imageSrc} alt="Uploaded" style={{ width: '150px' }} />}
                             </div>
                             <div className="post-main-content-modify-btns">

@@ -52,10 +52,21 @@ async function checkCode(email, code) {
     .then((response) => {
       console.log(response);
       console.log(response.data);
+      Swal.fire({
+        icon: "success",
+        title: "이메일 인증", // Alert 제목
+        text: "이메일 인증 완료",
+        width: 360,
+      });
       return response.data;
     })
     .catch((error) => {
-      console.log(error); //오류발생시 실행
+      Swal.fire({
+        icon: "warning",
+        title: "이메일 인증", // Alert 제목
+        text: "인증 번호를 확인해주세요",
+        width: 360,
+      }); //오류발생시 실행
     });
 }
 
