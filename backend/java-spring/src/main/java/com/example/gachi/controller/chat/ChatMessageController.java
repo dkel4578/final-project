@@ -33,7 +33,7 @@ public class ChatMessageController {
 
     @MessageMapping("/chat")
     public void sendMessage(ChatDto chatDto, SimpMessageHeaderAccessor accessor) {
-     
+
 
         ChatResponseDto chatResponseDto = chatMessageService.signupMessage(chatDto);
         ResponseEntity.ok(chatResponseDto);
