@@ -25,7 +25,7 @@ const BoardPreview = ({ boardInfo,kind }) => {
 
                 </div>
                 <div className="board-user-log">
-                    <span>글쓴이 {boardInfo.nickname}/{boardInfo.id}</span>
+                    <span>글쓴이 {boardInfo.nickname}</span>
                     <span>/시간: {dayjs(boardInfo.creatAt).format('YYYY/MM/DD HH:mm:ss')}</span>
                     <span> / 조회수: {boardInfo.cnt}</span>
                 </div>

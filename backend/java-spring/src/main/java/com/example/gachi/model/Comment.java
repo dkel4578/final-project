@@ -36,6 +36,7 @@ public class Comment extends BaseEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
     private Board board;
+    private String nickname; //닉네임
 
 
     public void setContent(String content) {
@@ -55,5 +56,7 @@ public class Comment extends BaseEntity{
     public Comment(@JsonProperty("content") String content) {
         this.content = content;
     }
+
+
 
 }

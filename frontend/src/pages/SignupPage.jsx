@@ -106,7 +106,7 @@ function SignupPage() {
   const [pwdCheckFlg, setPwdCheckFlg] = useState(false);
   const [nameFlg, setNameFlg]= useState(false);
   //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-  const [authenticationFlg, setAuthenticationFlg] = useState(true); // 가입 테스트 하게 바꿨음
+  const [authenticationFlg, setAuthenticationFlg] = useState(false); // 가입 테스트 하게 바꿨음
   //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 

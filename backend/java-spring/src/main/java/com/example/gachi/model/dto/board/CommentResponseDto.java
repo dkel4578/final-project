@@ -20,6 +20,7 @@ public class CommentResponseDto {
     private Long parentId;
     private String content;
     private LocalDateTime creatAt;
+    private String nickname;
 
     public static CommentResponseDto of(Comment comment){
         return CommentResponseDto.builder()
@@ -29,6 +30,7 @@ public class CommentResponseDto {
                 .boardId(comment.getBoard().getId())
                 .parentId(comment.getParentId())
                 .creatAt(comment.getCreateAt())
+                .nickname(comment.getUser().getNickname())
                 .build();
     }
 }

@@ -861,10 +861,14 @@ console.log("kind  ===>", kind);
                     </div>
                   ) : (
                     // 수정 폼이 아닌 경우
-                    (commentInfo.userId !== userInfo.uid && userInfo.uid!=="" ) &&
+
                       <div className="comment-modify-box">
                         <p>{commentInfo.content}</p>
-                        <p>{commentInfo.id}</p>
+
+                        <span>글쓴이 {commentInfo.nickname}</span>
+                        <span>/ 시간: {dayjs(commentInfo.creatAt).format("YYYY/MM/DD HH:mm:ss")}</span>
+
+                        {commentInfo.userId !== userInfo.uid && userInfo.uid !== "" && (
                         <div className="comment-about-btns">
                           <button
                             className="comment-modify-btn comment-about-btn"
@@ -901,8 +905,8 @@ console.log("kind  ===>", kind);
                             <path d="M3 12h1m8 -9v1m8 8h1m-15.4 -6.4l.7 .7m12.1 -.7l-.7 .7" />
                             <path d="M6 16m0 1a1 1 0 0 1 1 -1h10a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1z" />
                           </svg>
+                        </div>)}
 
-                        </div>
                       </div>
 
                   )}
