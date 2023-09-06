@@ -18,7 +18,7 @@
 <hr>
 <p> 개발언어 : Java</p>
 <p> 사전 구상 : Figma, ERD </p>
-<p> 프레임워크 : SproingBoot</p>
+<p> 프레임워크 : SpringBoot</p>
 <p> 개발 관리 : intelliJ, VS Code</p>
 <p> DB 관리 : mariaDb, DBeaver</p>
 <p> 프론트엔드 : React, HTML, CSS, JavaScript, sass, nodeJs, jQuerry </p>
