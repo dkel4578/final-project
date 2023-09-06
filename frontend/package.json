@@ -78,7 +78,6 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "postbuild": "del /f /s /q ..\\docs\\** && xcopy /Y .\\build\\* ..\\docs\\ /E",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
