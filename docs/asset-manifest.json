@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/final-project/static/css/main.8ea6901e.css",
-    "main.js": "/final-project/static/js/main.2b703e45.js",
+    "main.css": "/final-project/static/css/main.acd60900.css",
+    "main.js": "/final-project/static/js/main.1af8a0ec.js",
     "static/js/915.6b35a6fd.chunk.js": "/final-project/static/js/915.6b35a6fd.chunk.js",
     "static/media/fontawesome-webfont.svg?v=4.7.0": "/final-project/static/media/fontawesome-webfont.c1e38fd9e0e74ba58f7a.svg",
     "static/media/fontawesome-webfont.eot": "/final-project/static/media/fontawesome-webfont.8b43027f47b20503057d.eot",
@@ -21,12 +21,12 @@
     "static/media/header-logo.png": "/final-project/static/media/header-logo.33737237625088d1c956.png",
     "static/media/header2-logo.png": "/final-project/static/media/header2-logo.3d4143097e4ea8dd3bfd.png",
     "index.html": "/final-project/index.html",
-    "main.8ea6901e.css.map": "/final-project/static/css/main.8ea6901e.css.map",
-    "main.2b703e45.js.map": "/final-project/static/js/main.2b703e45.js.map",
+    "main.acd60900.css.map": "/final-project/static/css/main.acd60900.css.map",
+    "main.1af8a0ec.js.map": "/final-project/static/js/main.1af8a0ec.js.map",
     "915.6b35a6fd.chunk.js.map": "/final-project/static/js/915.6b35a6fd.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.8ea6901e.css",
-    "static/js/main.2b703e45.js"
+    "static/css/main.acd60900.css",
+    "static/js/main.1af8a0ec.js"
   ]
 }
