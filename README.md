@@ -6,7 +6,7 @@
 <br>
 <h1>📹시연 영상</h1>
 <p>김현재 파트</p>
-<p>[![Video Label](http://img.youtube.com/vi/IugjDekLoOo/0.jpg)](https://youtu.be/IugjDekLoOo)</p>
+[![Video Label](http://img.youtube.com/vi/IugjDekLoOo/0.jpg)](https://youtu.be/IugjDekLoOo)
 <h1>👨‍💻Project Member</h1>
 <hr>
 <ul>
