@@ -4,6 +4,9 @@
 <p>최근 늘어나는 1인 가구에 따라 같이 늘어나고 있는 혼행족들이 있다. 혼자 여행하는 혼행족들의 고민인 2인분 이상 식사 가능한 맛집에서의 식사를 해결하기 위해서 여행지에서 간단하게 사람과 매칭할 수 있는 웹페이지를 만드는 것을 목표로 하였다.</p>
 <p>PPT : https://github.com/dkel4578/final-project/files/12520206/default.pptx</p>
 <br>
+<h1>📹시연 영상</h1>
+<p>김현재 파트</p>
+<p>[![Video Label](http://img.youtube.com/vi/IugjDekLoOo/0.jpg)](https://youtu.be/IugjDekLoOo)</p>
 <h1>👨‍💻Project Member</h1>
 <hr>
 <ul>
