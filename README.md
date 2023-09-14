@@ -4,9 +4,6 @@
 <p>최근 늘어나는 1인 가구에 따라 같이 늘어나고 있는 혼행족들이 있다. 혼자 여행하는 혼행족들의 고민인 2인분 이상 식사 가능한 맛집에서의 식사를 해결하기 위해서 여행지에서 간단하게 사람과 매칭할 수 있는 웹페이지를 만드는 것을 목표로 하였다.</p>
 <p>PPT : https://github.com/dkel4578/final-project/files/12520206/default.pptx</p>
 <br>
-<h1>📹시연 영상</h1>
-<p>김현재 파트</p>
-https://youtu.be/IugjDekLoOo
 <h1>👨‍💻Project Member</h1>
 <hr>
 <ul>
@@ -15,6 +12,26 @@ https://youtu.be/IugjDekLoOo
   <li>팀원 : 김세양 / https://github.com/tpdid2645</li>
   <li>팀원 : 서종기 / https://github.com/Seojongki</li>
   <li>팀원 : 이한빈 / https://github.com/Dev21V</li>
+</ul>
+<br>
+<h1>📹시연 영상</h1>
+<ul>
+  <li>
+    <p>김현재 파트</p>
+    <p>https://youtu.be/6Y08JwQcQcU</p>
+  </li>
+  <li>
+    <p>김성진 파트</p>
+    <p>https://youtu.be/GzmM2__8f70</p>
+  </li>
+  <li>
+    <p>서종기 파트</p>
+    <p>https://youtu.be/HPG8FRImqFQ</p>
+  </li>
+  <li>
+    <p>이한빈 파트</p>
+    <p>https://youtu.be/IugjDekLoOo</p>
+  </li>
 </ul>
 <br>
 <h1>⚙개발 환경</h1>
